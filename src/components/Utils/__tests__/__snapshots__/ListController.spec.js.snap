@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`smListController renders default smListController 1`] = `
+<div>
+  <div><span id="s0"></span><span id="s1"></span><span id="s2"></span></div>
+</div>
+`;
+
+exports[`smListController selects and clears index 1`] = `
+<div>
+  <div><span id="s0" selected="selected"></span><span id="s1"></span><span id="s2"></span></div>
+</div>
+`;
+
+exports[`smListController selects and clears index 2`] = `
+<div>
+  <div><span id="s0"></span><span id="s1"></span><span id="s2"></span></div>
+</div>
+`;

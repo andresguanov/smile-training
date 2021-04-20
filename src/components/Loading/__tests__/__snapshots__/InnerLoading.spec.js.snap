@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`smInnerLoading renders default loading 1`] = `
+<div class="loading">
+  <div class="msg-inner">
+    <sm-progress-circle-stub size="small" value="0" max="100"></sm-progress-circle-stub>
+    <div class="msg">
+      Buscando...
+    </div>
+  </div>
+</div>
+`;

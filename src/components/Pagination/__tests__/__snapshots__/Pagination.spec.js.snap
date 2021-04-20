@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`smPagination renders default smPagination 1`] = `
+<div class="sm-pagination">
+  <div class="left"><span><div class="icon-box first-page-icon disabled"></div> <div class="icon-box prev-page-icon disabled"></div></span> <span class="text-primary">
+      Página
+      <div class="page-input-wrapper"><sm-input-stub size="small" nativetype="text" value="1" label="" labelclass="" labelcontainerclass="" labelalignment="top" inputclass="" inputcontainerclass="" inputstyle="" help="" hint="" hintclass="" showerroricon="true" name="page" class="page-input"></sm-input-stub></div>
+      de 3
+    </span> <span><div class="icon-box next-page-icon"></div> <div class="icon-box last-page-icon"></div></span> <span><div class="icon-box refresh-icon"></div></span></div>
+  <div class="right"><span class="text-primary">
+      Mostrando 1-20 de 45
+    </span> <span class="text-primary per-page-label" style="font-weight: normal;">
+      Resultados por página
+    </span>
+    <div style="width: 60px;">
+      <sm-select-stub size="small" value="20" autocomplete="true" options="[object Object],[object Object],[object Object],[object Object],[object Object]" label="" labelclass="" selectclass="" selectstyle="" help="" hint="" hintclass="" multipleseparator=", " filterdelay="500" showalloptions="true" textfield="text" valuefield="value" showerroricon="true" nocontenttext="La búsqueda no obtuvo ningún resultado" searchingtext="Buscando..." name="item-per-page"></sm-select-stub>
+    </div>
+  </div>
+</div>
+`;

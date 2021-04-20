@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`smButtonGroup render default button correctly 1`] = `
+<div class="sm-container"><label>
+    <!----></label>
+  <div class="button-group grow"><button value="1" class="button is-medium side-border">Opt 1</button><button value="2" class="button is-medium side-border">Opt 2</button><button value="3" class="button is-medium">Opt 3</button></div>
+</div>
+`;
+
+exports[`smButtonGroup should be a large button 1`] = `
+<div class="sm-container"><label>
+    <!----></label>
+  <div class="button-group grow"><button value="1" class="button is-large side-border">Opt 1</button><button value="2" class="button is-large side-border">Opt 2</button><button value="3" class="button is-large">Opt 3</button></div>
+</div>
+`;
+
+exports[`smButtonGroup should be a small button 1`] = `
+<div class="sm-container"><label>
+    <!----></label>
+  <div class="button-group grow"><button value="1" class="button is-small side-border">Opt 1</button><button value="2" class="button is-small side-border">Opt 2</button><button value="3" class="button is-small">Opt 3</button></div>
+</div>
+`;

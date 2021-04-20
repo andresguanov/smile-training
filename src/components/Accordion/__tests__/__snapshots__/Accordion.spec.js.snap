@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`smAccordion renders default accordion 1`] = `
+<form class="bg-brand1">
+  <ul class="accordion">
+    <li class="accordion-section has-submenu"><input id="smAccordion-0" name="main-nav" type="radio" value="Title number 1 for section"> <label for="smAccordion-0"><span style="margin-left: 0px;">Title number 1 for section</span></label>
+      <ul class="accordion-submenu">
+        <div style="padding: 16px 24px;">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit
+        </div>
+      </ul>
+    </li>
+    <li class="accordion-section has-submenu"><input id="smAccordion-1" name="main-nav" type="radio" value="Maybe something different"> <label for="smAccordion-1"><span style="margin-left: 0px;">Maybe something different</span></label>
+      <ul class="accordion-submenu">
+        <div style="padding: 16px 24px;">
+          sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
+        </div>
+      </ul>
+    </li>
+    <li class="accordion-section has-submenu"><input id="smAccordion-2" name="main-nav" type="radio" value="Last one for the road"> <label for="smAccordion-2"><span style="margin-left: 0px;">Last one for the road</span></label>
+      <ul class="accordion-submenu">
+        <div style="padding: 16px 24px;">
+          Hit the road jack, and dont you look back, no more
+        </div>
+      </ul>
+    </li>
+  </ul>
+</form>
+`;

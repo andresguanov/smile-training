@@ -1,0 +1,209 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`smTable renders default table 1`] = `
+<div style="position: relative; display: table;">
+  <!---->
+  <div class="table-min-height-setter">
+    <sm-markup-table-stub separator="horizontal" separatorcolor="#ededed" style="width: 100%;">
+      <thead>
+        <!---->
+        <tr class="headers">
+          <!---->
+          <th class="th TEST"><span style="display: inline-block;">
+              Id
+            </span>
+            <!---->
+          </th>
+          <th class="th"><span style="display: inline-block;">
+              Nombre:
+            </span>
+            <!---->
+          </th>
+          <th class="th"><span style="display: inline-block;">
+              EDAD
+            </span>
+            <!---->
+          </th>
+          <th class="th center" style="background: lightblue; font-size: 18px; font-weight: bold;"><span style="display: inline-block;">
+              Aptitudes
+            </span>
+            <!---->
+          </th>
+          <!---->
+        </tr>
+      </thead>
+      <tbody>
+        <!---->
+        <tr>
+          <!---->
+          <td class="td">
+            1
+          </td>
+          <td class="td right">
+            Nacho
+          </td>
+          <td class="td">
+            33
+          </td>
+          <td class="td right PRUEBA" style="font-size: 15px; font-weight: thin;">
+            Vue, Php
+          </td>
+          <!---->
+        </tr>
+        <tr>
+          <!---->
+          <td class="td">
+            2
+          </td>
+          <td class="td right">
+            Lian
+          </td>
+          <td class="td">
+            25
+          </td>
+          <td class="td right PRUEBA" style="font-size: 15px; font-weight: thin;">
+            Vue, React
+          </td>
+          <!---->
+        </tr>
+        <tr>
+          <!---->
+          <td class="td">
+            3
+          </td>
+          <td class="td right">
+            Seba
+          </td>
+          <td class="td">
+            60
+          </td>
+          <td class="td right PRUEBA" style="font-size: 15px; font-weight: thin;">
+            Node
+          </td>
+          <!---->
+        </tr>
+        <tr>
+          <!---->
+          <td class="td">
+            4
+          </td>
+          <td class="td right">
+            Martin
+          </td>
+          <td class="td">
+            54
+          </td>
+          <td class="td right PRUEBA" style="font-size: 15px; font-weight: thin;">
+            Php
+          </td>
+          <!---->
+        </tr>
+        <tr>
+          <!---->
+          <td class="td">
+            5
+          </td>
+          <td class="td right">
+            Carlos
+          </td>
+          <td class="td">
+            18
+          </td>
+          <td class="td right PRUEBA" style="font-size: 15px; font-weight: thin;">
+            Python
+          </td>
+          <!---->
+        </tr>
+        <tr>
+          <!---->
+          <td class="td">
+            6
+          </td>
+          <td class="td right">
+            Ariana
+          </td>
+          <td class="td">
+            23
+          </td>
+          <td class="td right PRUEBA" style="font-size: 15px; font-weight: thin;">
+            Javascript
+          </td>
+          <!---->
+        </tr>
+        <tr>
+          <!---->
+          <td class="td">
+            7
+          </td>
+          <td class="td right">
+            Juan
+          </td>
+          <td class="td">
+            46
+          </td>
+          <td class="td right PRUEBA" style="font-size: 15px; font-weight: thin;">
+            Php
+          </td>
+          <!---->
+        </tr>
+        <tr>
+          <!---->
+          <td class="td">
+            8
+          </td>
+          <td class="td right">
+            Pedro
+          </td>
+          <td class="td">
+            55
+          </td>
+          <td class="td right PRUEBA" style="font-size: 15px; font-weight: thin;">
+            Python
+          </td>
+          <!---->
+        </tr>
+        <tr>
+          <!---->
+          <td class="td">
+            9
+          </td>
+          <td class="td right">
+            Diana
+          </td>
+          <td class="td">
+            66
+          </td>
+          <td class="td right PRUEBA" style="font-size: 15px; font-weight: thin;">
+            Javascript
+          </td>
+          <!---->
+        </tr>
+        <tr>
+          <!---->
+          <td class="td">
+            10
+          </td>
+          <td class="td right">
+            Zeta
+          </td>
+          <td class="td">
+            21
+          </td>
+          <td class="td right PRUEBA" style="font-size: 15px; font-weight: thin;">
+            Php
+          </td>
+          <!---->
+        </tr>
+      </tbody>
+    </sm-markup-table-stub>
+  </div>
+  <tfoot>
+    <tr>
+      <td colspan="4">
+        <sm-pagination-stub value="0" itemsperpage="10" total="12" showrefresh="true" texts="[object Object]" style="margin: 0px auto;"></sm-pagination-stub>
+      </td>
+    </tr>
+  </tfoot>
+  <sm-inner-loading-stub text="Cargando..." style="position: absolute; top: 0px; left: 0px;"></sm-inner-loading-stub>
+</div>
+`;

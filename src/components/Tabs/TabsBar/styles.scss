@@ -1,0 +1,32 @@
+.sm-tabs-bar {
+  display: flex;
+  justify-content: flex-start;
+  overflow-x: hidden;
+  position: relative;
+  &.right {
+    justify-content: flex-end;
+  }
+  &.center {
+    justify-content: center;
+    border: unset;
+    width: unset;
+  }
+  &.grow > .sm-tab {
+    flex: 1;
+  }
+  &.overflowed {
+    padding: 0 25px;
+  }
+  .tab-nav {
+    position: absolute;
+    height: 100%;
+    background: #f9fafd;
+    z-index: 10;
+    &.prev {
+      left: 0;
+    }
+    &.next {
+      right: 0;
+    }
+  }
+}

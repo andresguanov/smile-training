@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`smAlert renders default alert 1`] = `
+<div class="alert bounceInRight success" style="height: 0px;">
+  <div class="content">
+    <div class="alert-icon">
+      <icon-stub size="large" icon="success" width="" height="" color="#999999"></icon-stub>
+    </div>
+    <div class="text">
+      <p class="is-small title">alert title</p>
+      <p class="is-small"></p>
+    </div>
+    <div class="close">
+      <icon-stub size="" icon="close" width="" height="" color="#999999"></icon-stub>
+    </div>
+  </div>
+</div>
+`;

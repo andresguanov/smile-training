@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`smInput renders default smInput 1`] = `
+<div class="sm-container"><label class="">
+    <!---->
+    <div class="input-wrapper">
+      <!----> <input type="text" class="is-medium">
+      <!---->
+      <!---->
+    </div>
+  </label>
+  <!---->
+</div>
+`;

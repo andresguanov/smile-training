@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`smCheckbox renders default checkbox simple 1`] = `
+<span class="sm-container no-label"><label for="ACheckbox" class="checkbox is-medium"><input type="checkbox" id="ACheckbox" true-value="true" value="false"> <span></span>
+<!----></label>
+<!----></span>
+`;
