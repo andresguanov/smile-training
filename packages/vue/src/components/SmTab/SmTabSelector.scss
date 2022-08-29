@@ -1,0 +1,7 @@
+.sm-tab-selector {
+  @apply text-eagle-green font-bold bg-slate-100 text-sm cursor-pointer px-4 py-3 w-fit hover:underline
+          mr-1 last:mr-0;
+  &.sm-active {
+    @apply bg-white;
+  }
+}

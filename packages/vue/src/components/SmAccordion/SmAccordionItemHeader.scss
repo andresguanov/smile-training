@@ -1,0 +1,16 @@
+.sm-accordion-item {
+  &-header {
+    @apply cursor-pointer pl-5 pr-2 py-2
+                    flex
+                    border-l-4 border-l-transparent
+                    border-t border-t-transparent/10
+                    hover:bg-transparent/10
+                    transition-all duration-300 ease-in-out;
+    &.sm-active {
+      @apply shadow-md border-l-transparent/30 bg-transparent/10;
+    }
+  }
+  &-collapse {
+    @apply ml-auto;
+  }
+}

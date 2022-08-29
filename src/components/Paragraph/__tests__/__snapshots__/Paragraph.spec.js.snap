@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`smParagraph renders default smParagraph 1`] = `<p class="is-small static-class" style="font-size: 16px;"></p>`;

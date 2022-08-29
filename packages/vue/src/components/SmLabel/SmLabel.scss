@@ -1,0 +1,20 @@
+.sm-label {
+  color: #707070;
+  @apply align-middle;
+  &-text {
+    @apply block;
+  }
+  &-required {
+    &::after {
+      content: '*';
+      @apply ml-[2px];
+      @apply text-persian-green;
+    }
+  }
+  &-error {
+    @apply text-fire-opal;
+    &::after {
+      @apply text-fire-opal;
+    }
+  }
+}

@@ -1,0 +1,29 @@
+.sm-progress-circle {
+  @apply h-10 w-10;
+  &::before {
+    @apply animate-round border-4 rounded-full border-b-persian-green border-gray-100 content-[""]
+        absolute z-0 h-10 w-10;
+  }
+  &-small {
+    @apply h-8 w-8;
+    &::before {
+      @apply h-8 w-8;
+    }
+    &.sm-progress-circle-show-percentage::after {
+      @apply text-[0.6rem];
+    }
+  }
+  &-large {
+    @apply h-12 w-12;
+    &::before {
+      @apply h-12 w-12;
+    }
+    &.sm-progress-circle-show-percentage::after {
+      @apply text-[0.9rem];
+    }
+  }
+  &-show-percentage::after {
+    @apply content-[attr(value)"%"] relative text-xs;
+    @apply flex items-center justify-center top-0 left-0 w-full h-full;
+  }
+}

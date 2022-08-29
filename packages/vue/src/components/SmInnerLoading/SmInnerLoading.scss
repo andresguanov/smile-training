@@ -1,0 +1,13 @@
+.sm-inner-loading {
+  @apply flex items-center justify-center bg-white/50;
+  @apply absolute w-full h-full top-0 left-0;
+  @apply z-[1];
+
+  &-content {
+    @apply flex items-center justify-between;
+    @apply p-2 border border-gray-500 bg-white rounded-md;
+  }
+  p {
+    @apply ml-1;
+  }
+}

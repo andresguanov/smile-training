@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  /* @apply outline-1 outline-persian-green; */
+  @apply outline-none;
+}
+
+body {
+  @apply box-border
+      p-0 m-0
+      relative
+      font-sans text-gray-500 antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply text-eagle-green;
+}
+
+.sm-text-small {
+  @apply text-[12px];
+  @apply leading-[18px];
+}
+
+.sm-text-large {
+  @apply text-[16px];
+  @apply leading-[24px];
+}
+
+.sm-text-medium {
+  @apply text-[14px];
+  @apply leading-[21px];
+}

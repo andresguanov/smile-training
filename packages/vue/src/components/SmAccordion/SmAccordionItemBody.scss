@@ -1,0 +1,6 @@
+.sm-accordion-item-body {
+  @apply px-1 overflow-hidden max-h-0 transition-all duration-300 ease-in-out bg-opacity-5 bg-transparent/10;
+  &.sm-active {
+    @apply py-2 max-h-96 visible;
+  }
+}

@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`smMarkupTable renders default markup table 1`] = `<table class="markup-table horizontal" style="--separator-color: #ededed;"></table>`;

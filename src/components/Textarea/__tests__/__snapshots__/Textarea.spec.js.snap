@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`smTextarea renders default smTextarea 1`] = `
-<div class="sm-container"><label class="">
-    <!----> <textarea rows="2" class="is-medium"></textarea>
-    <!----> </label>
-  <!---->
-</div>
-`;

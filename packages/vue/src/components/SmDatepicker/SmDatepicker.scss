@@ -1,0 +1,64 @@
+@import '../SmInput/SmInput.scss';
+
+.sm-datepicker {
+  &-input {
+    @apply p-0;
+    @apply hover:border-persian-green;
+    &:deep(.mx-input-wrapper) {
+      @apply flex;
+      .mx-input {
+        height: auto;
+        @apply border-none shadow-none;
+      }
+    }
+    &:deep(.mx-datepicker-main) {
+      .cell {
+        &.active:not(.not-current-month) {
+          @apply bg-persian-green;
+        }
+        &.in-range:not(.not-current-month) {
+          @apply bg-persian-green/10;
+        }
+        &.hover-in-range:not(.not-current-month) {
+          @apply bg-persian-green/10;
+        }
+      }
+    }
+    &.sm-input-disabled {
+      @apply hover:border-gray-300;
+      &:deep(.mx-input) {
+        @apply bg-gray-50 cursor-default;
+      }
+    }
+    &.sm-input-small {
+      &:deep(.mx-input) {
+        @apply text-[12px];
+        @apply leading-[18px];
+        @apply px-[8px];
+        @apply py-[3px];
+        .mx-icon-calendar > svg {
+          @apply h-3 w-3;
+        }
+      }
+    }
+    &.sm-input-medium {
+      &:deep(.mx-input) {
+        @apply py-[9px];
+        @apply px-[8px];
+        @apply text-[14px];
+        @apply leading-[21px];
+      }
+    }
+    &.sm-input-large {
+      &:deep(.mx-input) {
+        @apply text-[16px];
+        @apply leading-[24px];
+        @apply py-[12px];
+        @apply px-[8px];
+      }
+    }
+    &.sm-input-error {
+      @apply hover:border-fire-opal;
+    }
+  }
+}

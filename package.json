@@ -1,88 +1,20 @@
 {
-  "name": "smile-test",
-  "version": "0.1.0",
+  "name": "smile-ui",
   "private": true,
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint",
-    "build:lib": "vue-cli-service build --target lib --name smile-ui src/main.js",
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build --dest ./docs/ui docs"
-  },
-  "files": [
-    "dist/*",
-    "vetur"
-  ],
-  "dependencies": {
-    "@alegradev/smile-icons": "^0.4.4",
-    "@alegradev/smile-ui-css": "^0.9.0",
-    "core-js": "^3.8.3",
-    "debounce-async": "^0.0.2",
-    "lodash-es": "^4.17.21",
-    "mitt": "^2.1.0",
-    "trie-search": "^1.3.4",
-    "v-click-outside": "^3.1.2",
-    "vue": "^3.0.4",
-    "vue-meta": "^3.0.0-alpha.4",
-    "vue-mq": "^1.0.1",
-    "vue-tippy": "^6.0.0-alpha.28",
-    "vue2-datepicker": "^4.0.0-beta.2"
-  },
   "devDependencies": {
-    "@types/jest": "^26.0.20",
-    "@typescript-eslint/eslint-plugin": "^4.15.1",
-    "@typescript-eslint/parser": "^4.15.1",
-    "@vue/cli-plugin-babel": "~5.0.0-alpha.8",
-    "@vue/cli-plugin-eslint": "~5.0.0-alpha.8",
-    "@vue/cli-plugin-typescript": "~5.0.0-alpha.8",
-    "@vue/cli-plugin-unit-jest": "~5.0.0-alpha.8",
-    "@vue/cli-service": "~5.0.0-alpha.8",
-    "@vue/compiler-sfc": "^3.0.4",
-    "@vue/eslint-config-prettier": "^6.0.0",
-    "@vue/eslint-config-typescript": "^7.0.0",
-    "@vue/test-utils": "^2.0.0-0",
-    "eslint": "^7.20.0",
-    "eslint-plugin-prettier": "^3.3.1",
-    "eslint-plugin-vue": "^7.2.0",
-    "lint-staged": "^10.5.4",
-    "optimize-css-assets-webpack-plugin": "^5.0.4",
-    "prettier": "^2.2.1",
-    "sass": "^1.32.7",
-    "sass-loader": "^11.0.1",
-    "terser-webpack-plugin": "^5.1.1",
-    "ts-jest": "^26.5.3",
-    "typescript": "~4.1.5",
-    "vue-jest": "^5.0.0-0",
-    "vuepress": "^1.8.2"
+    "husky": "^7.0.4",
+    "lerna": "^4.0.0"
   },
-  "gitHooks": {
-    "pre-commit": ""
+  "scripts": {
+    "storybook": "lerna run storybook",
+    "build": "lerna run build",
+    "build:vue": "lerna run build --scope @alegradev/smile-ui-next",
+    "build:storybook": "lerna run build-storybook",
+    "bootstrap": "lerna bootstrap",
+    "pack": "lerna run pack",
+    "prepare": "husky install"
   },
-  "homepage": "https://github.com/alegradev/smile-ui",
-  "keywords": [
-    "ui",
-    "ux",
-    "alegra",
-    "componentes",
-    "vue"
-  ],
-  "lint-staged": {
-    "*.{js,vue}": [
-      "vue-cli-service lint",
-      "git add"
-    ]
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alegradev/smile-ui.git"
-  },
-  "vetur": {
-    "tags": "vetur/tags.json",
-    "attributes": "vetur/attributes.json"
-  }
+  "workspaces": [
+    "packages/*"
+  ]
 }

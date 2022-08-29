@@ -1,0 +1,14 @@
+.sm-skeleton {
+  @apply m-4;
+  &-item {
+    @apply bg-gray-400/40 animate-pulse;
+  }
+  &-circle {
+    @apply h-8 w-8 rounded-full;
+  }
+  &-rectangle {
+    @apply h-4 w-full rounded-lg;
+    @apply my-3;
+    @apply first:mt-0 last:mb-0;
+  }
+}

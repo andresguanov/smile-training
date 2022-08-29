@@ -1,0 +1,23 @@
+.sm-modal-header {
+  @apply text-persian-green border-b px-4 pt-6 pb-3 text-xl flex justify-between capitalize;
+}
+
+.sm-modal-area {
+  @apply fixed w-screen bottom-0 left-0 h-screen
+      bg-black/20 flex justify-center items-center;
+  @apply z-10;
+}
+
+.sm-modal-body {
+  @apply overflow-y-auto overflow-x-hidden p-4;
+}
+
+.sm-modal-content {
+  @apply bg-white rounded-md;
+  min-width: 400px;
+}
+
+.sm-modal-footer {
+  @apply border-t;
+  @apply p-4;
+}

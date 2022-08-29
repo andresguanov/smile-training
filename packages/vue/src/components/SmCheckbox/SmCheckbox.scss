@@ -1,0 +1,101 @@
+.sm-checkbox {
+  @apply relative inline-block;
+  &-disabled {
+    @apply opacity-[0.65];
+    .sm-checkbox-box {
+      @apply hover:before:bg-white hover:before:border-gray-200 hover:after:border-gray-200;
+    }
+  }
+  &-small {
+    @apply pl-5;
+    .sm-checkbox-box {
+      @apply before:h-4 before:w-4;
+      @apply after:h-3 after:w-3;
+    }
+    input:checked + .sm-checkbox-box::after {
+      @apply border-[3px] border-l-0 h-3 w-1.5 border-t-0;
+      @apply left-[0.3rem];
+    }
+    &.label-to-left {
+      @apply pr-5 pl-0;
+      input:checked + .sm-checkbox-box::after {
+        @apply right-[0.3rem];
+      }
+    }
+  }
+  &-medium {
+    @apply pl-6;
+    .sm-checkbox-box {
+      @apply before:h-5 before:w-5;
+      @apply after:h-4 after:w-4;
+    }
+    input:checked + .sm-checkbox-box::after {
+      @apply border-4 border-l-0 h-4 w-2 border-t-0;
+      @apply left-[0.4rem];
+    }
+    &.label-to-left {
+      @apply pr-6 pl-0;
+      input:checked + .sm-checkbox-box::after {
+        @apply right-[0.4rem];
+      }
+    }
+  }
+  &-large {
+    @apply pl-7;
+    .sm-checkbox-box {
+      @apply before:h-6 before:w-6;
+      @apply after:h-5 after:w-5;
+    }
+    input:checked + .sm-checkbox-box::after {
+      @apply border-[5px] border-l-0 h-5 w-2.5 border-t-0;
+      @apply left-[0.5rem];
+    }
+    &.label-to-left {
+      @apply pr-7 pl-0;
+      input:checked + .sm-checkbox-box::after {
+        @apply right-[0.5rem];
+      }
+    }
+  }
+  &.label-to-left {
+    .sm-checkbox-box::after {
+      @apply right-[2px];
+      left: initial;
+    }
+    .sm-checkbox-box::before {
+      @apply right-0;
+    }
+    input:checked + .sm-checkbox-box::after {
+      left: initial;
+    }
+  }
+}
+
+/* Hide default HTML checkbox */
+.sm-checkbox input {
+  @apply opacity-0 w-0 h-0 absolute top-0 left-0 z-[-1];
+}
+
+/* The sm-checkbox-box*/
+.sm-checkbox-box {
+  @apply absolute duration-200 top-0 left-0 right-0 bottom-0 cursor-pointer
+    hover:before:bg-persian-green hover:before:border-persian-green 
+    hover:after:border-persian-green;
+}
+
+.sm-checkbox-box:before {
+  @apply absolute content-[''] duration-200 border rounded-sm;
+}
+
+.sm-checkbox-box:after {
+  @apply absolute content-[''] top-[2px] left-[2px] border bg-white;
+}
+
+input:checked + .sm-checkbox-box {
+  @apply after:bg-transparent after:border-0
+    before:bg-persian-green before:border-persian-green;
+}
+
+input:checked + .sm-checkbox-box:after {
+  @apply rotate-45 border-white border-4 border-l-0 h-4 w-2 border-t-0 -top-[0.01rem];
+}

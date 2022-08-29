@@ -1,0 +1,86 @@
+/* INFO: based on w3s implementation https://www.w3schools.com/howto/howto_css_custom_checkbox.asp
+    and will need a structure like this to work:
+
+        <label class="sm-radio">
+            <input type="radio">
+            <span class="sm-radio-circle"></span>
+        </label>
+*/
+
+.sm-radio {
+  @apply relative inline-block;
+  &-disabled {
+    @apply opacity-[0.65];
+  }
+  &-small {
+    @apply pl-5;
+    .sm-radio-circle {
+      @apply before:h-4 before:w-4;
+      @apply after:h-3 after:w-3;
+    }
+    &.label-to-left {
+      @apply pr-5 pl-0;
+    }
+  }
+  &-medium {
+    @apply pl-6;
+    .sm-radio-circle {
+      @apply before:h-5 before:w-5;
+      @apply after:h-4 after:w-4;
+    }
+    &.label-to-left {
+      @apply pr-6 pl-0;
+    }
+  }
+  &-large {
+    @apply pl-7;
+    .sm-radio-circle {
+      @apply before:h-6 before:w-6;
+      @apply after:h-5 after:w-5;
+    }
+    &.label-to-left {
+      @apply pr-7 pl-0;
+    }
+  }
+  &.label-to-left {
+    .sm-radio-circle::after {
+      @apply right-[2px];
+      left: initial;
+    }
+    .sm-radio-circle:before {
+      @apply right-0;
+    }
+    input:checked + .sm-radio-circle::after {
+      left: initial;
+    }
+  }
+}
+
+/* Hide default HTML checkbox */
+.sm-radio input {
+  @apply opacity-0 w-0 h-0 absolute top-0 left-0 z-[-1];
+}
+
+/* The sm-radio-circle*/
+.sm-radio-circle {
+  @apply absolute duration-200 top-0 left-0 right-0 bottom-0 cursor-pointer
+    hover:after:border-2 hover:after:border-persian-green;
+}
+
+.sm-radio-circle:before {
+  @apply absolute content-[''] duration-200 border rounded-full;
+}
+
+.sm-radio-circle:after {
+  @apply absolute content-[''] top-[2px] left-[2px] border bg-white rounded-full
+    hover:border-2 hover:border-persian-green;
+}
+
+input:checked + .sm-radio-circle {
+  @apply after:bg-transparent after:border-0
+    before:bg-persian-green before:border-persian-green;
+}
+
+input:checked + .sm-radio-circle:after {
+  @apply border-white border-2 bg-transparent;
+}

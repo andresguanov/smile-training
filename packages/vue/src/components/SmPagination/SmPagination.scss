@@ -1,0 +1,54 @@
+.sm-pagination {
+  @apply flex text-xs font-bold justify-between;
+  @apply flex-col md:flex-row;
+  &-right {
+    @apply flex items-center;
+    @apply justify-end mt-1 md:mt-0;
+
+    .sm-pagination-vr,
+    .sm-pagination-showing {
+      @apply hidden sm:block;
+    }
+  }
+  &-left {
+    @apply flex items-center;
+  }
+}
+
+.sm-pagination-page {
+  @apply px-1 flex items-center;
+}
+
+.sm-pagination-wrapper {
+  @apply flex items-center;
+}
+
+.sm-pagination-lastpage {
+  white-space: nowrap;
+}
+
+.sm-pagination-button {
+  @apply border rounded-md h-6 w-6 mx-1 cursor-pointer;
+  @apply bg-white hover:border-persian-green;
+  @apply disabled:cursor-default disabled:border-slate-200;
+
+  & img {
+    @apply m-auto;
+  }
+}
+
+.sm-pagination-input {
+  @apply border focus:border-persian-green duration-200 w-7 rounded-md px-1 h-7 mx-1;
+}
+
+.sm-pagination-vr {
+  @apply h-6 border-l border-black/50 mx-1;
+}
+
+.sm-pagination-results {
+  @apply font-normal;
+}
+
+.sm-pagination-select {
+  @apply w-12 ml-1;
+}

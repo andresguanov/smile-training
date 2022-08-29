@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`smProgressCircle renders default smProgressCircle 1`] = `<div class="progress-circle is-medium"></div>`;

@@ -1,0 +1,80 @@
+.sm-toggle {
+  @apply relative inline-block cursor-pointer;
+  &-disabled {
+    @apply opacity-[0.625];
+  }
+  &-small {
+    @apply pl-[2.7rem] min-h-[1.25rem];
+    .sm-toggle-slider {
+      @apply w-10 h-5;
+      @apply before:h-4 before:w-4;
+    }
+    .sm-label-text {
+      @apply leading-5;
+    }
+    input:checked + .sm-toggle-slider:before {
+      @apply translate-x-[1.3rem];
+    }
+    &.label-to-left {
+      @apply pr-[2.7rem] pl-0;
+    }
+  }
+  &-medium {
+    @apply pl-[3.2rem] min-h-[1.5rem];
+    .sm-toggle-slider {
+      @apply w-12 h-6;
+      @apply before:h-5 before:w-5;
+    }
+    .sm-label-text {
+      @apply leading-6;
+    }
+    input:checked + .sm-toggle-slider:before {
+      @apply translate-x-[1.55rem];
+    }
+    &.label-to-left {
+      @apply pr-[3.2rem] pl-0;
+    }
+  }
+  &-large {
+    @apply pl-[3.7rem] min-h-[2rem];
+    .sm-toggle-slider {
+      @apply w-14 h-7;
+      @apply before:h-6 before:w-6;
+    }
+    .sm-label-text {
+      @apply leading-7;
+    }
+    input:checked + .sm-toggle-slider:before {
+      @apply translate-x-[1.75rem];
+    }
+    &.label-to-left {
+      @apply pr-[3.7rem] pl-0;
+    }
+  }
+  &.label-to-left {
+    .sm-toggle-slider {
+      @apply right-0;
+      left: initial;
+    }
+  }
+}
+
+/* Hide default HTML checkbox */
+.sm-toggle input {
+  @apply opacity-0 absolute top-0;
+}
+
+/* The sm-toggle-slider */
+.sm-toggle-slider {
+  @apply absolute duration-200 bg-gray-200 top-0 left-0 cursor-pointer rounded-full
+    border border-gray-300;
+}
+
+.sm-toggle-slider:before {
+  @apply absolute content-[''] bg-white duration-200 rounded-full top-[0.05rem];
+  box-shadow: rgba(0, 0, 0, 0.2) 0.15rem 0rem 0.2rem 0rem;
+}
+
+input:checked + .sm-toggle-slider {
+  @apply bg-persian-green border-persian-green;
+}

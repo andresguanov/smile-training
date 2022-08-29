@@ -1,0 +1,51 @@
+.sm-button {
+    @apply relative font-semibold text-sm justify-center align-middle tracking-normal rounded-md h-10 p-2 duration-200
+    text-eagle-green bg-white border border-neutral-300 disabled:text-eagle-green/30;
+    &:not(:disabled, .loading) {
+        @apply hover:bg-gray-50 hover:border-gray-400 active:bg-gray-200;
+    }
+
+    &-primary {
+        @apply text-white bg-persian-green border-persian-green disabled:text-white/50;
+        &:not(:disabled, .loading) {
+            @apply text-white hover:bg-persian-green/70 hover:border-transparent;
+        }
+    }
+
+    &-secondary {
+        @apply text-white bg-eagle-green border-eagle-green disabled:text-white/50;
+        &:not(:disabled, .loading) {
+            @apply text-white hover:bg-eagle-green/70 hover:border-transparent;
+        }
+    }
+
+    &-ghost {
+        @apply text-persian-green bg-transparent border-persian-green disabled:text-black/30 disabled:border-black/30;
+        &:not(:disabled, .loading) {
+            @apply hover:text-white hover:bg-persian-green hover:border-persian-green;
+        }
+    }
+
+    &-text {
+        @apply text-persian-green bg-transparent border-transparent disabled:text-black/30;
+        &:not(:disabled, .loading) {
+            @apply hover:text-persian-green/60 hover:bg-transparent hover:border-transparent;
+        }
+    }
+
+    &-small {
+        @apply text-xs h-6 leading-[0.5rem];
+
+        .loading-icon {
+            @apply absolute left-0 right-0 top-0;
+        }
+    }
+
+    &-large {
+        @apply h-12 p-3;
+    }
+
+    .loading-icon {
+        @apply absolute left-0 right-0;
+    }
+}

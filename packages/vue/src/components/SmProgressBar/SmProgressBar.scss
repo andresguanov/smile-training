@@ -1,0 +1,24 @@
+/* INFO: this class is only available on progress html tags */
+.sm-progress-bar {
+  @apply appearance-none w-full h-2 rounded-full;
+
+  &::-webkit-progress-bar {
+    @apply bg-slate-200 rounded-full;
+  }
+  &::-moz-progress-bar {
+    @apply bg-slate-200 rounded-full;
+  }
+
+  &[value] {
+    &::-webkit-progress-value {
+      @apply rounded-full bg-persian-green transition-all;
+    }
+  }
+  &:not([value]) {
+    @apply animate-pulse;
+
+    &::-webkit-progress-bar {
+      @apply bg-persian-green;
+    }
+  }
+}

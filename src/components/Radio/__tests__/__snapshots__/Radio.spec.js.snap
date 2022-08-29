@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`smRadio renders default radio simple 1`] = `
-<span class="sm-container no-label"><label for="ARadio" class="radio-button is-medium"><input type="radio" id="ARadio" value="false"> <span></span>
-<!----></label>
-<!----></span>
-`;

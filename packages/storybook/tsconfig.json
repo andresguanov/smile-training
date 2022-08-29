@@ -1,0 +1,10 @@
+{
+    "extends": "../../tsconfig.json",
+    "paths": {
+        "~/*": ["src/*"]
+    },
+    "compilerOptions": {
+        "outDir": "./lib"
+    },
+    "include": ["./stories"]
+}

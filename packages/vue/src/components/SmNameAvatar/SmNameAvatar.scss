@@ -1,0 +1,5 @@
+.sm-name-avatar {
+  font-size: 0px;
+  @apply first-letter:text-xl first-letter:leading-8;
+  @apply rounded-full bg-tufts-blue text-white h-8 w-8 uppercase text-center font-bold align-middle;
+}

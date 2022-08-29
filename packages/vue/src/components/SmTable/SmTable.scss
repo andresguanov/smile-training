@@ -1,0 +1,56 @@
+.sm-table {
+  @apply w-full rounded-md min-h-[500px] flex flex-col border;
+
+  &-container {
+    &-thead {
+      @apply bg-slate-100;
+    }
+    &-th,
+    &-td {
+      @apply min-w-[110px] whitespace-nowrap;
+      @apply px-2 py-4 text-xs text-left;
+      @apply border-b-[0.5px];
+      &.right {
+        @apply text-right;
+      }
+      &.center {
+        @apply text-center;
+      }
+    }
+    &-th {
+      @apply text-eagle-green bg-slate-100;
+      @apply first:rounded-tl last:rounded-tr;
+      &.filterable {
+        @apply p-1;
+      }
+      &.sortable > span {
+        @apply cursor-pointer hover:text-eagle-green/80;
+      }
+      &.sortable > .sm-icon {
+        @apply transition-transform duration-300;
+        &.asc {
+          @apply rotate-180;
+        }
+      }
+    }
+  }
+  &-empty {
+    @apply text-center text-gray-500 text-sm;
+    @apply flex flex-1 items-center justify-center;
+  }
+  &-pagination {
+    @apply py-1 px-1 sm:px-2 bg-slate-50 border-slate-200;
+    @apply rounded-b mt-auto;
+  }
+  &-filter {
+    visibility: collapse;
+    opacity: 0;
+    transition: visibility 0.2s linear, opacity 0.2s linear;
+    &.open {
+      @apply visible opacity-100;
+    }
+    &-buttons {
+      @apply p-1 text-eagle-green bg-slate-100 text-right;
+    }
+  }
+}
