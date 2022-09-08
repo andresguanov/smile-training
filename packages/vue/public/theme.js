@@ -52,7 +52,7 @@ const theme = colors => {
       ...colors,
     },
     fontFamily: {
-      sans: ['Roboto', 'sans-serif'],
+      sans: ['Inter', 'Roboto', 'sans-serif'],
       // sans: ["Mulish", "Roboto", "sans-serif"]
     },
     extend: {
