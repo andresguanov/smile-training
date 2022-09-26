@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { icon } from '../../types'
+import type { IconType } from '../../types'
 import SmIcon from '../SmIcon/SmIcon.vue'
 
 // TODO: pasar a un archivo de typos cuando importacion de tipos este disponible
@@ -33,7 +33,7 @@ const props = withDefaults(defineProps<alert>(), {
   time: 7500,
 })
 
-const icons: Record<variant, icon> = {
+const icons: Record<variant, IconType> = {
   error: 'info',
   success: 'success',
   warning: 'info',

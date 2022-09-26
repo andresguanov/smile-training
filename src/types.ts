@@ -7,4 +7,4 @@ export interface Accordion {
   selected: Ref<number>;
 }
 
-export type icon = typeof icons[number]
+export type IconType = typeof icons[number]

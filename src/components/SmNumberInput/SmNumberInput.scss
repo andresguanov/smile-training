@@ -1,0 +1,60 @@
+.sm-input {
+  @apply block px-1;
+  @apply bg-no-repeat;
+  @apply rounded-[5px];
+  @apply border;
+  @apply hover:border-persian-green;
+  @apply focus:border-persian-green;
+  @apply border-gray-300;
+  @apply transition-colors;
+  @apply w-full;
+  @apply py-[9px];
+  @apply px-[8px];
+  color: #474747;
+
+  &-container {
+    @apply relative;
+    &[data-prefix] {
+      input {
+        @apply pl-[24px];
+      }
+    }
+    &[data-sufix] {
+      input {
+        @apply pr-[24px];
+      }
+    }
+    &[data-prefix]::before,
+    &[data-sufix]::after {
+      @apply absolute;
+      @apply top-1/2;
+      @apply text-gray-400;
+      @apply -translate-y-1/2;
+    }
+    &[data-prefix]::before {
+      content: attr(data-prefix);
+      @apply left-[10px];
+    }
+    &[data-sufix]::after {
+      content: attr(data-sufix);
+      @apply right-[10px];
+    }
+  }
+
+  &-small {
+    @apply px-[8px];
+    @apply py-[3px];
+  }
+
+  &-large {
+    @apply py-[12px];
+    @apply px-[8px];
+  }
+  &.sm-input-disabled {
+    @apply bg-gray-50;
+  }
+  &.sm-input-error {
+    @apply border-fire-opal;
+    @apply focus:border-fire-opal;
+  }
+}

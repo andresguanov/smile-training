@@ -1,26 +1,32 @@
 .sm-icon {
-  @apply fill-current inline-block stroke-0 stroke-current align-middle w-6 h-6;
-  &-small {
+  @apply fill-current;
+  @apply inline-block;
+  @apply stroke-0;
+  @apply align-middle;
+  &.small {
     @apply w-4 h-4;
   }
-
-  &-large {
+  &.medium {
+    @apply w-6 h-6;
+  }
+  &.large {
     @apply w-8 h-8;
   }
-
-  &-huge {
+  &.huge {
     @apply w-16 h-16;
   }
 
-  &-primary {
+  &.primary {
     @apply text-persian-green;
   }
-
-  &-secondary {
+  &.secondary {
     @apply text-eagle-green;
   }
-
-  &-error {
+  &.error {
     @apply text-fire-opal;
+  }
+
+  &.disabled {
+    @apply opacity-50;
   }
 }

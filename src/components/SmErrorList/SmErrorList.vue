@@ -1,6 +1,6 @@
 <template>
   <div class="sm-error" style="position: relative">
-    <sm-icon icon="info" error />
+    <sm-icon icon="info" type="error" />
     <ul>
       <li v-for="(error, i) in errorMessages" :key="i">
         {{ error }}

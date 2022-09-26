@@ -66,4 +66,7 @@ provide(provideSmFormSymbol, {
   registerInputRef: registerInputsValidRef,
   validationMode: props.validationMode,
 })
+defineExpose({
+  isValid,
+})
 </script>

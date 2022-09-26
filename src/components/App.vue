@@ -10,6 +10,13 @@
         <sm-checkbox label="test" />
         <sm-datepicker v-model="datepicker" label="Nombre" :rules="sRules" range size="large" />
         <sm-select v-model="select" :options="options" label="Nombre" multiple size="large" />
+        <sm-number-input
+          v-model="number"
+          :rules="numberRules"
+          :max="3"
+          :min="0"
+          :data-prefix="'%'"
+        />
         <template #footer="{ isValid }">
           <sm-button type="primary" native-type="submit" :disabled="!isValid">Submit</sm-button>
         </template>
@@ -28,7 +35,9 @@
     </sm-modal>
     <sm-tabs>
       <sm-tab-selectors>
-        <sm-tab-selector target="1"> Tab 1 </sm-tab-selector>
+        <sm-tab-selector target="1">
+          <sm-icon color="red" hover-color="blue" /> Tab 1
+        </sm-tab-selector>
         <sm-tab-selector target="2"> Tab 2 </sm-tab-selector>
         <sm-tab-selector target="3"> Tab 3 </sm-tab-selector>
       </sm-tab-selectors>
@@ -45,6 +54,7 @@ import { $SmAlert, ISmAlertProvide } from '../utils/alerts'
 
 const modal = ref(true)
 const radio = ref('')
+const number = ref(2)
 const select = ref([])
 const datepicker = ref('')
 const options = ref([
@@ -57,7 +67,14 @@ const sRules = ref([
     return !!v || 'Nombre es requerido'
   },
 ])
-
+const numberRules = ref([
+  (v: any) => {
+    return !!v || 'Número es requerido'
+  },
+  (v: any) => {
+    return v < 2 || 'Número debe ser menor a 2'
+  },
+])
 const rRules = ref([
   (v: any) => {
     return !!v || 'Nombre es requerido'

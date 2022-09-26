@@ -21,13 +21,13 @@ export default defineConfig({
     },
     lib: {
       entry: resolve(__dirname, 'src/main.ts'),
-      name: 'smile-ui',
+      name: 'smile-ui-next',
       fileName: '[name]',
     },
   },
   resolve: {
     alias: {
-      '@': resolve(__dirname, './src'),
+      '~': resolve(__dirname, 'src'),
     },
   },
   plugins: [
