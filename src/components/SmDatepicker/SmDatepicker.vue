@@ -28,7 +28,10 @@
         <slot :name="(slot as string)"></slot>
       </template>
     </date-picker>
-    <sm-hint v-if="datePickerElement && showError && errorListContent" :to="datePickerElement">
+    <sm-hint
+      v-if="datePickerElement && showError && errorListContent"
+      :to="() => datePickerElement"
+    >
       <template #content>
         <sm-error-list :error-messages="(errorListContent as Array<string>)" />
       </template>

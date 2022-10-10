@@ -27,7 +27,7 @@
         </li>
       </ul>
     </div>
-    <sm-hint v-if="showError && searchField && errorListContent" :to="searchField">
+    <sm-hint v-if="showError && searchField && errorListContent" :to="() => searchField">
       <template #content>
         <sm-error-list :error-messages="(errorListContent as Array<string>)" />
       </template>

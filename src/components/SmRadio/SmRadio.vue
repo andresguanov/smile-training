@@ -21,7 +21,7 @@
         <span class="sm-radio-circle"></span>
       </sm-label>
     </span>
-    <sm-hint v-if="radioElement && showError && errorListContent" :to="radioElement">
+    <sm-hint v-if="radioElement && showError && errorListContent" :to="() => radioElement">
       <template #content>
         <sm-error-list :error-messages="(errorListContent as Array<string>)" />
       </template>
@@ -34,19 +34,18 @@ import { useVModel } from '@vueuse/core'
 import { SmHint, SmLabel } from '../index'
 import { useValidate } from '../../composables'
 
-const props =
-  defineProps<{
-    nativeValue: any
-    label: string
-    modelValue?: any
-    error?: boolean
-    size?: 'small' | 'medium' | 'large'
-    required?: boolean
-    errorMessages?: Array<string>
-    disabled?: boolean
-    labelToLeft?: boolean
-    rules?: Array<(value: any) => boolean | string>
-  }>()
+const props = defineProps<{
+  nativeValue: any
+  label: string
+  modelValue?: any
+  error?: boolean
+  size?: 'small' | 'medium' | 'large'
+  required?: boolean
+  errorMessages?: Array<string>
+  disabled?: boolean
+  labelToLeft?: boolean
+  rules?: Array<(value: any) => boolean | string>
+}>()
 
 const emit = defineEmits(['update:modelValue'])
 const data = useVModel(props, 'modelValue', emit)

@@ -21,7 +21,7 @@
         <span class="sm-checkbox-box"></span>
       </sm-label>
     </span>
-    <sm-hint v-if="checkboxElement && showError && errorListContent" :to="checkboxElement">
+    <sm-hint v-if="checkboxElement && showError && errorListContent" :to="() => checkboxElement">
       <template #content>
         <sm-error-list :error-messages="(errorListContent as Array<string>)" />
       </template>
@@ -34,18 +34,17 @@ import { useVModel } from '@vueuse/core'
 import { SmLabel, SmHint, SmErrorList } from '../index'
 import { useValidate } from '../../composables'
 
-const props =
-  defineProps<{
-    label: string
-    modelValue?: boolean
-    error?: boolean
-    size?: 'small' | 'medium' | 'large'
-    required?: boolean
-    errorMessages?: Array<string>
-    disabled?: boolean
-    labelToLeft?: boolean
-    rules?: Array<(value: any) => boolean | string>
-  }>()
+const props = defineProps<{
+  label: string
+  modelValue?: boolean
+  error?: boolean
+  size?: 'small' | 'medium' | 'large'
+  required?: boolean
+  errorMessages?: Array<string>
+  disabled?: boolean
+  labelToLeft?: boolean
+  rules?: Array<(value: any) => boolean | string>
+}>()
 
 const emit = defineEmits(['update:modelValue', 'on:focusout'])
 const data = useVModel(props, 'modelValue', emit)

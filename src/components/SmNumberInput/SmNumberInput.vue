@@ -23,7 +23,7 @@
         @blur.prevent="updateValue"
       />
     </div>
-    <sm-hint v-if="showError && inputElement && errorListContent" :to="inputElement">
+    <sm-hint v-if="showError && inputElement && errorListContent" :to="() => inputElement">
       <template #content>
         <sm-error-list :error-messages="(errorListContent as Array<string>)" />
       </template>

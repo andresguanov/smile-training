@@ -15,7 +15,8 @@
           :rules="numberRules"
           :max="3"
           :min="0"
-          :data-prefix="'%'"
+          :data-sufix="'%'"
+          :data-prefix="'$'"
         />
         <template #footer="{ isValid }">
           <sm-button type="primary" native-type="submit" :disabled="!isValid">Submit</sm-button>

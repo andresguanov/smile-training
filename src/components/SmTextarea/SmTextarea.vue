@@ -14,7 +14,7 @@
       ]"
       @focusout="onFocusOut"
     ></textarea>
-    <sm-hint v-if="showError && textareaElement && errorListContent" :to="textareaElement">
+    <sm-hint v-if="showError && textareaElement && errorListContent" :to="() => textareaElement">
       <template #content>
         <sm-error-list :error-messages="(errorListContent as Array<string>)" />
       </template>
@@ -27,17 +27,16 @@ import { computed } from 'vue'
 import { SmLabel, SmHint } from '../index'
 import { useValidate } from '../../composables'
 
-const props =
-  defineProps<{
-    label?: string
-    modelValue?: string
-    error?: boolean
-    size?: 'small' | 'medium' | 'large'
-    required?: boolean
-    disabled?: boolean
-    errorMessages?: Array<string>
-    rules?: Array<(value: any) => boolean | string>
-  }>()
+const props = defineProps<{
+  label?: string
+  modelValue?: string
+  error?: boolean
+  size?: 'small' | 'medium' | 'large'
+  required?: boolean
+  disabled?: boolean
+  errorMessages?: Array<string>
+  rules?: Array<(value: any) => boolean | string>
+}>()
 
 const emit = defineEmits(['update:modelValue', 'on:focusout'])
 const data = useVModel(props, 'modelValue', emit)

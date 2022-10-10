@@ -22,7 +22,7 @@
         <span class="sm-toggle-slider"></span>
       </sm-label>
     </span>
-    <sm-hint v-if="toggleElement && showError && errorListContent" :to="toggleElement">
+    <sm-hint v-if="toggleElement && showError && errorListContent" :to="() => toggleElement">
       <template #content>
         <sm-error-list :error-messages="(errorListContent as Array<string>)" />
       </template>
