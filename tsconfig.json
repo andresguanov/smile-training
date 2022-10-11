@@ -3,7 +3,10 @@
     "baseUrl": ".",
     "module": "ESNext",
     "target": "es2016",
-    "lib": ["DOM", "ESNext"],
+    "lib": [
+      "DOM",
+      "ESNext"
+    ],
     "strict": true,
     "esModuleInterop": true,
     "incremental": false,
@@ -17,7 +20,20 @@
       "@types/node",
       "vite/client"
     ],
-    "declaration": true
+    "declaration": true,
+    "outDir": "./dist/types",
+    "jsx": "preserve",
+    "paths": {
+      "~/*": [
+        "src/*"
+      ]
+    },
   },
-  "exclude": ["dist", "node_modules"]
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
 }
