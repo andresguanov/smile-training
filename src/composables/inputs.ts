@@ -13,6 +13,7 @@ export const LabelProps = {
 export const InputProps = {
   disabled: Boolean,
   placeholder: String,
+  nativeType: String,
   errorMessages: Array as PropType<Array<string>>,
 }
 

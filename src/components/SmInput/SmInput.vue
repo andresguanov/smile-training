@@ -5,6 +5,7 @@
       v-model="data"
       :disabled="disabled"
       :placeholder="placeholder"
+      :type="nativeType || 'text'"
       :class="[
         'sm-input',
         `sm-input-${size}`,
