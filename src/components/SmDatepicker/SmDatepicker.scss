@@ -3,7 +3,7 @@
 .sm-datepicker {
   &-input {
     @apply p-0;
-    @apply hover:border-persian-green;
+    @apply hover:border-sm-primary-500;
     &:deep(.mx-input-wrapper) {
       @apply flex;
       .mx-input {
@@ -14,13 +14,13 @@
     &:deep(.mx-datepicker-main) {
       .cell {
         &.active:not(.not-current-month) {
-          @apply bg-persian-green;
+          @apply bg-sm-primary-500;
         }
         &.in-range:not(.not-current-month) {
-          @apply bg-persian-green/10;
+          @apply bg-sm-primary-500/10;
         }
         &.hover-in-range:not(.not-current-month) {
-          @apply bg-persian-green/10;
+          @apply bg-sm-primary-500/10;
         }
       }
     }

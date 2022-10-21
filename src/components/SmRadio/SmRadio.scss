@@ -64,7 +64,7 @@
 /* The sm-radio-circle*/
 .sm-radio-circle {
   @apply absolute duration-200 top-0 left-0 right-0 bottom-0 cursor-pointer
-    hover:after:border-2 hover:after:border-persian-green;
+    hover:after:border-2 hover:after:border-sm-primary-500;
 }
 
 .sm-radio-circle:before {
@@ -73,12 +73,12 @@
 
 .sm-radio-circle:after {
   @apply absolute content-[''] top-[2px] left-[2px] border bg-white rounded-full
-    hover:border-2 hover:border-persian-green;
+    hover:border-2 hover:border-sm-primary-500;
 }
 
 input:checked + .sm-radio-circle {
   @apply after:bg-transparent after:border-0
-    before:bg-persian-green before:border-persian-green;
+    before:bg-sm-primary-500 before:border-sm-primary-500;
 }
 
 input:checked + .sm-radio-circle:after {

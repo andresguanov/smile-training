@@ -79,8 +79,8 @@
 /* The sm-checkbox-box*/
 .sm-checkbox-box {
   @apply absolute duration-200 top-0 left-0 right-0 bottom-0 cursor-pointer
-    hover:before:bg-persian-green hover:before:border-persian-green 
-    hover:after:border-persian-green;
+    hover:before:bg-sm-primary-500 hover:before:border-sm-primary-500
+    hover:after:border-sm-primary-500;
 }
 
 .sm-checkbox-box:before {
@@ -93,7 +93,7 @@
 
 input:checked + .sm-checkbox-box {
   @apply after:bg-transparent after:border-0
-    before:bg-persian-green before:border-persian-green;
+    before:bg-sm-primary-500 before:border-sm-primary-500;
 }
 
 input:checked + .sm-checkbox-box:after {

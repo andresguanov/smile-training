@@ -8,7 +8,7 @@
     &::after {
       content: '*';
       @apply ml-[2px];
-      @apply text-persian-green;
+      @apply text-sm-primary-500;
     }
   }
   &-error {

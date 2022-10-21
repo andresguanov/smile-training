@@ -9,16 +9,44 @@
     --sm-color-primary-200: 182, 236, 234;
     --sm-color-primary-300: 160, 228, 226;
     --sm-color-primary-400: 134, 223, 220;
-    --sm-color-primary-500: 90, 205, 202;
+    /* --sm-color-primary-500: 90, 205, 202; */
+    --sm-color-primary-500: 0, 177, 157;
     --sm-color-primary-600: 10, 158, 154;
-    --sm-color-primary-700: 0, 128, 124;
+    /* --sm-color-primary-700: 0, 128, 124; */
+    --sm-color-primary-700: 0, 83, 94;
     --sm-color-primary-800: 0, 106, 103;
     --sm-color-primary-900: 0, 84, 82;
+  }
+
+  [sm-data-theme='sm-primary-smile'] {
+    --sm-color-primary-50: 255, 234, 227;
+    --sm-color-primary-100: 255, 214, 196;
+    --sm-color-primary-200: 255, 198, 173;
+    --sm-color-primary-300: 255, 184, 153;
+    --sm-color-primary-400: 255, 163, 122;
+    --sm-color-primary-500: 247, 134, 82;
+    --sm-color-primary-600: 184, 80, 30;
+    --sm-color-primary-700: 142, 62, 24;
+    --sm-color-primary-800: 109, 44, 6;
+    --sm-color-primary-900: 75, 30, 3;
+  }
+
+  [sm-data-theme='sm-primary-alanube'] {
+    --sm-color-primary-50: 243, 241, 253;
+    --sm-color-primary-100: 229, 228, 251;
+    --sm-color-primary-200: 210, 210, 249;
+    --sm-color-primary-300: 197, 197, 246;
+    --sm-color-primary-400: 166, 166, 242;
+    --sm-color-primary-500: 131, 127, 243;
+    --sm-color-primary-600: 115, 111, 226;
+    --sm-color-primary-700: 94, 94, 186;
+    --sm-color-primary-800: 77, 78, 151;
+    --sm-color-primary-900: 61, 61, 117;
   }
 }
 
 * {
-  /* @apply outline-1 outline-persian-green; */
+  /* @apply outline-1 outline-sm-primary-500; */
   @apply outline-none;
 }
 
@@ -35,7 +63,7 @@ h3,
 h4,
 h5,
 h6 {
-  @apply text-eagle-green;
+  @apply text-sm-primary-700;
 }
 
 .sm-text-small {
