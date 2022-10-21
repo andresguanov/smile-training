@@ -1,6 +1,26 @@
+function withOpacity(variableName) {
+  return ({ opacityValue }) => {
+    if (opacityValue !== undefined) {
+      return `rgba(var(${variableName}), ${opacityValue})`
+    }
+    return `rgb(var(${variableName}))`
+  }
+}
+
 const theme = colors => {
   return {
     colors: {
+      'sm-primary-50': withOpacity('--sm-color-primary-50'),
+      'sm-primary-100': withOpacity('--sm-color-primary-100'),
+      'sm-primary-200': withOpacity('--sm-color-primary-200'),
+      'sm-primary-300': withOpacity('--sm-color-primary-300'),
+      'sm-primary-400': withOpacity('--sm-color-primary-400'),
+      'sm-primary-500': withOpacity('--sm-color-primary-500'),
+      'sm-primary-600': withOpacity('--sm-color-primary-600'),
+      'sm-primary-700': withOpacity('--sm-color-primary-700'),
+      'sm-primary-800': withOpacity('--sm-color-primary-800'),
+      'sm-primary-900': withOpacity('--sm-color-primary-900'),
+
       'persian-green': '#00B19D',
       'eagle-green': '#00535E',
       'weldon-blue': '#809BB6',
