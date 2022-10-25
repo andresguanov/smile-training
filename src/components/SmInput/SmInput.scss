@@ -3,8 +3,8 @@
   @apply bg-no-repeat;
   @apply rounded-[5px];
   @apply border;
-  @apply hover:border-persian-green;
-  @apply focus:border-persian-green;
+  @apply hover:border-sm-primary-500;
+  @apply focus:border-sm-primary-500;
   @apply border-gray-300;
   @apply transition-colors;
   @apply w-full;
@@ -26,6 +26,6 @@
   }
   &.sm-input-error {
     @apply border-fire-opal;
-    @apply focus:border-fire-opal ;
+    @apply focus:border-fire-opal;
   }
 }

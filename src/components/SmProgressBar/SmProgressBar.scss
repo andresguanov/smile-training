@@ -11,14 +11,14 @@
 
   &[value] {
     &::-webkit-progress-value {
-      @apply rounded-full bg-persian-green transition-all;
+      @apply rounded-full bg-sm-primary-500 transition-all;
     }
   }
   &:not([value]) {
     @apply animate-pulse;
 
     &::-webkit-progress-bar {
-      @apply bg-persian-green;
+      @apply bg-sm-primary-500;
     }
   }
 }

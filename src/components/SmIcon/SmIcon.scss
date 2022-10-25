@@ -17,10 +17,10 @@
   }
 
   &.primary {
-    @apply text-persian-green;
+    @apply text-sm-primary-500;
   }
   &.secondary {
-    @apply text-eagle-green;
+    @apply text-sm-primary-700;
   }
   &.error {
     @apply text-fire-opal;

@@ -2,12 +2,12 @@
 
 .sm-textarea {
   @apply block w-full;
-  @apply border rounded border-gray-300 focus:border-persian-green transition-colors;
+  @apply border rounded border-gray-300 focus:border-sm-primary-500 transition-colors;
   &.sm-input-disabled {
     @apply bg-gray-50;
   }
   &.sm-input-error {
     @apply border-fire-opal;
-    @apply focus:border-fire-opal ;
+    @apply focus:border-fire-opal;
   }
 }

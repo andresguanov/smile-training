@@ -29,7 +29,7 @@
 
 .sm-pagination-button {
   @apply border rounded-md h-6 w-6 mx-1 cursor-pointer;
-  @apply bg-white hover:border-persian-green;
+  @apply bg-white hover:border-sm-primary-500;
   @apply disabled:cursor-default disabled:border-slate-200;
 
   & img {
@@ -38,7 +38,7 @@
 }
 
 .sm-pagination-input {
-  @apply border focus:border-persian-green duration-200 w-7 rounded-md px-1 h-7 mx-1;
+  @apply border focus:border-sm-primary-500 duration-200 w-7 rounded-md px-1 h-7 mx-1;
 }
 
 .sm-pagination-vr {

@@ -1,7 +1,7 @@
 .sm-progress-circle {
   @apply h-10 w-10;
   &::before {
-    @apply animate-round border-4 rounded-full border-b-persian-green border-gray-100 content-[""]
+    @apply animate-round border-4 rounded-full border-b-sm-primary-500 border-gray-100 content-[""]
         absolute z-0 h-10 w-10;
   }
   &-small {
