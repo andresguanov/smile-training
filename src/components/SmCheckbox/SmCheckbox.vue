@@ -1,6 +1,6 @@
 <template>
   <div class="sm-input-container">
-    <span ref="checkboxElement">
+    <span ref="checkboxElement" v-sm-simple-uid>
       <sm-label
         v-bind="$props"
         :class="[
@@ -21,7 +21,7 @@
         <span class="sm-checkbox-box"></span>
       </sm-label>
     </span>
-    <sm-hint v-if="checkboxElement && showError && errorListContent" :to="() => checkboxElement">
+    <sm-hint v-if="checkboxElement && showError && errorListContent" :to="`#${checkboxElement.id}`">
       <template #content>
         <sm-error-list :error-messages="(errorListContent as Array<string>)" />
       </template>
@@ -30,6 +30,7 @@
 </template>
 
 <script lang="ts" setup>
+import { smSimpleUid as vSmSimpleUid } from '../../directives'
 import { useVModel } from '@vueuse/core'
 import { SmLabel, SmHint, SmErrorList } from '../index'
 import { useValidate } from '../../composables'

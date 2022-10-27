@@ -1,6 +1,6 @@
 <template>
   <div class="sm-input-container">
-    <span ref="toggleElement">
+    <span ref="toggleElement" v-sm-simple-uid>
       <sm-label
         v-bind="$props"
         :class="[
@@ -22,7 +22,7 @@
         <span class="sm-toggle-slider"></span>
       </sm-label>
     </span>
-    <sm-hint v-if="toggleElement && showError && errorListContent" :to="() => toggleElement">
+    <sm-hint v-if="toggleElement && showError && errorListContent" :to="`#${toggleElement.id}`">
       <template #content>
         <sm-error-list :error-messages="(errorListContent as Array<string>)" />
       </template>
@@ -31,6 +31,7 @@
 </template>
 
 <script lang="ts" setup>
+import { smSimpleUid as vSmSimpleUid } from '../../directives'
 import { useVModel } from '@vueuse/core'
 import { SmHint, SmLabel, SmErrorList } from '../index'
 import {

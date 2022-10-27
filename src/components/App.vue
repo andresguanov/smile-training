@@ -10,14 +10,7 @@
         <sm-checkbox label="test" />
         <sm-datepicker v-model="datepicker" label="Nombre" :rules="sRules" range size="large" />
         <sm-select v-model="select" :options="options" label="Nombre" multiple size="large" />
-        <sm-number-input
-          v-model="number"
-          :rules="numberRules"
-          :max="3"
-          :min="0"
-          :data-sufix="'%'"
-          :data-prefix="'$'"
-        />
+        <sm-number-input v-model="number" :rules="numberRules" :min="0" :data-prefix="'$'" />
         <template #footer="{ isValid }">
           <sm-button type="primary" native-type="submit" :disabled="!isValid">Submit</sm-button>
         </template>
@@ -28,10 +21,16 @@
     </sm-table>
     <sm-modal v-model="modal">
       <template v-slot:header>Header</template>
-      <template v-slot:body>Body</template>
+      <template v-slot:body>
+        <sm-hint comment="asdadasdas">
+          <p>Body</p>
+        </sm-hint>
+      </template>
       <template v-slot:footer>
         <sm-button>Cancelar</sm-button>
-        <sm-button type="primary">Aceptar</sm-button>
+        <sm-hint comment="asdadasdas">
+          <sm-button type="primary">Aceptar</sm-button>
+        </sm-hint>
       </template>
     </sm-modal>
     <sm-tabs>

@@ -13,9 +13,10 @@
         { 'sm-input-error': showError },
         { 'sm-input-disabled': disabled },
       ]"
+      v-sm-simple-uid
       @focusout="onFocusOut"
     />
-    <sm-hint v-if="showError && inputElement && errorListContent" :to="() => inputElement">
+    <sm-hint v-if="showError && inputElement && errorListContent" :to="`#${inputElement.id}`">
       <template #content>
         <sm-error-list :error-messages="(errorListContent as Array<string>)" />
       </template>
@@ -24,7 +25,7 @@
 </template>
 
 <script lang="ts" setup>
-import { SmLabel, SmHint, SmErrorList } from '../index'
+import { smSimpleUid as vSmSimpleUid } from '../../directives'
 import {
   LabelProps as labelProps,
   InputProps as inputProps,

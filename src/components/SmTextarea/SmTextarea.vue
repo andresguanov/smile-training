@@ -12,9 +12,10 @@
         { 'sm-input-error': showError },
         { 'sm-input-disabled': disabled },
       ]"
+      v-sm-simple-uid
       @focusout="onFocusOut"
     ></textarea>
-    <sm-hint v-if="showError && textareaElement && errorListContent" :to="() => textareaElement">
+    <sm-hint v-if="showError && textareaElement && errorListContent" :to="`#${textareaElement.id}`">
       <template #content>
         <sm-error-list :error-messages="(errorListContent as Array<string>)" />
       </template>
@@ -23,6 +24,7 @@
 </template>
 
 <script lang="ts" setup>
+import { smSimpleUid as vSmSimpleUid } from '../../directives'
 import { computed } from 'vue'
 import { SmLabel, SmHint } from '../index'
 import { useValidate } from '../../composables'

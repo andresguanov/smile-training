@@ -1,6 +1,6 @@
 <template>
   <div class="sm-input-container">
-    <span ref="radioElement">
+    <span ref="radioElement" v-sm-simple-uid>
       <sm-label
         v-bind="$props"
         :class="[
@@ -21,7 +21,7 @@
         <span class="sm-radio-circle"></span>
       </sm-label>
     </span>
-    <sm-hint v-if="radioElement && showError && errorListContent" :to="() => radioElement">
+    <sm-hint v-if="radioElement && showError && errorListContent" :to="`#${radioElement.id}`">
       <template #content>
         <sm-error-list :error-messages="(errorListContent as Array<string>)" />
       </template>
@@ -30,6 +30,7 @@
 </template>
 <!-- TODO: crear un form para revisar reactividad de la implementacion -->
 <script lang="ts" setup>
+import { smSimpleUid as vSmSimpleUid } from '../../directives'
 import { useVModel } from '@vueuse/core'
 import { SmHint, SmLabel } from '../index'
 import { useValidate } from '../../composables'

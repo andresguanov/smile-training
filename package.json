@@ -1,6 +1,6 @@
 {
   "name": "@alegradev/smile-ui-next",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "files": [
     "dist"
   ],
@@ -37,8 +37,8 @@
     "unplugin-vue-components": "^0.17.14",
     "vite": "^2.7.2",
     "vue": "^3.2.25",
-    "vue-datepicker-next": "^1.0.2",
-    "vue-tippy": "^6.0.0-alpha.65",
-    "vue-tsc": "^1.0.3"
+    "vue-datepicker-next": "1.0.2",
+    "vue-tippy": "6.0.0-alpha.65",
+    "vue-tsc": "^1.0.9"
   }
 }

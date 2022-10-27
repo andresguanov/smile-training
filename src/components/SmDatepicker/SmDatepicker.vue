@@ -23,6 +23,7 @@
         { 'sm-input-error': showError },
         { 'sm-input-disabled': disabled },
       ]"
+      v-sm-simple-uid
     >
       <template v-for="slot in slotsList" v-slot:[slot]>
         <slot :name="(slot as string)"></slot>
@@ -30,7 +31,7 @@
     </date-picker>
     <sm-hint
       v-if="datePickerElement && showError && errorListContent"
-      :to="() => datePickerElement"
+      :to="`#${datePickerElement.id}`"
     >
       <template #content>
         <sm-error-list :error-messages="(errorListContent as Array<string>)" />
@@ -40,7 +41,7 @@
 </template>
 
 <script lang="ts" setup>
-import { SmLabel, SmHint, SmErrorList } from '../index'
+import { smSimpleUid as vSmSimpleUid } from '../../directives'
 import { useValidate } from '../../composables'
 import DatePicker from 'vue-datepicker-next'
 import 'vue-datepicker-next/locale/en'

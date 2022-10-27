@@ -8,6 +8,7 @@
         :disabled="disabled"
         :placeholder="currentValue || placeholder"
         :class="{ 'sm-input-disabled': disabled }"
+        v-sm-simple-uid
         @focusin="show = true"
         @focusout="hide"
         @beforeinput="filter"
@@ -27,7 +28,7 @@
         </li>
       </ul>
     </div>
-    <sm-hint v-if="showError && searchField && errorListContent" :to="() => searchField">
+    <sm-hint v-if="showError && searchField && errorListContent" :to="`#${searchField.id}`">
       <template #content>
         <sm-error-list :error-messages="(errorListContent as Array<string>)" />
       </template>
@@ -37,6 +38,7 @@
 
 <script lang="ts" setup>
 // TODO: agregar opcion de loading
+import { smSimpleUid as vSmSimpleUid } from '../../directives'
 import { Ref } from 'vue'
 import { useValidate } from '../../composables'
 

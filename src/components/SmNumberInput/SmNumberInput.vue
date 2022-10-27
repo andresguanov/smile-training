@@ -5,6 +5,7 @@
       class="sm-input-container"
       :data-prefix="dataPrefix"
       :data-sufix="dataSufix"
+      v-sm-simple-uid
     >
       <input
         v-model="data"
@@ -23,7 +24,7 @@
         @blur.prevent="updateValue"
       />
     </div>
-    <sm-hint v-if="showError && inputElement && errorListContent" :to="() => inputElement">
+    <sm-hint v-if="showError && inputElement && errorListContent" :to="`#${inputElement.id}`">
       <template #content>
         <sm-error-list :error-messages="(errorListContent as Array<string>)" />
       </template>
@@ -32,6 +33,7 @@
 </template>
 
 <script lang="ts" setup>
+import { smSimpleUid as vSmSimpleUid } from '../../directives'
 import { useValidate } from '~/composables'
 
 const props = withDefaults(
