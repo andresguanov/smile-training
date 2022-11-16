@@ -1,5 +1,5 @@
 <template>
-  <sm-label v-bind="$props" :error="showError">
+  <sm-label v-bind="$props" :error="hasError">
     <input
       ref="inputElement"
       v-model="data"
@@ -10,13 +10,13 @@
         'sm-input',
         `sm-input-${size}`,
         `sm-text-${size}`,
-        { 'sm-input-error': showError },
+        { 'sm-input-error': hasError },
         { 'sm-input-disabled': disabled },
       ]"
       v-sm-simple-uid
       @focusout="onFocusOut"
     />
-    <sm-hint v-if="showError && inputElement && errorListContent" :to="`#${inputElement.id}`">
+    <sm-hint v-if="hasError && inputElement && errorListContent" :to="`#${inputElement.id}`">
       <template #content>
         <sm-error-list :error-messages="(errorListContent as Array<string>)" />
       </template>
@@ -42,15 +42,12 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue', 'on:focusout'])
 const data = useVModel(props, 'modelValue', emit)
 const inputElement = ref<HTMLInputElement | null>(null)
-const { validate, isInvalid, errorListContent, validateOnFocusout } = useValidate(
+const { validate, hasError, errorListContent, validateOnFocusout } = useValidate(
   data,
   props.rules || [],
+  props.error,
   props.errorMessages
 )
-
-const showError = computed(() => {
-  return props.error || isInvalid.value
-})
 
 const onFocusOut = () => {
   if (validateOnFocusout.value) {
@@ -59,7 +56,7 @@ const onFocusOut = () => {
   emit('on:focusout')
 }
 
-defineExpose({ validate })
+defineExpose({ validate, hasError: hasError.value })
 </script>
 
 <style lang="scss" scoped>

@@ -1,6 +1,7 @@
 export * from './components'
 export * from './utils'
 export * from './directives'
+export * from './interfaces'
 
 // import 'package/styles/dist/main.css'
 import './index.css'

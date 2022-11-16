@@ -9,7 +9,7 @@
           { 'sm-radio-disabled': disabled },
           { 'label-to-left': labelToLeft },
         ]"
-        :error="showError"
+        :error="hasError"
       >
         <input
           v-model="data"
@@ -21,7 +21,7 @@
         <span class="sm-radio-circle"></span>
       </sm-label>
     </span>
-    <sm-hint v-if="radioElement && showError && errorListContent" :to="`#${radioElement.id}`">
+    <sm-hint v-if="radioElement && hasError && errorListContent" :to="`#${radioElement.id}`">
       <template #content>
         <sm-error-list :error-messages="(errorListContent as Array<string>)" />
       </template>
@@ -51,15 +51,13 @@ const props = defineProps<{
 const emit = defineEmits(['update:modelValue'])
 const data = useVModel(props, 'modelValue', emit)
 const radioElement = ref<HTMLSpanElement | null>(null)
-const { validate, isInvalid, errorListContent } = useValidate(
+const { validate, hasError, errorListContent } = useValidate(
   data,
   props.rules || [],
+  props.error,
   props.errorMessages
 )
 
-const showError = computed(() => {
-  return props.error || isInvalid.value
-})
 const sizeClass = computed(() => {
   let size = props.size || 'medium'
   return `sm-radio-${size}`

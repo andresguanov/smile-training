@@ -23,13 +23,16 @@
 <script lang="ts" setup>
 import SmIcon from '../SmIcon/SmIcon.vue'
 
-defineProps<{
-  loading?: boolean
-  disabled?: boolean
-  type?: 'primary' | 'secondary' | 'ghost' | 'text'
-  size?: 'small' | 'large'
-  nativeType?: 'button' | 'submit' | 'reset'
-}>()
+withDefaults(
+  defineProps<{
+    loading?: boolean
+    disabled?: boolean
+    type?: 'primary' | 'secondary' | 'ghost' | 'text'
+    size?: 'small' | 'large'
+    nativeType?: 'button' | 'submit' | 'reset'
+  }>(),
+  { nativeType: 'button' }
+)
 </script>
 
 <style scoped lang="scss">
