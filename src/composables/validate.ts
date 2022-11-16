@@ -10,20 +10,20 @@ export const ValidateProps = {
 export const useValidate = (
   data: Ref<any>,
   rules: Array<(value: any) => boolean | string>,
-  externalErrorMessages?: Array<string>
+  externalError: boolean = false,
+  externalErrorMessages: Array<string> = []
 ) => {
   const errorBucket = ref<Array<string>>([])
-  const isInvalid = ref(false)
   const validateOnFocusout = ref(false)
 
   const errorListContent = computed(() => {
-    if (isInvalid.value) {
-      return errorBucket.value
-    }
-    return externalErrorMessages
+    return [...errorBucket.value, ...externalErrorMessages]
+  })
+  const hasError = computed(() => {
+    return externalError || errorBucket.value.length > 0
   })
 
-  const validate = (): boolean => {
+  const validate = (ignoreUpdate?: boolean): boolean => {
     const errors = []
     const value = data.value
     for (let index = 0; index < rules.length; index++) {
@@ -31,33 +31,36 @@ export const useValidate = (
       const valid = typeof rule === 'function' ? rule(value) : rule
 
       if (valid === false || typeof valid === 'string') {
-        errors.push(valid || '')
+        errors.push(valid || 'Error de validación')
       } else if (typeof valid !== 'boolean') {
         console.error(`Rules should return a string or boolean, received '${typeof valid}' instead`)
       }
     }
-    errorBucket.value = errors
-    isInvalid.value = errorBucket.value.length !== 0
+    if (!ignoreUpdate) {
+      errorBucket.value = [...errors]
+    }
     return errors.length === 0
   }
+  const resetValidation = () => {
+    errorBucket.value = []
+  }
+
+  const stopWatchValidate = watch(data, () => validate())
 
   const smFormProvide = inject<provideSmForm | null>(provideSmFormSymbol, null)
   if (smFormProvide) {
     smFormProvide.register(validate)
-    smFormProvide.registerInputRef(isInvalid)
-    switch (smFormProvide.validationMode) {
-      case 'on-focusout':
-        validateOnFocusout.value = true
-        break
-      case 'on-type':
-        watch(data, () => {
-          validate()
-        })
-        break
-      default:
-        break
-    }
+    // smFormProvide.registerInputRef(isInvalid)
+    if (smFormProvide.validationMode !== 'on-type') stopWatchValidate()
+    if (smFormProvide.validationMode === 'on-focusout') validateOnFocusout.value = true
   }
 
-  return { errorBucket, isInvalid, validate, errorListContent, validateOnFocusout }
+  return {
+    errorBucket,
+    validate,
+    errorListContent,
+    validateOnFocusout,
+    hasError,
+    resetValidation,
+  }
 }

@@ -1,5 +1,5 @@
 <template>
-  <sm-label v-bind="$props" :error="showError">
+  <sm-label v-bind="$props" :error="hasError">
     <div
       ref="inputElement"
       class="sm-input-container"
@@ -16,7 +16,7 @@
           'sm-input',
           `sm-input-${size}`,
           `sm-text-${size}`,
-          { 'sm-input-error': showError },
+          { 'sm-input-error': hasError },
           { 'sm-input-disabled': disabled },
         ]"
         type="number"
@@ -24,7 +24,7 @@
         @blur.prevent="updateValue"
       />
     </div>
-    <sm-hint v-if="showError && inputElement && errorListContent" :to="`#${inputElement.id}`">
+    <sm-hint v-if="hasError && inputElement && errorListContent" :to="`#${inputElement.id}`">
       <template #content>
         <sm-error-list :error-messages="(errorListContent as Array<string>)" />
       </template>
@@ -63,9 +63,10 @@ const props = withDefaults(
 const emit = defineEmits(['update:modelValue', 'on:focusout'])
 const data = useVModel(props, 'modelValue', emit)
 const inputElement = ref<HTMLDivElement | null>(null)
-const { validate, isInvalid, errorListContent, validateOnFocusout } = useValidate(
+const { validate, hasError, errorListContent, validateOnFocusout } = useValidate(
   data,
   props.rules || [],
+  props.error,
   props.errorMessages
 )
 
@@ -109,10 +110,6 @@ const updateValue = () => {
     }
   }
 }
-const showError = computed(() => {
-  return props.error || isInvalid.value
-})
-
 const onFocusOut = () => {
   if (validateOnFocusout.value) {
     validate()
