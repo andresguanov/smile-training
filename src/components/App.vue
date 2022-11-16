@@ -2,16 +2,19 @@
   <div class="app_container">
     <sm-alert-stack />
     <sm-card>
-      <sm-form ref="smFormEl" validation-mode="on-type" container-is-form>
-        <h4>On Submit</h4>
-        <sm-radio v-model="radio" label="Nombre A" native-value="A" :rules="rRules" />
-        <sm-radio v-model="radio" label="Nombre B" native-value="B" :rules="rRules" />
-        <sm-radio v-model="radio" label="Nombre C" native-value="C" :rules="rRules" />
-        <sm-checkbox label="test" />
-        <sm-datepicker v-model="datepicker" label="Nombre" :rules="sRules" range size="large" />
-        <sm-select v-model="select" :options="options" label="Nombre" multiple size="large" />
-        <sm-number-input v-model="number" :rules="numberRules" :min="0" :data-prefix="'$'" />
-        <sm-button type="primary" native-type="submit">Submit</sm-button>
+      <sm-form ref="smFormEl" validation-mode="on-focusout">
+        <template #default="{ isValid, validate, reset }">
+          <h4>El formulario es: {{ isValid ? 'válido' : 'no válido' }}</h4>
+          <sm-radio v-model="radio" label="Nombre A" native-value="A" :rules="rRules" />
+          <sm-radio v-model="radio" label="Nombre B" native-value="B" :rules="rRules" />
+          <sm-radio v-model="radio" label="Nombre C" native-value="C" :rules="rRules" />
+          <sm-checkbox label="test" />
+          <sm-datepicker v-model="datepicker" label="Nombre" :rules="sRules" range size="large" />
+          <sm-select v-model="select" :options="options" label="Nombre" multiple size="large" />
+          <sm-number-input v-model="number" :rules="numberRules" :min="0" :data-prefix="'$'" />
+          <sm-button type="primary" @click="validate()">Submit</sm-button>
+          <sm-button type="primary" @click="reset">Reset</sm-button>
+        </template>
       </sm-form>
     </sm-card>
     <sm-modal v-model="modal">
@@ -37,7 +40,7 @@ import { $SmAlert, ISmAlertProvide } from '../utils/alerts'
 
 const modal = ref(true)
 const radio = ref('')
-const number = ref(2)
+const number = ref(3)
 const select = ref([])
 const datepicker = ref('')
 const options = ref([
@@ -70,7 +73,7 @@ const smFormEl = ref<InstanceType<typeof SmForm> | null>()
 
 const smAlert = inject<ISmAlertProvide>($SmAlert)
 onMounted(() => {
-  // smFormEl.value?.validateInputs()
+  smFormEl.value?.validateInputs(true)
   smAlert?.success('Hola mundo')
   smAlert?.error('Hola mundo')
   smAlert?.warning('Hola mundo')

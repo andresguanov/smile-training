@@ -50,7 +50,7 @@ export const useValidate = (
   const smFormProvide = inject<provideSmForm | null>(provideSmFormSymbol, null)
   if (smFormProvide) {
     smFormProvide.register(validate)
-    // smFormProvide.registerInputRef(isInvalid)
+    smFormProvide.registerReset(resetValidation)
     if (smFormProvide.validationMode !== 'on-type') stopWatchValidate()
     if (smFormProvide.validationMode === 'on-focusout') validateOnFocusout.value = true
   }
