@@ -12,6 +12,10 @@
           <sm-datepicker v-model="datepicker" label="Nombre" :rules="sRules" range size="large" />
           <sm-select v-model="select" :options="options" label="Nombre" multiple size="large" />
           <sm-number-input v-model="number" :rules="numberRules" :min="0" :data-prefix="'$'" />
+          <sm-input label="test">
+            <template #before> <sm-icon /> </template>
+            <template #after> despues </template>
+          </sm-input>
           <sm-button type="primary" @click="validate()">Submit</sm-button>
           <sm-button type="primary" @click="reset">Reset</sm-button>
         </template>

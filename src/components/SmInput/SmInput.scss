@@ -16,13 +16,13 @@
     @apply px-[8px];
     @apply py-[3px];
   }
-
   &-large {
     @apply py-[12px];
     @apply px-[8px];
   }
   &.sm-input-disabled {
     @apply bg-gray-50;
+    @apply cursor-default;
   }
   &.sm-input-error {
     @apply border-fire-opal;

@@ -1,11 +1,7 @@
 <template>
   <sm-label v-bind="$props" :error="hasError">
-    <input
+    <div
       ref="inputElement"
-      v-model="data"
-      :disabled="disabled"
-      :placeholder="placeholder"
-      :type="nativeType || 'text'"
       :class="[
         'sm-input',
         `sm-input-${size}`,
@@ -14,8 +10,17 @@
         { 'sm-input-disabled': disabled },
       ]"
       v-sm-simple-uid
-      @focusout="onFocusOut"
-    />
+    >
+      <slot name="before" />
+      <input
+        v-model="data"
+        :disabled="disabled"
+        :placeholder="placeholder"
+        :type="nativeType || 'text'"
+        @focusout="onFocusOut"
+      />
+      <slot name="after" />
+    </div>
     <sm-hint v-if="hasError && inputElement && errorListContent" :to="`#${inputElement.id}`">
       <template #content>
         <sm-error-list :error-messages="(errorListContent as Array<string>)" />
@@ -61,4 +66,14 @@ defineExpose({ validate, hasError: hasError.value })
 
 <style lang="scss" scoped>
 @import './SmInput.scss';
+
+.sm-input {
+  @apply cursor-text;
+  @apply flex items-center;
+  @apply gap-2;
+
+  > input {
+    @apply w-full;
+  }
+}
 </style>
