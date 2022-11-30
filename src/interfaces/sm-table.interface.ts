@@ -1,4 +1,4 @@
-export interface columnConfigProps {
+export interface smTableColumn {
   name: string
   label?: string
   format?: (e: string) => string
@@ -12,7 +12,7 @@ export interface columnConfigProps {
   bodyClass?: string
 }
 
-export interface filterConfigProps {
+export interface smTableFilter {
   type: 'input' | 'select' | 'checkbox' | 'datepicker'
   options?: Array<{ text: string; value: any; selected?: boolean }>
   attrs?: any

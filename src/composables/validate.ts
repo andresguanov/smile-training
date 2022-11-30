@@ -1,5 +1,5 @@
 import { PropType, Ref } from 'vue'
-import { provideSmForm } from '../interfaces/sm-form.interface'
+import { smFormProvide } from '../interfaces/sm-form.interface'
 
 export const provideSmFormSymbol = Symbol('smForm')
 
@@ -47,12 +47,12 @@ export const useValidate = (
 
   const stopWatchValidate = watch(data, () => validate())
 
-  const smFormProvide = inject<provideSmForm | null>(provideSmFormSymbol, null)
-  if (smFormProvide) {
-    smFormProvide.register(validate)
-    smFormProvide.registerReset(resetValidation)
-    if (smFormProvide.validationMode !== 'on-type') stopWatchValidate()
-    if (smFormProvide.validationMode === 'on-focusout') validateOnFocusout.value = true
+  const formProvide = inject<smFormProvide | null>(provideSmFormSymbol, null)
+  if (formProvide) {
+    formProvide.register(validate)
+    formProvide.registerReset(resetValidation)
+    if (formProvide.validationMode !== 'on-type') stopWatchValidate()
+    if (formProvide.validationMode === 'on-focusout') validateOnFocusout.value = true
   }
 
   return {

@@ -62,14 +62,14 @@ import firstDisabled from '../../assets/page-first-disabled.png'
 import re from '../../assets/refresh.png'
 import { SmSelect } from '../index'
 import { usePagination, paginationEmits } from '../../composables'
-import { paginationTextProps } from '../../interfaces/sm-pagination.interface'
+import { smPaginationText } from '../../interfaces/sm-pagination.interface'
 
 const props = withDefaults(
   defineProps<{
     itemsPerPage?: number
     total?: number
     page: number
-    text?: paginationTextProps
+    text?: smPaginationText
     itemLimitOptions?: Array<number>
     refresh?: boolean
   }>(),
