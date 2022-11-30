@@ -1,13 +1,14 @@
 <template>
   <div class="sm-input-container">
-    <sm-label v-if="label" v-bind="$props" :error="showError" @click="searchField?.focus()" />
-    <div :class="[sizeClass, { 'sm-select-search': search }, { 'sm-select-error': showError }]">
+    <sm-label v-if="label" v-bind="$props" :error="hasError" @click="searchField?.focus()" />
+    <div :class="[sizeClass, { 'sm-select-search': search }, { 'sm-select-error': hasError }]">
       <input
         ref="searchField"
         v-model="currentValue"
         :disabled="disabled"
         :placeholder="currentValue || placeholder"
         :class="{ 'sm-input-disabled': disabled }"
+        v-sm-simple-uid
         @focusin="show = true"
         @focusout="hide"
         @beforeinput="filter"
@@ -27,7 +28,7 @@
         </li>
       </ul>
     </div>
-    <sm-hint v-if="showError && searchField && errorListContent" :to="() => searchField">
+    <sm-hint v-if="hasError && searchField && errorListContent" :to="`#${searchField.id}`">
       <template #content>
         <sm-error-list :error-messages="(errorListContent as Array<string>)" />
       </template>
@@ -37,6 +38,7 @@
 
 <script lang="ts" setup>
 // TODO: agregar opcion de loading
+import { smSimpleUid as vSmSimpleUid } from '../../directives'
 import { Ref } from 'vue'
 import { useValidate } from '../../composables'
 
@@ -195,14 +197,12 @@ const sizeClass = computed(() => {
   return `sm-select sm-select-${size} sm-text-${size}`
 })
 
-const { validate, isInvalid, errorListContent, validateOnFocusout } = useValidate(
+const { validate, hasError, errorListContent, validateOnFocusout } = useValidate(
   data,
   props.rules || [],
+  props.error,
   props.errorMessages
 )
-const showError = computed(() => {
-  return props.error || isInvalid.value
-})
 
 defineExpose({ validate })
 

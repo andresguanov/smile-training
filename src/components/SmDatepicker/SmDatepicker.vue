@@ -4,7 +4,7 @@
       v-if="label"
       v-bind="$props"
       class="sm-datepicker-label"
-      :error="showError"
+      :error="hasError"
       @click="openDatepicker"
     />
     <date-picker
@@ -20,17 +20,18 @@
         'sm-input',
         `sm-input-${size}`,
         'sm-datepicker-input',
-        { 'sm-input-error': showError },
+        { 'sm-input-error': hasError },
         { 'sm-input-disabled': disabled },
       ]"
+      v-sm-simple-uid
     >
       <template v-for="slot in slotsList" v-slot:[slot]>
         <slot :name="(slot as string)"></slot>
       </template>
     </date-picker>
     <sm-hint
-      v-if="datePickerElement && showError && errorListContent"
-      :to="() => datePickerElement"
+      v-if="datePickerElement && hasError && errorListContent"
+      :to="`#${datePickerElement.id}`"
     >
       <template #content>
         <sm-error-list :error-messages="(errorListContent as Array<string>)" />
@@ -40,7 +41,7 @@
 </template>
 
 <script lang="ts" setup>
-import { SmLabel, SmHint, SmErrorList } from '../index'
+import { smSimpleUid as vSmSimpleUid } from '../../directives'
 import { useValidate } from '../../composables'
 import DatePicker from 'vue-datepicker-next'
 import 'vue-datepicker-next/locale/en'
@@ -77,26 +78,23 @@ const data = useVModel(props, 'modelValue', emit)
 const lang = ref(props.locale)
 const open = ref(false)
 const datePickerElement = ref<HTMLDivElement | null>(null)
-const { validate, isInvalid, errorListContent } = useValidate(
+const { validate, hasError, errorListContent } = useValidate(
   data,
   props.rules || [],
+  props.error,
   props.errorMessages
 )
-
-watch(props, () => {
-  lang.value = props.locale
-})
-
 const slotsList = computed((): Array<string> => {
   return Object.keys(slots)
-})
-const showError = computed(() => {
-  return props.error || isInvalid.value
 })
 
 const openDatepicker = () => {
   open.value = true
 }
+
+watch(props, () => {
+  lang.value = props.locale
+})
 
 defineExpose({ validate })
 </script>

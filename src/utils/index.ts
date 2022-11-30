@@ -11,7 +11,6 @@ export function install(app: App): App {
   Object.keys(components).forEach(comp => {
     app.component(comp, { ...(components as unknown as Record<string, Component>) }[comp])
   })
-  //  const { success, error, warning, info } = useSmAlert()
   app.provide<smAlertProvide>($SmAlert, useSmAlert())
   return app
 }
