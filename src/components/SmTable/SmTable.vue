@@ -109,8 +109,12 @@
 <script lang="ts" setup>
 import { SmPagination, SmInnerLoading, SmMarkupTable } from '../index'
 import { useSlots } from 'vue'
-import { paginationTextProps } from '../../interfaces/sm-pagination.interface'
-import { columnConfigProps, filterConfigProps } from '../../interfaces/sm-table.interface'
+import { smPaginationText } from '../../interfaces/sm-pagination.interface'
+import {
+  smTableColumn,
+  smTableFilter,
+  smTableChangeEvent,
+} from '../../interfaces/sm-table.interface'
 import { useFilters } from '../../composables'
 
 const props = withDefaults(
@@ -121,20 +125,20 @@ const props = withDefaults(
     page?: number
     itemsPerPage?: number
     itemsPerPageOptions?: Array<number>
-    columnConfig?: Array<columnConfigProps>
+    columnConfig?: Array<smTableColumn>
     loading?: boolean
     loadingText?: string
     noContentText?: string
-    textPagination?: paginationTextProps
+    textPagination?: smPaginationText
     actionsColHeadText?: string
-    filterConfig?: { [key: string]: filterConfigProps }
+    filterConfig?: { [key: string]: smTableFilter }
     filterBtnText?: string
     closeFilterBtnText?: string
   }>(),
   {
     hoverable: true,
     rows: (): Array<any> => [],
-    columnConfig: (): Array<columnConfigProps> => [],
+    columnConfig: (): Array<smTableColumn> => [],
     filterConfig: () => ({}),
     loading: false,
     page: 1,
@@ -148,7 +152,9 @@ const props = withDefaults(
 )
 
 const slots = useSlots()
-const emit = defineEmits(['refresh', 'change', 'filter'])
+const emit = defineEmits<{
+  (e: 'refresh' | 'change' | 'filter', data: smTableChangeEvent): void
+}>()
 
 const sortColumn = ref('')
 const ascending = ref(true)

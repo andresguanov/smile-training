@@ -1,4 +1,4 @@
-export interface paginationTextProps {
+export interface smPaginationText {
   page?: string
   of?: string
   showing?: string
@@ -9,7 +9,7 @@ export interface paginationProps {
   itemsPerPage?: number
   total?: number
   page: number
-  text?: paginationTextProps
+  text?: smPaginationText
   itemLimitOptions?: Array<number>
   refresh?: boolean
 }

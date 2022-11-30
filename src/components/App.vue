@@ -35,12 +35,15 @@
         </sm-hint>
       </template>
     </sm-modal>
+    <sm-table :total="totalItems" :rows="items" :column-config="cols" @change="onChange" />
+    <sm-button type="primary" @click="valid = !valid">Submit</sm-button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { SmForm } from './index'
+import { SmForm, SmTable } from './index'
 import { $SmAlert, ISmAlertProvide } from '../utils/alerts'
+import { smTableChangeEvent, smTableColumn } from '~/interfaces'
 
 const modal = ref(true)
 const radio = ref('')
@@ -52,6 +55,32 @@ const options = ref([
   { text: '2', value: '2' },
   { text: '3', value: '3' },
 ])
+
+const cols: smTableColumn[] = reactive([
+  {
+    bodyAlign: 'left',
+    headerAlign: 'left',
+    filterable: true,
+    format: (value: string) => value.toUpperCase(),
+    label: 'A',
+    name: 'a',
+  },
+])
+
+const totalItems = computed(() => (valid.value ? 35 : 5))
+const items = computed(() => {
+  const obj = []
+  for (let i = 0; i < totalItems.value; i++) {
+    obj.push({ a: i })
+  }
+  return obj
+})
+
+const valid = ref(false)
+const onChange = (data: smTableChangeEvent) => {
+  console.log({ data })
+}
+
 const sRules = ref([
   (v: any) => {
     return !!v || 'Fecha es requerida'
