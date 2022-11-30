@@ -153,9 +153,7 @@ const emit = defineEmits(['refresh', 'change', 'filter'])
 const sortColumn = ref('')
 const ascending = ref(true)
 const internalPage = ref(props.page)
-const internalTotal = computed(() =>
-  props.total ? props.total : props.rows.length ? props.rows.length : 1
-)
+const internalTotal = ref(props.total ? props.total : props.rows.length ? props.rows.length : 1)
 
 const { hasFilterableData, filterAttrs, filterValues, showFilters, resetValues } = useFilters(
   props.columnConfig,
