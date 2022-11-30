@@ -7,7 +7,7 @@ export function usePagination(
   emit: (event: 'update:page' | 'update:itemsPerPage', ...args: any[]) => void
 ) {
   const limit = ref(props.itemsPerPage || 10)
-  const total = ref(props.total || 0)
+  const total = computed(() => props.total || 0)
   function goTo(p: number) {
     if (p <= lastPage.value && p >= 1) {
       emit('update:page', p)
@@ -27,7 +27,7 @@ export function usePagination(
   const isAtEnd = computed(() => props.page * limit.value >= total.value)
   const lastPage = computed(() => Math.ceil(total.value / limit.value))
   const showingItemsRange = computed(() => [
-    Math.max(props.page * limit.value - limit.value, 1),
+    Math.max(props.page * limit.value - (limit.value - 1), 1),
     Math.min(props.page * limit.value, total.value),
   ])
 

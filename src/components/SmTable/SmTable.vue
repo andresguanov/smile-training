@@ -110,7 +110,11 @@
 import { SmPagination, SmInnerLoading, SmMarkupTable } from '../index'
 import { useSlots } from 'vue'
 import { smPaginationText } from '../../interfaces/sm-pagination.interface'
-import { smTableColumn, smTableFilter } from '../../interfaces/sm-table.interface'
+import {
+  smTableColumn,
+  smTableFilter,
+  smTableChangeEvent,
+} from '../../interfaces/sm-table.interface'
 import { useFilters } from '../../composables'
 
 const props = withDefaults(
@@ -148,7 +152,9 @@ const props = withDefaults(
 )
 
 const slots = useSlots()
-const emit = defineEmits(['refresh', 'change', 'filter'])
+const emit = defineEmits<{
+  (e: 'refresh' | 'change' | 'filter', data: smTableChangeEvent): void
+}>()
 
 const sortColumn = ref('')
 const ascending = ref(true)

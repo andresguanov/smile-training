@@ -17,3 +17,14 @@ export interface smTableFilter {
   options?: Array<{ text: string; value: any; selected?: boolean }>
   attrs?: any
 }
+
+export interface smTableChangeEvent {
+  start: number
+  to: number
+  limit: number
+  order_field: string
+  order_direction: string
+  filters: {
+    [key: string]: any
+  }
+}
