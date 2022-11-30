@@ -1,9 +1,9 @@
 import { SmInput, SmSelect, SmCheckbox, SmDatepicker } from '../components/index'
-import { columnConfigProps, filterConfigProps } from '../interfaces'
+import { smTableColumn, smTableFilter } from '../interfaces'
 
 export function useFilters(
-  columnConfig: Array<columnConfigProps>,
-  filterConfig: { [key: string]: filterConfigProps }
+  columnConfig: Array<smTableColumn>,
+  filterConfig: { [key: string]: smTableFilter }
 ) {
   const showFilters = ref(false)
   const filterValues = ref<{ [key: string]: any }>({})
