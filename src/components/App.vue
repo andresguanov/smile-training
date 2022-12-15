@@ -35,7 +35,18 @@
         </sm-hint>
       </template>
     </sm-modal>
-    <sm-table :total="totalItems" :rows="items" :column-config="cols" @change="onChange" />
+    <sm-table
+      :total="totalItems"
+      :filter-config="{
+        a: {
+          type: 'input',
+        },
+      }"
+      :rows="items"
+      :column-config="cols"
+      is-fixed
+      @change="onChange"
+    />
     <sm-button type="primary" @click="valid = !valid">Submit</sm-button>
   </div>
 </template>
@@ -64,14 +75,31 @@ const cols: smTableColumn[] = reactive([
     format: (value: string) => value.toUpperCase(),
     label: 'A',
     name: 'a',
+    width: '200px',
+  },
+  {
+    bodyAlign: 'left',
+    headerAlign: 'left',
+    format: (value: string) => value.toUpperCase(),
+    label: 'B',
+    name: 'b',
+    width: '100px',
+  },
+  {
+    bodyAlign: 'left',
+    headerAlign: 'left',
+    format: (value: string) => value.toUpperCase(),
+    label: 'C',
+    name: 'c',
+    width: '300px',
   },
 ])
 
-const totalItems = computed(() => (valid.value ? 35 : 5))
+const totalItems = computed(() => (valid.value ? 25 : 5))
 const items = computed(() => {
   const obj = []
   for (let i = 0; i < totalItems.value; i++) {
-    obj.push({ a: i })
+    obj.push({ a: i, b: 'a'.repeat(totalItems.value), c: 'test' })
   }
   return obj
 })

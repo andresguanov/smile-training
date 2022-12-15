@@ -8,13 +8,18 @@
         {{ closeFilterBtnText }}
       </sm-button>
     </div>
-    <sm-markup-table :hoverable="hoverable">
+    <sm-markup-table
+      :hoverable="hoverable"
+      :is-fixed="isFixed"
+      :class="{ 'sm-table-fixed': isFixed }"
+    >
       <thead class="sm-table-container-thead">
         <tr v-if="hasFilterableData" :class="['sm-table-filter', { open: showFilters }]">
           <th
             v-for="(filter, i) in filterAttrs"
             class="sm-table-container-th filterable"
             :key="'smFilterTh' + i"
+            :style="{ width: filter.width }"
           >
             <component
               v-if="filter.show"
@@ -134,6 +139,7 @@ const props = withDefaults(
     filterConfig?: { [key: string]: smTableFilter }
     filterBtnText?: string
     closeFilterBtnText?: string
+    isFixed?: boolean
   }>(),
   {
     hoverable: true,
