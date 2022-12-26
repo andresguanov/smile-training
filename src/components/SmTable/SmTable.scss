@@ -8,6 +8,7 @@
     &-th,
     &-td {
       @apply min-w-[110px] whitespace-nowrap;
+      @apply text-ellipsis overflow-hidden;
       @apply px-2 py-4 text-xs text-left;
       @apply border-b-[0.5px];
       &.right {
@@ -52,5 +53,9 @@
     &-buttons {
       @apply p-1 text-sm-primary-700 bg-slate-100 text-right;
     }
+  }
+  &-fixed {
+    @apply overflow-x-auto;
+    @apply flex-1;
   }
 }

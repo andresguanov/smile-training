@@ -10,7 +10,8 @@
   @apply w-full;
   @apply py-[9px];
   @apply px-[8px];
-  color: #474747;
+  @apply bg-white;
+  @apply text-[#474747];
 
   &-small {
     @apply px-[8px];

@@ -12,9 +12,9 @@
         <label class="sm-pagination-wrapper">
           {{ text?.page }}
           <input
-            v-model="selectedPage"
-            class="sm-pagination-input"
+            :value="currentPage"
             :disabled="total <= itemsPerPage"
+            class="sm-pagination-input"
             @beforeinput="testGoTo"
           />
         </label>
@@ -66,9 +66,9 @@ import { smPaginationText } from '../../interfaces/sm-pagination.interface'
 
 const props = withDefaults(
   defineProps<{
+    page?: number
     itemsPerPage?: number
     total?: number
-    page: number
     text?: smPaginationText
     itemLimitOptions?: Array<number>
     refresh?: boolean
@@ -87,18 +87,31 @@ const props = withDefaults(
     refresh: true,
   }
 )
+const emit = defineEmits([...paginationEmits, 'refresh'])
+const { goTo, isAtEnd, isAtStart, lastPage, showingItemsRange, limit, currentPage } = usePagination(
+  props,
+  emit
+)
+
 const selectLimitOptions = computed(() => {
   return props.itemLimitOptions.map(v => ({ text: v.toString(), value: v }))
 })
-const emit = defineEmits([...paginationEmits, 'refresh'])
 
-const { goTo, isAtEnd, isAtStart, lastPage, showingItemsRange, limit, selectedPage } =
-  usePagination(props, emit)
-
-function testGoTo(event: Event) {
-  if ((event as InputEvent).inputType === 'insertLineBreak') {
-    goTo(selectedPage.value)
+const testGoTo = (event: Event) => {
+  if ((event as InputEvent).inputType !== 'insertLineBreak') {
+    return
   }
+  const target = event.target as HTMLInputElement
+  const page = Number(target?.value)
+  if (isValidPageValue(page)) {
+    goTo(page)
+  } else {
+    target.value = currentPage.value.toString()
+  }
+}
+const isValidPageValue = (value: number) => {
+  const lastPageValue = Math.ceil(props.total / limit.value)
+  return !isNaN(value) && value > 0 && value <= lastPageValue
 }
 </script>
 
