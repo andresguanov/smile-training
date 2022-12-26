@@ -45,6 +45,7 @@
       :column-config="cols"
       is-fixed
       @change="onChange"
+      @filter="onChange"
     />
     <sm-button type="primary" @click="valid = !valid">Submit</sm-button>
   </div>
