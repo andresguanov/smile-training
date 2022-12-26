@@ -95,8 +95,8 @@
     <slot name="pagination">
       <sm-pagination
         :page="internalPage"
+        :items-per-page="internalItemsPerPage"
         :total="internalTotal"
-        :items-per-page="itemsPerPage"
         :item-limit-options="itemsPerPageOptions"
         :text="textPagination"
         class="sm-table-pagination"
@@ -160,11 +160,14 @@ const props = withDefaults(
 const slots = useSlots()
 const emit = defineEmits<{
   (e: 'refresh' | 'change' | 'filter', data: smTableChangeEvent): void
+  (e: 'update:page', data: number): void
+  (e: 'update:itemsPerPage', data: number): void
 }>()
 
 const sortColumn = ref('')
 const ascending = ref(true)
 const internalPage = ref(props.page)
+const internalItemsPerPage = ref(props.itemsPerPage)
 const internalTotal = computed(() =>
   props.total ? props.total : props.rows.length ? props.rows.length : 1
 )
@@ -175,8 +178,8 @@ const { hasFilterableData, filterAttrs, filterValues, showFilters, resetValues }
 )
 
 const tableData = computed((): Array<any> => {
-  if (props.rows.length > props.itemsPerPage) {
-    return [...props.rows].slice(0, props.itemsPerPage)
+  if (props.rows.length > internalItemsPerPage.value) {
+    return [...props.rows].slice(0, internalItemsPerPage.value)
   }
   return [...props.rows]
 })
@@ -208,16 +211,17 @@ const handleEvent = (event: 'refresh' | 'change' | 'filter', itemsPerPage: numbe
 }
 const onUpdatePage = (page: number) => {
   internalPage.value = page
-  handleEvent('change', props.itemsPerPage)
+  handleEvent('change', internalItemsPerPage.value)
 }
 const onUpdateItemsPerPage = (itemsPerPage: number) => {
   internalPage.value = 1
+  internalItemsPerPage.value = itemsPerPage
   handleEvent('change', itemsPerPage)
 }
 const onFilter = () => {
   if (showFilters.value) {
     internalPage.value = 1
-    handleEvent('filter', props.itemsPerPage)
+    handleEvent('filter', internalItemsPerPage.value)
   } else {
     showFilters.value = true
   }
@@ -239,6 +243,11 @@ const sortTable = (col: string) => {
 const hasSlot = (slotName: string) => {
   return slots[slotName] && typeof slots[slotName] === 'function'
 }
+
+defineExpose({
+  onUpdateItemsPerPage,
+  onUpdatePage,
+})
 </script>
 
 <style lang="scss" scoped>

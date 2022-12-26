@@ -36,7 +36,6 @@
       </template>
     </sm-modal>
     <sm-table
-      :total="totalItems"
       :filter-config="{
         a: {
           type: 'input',
@@ -95,11 +94,12 @@ const cols: smTableColumn[] = reactive([
   },
 ])
 
-const totalItems = computed(() => (valid.value ? 25 : 5))
+// const totalItems = computed(() => (valid.value ? 25 : 5))
 const items = computed(() => {
+  const totalItems = 35
   const obj = []
-  for (let i = 0; i < totalItems.value; i++) {
-    obj.push({ a: i, b: 'a'.repeat(totalItems.value), c: 'test' })
+  for (let i = 0; i < totalItems; i++) {
+    obj.push({ a: i, b: 'a'.repeat(totalItems / 2), c: 'test' })
   }
   return obj
 })
