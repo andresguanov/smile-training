@@ -11,34 +11,36 @@ export function useFilters(
   const filterAttrs = computed(() => {
     return columnConfig.map(col => {
       const filter = filterConfig[col.name]
+      const commonAttr = {
+        show: col.filterable,
+        name: col.name,
+        width: col.width,
+      }
       if (!filter) {
         return {
+          ...commonAttr,
           show: false,
-          name: 'none',
           component: SmInput,
           attrs: {},
         }
       }
       if (filter.type === 'checkbox') {
         return {
-          show: col.filterable,
-          name: col.name,
+          ...commonAttr,
           component: SmCheckbox,
           attrs: { label: col.label || col.name, ...filter.attrs },
         }
       }
       if (filter.type === 'datepicker') {
         return {
-          show: col.filterable,
-          name: col.name,
+          ...commonAttr,
           component: SmDatepicker,
           attrs: { placeholder: col.label || col.name, ...filter.attrs },
         }
       }
       if (filter.type === 'select') {
         return {
-          show: col.filterable,
-          name: col.name,
+          ...commonAttr,
           component: SmSelect,
           attrs: {
             placeholder: col.label || col.name,
@@ -48,8 +50,7 @@ export function useFilters(
         }
       }
       return {
-        show: col.filterable,
-        name: col.name,
+        ...commonAttr,
         component: SmInput,
         attrs: { placeholder: col.label || col.name, ...filter.attrs },
       }

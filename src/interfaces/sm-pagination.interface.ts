@@ -6,10 +6,10 @@ export interface smPaginationText {
 }
 
 export interface paginationProps {
-  itemsPerPage?: number
-  total?: number
+  itemsPerPage: number
+  total: number
   page: number
-  text?: smPaginationText
-  itemLimitOptions?: Array<number>
-  refresh?: boolean
+  text: smPaginationText
+  itemLimitOptions: Array<number>
+  refresh: boolean
 }
