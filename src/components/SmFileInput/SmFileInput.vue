@@ -15,8 +15,8 @@
           'sm-file-input-large': large,
         }"
         :placeholder="placeholder"
-        @focusout="onFocusOut"
         :value="inputText"
+        @focusout="onFocusOut"
       />
       <sm-button :size="buttonSize" class="sm-file-input-button">
         {{ buttonText }}
@@ -40,14 +40,14 @@ const props = withDefaults(
     accept?: string
     error?: boolean
     buttonText?: string
-    label: string
+    label?: string
     large?: boolean
     modelValue?: File | FileList
     multiple?: boolean
     placeholder?: string
     readonly?: boolean
     required?: boolean
-    rules: ((v: any) => boolean | string)[]
+    rules?: ((v: any) => boolean | string)[]
     small?: boolean
   }>(),
   {
