@@ -35,4 +35,5 @@ export { default as SmLabel } from './SmLabel/SmLabel.vue'
 export { default as SmDatepicker } from './SmDatepicker/SmDatepicker.vue'
 export { default as SmForm } from './SmForm/SmForm.vue'
 export { default as SmInnerLoading } from './SmInnerLoading/SmInnerLoading.vue'
+export { default as SmFileInput } from './SmFileInput/SmFileInput.vue'
 // TODO: agregar sm-input-* sm-filter sm-list-controller sm-context-menu
