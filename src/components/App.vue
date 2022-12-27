@@ -16,6 +16,7 @@
             <template #before> <sm-icon /> </template>
             <template #after> despues </template>
           </sm-input>
+          <sm-file-input />
           <sm-button type="primary" @click="validate()">Submit</sm-button>
           <sm-button type="primary" @click="reset">Reset</sm-button>
         </template>

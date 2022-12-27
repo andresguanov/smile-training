@@ -16,6 +16,7 @@ declare module 'vue' {
     SmCheckbox: typeof import('./components/SmCheckbox/SmCheckbox.vue')['default']
     SmDatepicker: typeof import('./components/SmDatepicker/SmDatepicker.vue')['default']
     SmErrorList: typeof import('./components/SmErrorList/SmErrorList.vue')['default']
+    SmFileInput: typeof import('./components/SmFileInput/SmFileInput.vue')['default']
     SmForm: typeof import('./components/SmForm/SmForm.vue')['default']
     SmHint: typeof import('./components/SmHint/SmHint.vue')['default']
     SmIcon: typeof import('./components/SmIcon/SmIcon.vue')['default']
