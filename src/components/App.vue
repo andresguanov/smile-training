@@ -41,6 +41,9 @@
         a: {
           type: 'input',
         },
+        b: {
+          type: 'datepicker',
+        },
       }"
       :rows="items"
       :column-config="cols"
@@ -81,6 +84,7 @@ const cols: smTableColumn[] = reactive([
   {
     bodyAlign: 'left',
     headerAlign: 'left',
+    filterable: true,
     format: (value: string) => value.toUpperCase(),
     label: 'B',
     name: 'b',
