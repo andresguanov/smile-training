@@ -23,6 +23,7 @@
       @apply first:rounded-tl last:rounded-tr;
       &.filterable {
         @apply p-1;
+        @apply overflow-visible;
       }
       &.sortable > span {
         @apply cursor-pointer hover:text-sm-primary-700/80;
