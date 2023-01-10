@@ -80,7 +80,7 @@
 .sm-checkbox-box {
   @apply absolute duration-200 top-0 left-0 right-0 bottom-0 cursor-pointer
     hover:before:bg-sm-primary-500 hover:before:border-sm-primary-500
-    hover:after:border-sm-primary-500;
+    hover:after:border-sm-primary-500 hover:before:left-0;
 }
 
 .sm-checkbox-box:before {

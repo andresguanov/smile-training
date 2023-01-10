@@ -3,22 +3,28 @@
     <sm-alert-stack />
     <sm-card>
       <sm-form ref="smFormEl" validation-mode="on-focusout">
-        <template #default="{ isValid, validate, reset }">
+        <template #default="{ validate, reset }">
+          <sm-datepicker v-model="datepicker" label="Nombre" :rules="sRules" range size="large" />
+          <sm-select v-model="select" :options="options" label="Nombre" search :rules="sRules" />
+          <sm-button type="primary" @click="validate()">Submit</sm-button>
+          <sm-button type="primary" @click="reset">Reset</sm-button>
+        </template>
+      </sm-form>
+    </sm-card>
+    <sm-card>
+      <sm-form ref="smFormEl" validation-mode="on-type" container-is-form @submit="onSubmit">
+        <template #default="{ isValid, reset }">
           <h4>El formulario es: {{ isValid ? 'válido' : 'no válido' }}</h4>
           <sm-radio v-model="radio" label="Nombre A" native-value="A" :rules="rRules" />
           <sm-radio v-model="radio" label="Nombre B" native-value="B" :rules="rRules" />
           <sm-radio v-model="radio" label="Nombre C" native-value="C" :rules="rRules" />
-          <sm-checkbox label="test" />
-          <sm-datepicker v-model="datepicker" label="Nombre" :rules="sRules" range size="large" />
-          <sm-select v-model="select" :options="options" label="Nombre" multiple size="large" />
           <sm-number-input v-model="number" :rules="numberRules" :min="0" :data-prefix="'$'" />
-          <sm-input label="test">
-            <template #before> <sm-icon /> </template>
-            <template #after> despues </template>
-          </sm-input>
-          <sm-file-input />
-          <sm-button type="primary" @click="validate()">Submit</sm-button>
+          <sm-button type="primary" native-type="submit">Submit</sm-button>
           <sm-button type="primary" @click="reset">Reset</sm-button>
+          <sm-checkbox
+            v-model="check"
+            label="Acepto que la información que he sumistrado es correcta y verdadera"
+          />
         </template>
       </sm-form>
     </sm-card>
@@ -61,6 +67,7 @@ import { $SmAlert, ISmAlertProvide } from '../utils/alerts'
 import { smTableChangeEvent, smTableColumn } from '~/interfaces'
 
 const modal = ref(true)
+const check = ref(false)
 const radio = ref('')
 const number = ref(3)
 const select = ref([])
@@ -137,6 +144,9 @@ const rRules = ref([
   },
 ])
 const smFormEl = ref<InstanceType<typeof SmForm> | null>()
+const onSubmit = (e?: string) => {
+  console.log({ e })
+}
 
 const smAlert = inject<ISmAlertProvide>($SmAlert)
 onMounted(() => {
