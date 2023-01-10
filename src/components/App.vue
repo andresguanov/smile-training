@@ -23,6 +23,7 @@
           <sm-button type="primary" @click="reset">Reset</sm-button>
           <sm-checkbox
             v-model="check"
+            label-to-left
             label="Acepto que la información que he sumistrado es correcta y verdadera"
           />
         </template>
