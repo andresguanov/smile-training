@@ -24,8 +24,6 @@ export const useValidate = (
   })
 
   const validate = (ignoreUpdate?: boolean): boolean => {
-    console.log({ ignoreUpdate })
-
     const errors = []
     const value = data.value
     for (let index = 0; index < rules.length; index++) {

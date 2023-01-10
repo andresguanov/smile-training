@@ -2,5 +2,8 @@
   "files.associations": {
     "*.css": "tailwindcss"
   },
-  "css.customData": [".vscode/css_custom_data.json"]
+  "css.customData": [
+    ".vscode/css_custom_data.json"
+  ],
+  "editor.fontFamily": "'JetBrains Mono', 'Courier New', monospace"
 }
