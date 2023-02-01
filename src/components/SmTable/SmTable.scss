@@ -10,7 +10,6 @@
       @apply px-2 py-4 text-xs text-left;
       @apply border-b-[0.5px];
       @apply min-w-[110px];
-      @apply whitespace-nowrap text-ellipsis overflow-x-hidden;
       &.right {
         @apply text-right;
       }
@@ -59,7 +58,6 @@
     }
   }
   &-fixed {
-    @apply overflow-x-auto;
     @apply flex-1;
   }
 }

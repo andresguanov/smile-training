@@ -60,6 +60,9 @@
       :filter-config="{
         a: {
           type: 'input',
+          attrs: {
+            label: 'name',
+          },
         },
         b: {
           type: 'datepicker',
@@ -67,6 +70,8 @@
       }"
       :rows="items"
       :column-config="cols"
+      actions-col-width="100px"
+      class="my-table"
       is-fixed
       @change="onChange"
       @filter="onChange"
@@ -74,10 +79,16 @@
       <template #actionsCol>
         <sm-select v-model="select" :options="options" />
       </template>
-      <template #bodyRow.a="{ row }">
-        <td>
-          <sm-hint :comment="'Hola mundo'">{{ row.a }}</sm-hint>
-        </td>
+      <template #bodyRow.a>
+        <sm-datepicker
+          v-model="datepicker"
+          label="Nombre"
+          error
+          :error-messages="['test error']"
+          :rules="sRules"
+          range
+          size="large"
+        />
       </template>
     </sm-table>
     <sm-button type="primary" @click="valid = !valid">Submit</sm-button>
@@ -119,7 +130,7 @@ const cols: smTableColumn[] = reactive([
     label: 'B',
     name: 'b',
     width: '100px',
-    hideOverflow: true,
+    bodyClass: 'b-column whitespace-nowrap text-ellipsis overflow-x-hidden',
   },
   {
     bodyAlign: 'left',
@@ -136,7 +147,7 @@ const items = computed(() => {
   const totalItems = 35
   const obj = []
   for (let i = 0; i < totalItems; i++) {
-    obj.push({ a: i, b: 'a'.repeat(totalItems / 2), c: 'test test test test test test' })
+    obj.push({ a: i, b: 'a'.repeat(totalItems), c: 'test test test test test test' })
   }
   return obj
 })
@@ -187,5 +198,13 @@ onMounted(() => {
   @apply flex flex-col;
   @apply m-5;
   @apply max-w-5xl;
+}
+.my-table:deep() {
+  .b-column {
+    @apply whitespace-nowrap text-ellipsis overflow-x-hidden;
+  }
+  [data-name='b'] {
+    @apply whitespace-nowrap text-ellipsis overflow-x-hidden;
+  }
 }
 </style>
