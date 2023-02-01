@@ -7,15 +7,17 @@
     }
     &-th,
     &-td {
-      @apply min-w-[110px] whitespace-nowrap;
-      @apply text-ellipsis overflow-hidden;
       @apply px-2 py-4 text-xs text-left;
       @apply border-b-[0.5px];
+      @apply min-w-[110px];
       &.right {
         @apply text-right;
       }
       &.center {
         @apply text-center;
+      }
+      &.actions {
+        @apply overflow-visible;
       }
     }
     &-th {
@@ -56,7 +58,6 @@
     }
   }
   &-fixed {
-    @apply overflow-x-auto;
     @apply flex-1;
   }
 }

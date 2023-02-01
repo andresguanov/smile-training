@@ -30,8 +30,9 @@
             />
           </th>
           <th
-            v-if="hasSlot('actionsCol') && !filterConfig.actionsCol"
+            v-if="hasActionsColumn && !filterConfig.actionsCol"
             class="sm-table-container-th filterable"
+            :style="{ width: actionsColWidth }"
           ></th>
         </tr>
         <tr>
@@ -44,7 +45,7 @@
               col.headerClass,
               { sortable: col.order },
             ]"
-            :data-name="col.name"
+            :header-name="col.name"
             :style="{ width: col.width }"
           >
             <template v-if="col.name == sortColumn">
@@ -57,13 +58,17 @@
               {{ columnNames[i] }}
             </span>
           </th>
-          <th v-if="hasSlot('actionsCol')" class="sm-table-container-th">
+          <th
+            v-if="hasActionsColumn"
+            class="sm-table-container-th"
+            :style="{ width: actionsColWidth }"
+          >
             {{ actionsColHeadText }}
           </th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(row, i) in tableData" :key="'smTableTr-' + i">
+        <tr v-for="(row, i) in tableData" :key="'smTableTr-' + i" class="sm-table-container-tr">
           <slot name="bodyRow" :columns="columnConfig" :row="row" :rowIndex="i">
             <td
               v-for="(col, j) in columnConfig"
@@ -73,15 +78,16 @@
             >
               <slot
                 :name="(('bodyRow.' + col.name) as string)"
+                :row-index="i"
+                :col-index="j"
+                :col="col"
                 :row="row"
-                :rowIndex="i"
-                :colIndex="j"
               >
                 {{ row[col.name] }}
               </slot>
             </td>
           </slot>
-          <td v-if="hasSlot('actionsCol')" class="sm-table-container-td">
+          <td v-if="hasActionsColumn" class="sm-table-container-td actions">
             <slot name="actionsCol" :row="row" />
           </td>
         </tr>
@@ -136,6 +142,7 @@ const props = withDefaults(
     noContentText?: string
     textPagination?: smPaginationText
     actionsColHeadText?: string
+    actionsColWidth?: string
     filterConfig?: { [key: string]: smTableFilter }
     filterBtnText?: string
     closeFilterBtnText?: string
@@ -170,6 +177,9 @@ const internalPage = ref(props.page)
 const internalItemsPerPage = ref(props.itemsPerPage)
 const internalTotal = computed(() =>
   props.total ? props.total : props.rows.length ? props.rows.length : 1
+)
+const hasActionsColumn = computed(
+  () => slots['actionsCol'] && typeof slots['actionsCol'] === 'function'
 )
 
 const { hasFilterableData, filterAttrs, filterValues, showFilters, resetValues } = useFilters(
@@ -240,9 +250,6 @@ const sortTable = (col: string) => {
   }
   onUpdateItemsPerPage(1)
 }
-const hasSlot = (slotName: string) => {
-  return slots[slotName] && typeof slots[slotName] === 'function'
-}
 
 defineExpose({
   onUpdateItemsPerPage,
@@ -250,6 +257,12 @@ defineExpose({
 })
 </script>
 
-<style lang="scss" scoped>
-@import './SmTable.scss';
+<style scoped lang="scss" src="./SmTable.scss" />
+<style scoped lang="scss">
+.sm-table-container-tr {
+  :slotted(td) {
+    @apply px-2 py-4 text-xs text-left;
+    @apply border-b-[0.5px];
+  }
+}
 </style>
