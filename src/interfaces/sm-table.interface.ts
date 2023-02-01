@@ -10,6 +10,7 @@ export interface smTableColumn {
   headerClass?: string
   bodyAlign?: 'left' | 'right' | 'center'
   bodyClass?: string
+  hideOverflow?: boolean
 }
 
 export interface smTableFilter {
