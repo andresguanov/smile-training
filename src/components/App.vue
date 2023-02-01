@@ -10,7 +10,6 @@
           <sm-radio v-model="radio" label="Nombre C" native-value="C" :rules="rRules" />
           <sm-checkbox label="test" />
           <sm-datepicker v-model="datepicker" label="Nombre" :rules="sRules" range size="large" />
-          <sm-select v-model="select" :options="options" label="Nombre" multiple size="large" />
           <sm-number-input v-model="number" :rules="numberRules" :min="0" :data-prefix="'$'" />
           <sm-input label="test">
             <template #before> <sm-icon /> </template>
@@ -25,9 +24,20 @@
     <sm-modal v-model="modal">
       <template v-slot:header>Header</template>
       <template v-slot:body>
-        <sm-hint comment="asdadasdas">
-          <p>Body</p>
-        </sm-hint>
+        <div class="w-[500px]">
+          <sm-hint comment="asdadasdas">
+            <p>Body</p>
+          </sm-hint>
+          <sm-datepicker
+            v-model="datepicker"
+            label="Nombre"
+            error
+            :error-messages="['test error']"
+            :rules="sRules"
+            range
+            size="large"
+          />
+        </div>
       </template>
       <template v-slot:footer>
         <sm-button>Cancelar</sm-button>
@@ -50,7 +60,16 @@
       is-fixed
       @change="onChange"
       @filter="onChange"
-    />
+    >
+      <template #actionsCol>
+        <sm-select v-model="select" :options="options" />
+      </template>
+      <template #bodyRow.a="{ row }">
+        <td>
+          <sm-hint :comment="'Hola mundo'">{{ row.a }}</sm-hint>
+        </td>
+      </template>
+    </sm-table>
     <sm-button type="primary" @click="valid = !valid">Submit</sm-button>
   </div>
 </template>
@@ -79,7 +98,7 @@ const cols: smTableColumn[] = reactive([
     format: (value: string) => value.toUpperCase(),
     label: 'A',
     name: 'a',
-    width: '200px',
+    width: '100px',
   },
   {
     bodyAlign: 'left',
@@ -89,6 +108,7 @@ const cols: smTableColumn[] = reactive([
     label: 'B',
     name: 'b',
     width: '100px',
+    hideOverflow: true,
   },
   {
     bodyAlign: 'left',
@@ -96,7 +116,7 @@ const cols: smTableColumn[] = reactive([
     format: (value: string) => value.toUpperCase(),
     label: 'C',
     name: 'c',
-    width: '300px',
+    width: '100px',
   },
 ])
 
@@ -105,7 +125,7 @@ const items = computed(() => {
   const totalItems = 35
   const obj = []
   for (let i = 0; i < totalItems; i++) {
-    obj.push({ a: i, b: 'a'.repeat(totalItems / 2), c: 'test' })
+    obj.push({ a: i, b: 'a'.repeat(totalItems / 2), c: 'test test test test test test' })
   }
   return obj
 })
