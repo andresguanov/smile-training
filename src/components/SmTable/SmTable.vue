@@ -258,11 +258,3 @@ defineExpose({
 </script>
 
 <style scoped lang="scss" src="./SmTable.scss" />
-<style scoped lang="scss">
-.sm-table-container-tr {
-  :slotted(td) {
-    @apply px-2 py-4 text-xs text-left;
-    @apply border-b-[0.5px];
-  }
-}
-</style>
