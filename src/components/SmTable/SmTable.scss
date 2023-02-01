@@ -16,13 +16,11 @@
       &.center {
         @apply text-center;
       }
-      &.actions {
-        @apply overflow-visible;
-      }
     }
     &-th {
       @apply text-sm-primary-700 bg-slate-100;
       @apply first:rounded-tl last:rounded-tr;
+      @apply whitespace-nowrap text-ellipsis overflow-x-hidden;
       &.filterable {
         @apply p-1;
         @apply overflow-visible;
