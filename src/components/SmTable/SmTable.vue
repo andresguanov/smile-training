@@ -32,6 +32,7 @@
           <th
             v-if="hasActionsColumn && !filterConfig.actionsCol"
             class="sm-table-container-th filterable"
+            :style="{ width: actionsColWidth }"
           ></th>
         </tr>
         <tr>
@@ -44,7 +45,7 @@
               col.headerClass,
               { sortable: col.order },
             ]"
-            :data-name="col.name"
+            :header-name="col.name"
             :style="{ width: col.width }"
           >
             <template v-if="col.name == sortColumn">
@@ -57,7 +58,11 @@
               {{ columnNames[i] }}
             </span>
           </th>
-          <th v-if="hasActionsColumn" class="sm-table-container-th">
+          <th
+            v-if="hasActionsColumn"
+            class="sm-table-container-th"
+            :style="{ width: actionsColWidth }"
+          >
             {{ actionsColHeadText }}
           </th>
         </tr>
@@ -65,22 +70,22 @@
       <tbody>
         <tr v-for="(row, i) in tableData" :key="'smTableTr-' + i" class="sm-table-container-tr">
           <slot name="bodyRow" :columns="columnConfig" :row="row" :rowIndex="i">
-            <slot
+            <td
               v-for="(col, j) in columnConfig"
               :key="`smTableTd-${i}-${j}`"
-              :name="(('bodyRow.' + col.name) as string)"
-              :row-index="i"
-              :col-index="j"
-              :col="col"
-              :row="row"
+              :class="['sm-table-container-td', col.bodyAlign, col.bodyClass]"
+              :data-name="col.name"
             >
-              <td
-                :class="['sm-table-container-td', col.bodyAlign, col.bodyClass]"
-                :data-name="col.name"
+              <slot
+                :name="(('bodyRow.' + col.name) as string)"
+                :row-index="i"
+                :col-index="j"
+                :col="col"
+                :row="row"
               >
                 {{ row[col.name] }}
-              </td>
-            </slot>
+              </slot>
+            </td>
           </slot>
           <td v-if="hasActionsColumn" class="sm-table-container-td actions">
             <slot name="actionsCol" :row="row" />
@@ -137,6 +142,7 @@ const props = withDefaults(
     noContentText?: string
     textPagination?: smPaginationText
     actionsColHeadText?: string
+    actionsColWidth?: string
     filterConfig?: { [key: string]: smTableFilter }
     filterBtnText?: string
     closeFilterBtnText?: string
