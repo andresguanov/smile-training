@@ -87,7 +87,7 @@
               </slot>
             </td>
           </slot>
-          <td v-if="hasActionsColumn" class="sm-table-container-td actions">
+          <td v-if="hasActionsColumn" class="sm-table-container-td">
             <slot name="actionsCol" :row="row" />
           </td>
         </tr>

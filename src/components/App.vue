@@ -127,7 +127,7 @@ const cols: smTableColumn[] = reactive([
     headerAlign: 'left',
     filterable: true,
     format: (value: string) => value.toUpperCase(),
-    label: 'B',
+    label: 'B es un nombre muy largo lorem ipsum -----',
     name: 'b',
     width: '100px',
     bodyClass: 'b-column whitespace-nowrap text-ellipsis overflow-x-hidden',
