@@ -52,6 +52,7 @@
     @apply absolute content-[''] h-3 w-3 left-[14px] border mt-[1px];
   }
   &-selected {
+    @apply font-extrabold;
     & .sm-select-checkbox {
       @apply after:border-0 bg-sm-primary-500 border-sm-primary-500;
     }

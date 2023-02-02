@@ -1,12 +1,12 @@
 <template>
-  <div class="sm-input-container">
+  <div v-if="!hasRenderError" class="sm-input-container">
     <sm-label v-if="label" v-bind="$props" :error="hasError" @click="searchField?.focus()" />
     <div :class="[sizeClass, { 'sm-select-search': search }, { 'sm-select-error': hasError }]">
       <input
         ref="searchField"
-        v-model="currentValue"
+        v-model="inputText"
         :disabled="disabled"
-        :placeholder="currentValue || placeholder"
+        :placeholder="inputText || placeholder"
         :class="{ 'sm-input-disabled': disabled }"
         v-sm-simple-uid
         @focusin="show = true"
@@ -15,15 +15,15 @@
       />
       <ul :class="['sm-select-options', { 'sm-select-options-open': show }]">
         <li
-          v-for="(option, index) in filterList(searchTerm, formatedOptions)"
-          :class="['sm-select-option', { 'sm-select-option-selected': option.selected }]"
+          v-for="(option, index) in filterList(searchTerm, formattedOptions)"
+          :class="['sm-select-option', { 'sm-select-option-selected': elementIsSelected(index) }]"
           :key="index"
-          @click="select(option)"
+          @click="select(index)"
           @mousedown="selecting"
         >
-          <slot name="option" :option="option">
+          <slot name="option" :option="options[index]">
             <div class="sm-select-checkbox" v-if="multiple"></div>
-            {{ option.text }}
+            {{ option }}
           </slot>
         </li>
       </ul>
@@ -38,15 +38,17 @@
 
 <script lang="ts" setup>
 // TODO: agregar opcion de loading
-import { smSimpleUid as vSmSimpleUid } from '../../directives'
-import { Ref } from 'vue'
 import { useValidate } from '../../composables'
+import { smSimpleUid as vSmSimpleUid } from '../../directives'
+import { ref, watch } from 'vue'
 
-type option = { text: string; value: any; selected?: boolean }
+// Interfaces y tipos
+type Item = { text: string; value: any; selected?: boolean; [index: string]: any }
+
 type Props = {
-  options: Array<option> | Array<string> | Array<number>
+  options: SelectItems
   label?: string
-  modelValue?: any
+  modelValue?: any | Item | number | string
   multiple?: boolean
   search?: boolean
   error?: boolean
@@ -58,47 +60,15 @@ type Props = {
   placeholder?: string
 }
 
-const props = defineProps<Props>()
+type SelectItems = Array<Item | string | number>
 
-const searchTerm = ref('')
-
-const formattedValue = computed<string>(() => {
-  if (props.multiple) {
-    return ((data.value as Array<any>) || [])
-      .reduce((list, element) => {
-        return list.concat([getValueText(element)])
-      }, [])
-      .join(', ')
-  } else {
-    return getValueText(data.value)
-  }
-})
-
-const currentValue = computed({
-  get: () => {
-    if (show.value && props.search) {
-      if (props.multiple) {
-        return formattedValue.value.length
-          ? `${formattedValue.value}, ${searchTerm.value}`
-          : searchTerm.value
-      } else {
-        return searchTerm.value
-      }
-    } else {
-      return formattedValue.value
-    }
-  },
-  set: value => {
-    searchTerm.value = formattedValue.value.length
-      ? value.slice(formattedValue.value.length + 2)
-      : value
-  },
-})
-
-const searchField: Ref<HTMLInputElement | null> = ref(null)
-
+// Emits
 const emit = defineEmits(['update:modelValue'])
 
+// Props
+const props = defineProps<Props>()
+
+// Declaraciones necesarias para flujo
 const data = computed({
   get: () => props.modelValue,
   set: value => {
@@ -109,16 +79,213 @@ const data = computed({
   },
 })
 
+const selectedItem = ref<any>()
+
+// Propiedades de composables
+const { validate, hasError, errorListContent, validateOnFocusout } = useValidate(
+  selectedItem,
+  props.rules || [],
+  props.error,
+  props.errorMessages
+)
+
+// Propiedades reactivas
+const searchTerm = ref('')
+
+const searchField = ref<HTMLInputElement | null>(null)
+
+const selectedIndex = ref<Set<number>>(new Set())
+
+const show = ref(false)
+
+const inputText = ref('')
+
+const hasRenderError = ref<boolean>(false)
+
+// Propiedades computadas
+
+const sizeClass = computed(() => {
+  let size = props.size || 'medium'
+  return `sm-select sm-select-${size} sm-text-${size}`
+})
+
+const optionsType = computed(() => {
+  hasRenderError.value = false
+  if (props.options.every(option => typeof option === 'object')) {
+    return 'object'
+  }
+  if (props.options.every(option => typeof option === 'number')) {
+    return 'number'
+  }
+  if (props.options.every(option => typeof option === 'string')) {
+    return 'string'
+  }
+  console.warn('[Smile SmSelect]: The options prop type is inconsistent')
+  hasRenderError.value = true
+  return 'undefined'
+})
+
 /**
  * semaforo para detener el cierre de opciones cuando se salga el focus del input principal
  */
 let selected = false
 
-function selecting() {
-  selected = true
+// Metodos
+const addToIndexes = (index: number) => {
+  if (!props.multiple) {
+    selectedIndex.value.clear()
+    selectedIndex.value.add(index)
+  } else {
+    if (!selectedIndex.value.has(index)) {
+      selectedIndex.value.add(index)
+    } else {
+      selectedIndex.value.delete(index)
+    }
+  }
 }
 
-function hide() {
+const addToSelectedItem = (index: number) => {
+  const itemSet = selectedItem.value as Set<number | string | Item>
+
+  if (optionsType.value == 'object') {
+    if (!itemSet.has((props.options[index] as Item).value)) {
+      itemSet.add((props.options[index] as Item).value)
+    } else {
+      itemSet.delete((props.options[index] as Item).value)
+    }
+  } else {
+    if (!itemSet.has(props.options[index])) {
+      itemSet.add(props.options[index])
+    } else {
+      itemSet.delete(props.options[index])
+    }
+  }
+  formatInputText()
+}
+
+const addSelectedItem = (index: number) => {
+  addToIndexes(index)
+  addToSelectedItem(index)
+}
+
+const checkModelValue = () => {
+  if (props.multiple) {
+    if (!Array.isArray(props.modelValue)) {
+      console.warn(
+        '[Smile SmSelect]: When the multiple prop is setted, the model value must be array'
+      )
+      hasRenderError.value = true
+    } else {
+      hasRenderError.value = false
+    }
+  }
+}
+
+const compare = (a: string, b: string) => {
+  if (a < b) {
+    return -1
+  }
+  if (a > b) {
+    return 1
+  }
+  return 0
+}
+
+const elementIsSelected = (index: number) => {
+  return selectedIndex.value.has(index)
+}
+
+const emitNewValue = (newVal: Set<Item | string | number> | Item | string | number) => {
+  if (!props.multiple) {
+    emit('update:modelValue', newVal)
+  } else {
+    const modelArray = Array.from(newVal as Set<Item | number | string>)
+    emit('update:modelValue', modelArray)
+  }
+  formatInputText()
+}
+
+function filterList(searchTerm: string, values: string[]) {
+  return searchTerm ? values.filter(op => op.includes(searchTerm)) : values
+}
+
+const filter = (event: Event) => {
+  if (!props.search) return event.preventDefault()
+  if (
+    props.multiple &&
+    !searchTerm.value &&
+    (event as InputEvent).inputType === 'deleteContentBackward'
+  ) {
+    data.value.pop()
+  }
+}
+
+const findItem = () => {
+  if (props.options) {
+    let index: number
+    if (optionsType.value == 'object') {
+      index = props.options.findIndex(option => (option as Item).value === props.modelValue)
+      if (index != -1) {
+        selectedItem.value = (props.options[index] as Item).value
+      }
+    } else {
+      index = props.options.findIndex(option => option == props.modelValue)
+      if (index != -1) {
+        selectedItem.value = props.options[index]
+      }
+    }
+    if (index != -1) {
+      addToIndexes(index)
+    }
+  }
+}
+
+const findItems = () => {
+  if (props.options) {
+    for (let item of props.modelValue) {
+      let index: number
+      if (optionsType.value == 'object') {
+        index = props.options.findIndex(option => (option as Item).value === item)
+      } else {
+        index = props.options.findIndex(option => option == item)
+      }
+      if (index != -1) {
+        addSelectedItem(index)
+      }
+    }
+  }
+}
+
+const formatInputText = () => {
+  if (!props.multiple) {
+    const array = Array.from(selectedIndex.value)
+    if (array.length > 0) {
+      if (optionsType.value == 'object') {
+        inputText.value = (props.options[array[0]] as Item).text
+      } else {
+        inputText.value = props.options[array[0]].toString()
+      }
+    }
+  } else {
+    const modelArray = Array.from(selectedItem.value as Set<string>).sort(compare)
+    inputText.value = modelArray.join(',')
+  }
+}
+
+const formattedOptions = computed<string[]>(() => {
+  if (!props.options) {
+    return []
+  }
+  if (props.options.length > 0 && props.options.every(option => typeof option !== 'object')) {
+    return props.options.every(option => typeof option !== 'number')
+      ? (props.options as string[])
+      : props.options.map(option => option.toString())
+  } else {
+    return (props.options as Item[]).map(option => option.text)
+  }
+})
+
+const hide = () => {
   if (!selected) {
     searchTerm.value = ''
     show.value = false
@@ -131,86 +298,61 @@ function hide() {
   selected = false
 }
 
-function select(option: option) {
-  if (props.multiple) {
-    const opIndex = data.value.findIndex((selected: any) => selected === option.value)
-    if (opIndex >= 0) {
-      ;(data.value as Array<any>).splice(opIndex, 1)
+const initSelect = async () => {
+  if (!hasRenderError.value) {
+    if (!props.multiple) {
+      findItem()
     } else {
-      data.value.push(option.value)
+      selectedItem.value ??= new Set()
+      findItems()
+    }
+  }
+}
+
+const select = (index: number) => {
+  if (!props.multiple) {
+    addToIndexes(index)
+    show.value = false
+    if (optionsType.value == 'object') {
+      selectedItem.value = (props.options as Item[])[index].value
+    } else {
+      selectedItem.value = props.options[index]
     }
   } else {
-    data.value = option.value
+    addSelectedItem(index)
   }
+  emitNewValue(selectedItem.value)
 }
 
-const show = ref(false)
-
-function getValueText(value: any): string {
-  var text = formatedOptions.value.find(option => option.value === value)?.text
-  if (!text) {
-    console.warn(`text value was undefined for option ${data.value}`)
-    return value
-  } else {
-    return text
-  }
+const selecting = () => {
+  selected = true
 }
 
-function filter(event: Event) {
-  if (!props.search) return event.preventDefault()
-  if (
-    props.multiple &&
-    !searchTerm.value &&
-    (event as InputEvent).inputType === 'deleteContentBackward'
-  ) {
-    data.value.pop()
-  }
-}
-
-const formatedOptions = computed(() => {
-  let op = []
-  if (props.options.length > 0 && typeof props.options[0] !== 'object') {
-    op = props.options.map(option => ({
-      text: option,
-      value: option,
-    })) as Array<option>
-  } else {
-    op = props.options as Array<option>
-  }
-  op.forEach(option => {
-    if (props.multiple) {
-      option.selected = (data.value as Array<any>).includes(option.value)
-    } else {
-      option.selected = data.value === option.value
-    }
-  })
-  // if (op.length === 0 && data.value) op.push({ text: formattedValue.value, value: data.value })
-  return op
+// Métodos ciclo de vida
+onBeforeMount(() => {
+  checkModelValue()
 })
-
-function filterList(term: string, values: Array<option>) {
-  return term ? values.filter(op => op.text.includes(term)) : values
-}
-
-const sizeClass = computed(() => {
-  let size = props.size || 'medium'
-  return `sm-select sm-select-${size} sm-text-${size}`
-})
-
-const { validate, hasError, errorListContent, validateOnFocusout } = useValidate(
-  data,
-  props.rules || [],
-  props.error,
-  props.errorMessages
-)
-
-defineExpose({ validate })
 
 onMounted(() => {
-  if (!data.value && props.multiple) {
-    emit('update:modelValue', [])
-  }
+  initSelect()
 })
+
+// Watcher
+watch(
+  () => props.multiple,
+  newVal => {
+    if (newVal) {
+      if (!selectedItem.value) {
+        selectedItem.value = new Set()
+      }
+    } else {
+      selectedItem.value = undefined
+    }
+  }
+)
+
+// Expose
+defineExpose({ validate })
 </script>
 
 <style lang="scss" scoped>
