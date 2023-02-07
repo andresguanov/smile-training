@@ -5,6 +5,7 @@
       <input
         ref="searchField"
         v-model="inputText"
+        :readonly="!search"
         :disabled="disabled"
         :placeholder="inputText || placeholder"
         :class="{ 'sm-input-disabled': disabled }"
@@ -16,14 +17,21 @@
       <ul :class="['sm-select-options', { 'sm-select-options-open': show }]">
         <li
           v-for="(option, index) in filterList(searchTerm, formattedOptions)"
-          :class="['sm-select-option', { 'sm-select-option-selected': elementIsSelected(index) }]"
+          :class="[
+            'sm-select-option',
+            {
+              'sm-select-option-disabled': isItemDisabled(index),
+              'sm-select-option-disabled-padding': isItemDisabled(index) && multiple,
+              'sm-select-option-selected': elementIsSelected(index),
+            },
+          ]"
           :key="index"
           @click="select(index)"
           @mousedown="selecting"
         >
           <slot name="option" :option="options[index]">
-            <div class="sm-select-checkbox" v-if="multiple"></div>
-            {{ option }}
+            <div class="sm-select-checkbox" v-if="multiple && !isItemDisabled(index)"></div>
+            <span>{{ option }}</span>
           </slot>
         </li>
       </ul>
@@ -43,7 +51,13 @@ import { smSimpleUid as vSmSimpleUid } from '../../directives'
 import { ref, watch } from 'vue'
 
 // Interfaces y tipos
-type Item = { text: string; value: any; selected?: boolean; [index: string]: any }
+type Item = {
+  disabled?: boolean
+  text: string
+  value: any
+  selected?: boolean
+  [index: string]: any
+}
 
 type Props = {
   options: SelectItems
@@ -195,7 +209,10 @@ const elementIsSelected = (index: number) => {
   return selectedIndex.value.has(index)
 }
 
-const emitNewValue = (newVal: Set<Item | string | number> | Item | string | number) => {
+const emitNewValue = (newVal: Set<Item | string | number> | Item | string | number | undefined) => {
+  if (newVal === undefined) {
+    emit('update:modelValue', undefined)
+  }
   if (!props.multiple) {
     emit('update:modelValue', newVal)
   } else {
@@ -236,6 +253,9 @@ const findItem = () => {
     }
     if (index != -1) {
       addToIndexes(index)
+      formatInputText()
+    } else {
+      emitNewValue(undefined)
     }
   }
 }
@@ -252,6 +272,9 @@ const findItems = () => {
       if (index != -1) {
         addSelectedItem(index)
       }
+    }
+    if (selectedIndex.value.size == 0) {
+      emitNewValue(undefined)
     }
   }
 }
@@ -309,7 +332,17 @@ const initSelect = async () => {
   }
 }
 
+const isItemDisabled = (index: number) => {
+  if (optionsType.value == 'object') {
+    return Boolean((props.options[index] as Item).disabled)
+  }
+  return false
+}
+
 const select = (index: number) => {
+  if (isItemDisabled(index)) {
+    return
+  }
   if (!props.multiple) {
     addToIndexes(index)
     show.value = false
