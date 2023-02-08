@@ -33,7 +33,9 @@
       @apply focus:border-fire-opal hover:border-fire-opal;
     }
   }
-
+  &-progress-bar{
+    @apply absolute bottom-0 left-0;
+  }
 }
 
 .sm-select-options {

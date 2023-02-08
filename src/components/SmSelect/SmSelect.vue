@@ -14,6 +14,7 @@
         @focusout="hide"
         @beforeinput="filter"
       />
+      <SmProgressBar v-if="loading" class="sm-select-progress-bar" />
       <ul :class="['sm-select-options', { 'sm-select-options-open': show }]">
         <li
           v-for="(option, index) in filterList(searchTerm, formattedOptions)"
@@ -45,7 +46,10 @@
 </template>
 
 <script lang="ts" setup>
-// TODO: agregar opcion de loading
+// Components
+import { SmProgressBar } from '..'
+
+// Importaciones
 import { useValidate } from '../../composables'
 import { smSimpleUid as vSmSimpleUid } from '../../directives'
 import { ref, watch } from 'vue'
@@ -72,6 +76,7 @@ type Props = {
   disabled?: boolean
   rules?: Array<(value: any) => boolean | string>
   placeholder?: string
+  loading: boolean
 }
 
 type SelectItems = Array<Item | string | number>
@@ -80,7 +85,9 @@ type SelectItems = Array<Item | string | number>
 const emit = defineEmits(['update:modelValue'])
 
 // Props
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  loading: false,
+})
 
 // Declaraciones necesarias para flujo
 const data = computed({
