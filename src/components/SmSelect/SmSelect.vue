@@ -12,12 +12,11 @@
         v-sm-simple-uid
         @focusin="show = true"
         @focusout="hide"
-        @beforeinput="filter"
       />
       <SmProgressBar v-if="loading" class="sm-select-progress-bar" />
       <ul :class="['sm-select-options', { 'sm-select-options-open': show }]">
         <li
-          v-for="(option, index) in filterList(searchTerm, formattedOptions)"
+          v-for="(option, index) in filteredList"
           :class="[
             'sm-select-option',
             {
@@ -30,7 +29,7 @@
           @click="select(index)"
           @mousedown="selecting"
         >
-          <slot name="option" :option="options[index]">
+          <slot name="option" :option="localOptions[index]">
             <div class="sm-select-checkbox" v-if="multiple && !isItemDisabled(index)"></div>
             <span>{{ option }}</span>
           </slot>
@@ -76,28 +75,17 @@ type Props = {
   disabled?: boolean
   rules?: Array<(value: any) => boolean | string>
   placeholder?: string
-  loading: boolean
+  loading?: boolean
 }
 
 type SelectItems = Array<Item | string | number>
 
 // Emits
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'updateSearchInput'])
 
 // Props
 const props = withDefaults(defineProps<Props>(), {
   loading: false,
-})
-
-// Declaraciones necesarias para flujo
-const data = computed({
-  get: () => props.modelValue,
-  set: value => {
-    if (!props.multiple) {
-      show.value = false
-    }
-    emit('update:modelValue', value)
-  },
 })
 
 const selectedItem = ref<any>()
@@ -124,6 +112,42 @@ const inputText = ref('')
 const hasRenderError = ref<boolean>(false)
 
 // Propiedades computadas
+const filteredList = computed(() => {
+  return props.search && inputText.value
+    ? optionsAsStringList.value.filter(option =>
+        option.toUpperCase().includes(inputText.value.toUpperCase())
+      )
+    : optionsAsStringList.value
+})
+
+const isValidInputText = computed(() => {
+  return !!inputText.value
+})
+
+const localOptions = computed(() => {
+  if (optionsType.value == 'undefined') {
+    return []
+  }
+  if (optionsType.value == 'object') {
+    return props.options.filter(option =>
+      String((option as Item).text)
+        .toUpperCase()
+        .includes(inputText.value.toUpperCase())
+    )
+  }
+  return props.options
+    .map(value => {
+      return { text: value, value }
+    })
+    .filter(option => String(option.value).includes(inputText.value))
+})
+
+const optionsAsStringList = computed(() => {
+  if (!localOptions.value) {
+    return []
+  }
+  return (localOptions.value as Item[]).map(option => option.text)
+})
 
 const sizeClass = computed(() => {
   let size = props.size || 'medium'
@@ -167,19 +191,10 @@ const addToIndexes = (index: number) => {
 
 const addToSelectedItem = (index: number) => {
   const itemSet = selectedItem.value as Set<number | string | Item>
-
-  if (optionsType.value == 'object') {
-    if (!itemSet.has((props.options[index] as Item).value)) {
-      itemSet.add((props.options[index] as Item).value)
-    } else {
-      itemSet.delete((props.options[index] as Item).value)
-    }
+  if (!itemSet.has((localOptions.value[index] as Item).value)) {
+    itemSet.add((localOptions.value[index] as Item).value)
   } else {
-    if (!itemSet.has(props.options[index])) {
-      itemSet.add(props.options[index])
-    } else {
-      itemSet.delete(props.options[index])
-    }
+    itemSet.delete((localOptions.value[index] as Item).value)
   }
   formatInputText()
 }
@@ -216,9 +231,10 @@ const elementIsSelected = (index: number) => {
   return selectedIndex.value.has(index)
 }
 
-const emitNewValue = (newVal: Set<Item | string | number> | Item | string | number | undefined) => {
-  if (newVal === undefined) {
-    emit('update:modelValue', undefined)
+const emitNewValue = (newVal?: Set<Item | string | number> | Item | string | number) => {
+  if (!newVal) {
+    !props.multiple ? emit('update:modelValue', undefined) : emit('update:modelValue', [])
+    return
   }
   if (!props.multiple) {
     emit('update:modelValue', newVal)
@@ -229,91 +245,51 @@ const emitNewValue = (newVal: Set<Item | string | number> | Item | string | numb
   formatInputText()
 }
 
-function filterList(searchTerm: string, values: string[]) {
-  return searchTerm ? values.filter(op => op.includes(searchTerm)) : values
-}
-
-const filter = (event: Event) => {
-  if (!props.search) return event.preventDefault()
-  if (
-    props.multiple &&
-    !searchTerm.value &&
-    (event as InputEvent).inputType === 'deleteContentBackward'
-  ) {
-    data.value.pop()
-  }
-}
-
 const findItem = () => {
-  if (props.options) {
-    let index: number
-    if (optionsType.value == 'object') {
-      index = props.options.findIndex(option => (option as Item).value === props.modelValue)
-      if (index != -1) {
-        selectedItem.value = (props.options[index] as Item).value
-      }
-    } else {
-      index = props.options.findIndex(option => option == props.modelValue)
-      if (index != -1) {
-        selectedItem.value = props.options[index]
-      }
-    }
-    if (index != -1) {
-      addToIndexes(index)
-      formatInputText()
-    } else {
-      emitNewValue(undefined)
-    }
+  let index: number
+  index = localOptions.value.findIndex(option => (option as Item).value === props.modelValue)
+  if (index != -1) {
+    selectedItem.value = (localOptions.value[index] as Item).value
+    addToIndexes(index)
+    formatInputText()
+    emitNewValue(selectedItem.value)
+  } else {
+    emitNewValue()
   }
 }
 
 const findItems = () => {
-  if (props.options) {
-    for (let item of props.modelValue) {
-      let index: number
-      if (optionsType.value == 'object') {
-        index = props.options.findIndex(option => (option as Item).value === item)
-      } else {
-        index = props.options.findIndex(option => option == item)
-      }
-      if (index != -1) {
-        addSelectedItem(index)
-      }
+  for (let item of props.modelValue) {
+    let index: number
+    index = localOptions.value.findIndex(option => (option as Item).value === item)
+    if (index != -1 && !isItemDisabled(index)) {
+      addSelectedItem(index)
     }
-    if (selectedIndex.value.size == 0) {
-      emitNewValue(undefined)
-    }
+  }
+  if (selectedIndex.value.size == 0) {
+    emitNewValue()
+  } else {
+    emitNewValue(selectedItem.value)
   }
 }
 
 const formatInputText = () => {
+  if (props.search) {
+    return
+  }
   if (!props.multiple) {
     const array = Array.from(selectedIndex.value)
     if (array.length > 0) {
-      if (optionsType.value == 'object') {
-        inputText.value = (props.options[array[0]] as Item).text
-      } else {
-        inputText.value = props.options[array[0]].toString()
-      }
+      inputText.value = (localOptions.value[array[0]] as Item).text
     }
   } else {
-    const modelArray = Array.from(selectedItem.value as Set<string>).sort(compare)
-    inputText.value = modelArray.join(',')
+    let textsList: string[] = []
+    selectedIndex.value.forEach((value: number) => {
+      textsList.push((localOptions.value[value] as Item).text)
+    })
+    inputText.value = textsList.sort(compare).join(',')
   }
 }
-
-const formattedOptions = computed<string[]>(() => {
-  if (!props.options) {
-    return []
-  }
-  if (props.options.length > 0 && props.options.every(option => typeof option !== 'object')) {
-    return props.options.every(option => typeof option !== 'number')
-      ? (props.options as string[])
-      : props.options.map(option => option.toString())
-  } else {
-    return (props.options as Item[]).map(option => option.text)
-  }
-})
 
 const hide = () => {
   if (!selected) {
@@ -341,7 +317,7 @@ const initSelect = async () => {
 
 const isItemDisabled = (index: number) => {
   if (optionsType.value == 'object') {
-    return Boolean((props.options[index] as Item).disabled)
+    return Boolean((localOptions.value[index] as Item).disabled)
   }
   return false
 }
@@ -354,9 +330,9 @@ const select = (index: number) => {
     addToIndexes(index)
     show.value = false
     if (optionsType.value == 'object') {
-      selectedItem.value = (props.options as Item[])[index].value
+      selectedItem.value = (localOptions.value as Item[])[index].value
     } else {
-      selectedItem.value = props.options[index]
+      selectedItem.value = localOptions.value[index]
     }
   } else {
     addSelectedItem(index)
@@ -387,6 +363,22 @@ watch(
       }
     } else {
       selectedItem.value = undefined
+    }
+  }
+)
+
+watch(
+  () => inputText.value,
+  () => {
+    if (props.search && isValidInputText.value) {
+      emit('updateSearchInput', inputText.value)
+      selectedIndex.value.clear()
+      if (props.multiple) {
+        ;(selectedItem.value as Set<Item | number | string>).clear()
+      } else {
+        selectedItem.value = undefined
+      }
+      emitNewValue()
     }
   }
 )
