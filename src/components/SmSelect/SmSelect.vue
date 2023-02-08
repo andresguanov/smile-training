@@ -81,7 +81,7 @@ type Props = {
 type SelectItems = Array<Item | string | number>
 
 // Emits
-const emit = defineEmits(['update:modelValue', 'updateSearchInput'])
+const emit = defineEmits(['update:modelValue', 'filter'])
 
 // Props
 const props = withDefaults(defineProps<Props>(), {
@@ -129,17 +129,20 @@ const localOptions = computed(() => {
     return []
   }
   if (optionsType.value == 'object') {
-    return props.options.filter(option =>
-      String((option as Item).text)
-        .toUpperCase()
-        .includes(inputText.value.toUpperCase())
-    )
+    return !props.search
+      ? props.options
+      : props.options.filter(option =>
+          String((option as Item).text)
+            .toUpperCase()
+            .includes(inputText.value.toUpperCase())
+        )
   }
-  return props.options
-    .map(value => {
-      return { text: value, value }
-    })
-    .filter(option => String(option.value).includes(inputText.value))
+  const formattedOptions = props.options.map(value => {
+    return { text: value, value }
+  })
+  return !props.search
+    ? formattedOptions
+    : formattedOptions.filter(option => String(option.value).includes(inputText.value))
 })
 
 const optionsAsStringList = computed(() => {
@@ -284,8 +287,10 @@ const formatInputText = () => {
     }
   } else {
     let textsList: string[] = []
-    selectedIndex.value.forEach((value: number) => {
-      textsList.push((localOptions.value[value] as Item).text)
+    selectedIndex.value.forEach(index => {
+      if (localOptions.value[index]) {
+        textsList.push((localOptions.value[index] as Item).text)
+      }
     })
     inputText.value = textsList.sort(compare).join(',')
   }
@@ -358,6 +363,7 @@ watch(
   () => props.multiple,
   newVal => {
     if (newVal) {
+      checkModelValue()
       if (!selectedItem.value) {
         selectedItem.value = new Set()
       }
@@ -371,7 +377,7 @@ watch(
   () => inputText.value,
   () => {
     if (props.search && isValidInputText.value) {
-      emit('updateSearchInput', inputText.value)
+      emit('filter', inputText.value)
       selectedIndex.value.clear()
       if (props.multiple) {
         ;(selectedItem.value as Set<Item | number | string>).clear()
