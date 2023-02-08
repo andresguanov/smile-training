@@ -1,11 +1,11 @@
-import { ComponentResolver } from 'unplugin-vue-components/dist/types'
+import { ComponentResolver, ComponentResolveResult } from 'unplugin-vue-components'
 
 export function SmComponentsResolver(): ComponentResolver {
     return {
       type: 'component',
-      resolve: (name: string) => {
+      resolve: (name: string): ComponentResolveResult => {
         if (/^Sm[A-Z]/.test(name))
-            return { importName: name, path: '@smile-ui/vue' }
+            return { name, from: '@smile-ui/vue' }
       },
     }
 }
@@ -13,9 +13,9 @@ export function SmComponentsResolver(): ComponentResolver {
 export function SmDirectiveResolver(): ComponentResolver {
   return {
     type: 'directive',
-    resolve: (name: string) => {
+    resolve: (name: string): ComponentResolveResult => {
       if (/^Sm[A-Z]/.test(name))
-          return { importName: name, path: '@smile-ui/vue' }
+          return { name, from: '@smile-ui/vue' }
     },
   }
 }
