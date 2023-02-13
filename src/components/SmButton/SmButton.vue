@@ -1,5 +1,6 @@
 <template>
-  <button
+  <component
+    :is="tag"
     :disabled="disabled"
     :class="[
       type && `sm-button-${type}`,
@@ -10,6 +11,7 @@
       },
     ]"
     :type="nativeType"
+    v-bind="$attrs"
   >
     <span class="loading-icon" v-if="loading">
       <sm-icon icon="loading" class="spin" />
@@ -17,7 +19,7 @@
     <span :style="{ visibility: loading ? 'hidden' : 'visible' }">
       <slot></slot>
     </span>
-  </button>
+  </component>
 </template>
 
 <script lang="ts" setup>
@@ -30,8 +32,9 @@ withDefaults(
     type?: 'primary' | 'secondary' | 'ghost' | 'text'
     size?: 'small' | 'large'
     nativeType?: 'button' | 'submit' | 'reset'
+    tag?: 'button' | 'a' | 'router-link'
   }>(),
-  { nativeType: 'button' }
+  { nativeType: 'button', tag: 'button' }
 )
 </script>
 
