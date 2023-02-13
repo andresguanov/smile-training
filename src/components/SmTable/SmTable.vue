@@ -248,7 +248,7 @@ const sortTable = (col: string) => {
     sortColumn.value = col
     ascending.value = true
   }
-  onUpdateItemsPerPage(1)
+  onUpdatePage(1)
 }
 
 defineExpose({

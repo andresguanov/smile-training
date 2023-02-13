@@ -50,10 +50,8 @@
         </div>
       </template>
       <template v-slot:footer>
-        <sm-button>Cancelar</sm-button>
-        <sm-hint comment="asdadasdas">
-          <sm-button type="primary">Aceptar</sm-button>
-        </sm-hint>
+        <sm-button type="text" tag="router-link" to="#">Cancelar</sm-button>
+        <sm-button type="primary"> <sm-hint comment="asdadasdas">Aceptar </sm-hint></sm-button>
       </template>
     </sm-modal>
     <sm-table
@@ -70,6 +68,7 @@
       }"
       :rows="items"
       :column-config="cols"
+      :items-per-page="20"
       actions-col-width="100px"
       class="my-table"
       is-fixed
@@ -78,17 +77,6 @@
     >
       <template #actionsCol>
         <sm-select v-model="select" :options="options" />
-      </template>
-      <template #bodyRow.a>
-        <sm-datepicker
-          v-model="datepicker"
-          label="Nombre"
-          error
-          :error-messages="['test error']"
-          :rules="sRules"
-          range
-          size="large"
-        />
       </template>
     </sm-table>
     <sm-button type="primary" @click="valid = !valid">Submit</sm-button>
@@ -117,6 +105,7 @@ const cols: smTableColumn[] = reactive([
     bodyAlign: 'left',
     headerAlign: 'left',
     filterable: true,
+    order: false,
     format: (value: string) => value.toUpperCase(),
     label: 'A',
     name: 'a',
@@ -126,6 +115,7 @@ const cols: smTableColumn[] = reactive([
     bodyAlign: 'left',
     headerAlign: 'left',
     filterable: true,
+    order: true,
     format: (value: string) => value.toUpperCase(),
     label: 'B es un nombre muy largo lorem ipsum -----',
     name: 'b',
