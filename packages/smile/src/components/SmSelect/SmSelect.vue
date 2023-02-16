@@ -46,49 +46,49 @@
 
 <script lang="ts" setup>
 // Components
-import { SmProgressBar } from '~/components/index'
+import { SmProgressBar } from '~/components/index';
 
 // Importaciones
-import { useValidate } from '../../composables'
-import { smSimpleUid as vSmSimpleUid } from '../../directives'
-import { ref, watch } from 'vue'
+import { useValidate } from '../../composables';
+import { smSimpleUid as vSmSimpleUid } from '../../directives';
+import { ref, watch } from 'vue';
 
 // Interfaces y tipos
 type Item = {
-  disabled?: boolean
-  text: string
-  value: any
-  selected?: boolean
-  [index: string]: any
-}
+  disabled?: boolean;
+  text: string;
+  value: any;
+  selected?: boolean;
+  [index: string]: any;
+};
 
 type Props = {
-  options: SelectItems
-  label?: string
-  modelValue?: any | Item | number | string
-  multiple?: boolean
-  search?: boolean
-  error?: boolean
-  size?: 'small' | 'medium' | 'large'
-  required?: boolean
-  errorMessages?: Array<string>
-  disabled?: boolean
-  rules?: Array<(value: any) => boolean | string>
-  placeholder?: string
-  loading?: boolean
-}
+  options: SelectItems;
+  label?: string;
+  modelValue?: any | Item | number | string;
+  multiple?: boolean;
+  search?: boolean;
+  error?: boolean;
+  size?: 'small' | 'medium' | 'large';
+  required?: boolean;
+  errorMessages?: Array<string>;
+  disabled?: boolean;
+  rules?: Array<(value: any) => boolean | string>;
+  placeholder?: string;
+  loading?: boolean;
+};
 
-type SelectItems = Array<Item | string | number>
+type SelectItems = Array<Item | string | number>;
 
 // Emits
-const emit = defineEmits(['update:modelValue', 'filter'])
+const emit = defineEmits(['update:modelValue', 'filter']);
 
 // Props
 const props = withDefaults(defineProps<Props>(), {
   loading: false,
-})
+});
 
-const selectedItem = ref<any>()
+const selectedItem = ref<any>();
 
 // Propiedades de composables
 const { validate, hasError, errorListContent, validateOnFocusout } = useValidate(
@@ -96,20 +96,20 @@ const { validate, hasError, errorListContent, validateOnFocusout } = useValidate
   props.rules || [],
   props.error,
   props.errorMessages
-)
+);
 
 // Propiedades reactivas
-const searchTerm = ref('')
+const searchTerm = ref('');
 
-const searchField = ref<HTMLInputElement | null>(null)
+const searchField = ref<HTMLInputElement | null>(null);
 
-const selectedIndex = ref<Set<number>>(new Set())
+const selectedIndex = ref<Set<number>>(new Set());
 
-const show = ref(false)
+const show = ref(false);
 
-const inputText = ref('')
+const inputText = ref('');
 
-const hasRenderError = ref<boolean>(false)
+const hasRenderError = ref<boolean>(false);
 
 // Propiedades computadas
 const filteredList = computed(() => {
@@ -117,16 +117,16 @@ const filteredList = computed(() => {
     ? optionsAsStringList.value.filter(option =>
         option.toUpperCase().includes(inputText.value.toUpperCase())
       )
-    : optionsAsStringList.value
-})
+    : optionsAsStringList.value;
+});
 
 const isValidInputText = computed(() => {
-  return !!inputText.value
-})
+  return !!inputText.value;
+});
 
 const localOptions = computed(() => {
   if (optionsType.value == 'undefined') {
-    return []
+    return [];
   }
   if (optionsType.value == 'object') {
     return !props.search
@@ -135,262 +135,269 @@ const localOptions = computed(() => {
           String((option as Item).text)
             .toUpperCase()
             .includes(inputText.value.toUpperCase())
-        )
+        );
   }
   const formattedOptions = props.options.map(value => {
-    return { text: value, value }
-  })
+    return { text: value, value };
+  });
   return !props.search
     ? formattedOptions
-    : formattedOptions.filter(option => String(option.value).includes(inputText.value))
-})
+    : formattedOptions.filter(option => String(option.value).includes(inputText.value));
+});
 
 const optionsAsStringList = computed(() => {
   if (!localOptions.value) {
-    return []
+    return [];
   }
-  return (localOptions.value as Item[]).map(option => option.text)
-})
+  return (localOptions.value as Item[]).map(option => option.text);
+});
 
 const sizeClass = computed(() => {
-  let size = props.size || 'medium'
-  return `sm-select sm-select-${size} sm-text-${size}`
-})
+  let size = props.size || 'medium';
+  return `sm-select sm-select-${size} sm-text-${size}`;
+});
 
 const optionsType = computed(() => {
-  hasRenderError.value = false
+  hasRenderError.value = false;
   if (props.options.every(option => typeof option === 'object')) {
-    return 'object'
+    return 'object';
   }
   if (props.options.every(option => typeof option === 'number')) {
-    return 'number'
+    return 'number';
   }
   if (props.options.every(option => typeof option === 'string')) {
-    return 'string'
+    return 'string';
   }
-  console.warn('[Smile SmSelect]: The options prop type is inconsistent')
-  hasRenderError.value = true
-  return 'undefined'
-})
+  console.warn('[Smile SmSelect]: The options prop type is inconsistent');
+  hasRenderError.value = true;
+  return 'undefined';
+});
 
 /**
  * semaforo para detener el cierre de opciones cuando se salga el focus del input principal
  */
-let selected = false
+let selected = false;
 
 // Metodos
 const addToIndexes = (index: number) => {
   if (!props.multiple) {
-    selectedIndex.value.clear()
-    selectedIndex.value.add(index)
+    selectedIndex.value.clear();
+    selectedIndex.value.add(index);
   } else {
     if (!selectedIndex.value.has(index)) {
-      selectedIndex.value.add(index)
+      selectedIndex.value.add(index);
     } else {
-      selectedIndex.value.delete(index)
+      selectedIndex.value.delete(index);
     }
   }
-}
+};
 
 const addToSelectedItem = (index: number) => {
-  const itemSet = selectedItem.value as Set<number | string | Item>
+  const itemSet = selectedItem.value as Set<number | string | Item>;
   if (!itemSet.has((localOptions.value[index] as Item).value)) {
-    itemSet.add((localOptions.value[index] as Item).value)
+    itemSet.add((localOptions.value[index] as Item).value);
   } else {
-    itemSet.delete((localOptions.value[index] as Item).value)
+    itemSet.delete((localOptions.value[index] as Item).value);
   }
-  formatInputText()
-}
+  formatInputText();
+};
 
 const addSelectedItem = (index: number) => {
-  addToIndexes(index)
-  addToSelectedItem(index)
-}
+  addToIndexes(index);
+  addToSelectedItem(index);
+};
 
 const checkModelValue = () => {
   if (props.multiple) {
     if (!Array.isArray(props.modelValue)) {
       console.warn(
         '[Smile SmSelect]: When the multiple prop is setted, the model value must be array'
-      )
-      hasRenderError.value = true
+      );
+      hasRenderError.value = true;
     } else {
-      hasRenderError.value = false
+      hasRenderError.value = false;
     }
   }
-}
+};
 
 const compare = (a: string, b: string) => {
   if (a < b) {
-    return -1
+    return -1;
   }
   if (a > b) {
-    return 1
+    return 1;
   }
-  return 0
-}
+  return 0;
+};
 
 const elementIsSelected = (index: number) => {
-  return selectedIndex.value.has(index)
-}
+  return selectedIndex.value.has(index);
+};
 
 const emitNewValue = (newVal?: Set<Item | string | number> | Item | string | number) => {
   if (!newVal) {
-    !props.multiple ? emit('update:modelValue', undefined) : emit('update:modelValue', [])
-    return
+    !props.multiple ? emit('update:modelValue', undefined) : emit('update:modelValue', []);
+    return;
   }
   if (!props.multiple) {
-    emit('update:modelValue', newVal)
+    emit('update:modelValue', newVal);
   } else {
-    const modelArray = Array.from(newVal as Set<Item | number | string>)
-    emit('update:modelValue', modelArray)
+    const modelArray = Array.from(newVal as Set<Item | number | string>);
+    emit('update:modelValue', modelArray);
   }
-  formatInputText()
-}
+  formatInputText();
+};
 
 const findItem = () => {
-  let index: number
-  index = localOptions.value.findIndex(option => (option as Item).value === props.modelValue)
+  let index: number;
+  index = localOptions.value.findIndex(option => (option as Item).value === props.modelValue);
   if (index != -1) {
-    selectedItem.value = (localOptions.value[index] as Item).value
-    addToIndexes(index)
-    formatInputText()
-    emitNewValue(selectedItem.value)
+    selectedItem.value = (localOptions.value[index] as Item).value;
+    addToIndexes(index);
+    formatInputText();
+    emitNewValue(selectedItem.value);
   } else {
-    emitNewValue()
+    emitNewValue();
   }
-}
+};
 
 const findItems = () => {
   for (let item of props.modelValue) {
-    let index: number
-    index = localOptions.value.findIndex(option => (option as Item).value === item)
+    let index: number;
+    index = localOptions.value.findIndex(option => (option as Item).value === item);
     if (index != -1 && !isItemDisabled(index)) {
-      addSelectedItem(index)
+      addSelectedItem(index);
     }
   }
   if (selectedIndex.value.size == 0) {
-    emitNewValue()
+    emitNewValue();
   } else {
-    emitNewValue(selectedItem.value)
+    emitNewValue(selectedItem.value);
   }
-}
+};
 
 const formatInputText = () => {
   if (props.search) {
-    return
+    return;
   }
   if (!props.multiple) {
-    const array = Array.from(selectedIndex.value)
+    const array = Array.from(selectedIndex.value);
     if (array.length > 0) {
-      inputText.value = (localOptions.value[array[0]] as Item).text
+      inputText.value = (localOptions.value[array[0]] as Item).text;
     }
   } else {
-    let textsList: string[] = []
+    let textsList: string[] = [];
     selectedIndex.value.forEach(index => {
       if (localOptions.value[index]) {
-        textsList.push((localOptions.value[index] as Item).text)
+        textsList.push((localOptions.value[index] as Item).text);
       }
-    })
-    inputText.value = textsList.sort(compare).join(',')
+    });
+    inputText.value = textsList.sort(compare).join(',');
   }
-}
+};
 
 const hide = () => {
   if (!selected) {
-    searchTerm.value = ''
-    show.value = false
+    searchTerm.value = '';
+    show.value = false;
     if (validateOnFocusout.value) {
-      validate()
+      validate();
     }
   } else if (props.multiple) {
-    searchField.value?.focus()
+    searchField.value?.focus();
   }
-  selected = false
-}
+  selected = false;
+};
 
 const initSelect = async () => {
   if (!hasRenderError.value) {
     if (!props.multiple) {
-      findItem()
+      findItem();
     } else {
-      selectedItem.value ??= new Set()
-      findItems()
+      selectedItem.value ??= new Set();
+      findItems();
     }
   }
-}
+};
 
 const isItemDisabled = (index: number) => {
   if (optionsType.value == 'object') {
-    return Boolean((localOptions.value[index] as Item).disabled)
+    return Boolean((localOptions.value[index] as Item).disabled);
   }
-  return false
-}
+  return false;
+};
 
 const select = (index: number) => {
   if (isItemDisabled(index)) {
-    return
+    return;
   }
   if (!props.multiple) {
-    addToIndexes(index)
-    show.value = false
+    addToIndexes(index);
+    show.value = false;
     if (optionsType.value == 'object') {
-      selectedItem.value = (localOptions.value as Item[])[index].value
+      selectedItem.value = (localOptions.value as Item[])[index].value;
     } else {
-      selectedItem.value = localOptions.value[index]
+      selectedItem.value = localOptions.value[index];
     }
   } else {
-    addSelectedItem(index)
+    addSelectedItem(index);
   }
-  emitNewValue(selectedItem.value)
-}
+  emitNewValue(selectedItem.value);
+};
 
 const selecting = () => {
-  selected = true
-}
+  selected = true;
+};
 
 // Métodos ciclo de vida
 onBeforeMount(() => {
-  checkModelValue()
-})
+  checkModelValue();
+});
 
 onMounted(() => {
-  initSelect()
-})
+  initSelect();
+});
 
 // Watcher
 watch(
   () => props.multiple,
   newVal => {
     if (newVal) {
-      checkModelValue()
+      checkModelValue();
       if (!selectedItem.value) {
-        selectedItem.value = new Set()
+        selectedItem.value = new Set();
       }
     } else {
-      selectedItem.value = undefined
+      selectedItem.value = undefined;
     }
   }
-)
+);
 
 watch(
   () => inputText.value,
   () => {
     if (props.search && isValidInputText.value) {
-      emit('filter', inputText.value)
-      selectedIndex.value.clear()
+      emit('filter', inputText.value);
+      selectedIndex.value.clear();
       if (props.multiple) {
-        ;(selectedItem.value as Set<Item | number | string>).clear()
+        (selectedItem.value as Set<Item | number | string>).clear();
       } else {
-        selectedItem.value = undefined
+        selectedItem.value = undefined;
       }
-      emitNewValue()
+      emitNewValue();
     }
   }
-)
+);
+
+watch(
+  () => props.modelValue,
+  () => {
+    initSelect();
+  }
+);
 
 // Expose
-defineExpose({ validate })
+defineExpose({ validate });
 </script>
 
 <style lang="scss" scoped>
