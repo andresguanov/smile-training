@@ -3,8 +3,9 @@
     <textarea
       ref="textareaElement"
       v-model="data"
-      v-bind="$attrs"
       :disabled="disabled"
+      :placeholder="placeholder"
+      :required="required"
       :class="[
         'sm-textarea',
         'sm-scrollbar',
@@ -36,6 +37,7 @@ const props = defineProps<{
   size?: 'small' | 'medium' | 'large'
   required?: boolean
   disabled?: boolean
+  placeholder?: string
   errorMessages?: Array<string>
   rules?: Array<(value: any) => boolean | string>
 }>()
