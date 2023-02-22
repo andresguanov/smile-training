@@ -72,6 +72,7 @@
       actions-col-width="100px"
       class="my-table"
       is-fixed
+      @refresh="onChange"
       @change="onChange"
       @filter="onChange"
     >
@@ -178,8 +179,20 @@ onMounted(() => {
   smFormEl.value?.validateInputs(true)
   smAlert?.success('Hola mundo')
   smAlert?.error('Hola mundo')
-  smAlert?.warning('Hola mundo')
-  smAlert?.info('Hola mundo', { title: 'Titulo de info', persistent: true })
+  smAlert?.warning('Hola mundo', { title: '<h2>Grande</h2> pequeño' })
+  smAlert?.info(
+    `
+  Errores:
+    <ul class="flex gap-4">
+      <li>1: Error al cargar los datos bla bla bla...</li>
+      <li>2: No se pudo generar la factura de venta a por los sig. motivos...</li>
+    </ul>
+    `,
+    {
+      title: 'Titulo de info',
+      persistent: true,
+    }
+  )
 })
 </script>
 

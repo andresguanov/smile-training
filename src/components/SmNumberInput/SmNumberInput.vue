@@ -12,6 +12,7 @@
         :step="step"
         :disabled="disabled"
         :placeholder="placeholder"
+        :required="required"
         :class="[
           'sm-input',
           `sm-input-${size}`,
@@ -50,6 +51,7 @@ const props = withDefaults(
     decimalSeparator?: '.' | ','
     disabled?: boolean
     placeholder?: string
+    required?: boolean
     errorMessages?: Array<string>
     rules?: Array<(value: any) => boolean | string>
   }>(),

@@ -39,4 +39,11 @@
   &-close {
     @apply pr-2 fill-gray-500/40 cursor-pointer;
   }
+
+  .sm-alert-icon {
+    @apply w-full max-w-[2rem];
+  }
+  .sm-alert-close {
+    @apply w-full max-w-[2rem];
+  }
 }
