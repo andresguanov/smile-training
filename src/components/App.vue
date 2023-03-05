@@ -83,7 +83,7 @@
         <sm-select v-model="select" :options="options" />
       </template>
     </sm-table>
-    <sm-button type="primary" @click="testSmTable?.onRefresh()">Submit</sm-button>
+    <!-- <sm-button type="primary" @click="testSmTable?.onRefresh()">Submit</sm-button> -->
   </div>
 </template>
 

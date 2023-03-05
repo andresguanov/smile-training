@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { IconType } from '~/interfaces'
+import type { IconType } from '../../interfaces'
 import SmIcon from '../SmIcon/SmIcon.vue'
 
 // TODO: pasar a un archivo de typos cuando importacion de tipos este disponible

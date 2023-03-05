@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { IconType } from '~/interfaces'
+import type { IconType } from '../../interfaces'
 import SmIcon from '../SmIcon/SmIcon.vue'
 
 withDefaults(
