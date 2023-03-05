@@ -17,6 +17,7 @@
         :disabled="disabled"
         :placeholder="placeholder"
         :type="nativeType || 'text'"
+        :required="required"
         @focusout="onFocusOut"
       />
       <slot name="after" />

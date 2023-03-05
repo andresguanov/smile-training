@@ -51,7 +51,7 @@
             <template v-if="col.name == sortColumn">
               <sm-icon :class="{ asc: ascending }" icon="caret-up" size="small" />
             </template>
-            <span v-if="col.order" @click="sortTable(col.name)">
+            <span v-if="col.order" @click="onSort(col.name)">
               {{ columnNames[i] }}
             </span>
             <span v-else>
@@ -106,7 +106,7 @@
         :item-limit-options="itemsPerPageOptions"
         :text="textPagination"
         class="sm-table-pagination"
-        @refresh="handleEvent('refresh', itemsPerPage)"
+        @refresh="onRefresh"
         @update:page="onUpdatePage"
         @update:itemsPerPage="onUpdateItemsPerPage"
       />
@@ -206,7 +206,7 @@ const columnNames = computed((): Array<string> => {
   })
 })
 
-const handleEvent = (event: 'refresh' | 'change' | 'filter', itemsPerPage: number) => {
+const onEvent = (event: 'refresh' | 'change' | 'filter', itemsPerPage: number) => {
   const start = (internalPage.value - 1) * itemsPerPage
   const order_field = sortColumn.value
   const order_direction = ascending.value ? 'ASC' : 'DESC'
@@ -221,17 +221,17 @@ const handleEvent = (event: 'refresh' | 'change' | 'filter', itemsPerPage: numbe
 }
 const onUpdatePage = (page: number) => {
   internalPage.value = page
-  handleEvent('change', internalItemsPerPage.value)
+  onEvent('change', internalItemsPerPage.value)
 }
 const onUpdateItemsPerPage = (itemsPerPage: number) => {
   internalPage.value = 1
   internalItemsPerPage.value = itemsPerPage
-  handleEvent('change', itemsPerPage)
+  onEvent('change', itemsPerPage)
 }
 const onFilter = () => {
   if (showFilters.value) {
     internalPage.value = 1
-    handleEvent('filter', internalItemsPerPage.value)
+    onEvent('filter', internalItemsPerPage.value)
   } else {
     showFilters.value = true
   }
@@ -241,7 +241,7 @@ const onHideFilter = () => {
   resetValues()
   onUpdatePage(1)
 }
-const sortTable = (col: string) => {
+const onSort = (col: string) => {
   if (sortColumn.value === col) {
     ascending.value = !ascending.value
   } else {
@@ -250,10 +250,14 @@ const sortTable = (col: string) => {
   }
   onUpdatePage(1)
 }
+const onRefresh = () => {
+  onEvent('refresh', internalItemsPerPage.value)
+}
 
 defineExpose({
   onUpdateItemsPerPage,
   onUpdatePage,
+  onRefresh
 })
 </script>
 

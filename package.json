@@ -1,6 +1,6 @@
 {
   "name": "@alegradev/smile-ui-next",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "files": [
     "dist"
   ],
@@ -23,7 +23,7 @@
     "@vueuse/core": "9.3.0"
   },
   "devDependencies": {
-    "@alegradev/smile-icons": "1.0.2",
+    "@alegradev/smile-icons": "1.0.5",
     "@commitlint/cli": "^16.1.0",
     "@commitlint/config-conventional": "^16.0.0",
     "@vitejs/plugin-vue": "^2.0.0",
@@ -38,7 +38,7 @@
     "vite": "^2.7.2",
     "vue": "^3.2.25",
     "vue-datepicker-next": "1.0.2",
-    "vue-tippy": "6.0.0-alpha.65",
+    "vue-tippy": "6.0.0",
     "vue-tsc": "^1.0.10"
   }
 }

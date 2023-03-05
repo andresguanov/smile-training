@@ -1,10 +1,10 @@
 <template>
   <li :class="['sm-alert', `sm-alert-${type}`]">
     <div class="sm-alert-content">
-      <sm-icon size="large" :class="`sm-alert-icon-${type}`" :icon="icons[type]" />
+      <sm-icon size="large" :class="`sm-alert-icon sm-alert-icon-${type}`" :icon="icons[type]" />
       <div class="sm-alert-message">
-        <p v-if="title" class="sm-alert-title">{{ title }}</p>
-        <p>{{ message }}</p>
+        <p v-if="title" class="sm-alert-title" v-html="title" />
+        <p v-html="message" />
       </div>
     </div>
     <sm-icon size="large" class="sm-alert-close" icon="close" @click="$emit('close')" />
@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { IconType } from '../../types'
+import type { IconType } from '../../interfaces'
 import SmIcon from '../SmIcon/SmIcon.vue'
 
 // TODO: pasar a un archivo de typos cuando importacion de tipos este disponible

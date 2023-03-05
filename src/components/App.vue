@@ -50,11 +50,14 @@
         </div>
       </template>
       <template v-slot:footer>
-        <sm-button type="text" tag="router-link" to="#">Cancelar</sm-button>
-        <sm-button type="primary"> <sm-hint comment="asdadasdas">Aceptar </sm-hint></sm-button>
+        <sm-button type="text" tag="router-link" to="#" icon-left="clock">Cancelar</sm-button>
+        <sm-button type="ghost" icon-left="clock" icon-right="2fa">Cancelar</sm-button>
+        <sm-button type="secondary">Cancelar</sm-button>
+        <sm-button icon-right="alert-circle"><sm-hint comment="test">Aceptar </sm-hint></sm-button>
       </template>
     </sm-modal>
     <sm-table
+      ref="testSmTable"
       :filter-config="{
         a: {
           type: 'input',
@@ -72,6 +75,7 @@
       actions-col-width="100px"
       class="my-table"
       is-fixed
+      @refresh="onChange"
       @change="onChange"
       @filter="onChange"
     >
@@ -79,7 +83,7 @@
         <sm-select v-model="select" :options="options" />
       </template>
     </sm-table>
-    <sm-button type="primary" @click="valid = !valid">Submit</sm-button>
+    <!-- <sm-button type="primary" @click="testSmTable?.onRefresh()">Submit</sm-button> -->
   </div>
 </template>
 
@@ -132,7 +136,6 @@ const cols: smTableColumn[] = reactive([
   },
 ])
 
-// const totalItems = computed(() => (valid.value ? 25 : 5))
 const items = computed(() => {
   const totalItems = 35
   const obj = []
@@ -141,8 +144,7 @@ const items = computed(() => {
   }
   return obj
 })
-
-const valid = ref(false)
+const testSmTable = ref(null)
 const onChange = (data: smTableChangeEvent) => {
   console.log({ data })
 }
@@ -178,8 +180,20 @@ onMounted(() => {
   smFormEl.value?.validateInputs(true)
   smAlert?.success('Hola mundo')
   smAlert?.error('Hola mundo')
-  smAlert?.warning('Hola mundo')
-  smAlert?.info('Hola mundo', { title: 'Titulo de info', persistent: true })
+  smAlert?.warning('Hola mundo', { title: '<h2>Grande</h2> pequeño' })
+  smAlert?.info(
+    `
+  Errores:
+    <ul class="flex gap-4">
+      <li>1: Error al cargar los datos bla bla bla...</li>
+      <li>2: No se pudo generar la factura de venta a por los sig. motivos...</li>
+    </ul>
+    `,
+    {
+      title: 'Titulo de info',
+      persistent: true,
+    }
+  )
 })
 </script>
 
