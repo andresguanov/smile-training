@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { IconType } from '~/interfaces'
+import type { IconType } from '../../interfaces'
 import smileIcons from '@alegradev/smile-icons/dist/smile-icons.svg'
 
 const props = withDefaults(
