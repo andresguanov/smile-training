@@ -50,10 +50,12 @@
         </div>
       </template>
       <template v-slot:footer>
-        <sm-button type="text" tag="router-link" to="#" icon-left="clock">Cancelar</sm-button>
-        <sm-button type="ghost" icon-left="clock" icon-right="2fa">Cancelar</sm-button>
-        <sm-button type="secondary">Cancelar</sm-button>
-        <sm-button icon-right="alert-circle"><sm-hint comment="test">Aceptar </sm-hint></sm-button>
+        <sm-button-next size="small" loading>Cancelar</sm-button-next>
+        <sm-button-next type="destructive">Cancelar</sm-button-next>
+        <sm-button-next size="large" type="reversed">Cancelar</sm-button-next>
+        <sm-button-next emphasis="outline" disabled>Cancelar</sm-button-next>
+        <sm-button-next emphasis="subtle" loading>Cancelar</sm-button-next>
+        <sm-button-next emphasis="text" disabled loading>Cancelar</sm-button-next>
       </template>
     </sm-modal>
     <sm-table
