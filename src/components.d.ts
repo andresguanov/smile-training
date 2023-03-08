@@ -12,6 +12,7 @@ declare module 'vue' {
     SmAlert: typeof import('./components/SmAlert/SmAlert.vue')['default']
     SmAlertStack: typeof import('./components/SmAlert/SmAlertStack.vue')['default']
     SmButton: typeof import('./components/SmButton/SmButton.vue')['default']
+    SmButtonNext: typeof import('./components/SmButtonNext/SmButtonNext.vue')['default']
     SmCard: typeof import('./components/SmCard/SmCard.vue')['default']
     SmCheckbox: typeof import('./components/SmCheckbox/SmCheckbox.vue')['default']
     SmDatepicker: typeof import('./components/SmDatepicker/SmDatepicker.vue')['default']
