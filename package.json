@@ -11,7 +11,8 @@
     "prepare": "node scripts/prepare.js",
     "dev": "node scripts/dev.js",
     "lint-staged": "lint-staged — config .lintstagedrc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "publish": "node scripts/publish.js"
   },
   "engines": {
     "node": ">=12"
@@ -21,16 +22,16 @@
     "url": "git+https://github.com/alegradev/smile-ui-next.git"
   },
   "devDependencies": {
-    "@commitlint/cli": "17.4.2",
-    "@commitlint/config-conventional": "17.4.2",
+    "@commitlint/cli": "17.4.4",
+    "@commitlint/config-conventional": "17.4.4",
     "cross-env": "7.0.3",
-    "cross-spawn": "^7.0.3",
+    "cross-spawn": "7.0.3",
     "cz-conventional-changelog": "3.3.0",
-    "eslint": "8.33.0",
+    "eslint": "8.35.0",
     "husky": "8.0.3",
     "is-ci": "3.0.1",
-    "lerna": "6.4.1",
-    "lint-staged": "13.1.1",
+    "lerna": "6.5.1",
+    "lint-staged": "13.1.2",
     "prettier": "2.8.4",
     "vue": "3.2.47"
   },

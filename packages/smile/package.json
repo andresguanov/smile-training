@@ -17,7 +17,7 @@
     "@vueuse/core": "9.12.0"
   },
   "devDependencies": {
-    "@alegradev/smile-icons": "1.0.2",
+    "@alegradev/smile-icons": "1.0.5",
     "@commitlint/cli": "^16.1.0",
     "@commitlint/config-conventional": "^16.0.0",
     "@vitejs/plugin-vue": "^2.0.0",
