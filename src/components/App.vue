@@ -50,12 +50,13 @@
         </div>
       </template>
       <template v-slot:footer>
-        <sm-button-next size="small" loading>Cancelar</sm-button-next>
-        <sm-button-next type="destructive">Cancelar</sm-button-next>
-        <sm-button-next size="large" type="reversed">Cancelar</sm-button-next>
-        <sm-button-next emphasis="outline" disabled>Cancelar</sm-button-next>
-        <sm-button-next emphasis="subtle" loading>Cancelar</sm-button-next>
-        <sm-button-next emphasis="text" disabled loading>Cancelar</sm-button-next>
+        <sm-button-next size="small">Cancelar</sm-button-next>
+        <sm-button-next size="small">Cancelar</sm-button-next>
+        <sm-button-next type="destructive" emphasis="outline">Cancelar</sm-button-next>
+        <sm-button-next size="large" type="reversed" emphasis="text">Cancelar</sm-button-next>
+        <sm-button-next emphasis="outline">Cancelar</sm-button-next>
+        <sm-button-next emphasis="subtle">Cancelar</sm-button-next>
+        <sm-button-next emphasis="text" loading>Cancelar</sm-button-next>
       </template>
     </sm-modal>
     <sm-table
