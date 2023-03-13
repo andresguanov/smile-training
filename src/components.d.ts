@@ -5,6 +5,8 @@
 declare module 'vue' {
   export interface GlobalComponents {
     App: typeof import('./components/App.vue')['default']
+    Page1: typeof import('./components/pages/page1.vue')['default']
+    Page2: typeof import('./components/pages/page2.vue')['default']
     SmAccordion: typeof import('./components/SmAccordion/SmAccordion.vue')['default']
     SmAccordionItem: typeof import('./components/SmAccordion/SmAccordionItem.vue')['default']
     SmAccordionItemBody: typeof import('./components/SmAccordion/SmAccordionItemBody.vue')['default']
@@ -45,6 +47,7 @@ declare module 'vue' {
     SmTabSelectors: typeof import('./components/SmTab/SmTabSelectors.vue')['default']
     SmTextarea: typeof import('./components/SmTextarea/SmTextarea.vue')['default']
     SmToggle: typeof import('./components/SmToggle/SmToggle.vue')['default']
+    SmWizardNext: typeof import('./components/SmWizardNext/SmWizardNext.vue')['default']
   }
 }
 
