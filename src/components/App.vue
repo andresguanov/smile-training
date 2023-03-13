@@ -1,5 +1,9 @@
 <template>
+  <sm-wizard-next v-model="activePage" :views="views" />
+
   <div class="app_container">
+    <div class="mb-32"></div>
+
     <sm-alert-stack />
     <sm-card>
       <sm-form ref="smFormEl" validation-mode="on-focusout">
@@ -94,6 +98,20 @@
 import { SmForm, SmTable } from './index'
 import { $SmAlert, ISmAlertProvide } from '../utils/alerts'
 import { smTableChangeEvent, smTableColumn } from '~/interfaces'
+import page1 from './pages/page1.vue'
+import page2 from './pages/page2.vue'
+
+const views = [
+  {
+    title: 'Este es un titulo',
+    description: 'Esta es una description',
+    components: [page1, page2],
+  },
+  { title: 'Este es un titulo', description: 'Esta es una description', components: [page1] },
+  { title: 'Este es un titulo', description: 'Esta es una description', components: [page1] },
+]
+
+const activePage = ref(0)
 
 const modal = ref(true)
 const check = ref(false)
