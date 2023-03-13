@@ -8,12 +8,12 @@
     </div>
     <div :class="`${className}-content`">
       <div>
-        <div :class="`${className}-title`">{{ views[activePage].title }}</div>
-        <div :class="`${className}-description`">{{ views[activePage].description }}</div>
+        <div :class="`${className}-title`">{{ pages[activePage].title }}</div>
+        <div :class="`${className}-description`">{{ pages[activePage].description }}</div>
 
         <component
-          v-if="views[activePage].components[0]"
-          :is="views[activePage].components[0]"
+          v-if="pages[activePage].components[0]"
+          :is="pages[activePage].components[0]"
           @previusPage="previousPage"
           @next-page="nextPage"
           @set-page="setPage"
@@ -23,7 +23,7 @@
       <div>
         <component
           v-if="isMultiRow"
-          :is="views[activePage].components[1]"
+          :is="pages[activePage].components[1]"
           @previusPage="previousPage"
           @next-page="nextPage"
           @set-page="setPage"
@@ -43,7 +43,7 @@ const className = 'sm-wizard-next'
 
 const props = withDefaults(
   defineProps<{
-    views: Array<{
+    pages: Array<{
       title: string
       description: string
       components: DefineComponent<{}, {}, any>[]
@@ -59,10 +59,10 @@ const emits = defineEmits<{
 
 const activePage = useVModel(props, 'modelValue', emits)
 
-const isMultiRow = computed(() => props.views[activePage.value].components.length > 1)
+const isMultiRow = computed(() => props.pages[activePage.value].components.length > 1)
 
 const nextPage = () => {
-  if (activePage.value < props.views.length - 1) {
+  if (activePage.value < props.pages.length - 1) {
     activePage.value++
   }
 }
