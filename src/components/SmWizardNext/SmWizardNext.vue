@@ -38,6 +38,7 @@
 </template>
 
 <script setup lang="ts">
+import type { DefineComponent } from 'vue'
 const className = 'sm-wizard-next'
 
 const props = withDefaults(
@@ -45,7 +46,7 @@ const props = withDefaults(
     views: Array<{
       title: string
       description: string
-      components: Array<any>
+      components: DefineComponent<{}, {}, any>[]
     }>
     modelValue: number
   }>(),
