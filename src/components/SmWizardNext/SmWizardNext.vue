@@ -7,23 +7,18 @@
       <sm-icon icon="close" color="#0F172A" size="medium" />
     </div>
     <div :class="`${className}-content`">
-      <div>
+      <div :class="`${className}-col-2`">
         <div :class="`${className}-title`">{{ steps[activePage].title }}</div>
         <div :class="`${className}-description`">{{ steps[activePage].description }}</div>
-
-        <component
-          v-if="steps[activePage].components[0]"
-          :is="steps[activePage].components[0]"
-          @previusPage="previousPage"
-          @next-page="nextPage"
-          @set-page="setPage"
-        />
       </div>
 
-      <div>
+      <div
+        v-for="(item, i) in steps[activePage].components"
+        :key="i"
+        :class="{ 'sm-wizard-next-col-2': i > 1 }"
+      >
         <component
-          v-if="isMultiRow"
-          :is="steps[activePage].components[1]"
+          :is="item"
           @previusPage="previousPage"
           @next-page="nextPage"
           @set-page="setPage"
@@ -59,7 +54,7 @@ const emits = defineEmits<{
 
 const activePage = useVModel(props, 'modelValue', emits)
 
-const isMultiRow = computed(() => props.steps[activePage.value].components.length > 1)
+// const isMultiRow = computed(() => props.steps[activePage.value].components.length > 1)
 
 const nextPage = () => {
   if (activePage.value < props.steps.length - 1) {
@@ -84,7 +79,7 @@ const setPage = (value: number) => (activePage.value = value)
   }
 
   &-content {
-    @apply m-auto grid grid-cols-1 px-4;
+    @apply m-auto grid grid-cols-1 px-4 gap-y-2;
 
     @screen md {
       @apply grid-cols-2 max-w-[738px] px-2;
@@ -108,11 +103,23 @@ const setPage = (value: number) => (activePage.value = value)
   }
 
   &-footer {
-    @apply text-slate-200 border-t py-4 mt-16;
+    @apply text-slate-200 border-t py-4 mt-16 col-start-1;
 
     @screen md {
       @apply flex justify-end;
     }
   }
+
+  &-col-2 {
+    @apply col-span-1;
+
+    @screen md {
+      @apply col-span-2;
+    }
+  }
+
+  // &-row-start-2 {
+  //   @apply row-start-1;
+  // }
 }
 </style>
