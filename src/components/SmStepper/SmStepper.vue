@@ -3,7 +3,7 @@
     <sm-step
       v-for="(item, index) in steps"
       :key="index"
-      :label="item"
+      :label="!hideLabels ? item : ''"
       :state="getStepState(index)"
       class="sm-stepper__step"
       @click="emit('click-step', index)"
