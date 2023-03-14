@@ -38,6 +38,8 @@ declare module 'vue' {
     SmRadio: typeof import('./components/SmRadio/SmRadio.vue')['default']
     SmSelect: typeof import('./components/SmSelect/SmSelect.vue')['default']
     SmSkeleton: typeof import('./components/SmSkeleton/SmSkeleton.vue')['default']
+    SmStep: typeof import('./components/SmStepper/SmStep.vue')['default']
+    SmStepper: typeof import('./components/SmStepper/SmStepper.vue')['default']
     SmTabContent: typeof import('./components/SmTab/SmTabContent.vue')['default']
     SmTable: typeof import('./components/SmTable/SmTable.vue')['default']
     SmTabs: typeof import('./components/SmTab/SmTabs.vue')['default']

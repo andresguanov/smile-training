@@ -1,6 +1,13 @@
 <template>
   <div class="app_container">
     <sm-alert-stack />
+    <div class="m-3">
+      <sm-stepper
+        :steps="['nombre', 'ciudad', 'test', 'label']"
+        v-model="step"
+        @click-step="step = $event"
+      />
+    </div>
     <sm-card>
       <sm-form ref="smFormEl" validation-mode="on-focusout">
         <template #default="{ validate, reset }">
@@ -95,6 +102,7 @@ import { SmForm, SmTable } from './index'
 import { $SmAlert, ISmAlertProvide } from '../utils/alerts'
 import { smTableChangeEvent, smTableColumn } from '~/interfaces'
 
+const step = ref(1)
 const modal = ref(true)
 const check = ref(false)
 const radio = ref('')
