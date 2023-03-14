@@ -6,7 +6,7 @@
 
       <sm-icon icon="close" color="#0F172A" size="medium" />
     </div>
-    <div :class="`${className}-content`">
+    <div :class="[`${className}-content`, { 'sm-wizard-next-grid-cols-1': !isMultiRow }]">
       <div :class="`${className}-col-2`">
         <div :class="`${className}-title`">{{ steps[activePage].title }}</div>
         <div :class="`${className}-description`">{{ steps[activePage].description }}</div>
@@ -54,7 +54,7 @@ const emits = defineEmits<{
 
 const activePage = useVModel(props, 'modelValue', emits)
 
-// const isMultiRow = computed(() => props.steps[activePage.value].components.length > 1)
+const isMultiRow = computed(() => props.steps[activePage.value].components.length > 1)
 
 const nextPage = () => {
   if (activePage.value < props.steps.length - 1) {
@@ -116,6 +116,10 @@ const setPage = (value: number) => (activePage.value = value)
     @screen md {
       @apply col-span-2;
     }
+  }
+
+  &-grid-cols-1 {
+    @apply grid-cols-1;
   }
 
   // &-row-start-2 {
