@@ -133,6 +133,7 @@ function hide() {
 
 function select(option: option) {
   if (props.multiple) {
+    console.log(data.value)
     const opIndex = data.value.findIndex((selected: any) => selected === option.value)
     if (opIndex >= 0) {
       ;(data.value as Array<any>).splice(opIndex, 1)
