@@ -60,6 +60,9 @@ export function useFilters(
   const hasFilterableData = computed<boolean>(() => {
     return columnConfig.some(el => el.filterable) && Object.keys(filterConfig).length > 0
   })
+  const filtersAreFalsy = computed(() =>
+    Object.values(filterValues.value).every(val => (Array.isArray(val) && val.length === 0) || !val)
+  )
 
   const resetValues = () => {
     columnConfig.forEach(el => {
@@ -76,5 +79,5 @@ export function useFilters(
 
   resetValues()
 
-  return { filterValues, hasFilterableData, filterAttrs, showFilters, resetValues }
+  return { filterValues, hasFilterableData, filterAttrs, showFilters, resetValues, filtersAreFalsy }
 }

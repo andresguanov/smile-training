@@ -25,15 +25,16 @@
               v-if="filter.show"
               :is="filter.component"
               v-model="filterValues[filter.name]"
-              size="small"
               v-bind="filter.attrs"
+              size="small"
+              @keyup.enter="onFilter"
             />
           </th>
           <th
             v-if="hasActionsColumn && !filterConfig.actionsCol"
             class="sm-table-container-th filterable"
             :style="{ width: actionsColWidth }"
-          ></th>
+          />
         </tr>
         <tr>
           <th
@@ -182,10 +183,8 @@ const hasActionsColumn = computed(
   () => slots['actionsCol'] && typeof slots['actionsCol'] === 'function'
 )
 
-const { hasFilterableData, filterAttrs, filterValues, showFilters, resetValues } = useFilters(
-  props.columnConfig,
-  props.filterConfig
-)
+const { hasFilterableData, filterAttrs, filterValues, showFilters, resetValues, filtersAreFalsy } =
+  useFilters(props.columnConfig, props.filterConfig)
 
 const tableData = computed((): Array<any> => {
   if (props.rows.length > internalItemsPerPage.value) {
@@ -238,8 +237,10 @@ const onFilter = () => {
 }
 const onHideFilter = () => {
   showFilters.value = false
-  resetValues()
-  onUpdatePage(1)
+  if (!filtersAreFalsy.value) {
+    resetValues()
+    onUpdatePage(1)
+  }
 }
 const onSort = (col: string) => {
   if (sortColumn.value === col) {
@@ -257,7 +258,7 @@ const onRefresh = () => {
 defineExpose({
   onUpdateItemsPerPage,
   onUpdatePage,
-  onRefresh
+  onRefresh,
 })
 </script>
 
