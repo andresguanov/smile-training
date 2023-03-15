@@ -60,15 +60,24 @@ export function useFilters(
   const hasFilterableData = computed<boolean>(() => {
     return columnConfig.some(el => el.filterable) && Object.keys(filterConfig).length > 0
   })
+  const filtersAreFalsy = computed(() =>
+    Object.values(filterValues.value).every(val => (Array.isArray(val) && val.length === 0) || !val)
+  )
 
   const resetValues = () => {
     columnConfig.forEach(el => {
-      const modelIsBoolean = filterConfig[el.name]
-      filterValues.value[el.name] = modelIsBoolean?.type === 'checkbox' ? false : ''
+      const filter = filterConfig[el.name]
+      if (filter?.type === 'checkbox') {
+        filterValues.value[el.name] = false
+      } else if (filter?.type === 'select' && filter?.attrs?.multiple) {
+        filterValues.value[el.name] = []
+      } else {
+        filterValues.value[el.name] = ''
+      }
     })
   }
 
   resetValues()
 
-  return { filterValues, hasFilterableData, filterAttrs, showFilters, resetValues }
+  return { filterValues, hasFilterableData, filterAttrs, showFilters, resetValues, filtersAreFalsy }
 }
