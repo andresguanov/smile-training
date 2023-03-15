@@ -8,6 +8,8 @@
       :filter-config="filterConfig"
       :items-per-page="20"
       :text-pagination="textPagination"
+      @change="onchangetest"
+      @filter="onchangetest"
     >
     </sm-table>
   </div>
@@ -112,6 +114,9 @@ const textPagination = ref({
   showing: 'remissionListing.textPagination.showing',
   resultsPerPage: 'remissionListing.textPagination.resultsPerPage',
 })
+const onchangetest = (data: any) => {
+  console.log({ data })
+}
 
 const smAlert = inject<ISmAlertProvide>($SmAlert)
 onMounted(() => {
