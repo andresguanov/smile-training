@@ -1,5 +1,6 @@
 <template>
-  <sm-wizard-next v-model="activePage" :steps="views"> </sm-wizard-next>
+  <sm-wizard-next v-if="showWizard" v-model="activePage" :steps="views" @close="closeWizard">
+  </sm-wizard-next>
 
   <div class="app_container">
     <div class="mb-32"></div>
@@ -136,6 +137,10 @@ const views: Array<{
 ]
 
 const activePage = ref(0)
+const showWizard = ref(true)
+const closeWizard = () => {
+  showWizard.value = false
+}
 
 const step = ref(1)
 const modal = ref(true)

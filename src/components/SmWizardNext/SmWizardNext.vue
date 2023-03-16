@@ -7,9 +7,9 @@
         <sm-stepper v-model="activePage" :steps="stepsLabels"></sm-stepper>
       </div>
 
-      <sm-icon icon="close" color="#0F172A" size="medium" />
+      <sm-icon icon="close" color="#0F172A" size="medium" @click="closeWizard" />
     </div>
-    <div :class="[`sm-wzd-next-content`, { 'sm-wizard-next-grid-cols-1': !isMultiRow }]">
+    <div :class="[`sm-wzd-next-content`, { 'sm-wzd-next-grid-cols-1': !isMultiRow }]">
       <div class="sm-wzd-next-col-2">
         <div class="sm-wzd-next-title">{{ steps[activePage].title }}</div>
         <div class="sm-wzd-next-description">{{ steps[activePage].description }}</div>
@@ -18,7 +18,7 @@
       <div
         v-for="(item, i) in steps[activePage].components"
         :key="i"
-        :class="{ 'sm-wizard-next-col-2': i > 1 }"
+        :class="{ 'sm-wzd-next-col-2': i > 1 }"
       >
         <component
           :is="item"
@@ -32,7 +32,7 @@
         <slot v-if="slots.footer" name="footer"></slot>
 
         <div v-else class="wd-footer-btn">
-          <sm-button type="primary" @click="nextPage">Siguiente</sm-button>
+          <sm-button type="primary" @click="nextPage">Continuar</sm-button>
         </div>
       </div>
     </div>
@@ -58,6 +58,7 @@ const props = withDefaults(
 
 const emits = defineEmits<{
   (event: 'update:modelValue', value: number): void
+  (event: 'close'): void
 }>()
 
 const slots = useSlots()
@@ -66,13 +67,15 @@ const activePage = useVModel(props, 'modelValue', emits)
 
 const isMultiRow = computed(() => props.steps[activePage.value].components.length > 1)
 
+const stepsLabels = computed(() => props.steps.map(el => el.label))
+
 const nextPage = () => activePage.value < props.steps.length - 1 && activePage.value++
 
 const previousPage = () => activePage.value > 0 && activePage.value--
 
 const setPage = (value: number) => (activePage.value = value)
 
-const stepsLabels = props.steps.map(el => el.label)
+const closeWizard = () => emits('close')
 </script>
 
 <style scoped lang="scss" src="./SmWizard.scss"></style>
