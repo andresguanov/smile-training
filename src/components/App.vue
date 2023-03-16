@@ -106,16 +106,11 @@
 import type { DefineComponent } from 'vue'
 import { SmForm, SmTable } from './index'
 import { $SmAlert, ISmAlertProvide } from '../utils/alerts'
-import { smTableChangeEvent, smTableColumn } from '~/interfaces'
+import { smTableChangeEvent, smTableColumn, smStepWizard } from '~/interfaces'
 import page1 from './pages/page1.vue'
 import page2 from './pages/page2.vue'
 
-const views: Array<{
-  title: string
-  description: string
-  label: string
-  components: DefineComponent<{}, {}, any>[]
-}> = [
+const views: smStepWizard[] = [
   {
     title: 'Este es un titulo',
     description: 'Esta es una description',
