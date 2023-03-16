@@ -1,5 +1,5 @@
 <template>
-  <sm-wizard-next v-model="activePage" :views="views" />
+  <sm-wizard-next v-model="activePage" :steps="views" />
 
   <div class="app_container">
     <div class="mb-32"></div>
@@ -95,20 +95,33 @@
 </template>
 
 <script setup lang="ts">
+import type { DefineComponent } from 'vue'
 import { SmForm, SmTable } from './index'
 import { $SmAlert, ISmAlertProvide } from '../utils/alerts'
 import { smTableChangeEvent, smTableColumn } from '~/interfaces'
 import page1 from './pages/page1.vue'
 import page2 from './pages/page2.vue'
 
-const views = [
+const views: Array<{
+  title: string
+  description: string
+  components: DefineComponent<{}, {}, any>[]
+}> = [
   {
     title: 'Este es un titulo',
     description: 'Esta es una description',
-    components: [page1, page2],
+    components: [page1, page2, page2, page2] as DefineComponent<{}, {}, any>[],
   },
-  { title: 'Este es un titulo', description: 'Esta es una description', components: [page1] },
-  { title: 'Este es un titulo', description: 'Esta es una description', components: [page1] },
+  {
+    title: 'Este es un titulo',
+    description: 'Esta es una description',
+    components: [page1] as DefineComponent<{}, {}, any>[],
+  },
+  {
+    title: 'Este es un titulo',
+    description: 'Esta es una description',
+    components: [page1] as DefineComponent<{}, {}, any>[],
+  },
 ]
 
 const activePage = ref(0)
