@@ -40,17 +40,12 @@
 </template>
 
 <script setup lang="ts">
-import type { DefineComponent } from 'vue'
+import { smStepWizard } from '../../interfaces/sm-wizard.interface'
 import { useSlots } from 'vue'
 
 const props = withDefaults(
   defineProps<{
-    steps: Array<{
-      title: string
-      description: string
-      label: string
-      components: DefineComponent<{}, {}, any>[]
-    }>
+    steps: smStepWizard[]
     modelValue: number
   }>(),
   {}
