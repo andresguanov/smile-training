@@ -1,5 +1,5 @@
 <template>
-  <sm-wizard-next v-model="activePage" :steps="views" />
+  <sm-wizard-next v-model="activePage" :steps="views"> </sm-wizard-next>
 
   <div class="app_container">
     <div class="mb-32"></div>
@@ -112,21 +112,25 @@ import page2 from './pages/page2.vue'
 const views: Array<{
   title: string
   description: string
+  label: string
   components: DefineComponent<{}, {}, any>[]
 }> = [
   {
     title: 'Este es un titulo',
     description: 'Esta es una description',
+    label: 'Paso 1',
     components: [page1, page2, page2, page2] as DefineComponent<{}, {}, any>[],
   },
   {
     title: 'Este es un titulo',
     description: 'Esta es una description',
+    label: 'Paso 2',
     components: [page1] as DefineComponent<{}, {}, any>[],
   },
   {
     title: 'Este es un titulo',
     description: 'Esta es una description',
+    label: 'Paso 3',
     components: [page1] as DefineComponent<{}, {}, any>[],
   },
 ]
