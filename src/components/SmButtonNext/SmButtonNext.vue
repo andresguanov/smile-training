@@ -17,9 +17,9 @@
       class="sm-button__loading__icon"
     />
     <template v-else>
-      <sm-icon icon="notification" :height="iconSize" :width="iconSize" />
+      <sm-icon :icon="iconLeft" :height="iconSize" :width="iconSize" />
       <span>Suscribirse</span>
-      <sm-icon icon="chevron-down" :height="iconSize" :width="iconSize" />
+      <sm-icon :icon="iconRight" :height="iconSize" :width="iconSize" />
     </template>
   </component>
 </template>
