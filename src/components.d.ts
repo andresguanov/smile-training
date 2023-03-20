@@ -49,6 +49,7 @@ declare module 'vue' {
     SmTextarea: typeof import('./components/SmTextarea/SmTextarea.vue')['default']
     SmToggle: typeof import('./components/SmToggle/SmToggle.vue')['default']
     SmWizardNext: typeof import('./components/SmWizardNext/SmWizardNext.vue')['default']
+    SmTooltip: typeof import('./components/SmTooltip/SmTooltip.vue')['default']
   }
 }
 
