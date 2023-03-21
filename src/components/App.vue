@@ -49,9 +49,9 @@
       <template v-slot:header>Header</template>
       <template v-slot:body>
         <div class="w-[500px]">
-          <sm-hint comment="asdadasdas">
-            <p>Body</p>
-          </sm-hint>
+          <sm-tooltip comment="Label" placement="bottom-end">
+            <p>Nuevo tooltip</p>
+          </sm-tooltip>
           <sm-datepicker
             v-model="datepicker"
             label="Nombre"
