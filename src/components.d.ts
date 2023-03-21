@@ -38,8 +38,8 @@ declare module 'vue' {
     SmRadio: typeof import('./components/SmRadio/SmRadio.vue')['default']
     SmSelect: typeof import('./components/SmSelect/SmSelect.vue')['default']
     SmSkeleton: typeof import('./components/SmSkeleton/SmSkeleton.vue')['default']
-    SmStep: typeof import('./components/SmStepper/SmStep.vue')['default']
-    SmStepper: typeof import('./components/SmStepper/SmStepper.vue')['default']
+    SmStep: typeof import('./components/SmStepperNext/SmStep.vue')['default']
+    SmStepper: typeof import('./components/SmStepperNext/SmStepper.vue')['default']
     SmTabContent: typeof import('./components/SmTab/SmTabContent.vue')['default']
     SmTable: typeof import('./components/SmTable/SmTable.vue')['default']
     SmTabs: typeof import('./components/SmTab/SmTabs.vue')['default']
@@ -48,8 +48,8 @@ declare module 'vue' {
     SmTagNext: typeof import('./components/SmTagNext/SmTagNext.vue')['default']
     SmTextarea: typeof import('./components/SmTextarea/SmTextarea.vue')['default']
     SmToggle: typeof import('./components/SmToggle/SmToggle.vue')['default']
+    SmTooltip: typeof import('./components/SmTooltipNext/SmTooltip.vue')['default']
     SmWizardNext: typeof import('./components/SmWizardNext/SmWizardNext.vue')['default']
-    SmTooltip: typeof import('./components/SmTooltip/SmTooltip.vue')['default']
   }
 }
 
