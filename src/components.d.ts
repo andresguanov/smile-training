@@ -5,6 +5,8 @@
 declare module 'vue' {
   export interface GlobalComponents {
     App: typeof import('./components/App.vue')['default']
+    Page1: typeof import('./components/pages/page1.vue')['default']
+    Page2: typeof import('./components/pages/page2.vue')['default']
     SmAccordion: typeof import('./components/SmAccordion/SmAccordion.vue')['default']
     SmAccordionItem: typeof import('./components/SmAccordion/SmAccordionItem.vue')['default']
     SmAccordionItemBody: typeof import('./components/SmAccordion/SmAccordionItemBody.vue')['default']
@@ -12,6 +14,7 @@ declare module 'vue' {
     SmAlert: typeof import('./components/SmAlert/SmAlert.vue')['default']
     SmAlertStack: typeof import('./components/SmAlert/SmAlertStack.vue')['default']
     SmButton: typeof import('./components/SmButton/SmButton.vue')['default']
+    SmButtonNext: typeof import('./components/SmButtonNext/SmButtonNext.vue')['default']
     SmCard: typeof import('./components/SmCard/SmCard.vue')['default']
     SmCheckbox: typeof import('./components/SmCheckbox/SmCheckbox.vue')['default']
     SmDatepicker: typeof import('./components/SmDatepicker/SmDatepicker.vue')['default']
@@ -37,13 +40,17 @@ declare module 'vue' {
     SmRadio: typeof import('./components/SmRadio/SmRadio.vue')['default']
     SmSelect: typeof import('./components/SmSelect/SmSelect.vue')['default']
     SmSkeleton: typeof import('./components/SmSkeleton/SmSkeleton.vue')['default']
+    SmStep: typeof import('./components/SmStepper/SmStep.vue')['default']
+    SmStepper: typeof import('./components/SmStepper/SmStepper.vue')['default']
     SmTabContent: typeof import('./components/SmTab/SmTabContent.vue')['default']
     SmTable: typeof import('./components/SmTable/SmTable.vue')['default']
     SmTabs: typeof import('./components/SmTab/SmTabs.vue')['default']
     SmTabSelector: typeof import('./components/SmTab/SmTabSelector.vue')['default']
     SmTabSelectors: typeof import('./components/SmTab/SmTabSelectors.vue')['default']
+    SmTagNext: typeof import('./components/SmTagNext/SmTagNext.vue')['default']
     SmTextarea: typeof import('./components/SmTextarea/SmTextarea.vue')['default']
     SmToggle: typeof import('./components/SmToggle/SmToggle.vue')['default']
+    SmWizardNext: typeof import('./components/SmWizardNext/SmWizardNext.vue')['default']
   }
 }
 

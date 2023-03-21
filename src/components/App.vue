@@ -1,6 +1,20 @@
 <template>
+  <!-- <sm-wizard-next v-if="showWizard" v-model="activePage" :steps="views" @close="closeWizard">
+  </sm-wizard-next> -->
+
   <div class="app_container">
+    <sm-tag-next label="Label" type="green"></sm-tag-next>
+
+    <div class="mb-32"></div>
+
     <sm-alert-stack />
+    <div class="m-3">
+      <sm-stepper
+        :steps="['nombre', 'ciudad', 'test', 'label']"
+        v-model="step"
+        @click-step="step = $event"
+      />
+    </div>
     <sm-card>
       <sm-form ref="smFormEl" validation-mode="on-focusout">
         <template #default="{ validate, reset }">
@@ -50,10 +64,13 @@
         </div>
       </template>
       <template v-slot:footer>
-        <sm-button type="text" tag="router-link" to="#" icon-left="clock">Cancelar</sm-button>
-        <sm-button type="ghost" icon-left="clock" icon-right="2fa">Cancelar</sm-button>
-        <sm-button type="secondary">Cancelar</sm-button>
-        <sm-button icon-right="alert-circle"><sm-hint comment="test">Aceptar </sm-hint></sm-button>
+        <sm-button-next size="small">Cancelar</sm-button-next>
+        <sm-button-next size="small">Cancelar</sm-button-next>
+        <sm-button-next type="destructive" emphasis="outline">Cancelar</sm-button-next>
+        <sm-button-next size="large" type="reversed" emphasis="text">Cancelar</sm-button-next>
+        <sm-button-next emphasis="outline">Cancelar</sm-button-next>
+        <sm-button-next emphasis="subtle">Cancelar</sm-button-next>
+        <sm-button-next emphasis="text" loading>Cancelar</sm-button-next>
       </template>
     </sm-modal>
     <sm-table
@@ -88,10 +105,45 @@
 </template>
 
 <script setup lang="ts">
+// import type { DefineComponent } from 'vue'
 import { SmForm, SmTable } from './index'
 import { $SmAlert, ISmAlertProvide } from '../utils/alerts'
-import { smTableChangeEvent, smTableColumn } from '~/interfaces'
+import {
+  smTableChangeEvent,
+  smTableColumn,
+  // smStepWizard
+} from '~/interfaces'
+// import page1 from './pages/page1.vue'
+// import page2 from './pages/page2.vue'
 
+// const views: smStepWizard[] = [
+//   {
+//     title: 'Este es un titulo',
+//     description: 'Esta es una description',
+//     label: 'Paso 1',
+//     components: [page1, page2, page2, page2] as DefineComponent<{}, {}, any>[],
+//   },
+//   {
+//     title: 'Este es un titulo',
+//     description: 'Esta es una description',
+//     label: 'Paso 2',
+//     components: [page1] as DefineComponent<{}, {}, any>[],
+//   },
+//   {
+//     title: 'Este es un titulo',
+//     description: 'Esta es una description',
+//     label: 'Paso 3',
+//     components: [page1] as DefineComponent<{}, {}, any>[],
+//   },
+// ]
+
+// const activePage = ref(0)
+// const showWizard = ref(true)
+// const closeWizard = () => {
+//   showWizard.value = false
+// }
+
+const step = ref(1)
 const modal = ref(true)
 const check = ref(false)
 const radio = ref('')
