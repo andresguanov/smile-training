@@ -37,3 +37,7 @@ export { default as SmForm } from './SmForm/SmForm.vue'
 export { default as SmInnerLoading } from './SmInnerLoading/SmInnerLoading.vue'
 export { default as SmFileInput } from './SmFileInput/SmFileInput.vue'
 // TODO: agregar sm-input-* sm-filter sm-list-controller sm-context-menu
+// New Smile
+export { default as SmButtonNext } from './SmButtonNext/SmButtonNext.vue'
+export { default as SmStepperNext } from './SmStepper/SmStepper.vue'
+export { default as SmWizardNext } from './SmWizardNext/SmWizardNext.vue'
