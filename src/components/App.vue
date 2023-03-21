@@ -1,6 +1,6 @@
 <template>
-  <sm-wizard-next v-if="showWizard" v-model="activePage" :steps="views" @close="closeWizard">
-  </sm-wizard-next>
+  <!-- <sm-wizard-next v-if="showWizard" v-model="activePage" :steps="views" @close="closeWizard">
+  </sm-wizard-next> -->
 
   <div class="app_container">
     <sm-tag-next label="Label" type="green"></sm-tag-next>
@@ -105,39 +105,43 @@
 </template>
 
 <script setup lang="ts">
-import type { DefineComponent } from 'vue'
+// import type { DefineComponent } from 'vue'
 import { SmForm, SmTable } from './index'
 import { $SmAlert, ISmAlertProvide } from '../utils/alerts'
-import { smTableChangeEvent, smTableColumn, smStepWizard } from '~/interfaces'
-import page1 from './pages/page1.vue'
-import page2 from './pages/page2.vue'
+import {
+  smTableChangeEvent,
+  smTableColumn,
+  // smStepWizard
+} from '~/interfaces'
+// import page1 from './pages/page1.vue'
+// import page2 from './pages/page2.vue'
 
-const views: smStepWizard[] = [
-  {
-    title: 'Este es un titulo',
-    description: 'Esta es una description',
-    label: 'Paso 1',
-    components: [page1, page2, page2, page2] as DefineComponent<{}, {}, any>[],
-  },
-  {
-    title: 'Este es un titulo',
-    description: 'Esta es una description',
-    label: 'Paso 2',
-    components: [page1] as DefineComponent<{}, {}, any>[],
-  },
-  {
-    title: 'Este es un titulo',
-    description: 'Esta es una description',
-    label: 'Paso 3',
-    components: [page1] as DefineComponent<{}, {}, any>[],
-  },
-]
+// const views: smStepWizard[] = [
+//   {
+//     title: 'Este es un titulo',
+//     description: 'Esta es una description',
+//     label: 'Paso 1',
+//     components: [page1, page2, page2, page2] as DefineComponent<{}, {}, any>[],
+//   },
+//   {
+//     title: 'Este es un titulo',
+//     description: 'Esta es una description',
+//     label: 'Paso 2',
+//     components: [page1] as DefineComponent<{}, {}, any>[],
+//   },
+//   {
+//     title: 'Este es un titulo',
+//     description: 'Esta es una description',
+//     label: 'Paso 3',
+//     components: [page1] as DefineComponent<{}, {}, any>[],
+//   },
+// ]
 
-const activePage = ref(0)
-const showWizard = ref(true)
-const closeWizard = () => {
-  showWizard.value = false
-}
+// const activePage = ref(0)
+// const showWizard = ref(true)
+// const closeWizard = () => {
+//   showWizard.value = false
+// }
 
 const step = ref(1)
 const modal = ref(true)
