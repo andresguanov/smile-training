@@ -3,6 +3,8 @@
   </sm-wizard-next>
 
   <div class="app_container">
+    <sm-tag-next label="Label" type="green"></sm-tag-next>
+
     <div class="mb-32"></div>
 
     <sm-alert-stack />
