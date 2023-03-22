@@ -1,6 +1,6 @@
 <template>
   <div class="sm-stepper">
-    <sm-step
+    <s-step
       v-for="(item, index) in steps"
       :key="index"
       :label="!hideLabels ? item : ''"

@@ -4,7 +4,7 @@
       <div class="sm-wzd-next-logo"></div>
 
       <div class="sm-wzd-next-stepper">
-        <sm-stepper v-model="activePage" :steps="stepsLabels"></sm-stepper>
+        <s-stepper v-model="activePage" :steps="stepsLabels" />
       </div>
 
       <sm-icon icon="close" color="#0F172A" size="medium" @click="closeWizard" />

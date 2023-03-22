@@ -1,5 +1,5 @@
 <template>
-  <sm-tooltip-next
+  <s-tooltip
     v-bind="$attrs"
     class="sm-button"
     :tag="tag"
@@ -42,11 +42,11 @@
         <sm-icon v-if="iconRight" :icon="iconRight" :height="iconSize" :width="iconSize" />
       </slot>
     </template>
-  </sm-tooltip-next>
+  </s-tooltip>
 </template>
 
 <script lang="ts" setup>
-import { IconType } from '~/interfaces'
+import type { IconType } from '../../interfaces'
 
 const props = withDefaults(
   defineProps<{
