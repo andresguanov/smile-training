@@ -34,6 +34,9 @@
             <span>{{ option }}</span>
           </slot>
         </li>
+        <li @mousedown="selecting">
+          <slot name="lastItem"></slot>
+        </li>
       </ul>
     </div>
     <sm-hint v-if="hasError && searchField && errorListContent" :to="`#${searchField.id}`">
