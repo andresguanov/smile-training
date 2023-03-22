@@ -39,6 +39,7 @@ export { default as SmFileInput } from './SmFileInput/SmFileInput.vue'
 // TODO: agregar sm-input-* sm-filter sm-list-controller sm-context-menu
 // New Smile
 export { default as SmButtonNext } from './SmButtonNext/SmButtonNext.vue'
-export { default as SmStepperNext } from './SmStepperNext/SmStepper.vue'
+export { default as SmStepperNext } from './SmStepperNext/SmStepperNext.vue'
 export { default as SmWizardNext } from './SmWizardNext/SmWizardNext.vue'
-export { default as SmTooltipNext } from './SmTooltipNext/SmTooltip.vue'
+export { default as SmTooltipNext } from './SmTooltipNext/SmTooltipNext.vue'
+export { default as SmTagNext } from './SmTagNext/SmTagNext.vue'

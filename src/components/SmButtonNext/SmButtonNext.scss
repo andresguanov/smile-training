@@ -158,8 +158,23 @@
   }
 
   &__loading {
-    &__icon {
-      @apply animate-spin;
+    @apply animate-spin;
+  }
+  &__icon {
+    @apply absolute inset-0 m-auto;
+  }
+  &--only-icon {
+    @apply relative;
+    @apply w-10 h-10;
+
+    &.small {
+      @apply w-8 h-8;
+    }
+    &.large {
+      @apply w-12 h-12;
+    }
+    &.text {
+      @apply text-slate-900;
     }
   }
 }

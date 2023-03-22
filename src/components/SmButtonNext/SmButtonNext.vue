@@ -1,27 +1,48 @@
 <template>
-  <component
-    :is="tag"
+  <sm-tooltip-next
     v-bind="$attrs"
     class="sm-button"
-    :class="[size, type, emphasis]"
+    :tag="tag"
+    :content="isOnlyIcon ? label : ''"
+    :placement="tooltipPosition"
+    :class="[size, type, emphasis, { 'sm-button--only-icon': isOnlyIcon }]"
     :disabled="disabled"
     :loading="loading"
     :type="nativeType"
   >
+    <!-- <component
+      :is="tag"
+      class="sm-button"
+      :class="[size, type, emphasis, { 'sm-button--only-icon': isOnlyIcon }]"
+      :disabled="disabled"
+      :loading="loading"
+      :type="nativeType"
+    >
+    </component> -->
     <sm-icon
       v-if="loading"
       icon="loading"
       type="primary"
+      class="sm-button__loading"
       :height="iconSize"
       :width="iconSize"
-      class="sm-button__loading__icon"
+      :class="{ 'sm-button__icon': isOnlyIcon }"
     />
     <template v-else>
-      <sm-icon :icon="iconLeft" :height="iconSize" :width="iconSize" />
-      <span>Suscribirse</span>
-      <sm-icon :icon="iconRight" :height="iconSize" :width="iconSize" />
+      <sm-icon
+        v-if="isOnlyIcon"
+        :icon="onlyIcon"
+        :height="iconSize"
+        :width="iconSize"
+        class="sm-button__icon"
+      />
+      <slot v-else>
+        <sm-icon v-if="iconLeft" :icon="iconLeft" :height="iconSize" :width="iconSize" />
+        <span>{{ label }}</span>
+        <sm-icon v-if="iconRight" :icon="iconRight" :height="iconSize" :width="iconSize" />
+      </slot>
     </template>
-  </component>
+  </sm-tooltip-next>
 </template>
 
 <script lang="ts" setup>
@@ -29,6 +50,7 @@ import { IconType } from '~/interfaces'
 
 const props = withDefaults(
   defineProps<{
+    label?: string
     tag?: 'button' | 'a' | 'router-link'
     nativeType?: 'button' | 'submit' | 'reset'
     size?: 'small' | 'medium' | 'large'
@@ -38,6 +60,8 @@ const props = withDefaults(
     iconRight?: IconType
     loading?: boolean
     disabled?: boolean
+    onlyIcon?: IconType
+    tooltipPosition?: 'top' | 'bottom'
   }>(),
   {
     tag: 'button',
@@ -45,10 +69,12 @@ const props = withDefaults(
     nativeType: 'button',
     type: 'default',
     emphasis: 'filled',
+    tooltipPosition: 'top',
   }
 )
 
 const iconSize = computed(() => (props.size === 'small' ? '16px' : '20px'))
+const isOnlyIcon = computed(() => Boolean(props.onlyIcon))
 </script>
 
 <style lang="scss" src="./SmButtonNext.scss" scoped></style>

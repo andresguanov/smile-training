@@ -9,7 +9,7 @@
 
     <sm-alert-stack />
     <div class="m-3">
-      <sm-stepper
+      <sm-stepper-next
         :steps="['nombre', 'ciudad', 'test', 'label']"
         v-model="step"
         @click-step="step = $event"
@@ -49,9 +49,12 @@
       <template v-slot:header>Header</template>
       <template v-slot:body>
         <div class="w-[500px]">
-          <sm-tooltip comment="Label largo" placement="bottom-end">
+          <sm-tooltip-next placement="bottom-end">
+            <template #content>
+              <p>Nuevo tooltip</p>
+            </template>
             <p>Nuevo tooltip</p>
-          </sm-tooltip>
+          </sm-tooltip-next>
           <sm-datepicker
             v-model="datepicker"
             label="Nombre"
@@ -64,13 +67,13 @@
         </div>
       </template>
       <template v-slot:footer>
-        <sm-button-next size="small">Cancelar</sm-button-next>
-        <sm-button-next size="small">Cancelar</sm-button-next>
-        <sm-button-next type="destructive" emphasis="outline">Cancelar</sm-button-next>
-        <sm-button-next size="large" type="reversed" emphasis="text">Cancelar</sm-button-next>
-        <sm-button-next emphasis="outline">Cancelar</sm-button-next>
-        <sm-button-next emphasis="subtle">Cancelar</sm-button-next>
-        <sm-button-next emphasis="text" loading>Cancelar</sm-button-next>
+        <sm-button-next size="small" label="hola" loading></sm-button-next>
+        <sm-button-next label="Cancelar" loading only-icon="2fa"></sm-button-next>
+        <sm-button-next size="large" label="hola" loading></sm-button-next>
+        <sm-button-next icon-left="notification" label="a" icon-right="chevron-down" loading />
+        <sm-button-next only-icon="edit" emphasis="outline"></sm-button-next>
+        <sm-button-next only-icon="edit" emphasis="subtle"></sm-button-next>
+        <sm-button-next only-icon="edit" emphasis="text"></sm-button-next>
       </template>
     </sm-modal>
     <sm-table
