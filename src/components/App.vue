@@ -3,13 +3,13 @@
   </sm-wizard-next> -->
 
   <div class="app_container">
-    <sm-tag-next label="Label" type="green"></sm-tag-next>
+    <s-tag label="Label" type="green" />
 
     <div class="mb-32"></div>
 
     <sm-alert-stack />
     <div class="m-3">
-      <sm-stepper
+      <s-stepper
         :steps="['nombre', 'ciudad', 'test', 'label']"
         v-model="step"
         @click-step="step = $event"
@@ -49,9 +49,12 @@
       <template v-slot:header>Header</template>
       <template v-slot:body>
         <div class="w-[500px]">
-          <sm-tooltip comment="Label largo" placement="bottom-end">
+          <s-tooltip placement="bottom-end">
+            <template #content>
+              <p>Nuevo tooltip</p>
+            </template>
             <p>Nuevo tooltip</p>
-          </sm-tooltip>
+          </s-tooltip>
           <sm-datepicker
             v-model="datepicker"
             label="Nombre"
@@ -64,13 +67,13 @@
         </div>
       </template>
       <template v-slot:footer>
-        <sm-button-next size="small">Cancelar</sm-button-next>
-        <sm-button-next size="small">Cancelar</sm-button-next>
-        <sm-button-next type="destructive" emphasis="outline">Cancelar</sm-button-next>
-        <sm-button-next size="large" type="reversed" emphasis="text">Cancelar</sm-button-next>
-        <sm-button-next emphasis="outline">Cancelar</sm-button-next>
-        <sm-button-next emphasis="subtle">Cancelar</sm-button-next>
-        <sm-button-next emphasis="text" loading>Cancelar</sm-button-next>
+        <s-button size="small" label="hola" loading></s-button>
+        <s-button label="Cancelar" loading only-icon="2fa"></s-button>
+        <s-button size="large" label="hola" loading></s-button>
+        <s-button icon-left="notification" label="a" icon-right="chevron-down" loading />
+        <s-button only-icon="edit" emphasis="outline"></s-button>
+        <s-button only-icon="edit" emphasis="subtle"></s-button>
+        <s-button only-icon="edit" emphasis="text"></s-button>
       </template>
     </sm-modal>
     <sm-table

@@ -38,7 +38,8 @@ export { default as SmInnerLoading } from './SmInnerLoading/SmInnerLoading.vue'
 export { default as SmFileInput } from './SmFileInput/SmFileInput.vue'
 // TODO: agregar sm-input-* sm-filter sm-list-controller sm-context-menu
 // New Smile
-export { default as SmButtonNext } from './SmButtonNext/SmButtonNext.vue'
-export { default as SmStepperNext } from './SmStepperNext/SmStepper.vue'
-export { default as SmWizardNext } from './SmWizardNext/SmWizardNext.vue'
-export { default as SmTooltipNext } from './SmTooltipNext/SmTooltip.vue'
+export { default as SButton } from './SButton/SButton.vue'
+export { default as SStepper } from './SStepper/SStepper.vue'
+export { default as SWizard } from './SWizard/SWizard.vue'
+export { default as STooltip } from './STooltip/STooltip.vue'
+export { default as STag } from './STag/STag.vue'

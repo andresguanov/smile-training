@@ -5,6 +5,7 @@
 declare module 'vue' {
   export interface GlobalComponents {
     App: typeof import('./components/App.vue')['default']
+    SButton: typeof import('./components/SButton/SButton.vue')['default']
     SmAccordion: typeof import('./components/SmAccordion/SmAccordion.vue')['default']
     SmAccordionItem: typeof import('./components/SmAccordion/SmAccordionItem.vue')['default']
     SmAccordionItemBody: typeof import('./components/SmAccordion/SmAccordionItemBody.vue')['default']
@@ -12,7 +13,7 @@ declare module 'vue' {
     SmAlert: typeof import('./components/SmAlert/SmAlert.vue')['default']
     SmAlertStack: typeof import('./components/SmAlert/SmAlertStack.vue')['default']
     SmButton: typeof import('./components/SmButton/SmButton.vue')['default']
-    SmButtonNext: typeof import('./components/SmButtonNext/SmButtonNext.vue')['default']
+    SmButtonNext: typeof import('./components/SButton/SmButtonNext.vue')['default']
     SmCard: typeof import('./components/SmCard/SmCard.vue')['default']
     SmCheckbox: typeof import('./components/SmCheckbox/SmCheckbox.vue')['default']
     SmDatepicker: typeof import('./components/SmDatepicker/SmDatepicker.vue')['default']
@@ -48,8 +49,11 @@ declare module 'vue' {
     SmTagNext: typeof import('./components/SmTagNext/SmTagNext.vue')['default']
     SmTextarea: typeof import('./components/SmTextarea/SmTextarea.vue')['default']
     SmToggle: typeof import('./components/SmToggle/SmToggle.vue')['default']
-    SmTooltip: typeof import('./components/SmTooltipNext/SmTooltip.vue')['default']
-    SmWizardNext: typeof import('./components/SmWizardNext/SmWizardNext.vue')['default']
+    SStep: typeof import('./components/SStepper/SStep.vue')['default']
+    SStepper: typeof import('./components/SStepper/SStepper.vue')['default']
+    STag: typeof import('./components/STag/STag.vue')['default']
+    STooltip: typeof import('./components/STooltip/STooltip.vue')['default']
+    SWizard: typeof import('./components/SWizard/SWizard.vue')['default']
   }
 }
 
