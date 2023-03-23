@@ -16,7 +16,7 @@
       <SmProgressBar v-if="loading" class="sm-select-progress-bar" />
       <ul :class="['sm-select-options', { 'sm-select-options-open': show }]">
         <li
-          v-for="(option, index) in filteredList"
+          v-for="(option, index) in optionsAsStringList"
           :class="[
             'sm-select-option',
             {
@@ -115,14 +115,6 @@ const inputText = ref('');
 const hasRenderError = ref<boolean>(false);
 
 // Propiedades computadas
-const filteredList = computed(() => {
-  return props.search && inputText.value
-    ? optionsAsStringList.value.filter(option =>
-        option.toUpperCase().includes(inputText.value.toUpperCase())
-      )
-    : optionsAsStringList.value;
-});
-
 const isValidInputText = computed(() => {
   return !!inputText.value;
 });
@@ -257,7 +249,6 @@ const findItem = () => {
   if (index != -1) {
     selectedItem.value = (localOptions.value[index] as Item).value;
     addToIndexes(index);
-    formatInputText();
     emitNewValue(selectedItem.value);
   } else {
     emitNewValue();
@@ -280,13 +271,10 @@ const findItems = () => {
 };
 
 const formatInputText = () => {
-  if (props.search) {
-    return;
-  }
   if (!props.multiple) {
     const array = Array.from(selectedIndex.value);
     if (array.length > 0) {
-      inputText.value = (localOptions.value[array[0]] as Item).text;
+      inputText.value = (localOptions.value[array[0]] as Item)?.text ?? '';
     }
   } else {
     let textsList: string[] = [];
@@ -338,11 +326,11 @@ const select = (index: number) => {
     addToIndexes(index);
     show.value = false;
     if (optionsType.value == 'object') {
-      inputText.value = (localOptions.value as Item[])[index].text;
       selectedItem.value = (localOptions.value as Item[])[index].value;
+      //inputText.value = (localOptions.value as Item[])[index].text;
     } else {
-      inputText.value = localOptions.value[index].toString();
       selectedItem.value = localOptions.value[index];
+      //inputText.value = localOptions.value[index].toString();
     }
   } else {
     addSelectedItem(index);
@@ -357,10 +345,6 @@ const selecting = () => {
 // Métodos ciclo de vida
 onBeforeMount(() => {
   checkModelValue();
-});
-
-onMounted(() => {
-  initSelect();
 });
 
 // Watcher
@@ -381,15 +365,18 @@ watch(
 watch(
   () => inputText.value,
   () => {
-    if (props.search && isValidInputText.value) {
-      emit('filter', inputText.value);
-      selectedIndex.value.clear();
-      if (props.multiple) {
-        (selectedItem.value as Set<Item | number | string>).clear();
+    if (props.search) {
+      if (isValidInputText.value) {
+        emit('filter', inputText.value);
       } else {
-        selectedItem.value = undefined;
+        selectedIndex.value.clear();
+        if (props.multiple) {
+          (selectedItem.value as Set<Item | number | string>).clear();
+        } else {
+          selectedItem.value = undefined;
+        }
+        emitNewValue();
       }
-      emitNewValue();
     }
   }
 );
@@ -398,7 +385,8 @@ watch(
   () => props.modelValue,
   () => {
     initSelect();
-  }
+  },
+  { immediate: true }
 );
 
 // Expose
