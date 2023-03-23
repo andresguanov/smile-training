@@ -338,11 +338,11 @@ const select = (index: number) => {
     addToIndexes(index);
     show.value = false;
     if (optionsType.value == 'object') {
-      emit('filter', (localOptions.value as Item[])[index].text);
+      inputText.value = (localOptions.value as Item[])[index].text;
       selectedItem.value = (localOptions.value as Item[])[index].value;
     } else {
+      inputText.value = localOptions.value[index].toString();
       selectedItem.value = localOptions.value[index];
-      emit('filter', localOptions.value[index]);
     }
   } else {
     addSelectedItem(index);
