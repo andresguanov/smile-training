@@ -36,6 +36,7 @@ export { default as SmDatepicker } from './SmDatepicker/SmDatepicker.vue'
 export { default as SmForm } from './SmForm/SmForm.vue'
 export { default as SmInnerLoading } from './SmInnerLoading/SmInnerLoading.vue'
 export { default as SmFileInput } from './SmFileInput/SmFileInput.vue'
+export { default as SmNumberInput } from './SmNumberInput/SmNumberInput.vue'
 // TODO: agregar sm-input-* sm-filter sm-list-controller sm-context-menu
 // New Smile
 export { default as SButton } from './SButton/SButton.vue'

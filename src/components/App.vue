@@ -1,16 +1,12 @@
 <template>
-  <!-- <sm-wizard-next v-if="showWizard" v-model="activePage" :steps="views" @close="closeWizard">
-  </sm-wizard-next> -->
-
   <div class="app_container">
-    <s-tag label="Label" type="green" />
-
-    <div class="mb-32"></div>
-
     <sm-alert-stack />
+    <s-tag label="Label" type="green" />
+    <div class="mb-32"></div>
     <div class="m-3">
       <s-stepper
         :steps="['nombre', 'ciudad', 'test', 'label']"
+        current-step-has-error
         v-model="step"
         @click-step="step = $event"
       />
@@ -29,19 +25,18 @@
       <sm-form ref="smFormEl" validation-mode="on-type" container-is-form @submit="onSubmit">
         <template #default="{ isValid, reset }">
           <h4>El formulario es: {{ isValid ? 'válido' : 'no válido' }}</h4>
-          <sm-radio v-model="radio" label="Nombre A" native-value="A" :rules="rRules" />
-          <sm-radio v-model="radio" label="Nombre B" native-value="B" :rules="rRules" />
-          <sm-radio v-model="radio" label="Nombre C" native-value="C" :rules="rRules" />
-          <sm-checkbox label="test" />
-          <sm-datepicker v-model="datepicker" label="Nombre" :rules="sRules" range size="large" />
-          <sm-number-input v-model="number" :rules="numberRules" :min="0" :data-prefix="'$'" />
+          <s-radio
+            v-model="radio"
+            label="test"
+            orientation="horizontal"
+            :options="[
+              { value: { card: '1' }, label: 'card-1' },
+              { value: { card: '2' }, label: 'card-2' },
+            ]"
+          />
+          {{ radio }}
           <sm-button type="primary" native-type="submit">Submit</sm-button>
           <sm-button type="primary" @click="reset">Reset</sm-button>
-          <sm-checkbox
-            v-model="check"
-            label-to-left
-            label="Acepto que la información que he sumistrado es correcta y verdadera"
-          />
         </template>
       </sm-form>
     </sm-card>
@@ -55,15 +50,6 @@
             </template>
             <p>Nuevo tooltip</p>
           </s-tooltip>
-          <sm-datepicker
-            v-model="datepicker"
-            label="Nombre"
-            error
-            :error-messages="['test error']"
-            :rules="sRules"
-            range
-            size="large"
-          />
         </div>
       </template>
       <template v-slot:footer>
