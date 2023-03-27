@@ -1,0 +1,72 @@
+.s-radio {
+  @apply inline-block;
+
+  &__group {
+    &.vertical {
+      @apply space-y-2;
+    }
+    &.horizontal {
+      @apply flex;
+      @apply space-x-4;
+    }
+  }
+  &__label {
+    @apply text-sm font-medium text-[#0F172A];
+    @apply mb-2;
+  }
+  &__radio {
+    @apply flex items-center;
+    @apply space-x-2;
+    @apply cursor-pointer;
+
+    &__label {
+      @apply block;
+      @apply text-sm font-normal;
+      @apply text-slate-700;
+    }
+    &__input {
+      @apply block;
+      @apply w-4 h-4;
+      @apply rounded-full;
+      @apply appearance-none;
+      @apply border border-solid border-slate-300;
+
+      &:not(:disabled) {
+        &:hover {
+          @apply border-slate-400;
+        }
+        &:focus {
+          @apply ring-2 ring-offset-1 ring-sm-primary-500;
+        }
+      }
+      &:disabled {
+        @apply opacity-30;
+
+        + .s-radio__radio__label {
+          @apply text-slate-300;
+        }
+      }
+      &:checked {
+        @apply border-5 border-sm-primary-500;
+
+        &:hover {
+          @apply border-sm-primary-600;
+        }
+
+        + .s-radio__radio__label {
+          @apply text-slate-700;
+        }
+      }
+    }
+    /*
+    &:not(:disabled, [loading='true']) {
+      &:hover {
+      }
+      &:active {
+      }
+      &:focus {
+      }
+    }
+    */
+  }
+}

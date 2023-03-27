@@ -61,5 +61,8 @@
     .sm-step__label {
       @apply text-rose-600;
     }
+    .sm-step__line--left {
+      @apply bg-rose-600;
+    }
   }
 }
