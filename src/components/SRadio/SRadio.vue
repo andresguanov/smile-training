@@ -2,7 +2,12 @@
   <div class="s-radio">
     <p v-if="label" class="s-radio__label">{{ label }}</p>
     <div class="s-radio__group" :class="[orientation]">
-      <label class="s-radio__radio" v-for="(option, i) in options" :key="i">
+      <label
+        v-for="(option, i) in options"
+        :key="i"
+        :class="{ 's-radio__radio--disabled': option.disabled }"
+        class="s-radio__radio"
+      >
         <input
           v-model="internalValue"
           :value="option.value"
