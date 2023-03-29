@@ -25,16 +25,30 @@
       <sm-form ref="smFormEl" validation-mode="on-type" container-is-form @submit="onSubmit">
         <template #default="{ isValid, reset }">
           <h4>El formulario es: {{ isValid ? 'válido' : 'no válido' }}</h4>
-          <s-radio
-            v-model="radio"
-            label="test"
-            orientation="horizontal"
-            :options="[
-              { value: { card: '1' }, label: 'card-1' },
-              { value: { card: '2' }, label: 'card-2' },
-            ]"
-          />
-          {{ radio }}
+          <div class="flex flex-col">
+            <s-radio
+              v-model="radio"
+              label="test"
+              orientation="horizontal"
+              :options="[
+                { value: { card: '1' }, label: 'card-1' },
+                { value: { card: '2' }, label: 'card-2' },
+              ]"
+            />
+            <s-checkbox
+              v-model="check"
+              name="test"
+              label="test"
+              orientation="horizontal"
+              :options="[
+                { value: '1', label: 'card-1' },
+                { value: '2', label: 'card-2', disabled: true },
+                { value: '3', label: 'card-3', disabled: true, indeterminate: true },
+                { value: '4', label: 'card-4', indeterminate: true },
+              ]"
+            />
+            {{ check }}
+          </div>
           <sm-button type="primary" native-type="submit">Submit</sm-button>
           <sm-button type="primary" @click="reset">Reset</sm-button>
         </template>
@@ -134,9 +148,9 @@ import {
 
 const step = ref(1)
 const modal = ref(true)
-const check = ref(false)
+const check = ref([])
 const radio = ref('')
-const number = ref(3)
+// const number = ref(3)
 const select = ref([])
 const datepicker = ref('')
 const options = ref([
@@ -195,22 +209,22 @@ const sRules = ref([
     return !!v || 'Fecha es requerida'
   },
 ])
-const numberRules = ref([
-  (v: any) => {
-    return !!v || 'Número es requerido'
-  },
-  (v: any) => {
-    return v < 2 || 'Número debe ser menor a 2'
-  },
-])
-const rRules = ref([
-  (v: any) => {
-    return !!v || 'Nombre es requerido'
-  },
-  (v: any) => {
-    return v === 'B' || 'Nombre debe ser B'
-  },
-])
+// const numberRules = ref([
+//   (v: any) => {
+//     return !!v || 'Número es requerido'
+//   },
+//   (v: any) => {
+//     return v < 2 || 'Número debe ser menor a 2'
+//   },
+// ])
+// const rRules = ref([
+//   (v: any) => {
+//     return !!v || 'Nombre es requerido'
+//   },
+//   (v: any) => {
+//     return v === 'B' || 'Nombre debe ser B'
+//   },
+// ])
 const smFormEl = ref<InstanceType<typeof SmForm> | null>()
 const onSubmit = (e?: string) => {
   console.log({ e })
