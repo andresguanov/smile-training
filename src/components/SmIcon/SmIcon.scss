@@ -3,6 +3,7 @@
   @apply inline-block;
   @apply stroke-0;
   @apply align-middle;
+
   &.small {
     @apply w-4 h-4;
   }
@@ -28,5 +29,22 @@
 
   &.disabled {
     @apply opacity-50;
+  }
+
+  &.fluid {
+    @apply w-full h-full;
+
+    &.small {
+      @apply max-w-[1rem] max-h-[1rem];
+    }
+    &.medium {
+      @apply max-w-[1.5rem] max-h-[1.5rem];
+    }
+    &.large {
+      @apply max-w-[2rem] max-h-[2rem];
+    }
+    &.huge {
+      @apply max-w-[4rem] max-h-[4rem];
+    }
   }
 }

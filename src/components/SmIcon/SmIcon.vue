@@ -1,6 +1,6 @@
 <template>
   <svg
-    :class="['sm-icon', { disabled, hoverable: !!hoverColor }, type, size]"
+    :class="['sm-icon', { disabled, fluid, hoverable: !!hoverColor }, type, size]"
     :style="{ width, height }"
   >
     <use :xlink:href="iconUrl"></use>
@@ -21,6 +21,10 @@ const props = withDefaults(
     width?: string
     height?: string
     color?: string
+    /**
+     * En caso de tener un contenedor con display flex usar esta prop.
+     */
+    fluid?: boolean
   }>(),
   {
     size: 'medium',
