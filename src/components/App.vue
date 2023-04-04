@@ -34,6 +34,11 @@
                 { value: { card: '1' }, label: 'card-1' },
                 { value: { card: '2' }, label: 'card-2' },
               ]"
+              :rules="[
+                (val) => {
+                  return (val as radioTest).card === '1' || 'Debe escoger el valord card 1'
+                }
+              ]"
             />
             <s-checkbox
               v-model="check"
@@ -46,8 +51,12 @@
                 { value: '3', label: 'card-3', disabled: true, indeterminate: true },
                 { value: '4', label: 'card-4', indeterminate: true },
               ]"
+              :rules="[
+                val => {
+                  return val.length > 0 || 'Debe escoger al menos una opción'
+                },
+              ]"
             />
-            {{ check }}
           </div>
           <sm-button type="primary" native-type="submit">Submit</sm-button>
           <sm-button type="primary" @click="reset">Reset</sm-button>
@@ -145,7 +154,9 @@ import {
 // const closeWizard = () => {
 //   showWizard.value = false
 // }
-
+interface radioTest {
+  card: string
+}
 const step = ref(1)
 const modal = ref(true)
 const check = ref([])

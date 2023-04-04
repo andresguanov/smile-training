@@ -1,5 +1,6 @@
 .s-radio {
   @apply inline-block;
+  @apply space-y-2;
 
   &__group {
     &.vertical {
@@ -12,7 +13,6 @@
   }
   &__label {
     @apply text-sm font-medium text-[#0F172A];
-    @apply mb-2;
   }
   &__radio {
     @apply flex items-center;
