@@ -1,0 +1,64 @@
+.s-empty {
+  @apply w-full px-8;
+  @apply text-center;
+
+  @screen md {
+    @apply w-[31rem] px-0;
+  }
+  &__image {
+    @apply mb-6 mx-auto;
+    @apply object-cover;
+    @apply h-[7.5rem] w-[12.5rem];
+
+    @screen md {
+      @apply h-[9.5rem] w-[16rem];
+    }
+  }
+  &__title {
+    @apply mb-4;
+    @apply text-2xl font-semibold text-slate-900;
+
+    @screen md {
+      @apply text-3xl;
+    }
+  }
+  &__message {
+    @apply mb-8;
+    @apply text-base font-normal text-slate-700;
+
+    @screen md {
+      @apply text-lg;
+    }
+  }
+  &__action {
+    @apply mx-auto;
+  }
+  &__action--secondary {
+    @apply mx-auto mt-3;
+  }
+  &__icon {
+    @apply hidden mx-auto mb-6;
+  }
+
+  &--in-component {
+    @apply w-[23.438rem];
+
+    @screen md {
+      @apply w-[21rem];
+    }
+    .s-empty {
+      &__image {
+        @apply hidden;
+      }
+      &__title {
+        @apply mb-2 text-xl;
+      }
+      &__message {
+        @apply mb-6 text-sm;
+      }
+      &__icon {
+        @apply block w-10 h-10;
+      }
+    }
+  }
+}

@@ -5,12 +5,25 @@
 </template>
 
 <script lang="ts" setup>
-// import type { Ref } from 'vue'
 import { provideSmFormSymbol } from '../../composables'
 
 const props = withDefaults(
   defineProps<{
+    /**
+     * Si es true el contenedor adquiere la etiqueta <form> caso contrario usa <div>
+     */
     containerIsForm?: boolean
+    /**
+     * Úsalo para especificar el tipo de validación que se tendrá:
+     * 
+     * `on-submit`: la validación se lanza en el evento submit del form.
+     * 
+     * `on-focusout`: la validación se lanza en el evento focusout.
+     * 
+     * `on-type`: la validación se lanza cuando el valor de los inputs cambiar.
+     * 
+     * Para los inputs de tipo radio y checkbox on-focusout y on-type hacen la misma acción.
+     */
     validationMode?: 'on-submit' | 'on-focusout' | 'on-type'
   }>(),
   { validationMode: 'on-submit' }

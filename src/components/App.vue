@@ -1,21 +1,17 @@
 <template>
-  <!-- <sm-wizard-next v-if="showWizard" v-model="activePage" :steps="views" @close="closeWizard">
-  </sm-wizard-next> -->
-
   <div class="app_container">
-    <s-tag label="Label" type="green" />
-
-    <div class="mb-32"></div>
-
     <sm-alert-stack />
     <div class="m-3">
       <s-stepper
         :steps="['nombre', 'ciudad', 'test', 'label']"
+        current-step-has-error
         v-model="step"
         @click-step="step = $event"
       />
     </div>
-    <sm-card>
+    <s-empty-state />
+    <s-empty-state is-on-component secondary-action="ssss" />
+    <sm-card class="mt-1">
       <sm-form ref="smFormEl" validation-mode="on-focusout">
         <template #default="{ validate, reset }">
           <sm-datepicker v-model="datepicker" label="Nombre" :rules="sRules" range size="large" />
@@ -29,19 +25,41 @@
       <sm-form ref="smFormEl" validation-mode="on-type" container-is-form @submit="onSubmit">
         <template #default="{ isValid, reset }">
           <h4>El formulario es: {{ isValid ? 'válido' : 'no válido' }}</h4>
-          <sm-radio v-model="radio" label="Nombre A" native-value="A" :rules="rRules" />
-          <sm-radio v-model="radio" label="Nombre B" native-value="B" :rules="rRules" />
-          <sm-radio v-model="radio" label="Nombre C" native-value="C" :rules="rRules" />
-          <sm-checkbox label="test" />
-          <sm-datepicker v-model="datepicker" label="Nombre" :rules="sRules" range size="large" />
-          <sm-number-input v-model="number" :rules="numberRules" :min="0" :data-prefix="'$'" />
+          <div class="flex flex-col">
+            <s-radio
+              v-model="radio"
+              label="test"
+              orientation="horizontal"
+              :options="[
+                { value: { card: '1' }, label: 'card-1' },
+                { value: { card: '2' }, label: 'card-2' },
+              ]"
+              :rules="[
+                (val) => {
+                  return (val as radioTest).card === '1' || 'Debe escoger el valord card 1'
+                }
+              ]"
+            />
+            <s-checkbox
+              v-model="check"
+              name="test"
+              label="test"
+              orientation="horizontal"
+              :options="[
+                { value: '1', label: 'card-1' },
+                { value: '2', label: 'card-2', disabled: true },
+                { value: '3', label: 'card-3', disabled: true, indeterminate: true },
+                { value: '4', label: 'card-4', indeterminate: true },
+              ]"
+              :rules="[
+                val => {
+                  return val.length > 0 || 'Debe escoger al menos una opción'
+                },
+              ]"
+            />
+          </div>
           <sm-button type="primary" native-type="submit">Submit</sm-button>
           <sm-button type="primary" @click="reset">Reset</sm-button>
-          <sm-checkbox
-            v-model="check"
-            label-to-left
-            label="Acepto que la información que he sumistrado es correcta y verdadera"
-          />
         </template>
       </sm-form>
     </sm-card>
@@ -55,25 +73,10 @@
             </template>
             <p>Nuevo tooltip</p>
           </s-tooltip>
-          <sm-datepicker
-            v-model="datepicker"
-            label="Nombre"
-            error
-            :error-messages="['test error']"
-            :rules="sRules"
-            range
-            size="large"
-          />
         </div>
       </template>
       <template v-slot:footer>
         <s-button size="small" label="hola" loading></s-button>
-        <s-button label="Cancelar" loading only-icon="2fa"></s-button>
-        <s-button size="large" label="hola" loading></s-button>
-        <s-button icon-left="notification" label="a" icon-right="chevron-down" loading />
-        <s-button only-icon="edit" emphasis="outline"></s-button>
-        <s-button only-icon="edit" emphasis="subtle"></s-button>
-        <s-button only-icon="edit" emphasis="text"></s-button>
       </template>
     </sm-modal>
     <sm-table
@@ -145,12 +148,14 @@ import {
 // const closeWizard = () => {
 //   showWizard.value = false
 // }
-
+interface radioTest {
+  card: string
+}
 const step = ref(1)
 const modal = ref(true)
-const check = ref(false)
+const check = ref([])
 const radio = ref('')
-const number = ref(3)
+// const number = ref(3)
 const select = ref([])
 const datepicker = ref('')
 const options = ref([
@@ -209,22 +214,22 @@ const sRules = ref([
     return !!v || 'Fecha es requerida'
   },
 ])
-const numberRules = ref([
-  (v: any) => {
-    return !!v || 'Número es requerido'
-  },
-  (v: any) => {
-    return v < 2 || 'Número debe ser menor a 2'
-  },
-])
-const rRules = ref([
-  (v: any) => {
-    return !!v || 'Nombre es requerido'
-  },
-  (v: any) => {
-    return v === 'B' || 'Nombre debe ser B'
-  },
-])
+// const numberRules = ref([
+//   (v: any) => {
+//     return !!v || 'Número es requerido'
+//   },
+//   (v: any) => {
+//     return v < 2 || 'Número debe ser menor a 2'
+//   },
+// ])
+// const rRules = ref([
+//   (v: any) => {
+//     return !!v || 'Nombre es requerido'
+//   },
+//   (v: any) => {
+//     return v === 'B' || 'Nombre debe ser B'
+//   },
+// ])
 const smFormEl = ref<InstanceType<typeof SmForm> | null>()
 const onSubmit = (e?: string) => {
   console.log({ e })
