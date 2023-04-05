@@ -51,27 +51,27 @@
 </template>
 
 <script lang="ts" setup>
-import last from '../../assets/page-last.png'
-import lastDisabled from '../../assets/page-last-disabled.png'
-import next from '../../assets/page-next.png'
-import nextDisabled from '../../assets/page-next-disabled.png'
-import prev from '../../assets/page-prev.png'
-import prevDisabled from '../../assets/page-prev-disabled.png'
-import first from '../../assets/page-first.png'
-import firstDisabled from '../../assets/page-first-disabled.png'
-import re from '../../assets/refresh.png'
-import { SmSelect } from '~/components/index'
-import { usePagination, paginationEmits } from '../../composables'
-import { smPaginationText } from '../../interfaces/sm-pagination.interface'
+import last from '../../assets/page-last.png';
+import lastDisabled from '../../assets/page-last-disabled.png';
+import next from '../../assets/page-next.png';
+import nextDisabled from '../../assets/page-next-disabled.png';
+import prev from '../../assets/page-prev.png';
+import prevDisabled from '../../assets/page-prev-disabled.png';
+import first from '../../assets/page-first.png';
+import firstDisabled from '../../assets/page-first-disabled.png';
+import re from '../../assets/refresh.png';
+import { SmSelect } from '../index';
+import { usePagination, paginationEmits } from '../../composables';
+import { smPaginationText } from '../../interfaces/sm-pagination.interface';
 
 const props = withDefaults(
   defineProps<{
-    page?: number
-    itemsPerPage?: number
-    total?: number
-    text?: smPaginationText
-    itemLimitOptions?: Array<number>
-    refresh?: boolean
+    page?: number;
+    itemsPerPage?: number;
+    total?: number;
+    text?: smPaginationText;
+    itemLimitOptions?: Array<number>;
+    refresh?: boolean;
   }>(),
   {
     text: () => ({
@@ -86,33 +86,33 @@ const props = withDefaults(
     page: 1,
     refresh: true,
   }
-)
-const emit = defineEmits([...paginationEmits, 'refresh'])
+);
+const emit = defineEmits([...paginationEmits, 'refresh']);
 const { goTo, isAtEnd, isAtStart, lastPage, showingItemsRange, limit, currentPage } = usePagination(
   props,
   emit
-)
+);
 
 const selectLimitOptions = computed(() => {
-  return props.itemLimitOptions.map(v => ({ text: v.toString(), value: v }))
-})
+  return props.itemLimitOptions.map(v => ({ text: v.toString(), value: v }));
+});
 
 const testGoTo = (event: Event) => {
   if ((event as InputEvent).inputType !== 'insertLineBreak') {
-    return
+    return;
   }
-  const target = event.target as HTMLInputElement
-  const page = Number(target?.value)
+  const target = event.target as HTMLInputElement;
+  const page = Number(target?.value);
   if (isValidPageValue(page)) {
-    goTo(page)
+    goTo(page);
   } else {
-    target.value = currentPage.value.toString()
+    target.value = currentPage.value.toString();
   }
-}
+};
 const isValidPageValue = (value: number) => {
-  const lastPageValue = Math.ceil(props.total / limit.value)
-  return !isNaN(value) && value > 0 && value <= lastPageValue
-}
+  const lastPageValue = Math.ceil(props.total / limit.value);
+  return !isNaN(value) && value > 0 && value <= lastPageValue;
+};
 </script>
 
 <style lang="scss" scoped>

@@ -1,10 +1,25 @@
 <template>
+  <!-- <sm-wizard-next v-if="showWizard" v-model="activePage" :steps="views" @close="closeWizard">
+  </sm-wizard-next> -->
+
   <div class="app_container">
+    <s-tag label="Label" type="green" />
+
+    <div class="mb-32"></div>
+
     <sm-alert-stack />
+    <div class="m-3">
+      <s-stepper
+        :steps="['nombre', 'ciudad', 'test', 'label']"
+        v-model="step"
+        @click-step="step = $event"
+      />
+    </div>
     <sm-card>
       <sm-form ref="smFormEl" validation-mode="on-focusout">
         <template #default="{ validate, reset }">
           <sm-datepicker v-model="datepicker" label="Nombre" :rules="sRules" range size="large" />
+          <sm-select v-model="select" :options="options" label="Nombre" search :rules="sRules" />
           <sm-button type="primary" @click="validate()">Submit</sm-button>
           <sm-button type="primary" @click="reset">Reset</sm-button>
         </template>
@@ -17,6 +32,8 @@
           <sm-radio v-model="radio" label="Nombre A" native-value="A" :rules="rRules" />
           <sm-radio v-model="radio" label="Nombre B" native-value="B" :rules="rRules" />
           <sm-radio v-model="radio" label="Nombre C" native-value="C" :rules="rRules" />
+          <sm-checkbox label="test" />
+          <sm-datepicker v-model="datepicker" label="Nombre" :rules="sRules" range size="large" />
           <sm-number-input v-model="number" :rules="numberRules" :min="0" :data-prefix="'$'" />
           <sm-button type="primary" native-type="submit">Submit</sm-button>
           <sm-button type="primary" @click="reset">Reset</sm-button>
@@ -31,21 +48,42 @@
     <sm-modal v-model="modal">
       <template v-slot:header>Header</template>
       <template v-slot:body>
-        <sm-hint comment="asdadasdas">
-          <p>Body</p>
-        </sm-hint>
+        <div class="w-[500px]">
+          <s-tooltip placement="bottom-end">
+            <template #content>
+              <p>Nuevo tooltip</p>
+            </template>
+            <p>Nuevo tooltip</p>
+          </s-tooltip>
+          <sm-datepicker
+            v-model="datepicker"
+            label="Nombre"
+            error
+            :error-messages="['test error']"
+            :rules="sRules"
+            range
+            size="large"
+          />
+        </div>
       </template>
       <template v-slot:footer>
-        <sm-button>Cancelar</sm-button>
-        <sm-hint comment="asdadasdas">
-          <sm-button type="primary">Aceptar</sm-button>
-        </sm-hint>
+        <s-button size="small" label="hola" loading></s-button>
+        <s-button label="Cancelar" loading only-icon="2fa"></s-button>
+        <s-button size="large" label="hola" loading></s-button>
+        <s-button icon-left="notification" label="a" icon-right="chevron-down" loading />
+        <s-button only-icon="edit" emphasis="outline"></s-button>
+        <s-button only-icon="edit" emphasis="subtle"></s-button>
+        <s-button only-icon="edit" emphasis="text"></s-button>
       </template>
     </sm-modal>
     <sm-table
+      ref="testSmTable"
       :filter-config="{
         a: {
           type: 'input',
+          attrs: {
+            label: 'name',
+          },
         },
         b: {
           type: 'datepicker',
@@ -53,66 +91,95 @@
       }"
       :rows="items"
       :column-config="cols"
+      :items-per-page="20"
+      actions-col-width="100px"
+      class="my-table"
       is-fixed
-    />
-    <sm-button type="primary" @click="valid = !valid">Submit</sm-button>
-    <sm-select v-model="selectedItem" :options="options" @filter="filter" multiple> </sm-select>
-    {{ selectedItem }}
+      @refresh="onChange"
+      @change="onChange"
+      @filter="onChange"
+    >
+      <template #actionsCol>
+        <sm-select v-model="select" :options="options" />
+      </template>
+    </sm-table>
+    <!-- <sm-button type="primary" @click="testSmTable?.onRefresh()">Submit</sm-button> -->
   </div>
 </template>
 
 <script setup lang="ts">
-import { SmForm, SmTable, SmSelect } from '~/components/'
-import { $SmAlert, ISmAlertProvide } from '~/utils/alerts'
-import { smTableColumn } from '~/interfaces'
-import { computed, inject, onMounted, reactive, ref } from 'vue'
-const filter = (text: string) => {
-  console.log(text)
-}
-const modal = ref(true)
-const check = ref(false)
-const radio = ref('')
-const number = ref(3)
-const selectedItem = ref([3, 2, 1])
-const datepicker = ref('')
+// import type { DefineComponent } from 'vue'
+import { SmForm, SmTable } from './index';
+import { $SmAlert, ISmAlertProvide } from '../utils/alerts';
+import {
+  smTableChangeEvent,
+  smTableColumn,
+  // smStepWizard
+} from '~/interfaces';
+// import page1 from './pages/page1.vue'
+// import page2 from './pages/page2.vue'
+
+// const views: smStepWizard[] = [
+//   {
+//     title: 'Este es un titulo',
+//     description: 'Esta es una description',
+//     label: 'Paso 1',
+//     components: [page1, page2, page2, page2] as DefineComponent<{}, {}, any>[],
+//   },
+//   {
+//     title: 'Este es un titulo',
+//     description: 'Esta es una description',
+//     label: 'Paso 2',
+//     components: [page1] as DefineComponent<{}, {}, any>[],
+//   },
+//   {
+//     title: 'Este es un titulo',
+//     description: 'Esta es una description',
+//     label: 'Paso 3',
+//     components: [page1] as DefineComponent<{}, {}, any>[],
+//   },
+// ]
+
+// const activePage = ref(0)
+// const showWizard = ref(true)
+// const closeWizard = () => {
+//   showWizard.value = false
+// }
+
+const step = ref(1);
+const modal = ref(true);
+const check = ref(false);
+const radio = ref('');
+const number = ref(3);
+const select = ref([]);
+const datepicker = ref('');
 const options = ref([
-  {
-    text: 'A',
-    value: 3,
-  },
-  {
-    text: 'Ab',
-    value: 2,
-  },
-  {
-    text: 'casadjhkbsahjd',
-    value: 3,
-  },
-  {
-    text: 'dsadjhgasdjhgxc',
-    value: 4,
-    disabled: true,
-  },
-])
+  { text: '1', value: '1' },
+  { text: '2', value: '2' },
+  { text: '3', value: '3' },
+]);
 
 const cols: smTableColumn[] = reactive([
   {
     bodyAlign: 'left',
     headerAlign: 'left',
     filterable: true,
+    order: false,
     format: (value: string) => value.toUpperCase(),
     label: 'A',
     name: 'a',
-    width: '200px',
+    width: '100px',
   },
   {
     bodyAlign: 'left',
     headerAlign: 'left',
     filterable: true,
+    order: true,
     format: (value: string) => value.toUpperCase(),
-    label: 'B',
+    label: 'B es un nombre muy largo lorem ipsum -----',
     name: 'b',
     width: '100px',
+    bodyClass: 'b-column whitespace-nowrap text-ellipsis overflow-x-hidden',
   },
   {
     bodyAlign: 'left',
@@ -120,56 +187,69 @@ const cols: smTableColumn[] = reactive([
     format: (value: string) => value.toUpperCase(),
     label: 'C',
     name: 'c',
-    width: '300px',
+    width: '100px',
   },
-])
+]);
 
-// const totalItems = computed(() => (valid.value ? 25 : 5))
 const items = computed(() => {
-  const totalItems = 35
-  const obj: any[] = []
+  const totalItems = 35;
+  const obj = [];
   for (let i = 0; i < totalItems; i++) {
-    obj.push({ a: i, b: 'a'.repeat(totalItems / 2), c: 'test' })
+    obj.push({ a: i, b: 'a'.repeat(totalItems), c: 'test test test test test test' });
   }
-  return obj
-})
-
-const valid = ref(false)
+  return obj;
+});
+const testSmTable = ref(null);
+const onChange = (data: smTableChangeEvent) => {
+  console.log({ data });
+};
 
 const sRules = ref([
   (v: any) => {
-    return !!v || 'Fecha es requerida'
+    return !!v || 'Fecha es requerida';
   },
-])
+]);
 const numberRules = ref([
   (v: any) => {
-    return !!v || 'Número es requerido'
+    return !!v || 'Número es requerido';
   },
   (v: any) => {
-    return v < 2 || 'Número debe ser menor a 2'
+    return v < 2 || 'Número debe ser menor a 2';
   },
-])
+]);
 const rRules = ref([
   (v: any) => {
-    return !!v || 'Nombre es requerido'
+    return !!v || 'Nombre es requerido';
   },
   (v: any) => {
-    return v === 'B' || 'Nombre debe ser B'
+    return v === 'B' || 'Nombre debe ser B';
   },
-])
-const smFormEl = ref<InstanceType<typeof SmForm> | null>()
+]);
+const smFormEl = ref<InstanceType<typeof SmForm> | null>();
 const onSubmit = (e?: string) => {
-  console.log({ e })
-}
+  console.log({ e });
+};
 
-const smAlert = inject<ISmAlertProvide>($SmAlert)
+const smAlert = inject<ISmAlertProvide>($SmAlert);
 onMounted(() => {
-  smFormEl.value?.validateInputs(true)
-  smAlert?.success('Hola mundo')
-  smAlert?.error('Hola mundo')
-  smAlert?.warning('Hola mundo')
-  smAlert?.info('Hola mundo', { title: 'Titulo de info', persistent: true })
-})
+  smFormEl.value?.validateInputs(true);
+  smAlert?.success('Hola mundo');
+  smAlert?.error('Hola mundo');
+  smAlert?.warning('Hola mundo', { title: '<h2>Grande</h2> pequeño' });
+  smAlert?.info(
+    `
+  Errores:
+    <ul class="flex gap-4">
+      <li>1: Error al cargar los datos bla bla bla...</li>
+      <li>2: No se pudo generar la factura de venta a por los sig. motivos...</li>
+    </ul>
+    `,
+    {
+      title: 'Titulo de info',
+      persistent: true,
+    }
+  );
+});
 </script>
 
 <style lang="scss" scoped>
@@ -177,5 +257,13 @@ onMounted(() => {
   @apply flex flex-col;
   @apply m-5;
   @apply max-w-5xl;
+}
+.my-table:deep() {
+  .b-column {
+    @apply whitespace-nowrap text-ellipsis overflow-x-hidden;
+  }
+  [data-name='b'] {
+    @apply whitespace-nowrap text-ellipsis overflow-x-hidden;
+  }
 }
 </style>

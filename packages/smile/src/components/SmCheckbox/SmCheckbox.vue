@@ -30,45 +30,45 @@
 </template>
 
 <script lang="ts" setup>
-import { smSimpleUid as vSmSimpleUid } from '../../directives'
-import { useVModel } from '@vueuse/core'
-import { SmLabel, SmHint, SmErrorList } from '~/components/index'
-import { useValidate } from '../../composables'
+import { smSimpleUid as vSmSimpleUid } from '../../directives';
+import { useVModel } from '@vueuse/core';
+import { SmLabel, SmHint, SmErrorList } from '../index';
+import { useValidate } from '../../composables';
 
 const props = defineProps<{
-  label: string
-  modelValue?: boolean
-  error?: boolean
-  size?: 'small' | 'medium' | 'large'
-  required?: boolean
-  errorMessages?: Array<string>
-  disabled?: boolean
-  labelToLeft?: boolean
-  rules?: Array<(value: any) => boolean | string>
-}>()
+  label: string;
+  modelValue?: boolean;
+  error?: boolean;
+  size?: 'small' | 'medium' | 'large';
+  required?: boolean;
+  errorMessages?: Array<string>;
+  disabled?: boolean;
+  labelToLeft?: boolean;
+  rules?: Array<(value: any) => boolean | string>;
+}>();
 
-const emit = defineEmits(['update:modelValue', 'on:focusout'])
-const data = useVModel(props, 'modelValue', emit)
-const checkboxElement = ref<HTMLSpanElement | null>(null)
+const emit = defineEmits(['update:modelValue', 'on:focusout']);
+const data = useVModel(props, 'modelValue', emit);
+const checkboxElement = ref<HTMLSpanElement | null>(null);
 const { validate, hasError, errorListContent, validateOnFocusout } = useValidate(
   data,
   props.rules || [],
   props.error,
   props.errorMessages
-)
+);
 const sizeClass = computed(() => {
-  let size = props.size || 'medium'
-  return `sm-checkbox-${size}`
-})
+  let size = props.size || 'medium';
+  return `sm-checkbox-${size}`;
+});
 
 const onFocusOut = () => {
   if (validateOnFocusout.value) {
-    validate()
+    validate();
   }
-  emit('on:focusout')
-}
+  emit('on:focusout');
+};
 
-defineExpose({ validate })
+defineExpose({ validate });
 </script>
 
 <style scoped lang="scss">

@@ -17,6 +17,7 @@
         :disabled="disabled"
         :placeholder="placeholder"
         :type="nativeType || 'text'"
+        :required="required"
         @focusout="onFocusOut"
       />
       <slot name="after" />
@@ -30,38 +31,38 @@
 </template>
 
 <script lang="ts" setup>
-import { smSimpleUid as vSmSimpleUid } from '../../directives'
+import { smSimpleUid as vSmSimpleUid } from '../../directives';
 import {
   LabelProps as labelProps,
   InputProps as inputProps,
   ValidateProps as validateProps,
   useValidate,
-} from '../../composables'
+} from '../../composables';
 
 const props = defineProps({
   modelValue: String,
   ...labelProps,
   ...inputProps,
   ...validateProps,
-})
-const emit = defineEmits(['update:modelValue', 'on:focusout'])
-const data = useVModel(props, 'modelValue', emit)
-const inputElement = ref<HTMLInputElement | null>(null)
+});
+const emit = defineEmits(['update:modelValue', 'on:focusout']);
+const data = useVModel(props, 'modelValue', emit);
+const inputElement = ref<HTMLInputElement | null>(null);
 const { validate, hasError, errorListContent, validateOnFocusout } = useValidate(
   data,
   props.rules || [],
   props.error,
   props.errorMessages
-)
+);
 
 const onFocusOut = () => {
   if (validateOnFocusout.value) {
-    validate()
+    validate();
   }
-  emit('on:focusout')
-}
+  emit('on:focusout');
+};
 
-defineExpose({ validate, hasError: hasError.value })
+defineExpose({ validate, hasError: hasError.value });
 </script>
 
 <style lang="scss" scoped>

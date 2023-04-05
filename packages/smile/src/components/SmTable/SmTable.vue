@@ -25,14 +25,16 @@
               v-if="filter.show"
               :is="filter.component"
               v-model="filterValues[filter.name]"
-              size="small"
               v-bind="filter.attrs"
+              size="small"
+              @keyup.enter="onFilter"
             />
           </th>
           <th
-            v-if="hasSlot('actionsCol') && !filterConfig.actionsCol"
+            v-if="hasActionsColumn && !filterConfig.actionsCol"
             class="sm-table-container-th filterable"
-          ></th>
+            :style="{ width: actionsColWidth }"
+          />
         </tr>
         <tr>
           <th
@@ -44,26 +46,30 @@
               col.headerClass,
               { sortable: col.order },
             ]"
-            :data-name="col.name"
+            :header-name="col.name"
             :style="{ width: col.width }"
           >
             <template v-if="col.name == sortColumn">
               <sm-icon :class="{ asc: ascending }" icon="caret-up" size="small" />
             </template>
-            <span v-if="col.order" @click="sortTable(col.name)">
+            <span v-if="col.order" @click="onSort(col.name)">
               {{ columnNames[i] }}
             </span>
             <span v-else>
               {{ columnNames[i] }}
             </span>
           </th>
-          <th v-if="hasSlot('actionsCol')" class="sm-table-container-th">
+          <th
+            v-if="hasActionsColumn"
+            class="sm-table-container-th"
+            :style="{ width: actionsColWidth }"
+          >
             {{ actionsColHeadText }}
           </th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(row, i) in tableData" :key="'smTableTr-' + i">
+        <tr v-for="(row, i) in tableData" :key="'smTableTr-' + i" class="sm-table-container-tr">
           <slot name="bodyRow" :columns="columnConfig" :row="row" :rowIndex="i">
             <td
               v-for="(col, j) in columnConfig"
@@ -73,15 +79,16 @@
             >
               <slot
                 :name="(('bodyRow.' + col.name) as string)"
+                :row-index="i"
+                :col-index="j"
+                :col="col"
                 :row="row"
-                :rowIndex="i"
-                :colIndex="j"
               >
                 {{ row[col.name] }}
               </slot>
             </td>
           </slot>
-          <td v-if="hasSlot('actionsCol')" class="sm-table-container-td">
+          <td v-if="hasActionsColumn" class="sm-table-container-td">
             <slot name="actionsCol" :row="row" />
           </td>
         </tr>
@@ -100,7 +107,7 @@
         :item-limit-options="itemsPerPageOptions"
         :text="textPagination"
         class="sm-table-pagination"
-        @refresh="handleEvent('refresh', itemsPerPage)"
+        @refresh="onRefresh"
         @update:page="onUpdatePage"
         @update:itemsPerPage="onUpdateItemsPerPage"
       />
@@ -112,34 +119,35 @@
 </template>
 
 <script lang="ts" setup>
-import { SmPagination, SmInnerLoading, SmMarkupTable } from '~/components/index'
-import { useSlots } from 'vue'
-import { smPaginationText } from '../../interfaces/sm-pagination.interface'
+import { SmPagination, SmInnerLoading, SmMarkupTable } from '../index';
+import { useSlots } from 'vue';
+import { smPaginationText } from '../../interfaces/sm-pagination.interface';
 import {
   smTableColumn,
   smTableFilter,
   smTableChangeEvent,
-} from '../../interfaces/sm-table.interface'
-import { useFilters } from '../../composables'
+} from '../../interfaces/sm-table.interface';
+import { useFilters } from '../../composables';
 
 const props = withDefaults(
   defineProps<{
-    rows?: Array<any>
-    hoverable?: boolean
-    total?: number
-    page?: number
-    itemsPerPage?: number
-    itemsPerPageOptions?: Array<number>
-    columnConfig?: Array<smTableColumn>
-    loading?: boolean
-    loadingText?: string
-    noContentText?: string
-    textPagination?: smPaginationText
-    actionsColHeadText?: string
-    filterConfig?: { [key: string]: smTableFilter }
-    filterBtnText?: string
-    closeFilterBtnText?: string
-    isFixed?: boolean
+    rows?: Array<any>;
+    hoverable?: boolean;
+    total?: number;
+    page?: number;
+    itemsPerPage?: number;
+    itemsPerPageOptions?: Array<number>;
+    columnConfig?: Array<smTableColumn>;
+    loading?: boolean;
+    loadingText?: string;
+    noContentText?: string;
+    textPagination?: smPaginationText;
+    actionsColHeadText?: string;
+    actionsColWidth?: string;
+    filterConfig?: { [key: string]: smTableFilter };
+    filterBtnText?: string;
+    closeFilterBtnText?: string;
+    isFixed?: boolean;
   }>(),
   {
     hoverable: true,
@@ -155,51 +163,52 @@ const props = withDefaults(
     filterBtnText: 'Filtrar',
     closeFilterBtnText: 'Cerrar',
   }
-)
+);
 
-const slots = useSlots()
+const slots = useSlots();
 const emit = defineEmits<{
-  (e: 'refresh' | 'change' | 'filter', data: smTableChangeEvent): void
-  (e: 'update:page', data: number): void
-  (e: 'update:itemsPerPage', data: number): void
-}>()
+  (e: 'refresh' | 'change' | 'filter', data: smTableChangeEvent): void;
+  (e: 'update:page', data: number): void;
+  (e: 'update:itemsPerPage', data: number): void;
+}>();
 
-const sortColumn = ref('')
-const ascending = ref(true)
-const internalPage = ref(props.page)
-const internalItemsPerPage = ref(props.itemsPerPage)
+const sortColumn = ref('');
+const ascending = ref(true);
+const internalPage = ref(props.page);
+const internalItemsPerPage = ref(props.itemsPerPage);
 const internalTotal = computed(() =>
   props.total ? props.total : props.rows.length ? props.rows.length : 1
-)
+);
+const hasActionsColumn = computed(
+  () => slots['actionsCol'] && typeof slots['actionsCol'] === 'function'
+);
 
-const { hasFilterableData, filterAttrs, filterValues, showFilters, resetValues } = useFilters(
-  props.columnConfig,
-  props.filterConfig
-)
+const { hasFilterableData, filterAttrs, filterValues, showFilters, resetValues, filtersAreFalsy } =
+  useFilters(props.columnConfig, props.filterConfig);
 
 const tableData = computed((): Array<any> => {
   if (props.rows.length > internalItemsPerPage.value) {
-    return [...props.rows].slice(0, internalItemsPerPage.value)
+    return [...props.rows].slice(0, internalItemsPerPage.value);
   }
-  return [...props.rows]
-})
+  return [...props.rows];
+});
 const columnNames = computed((): Array<string> => {
   return props.columnConfig.map(col => {
-    const finalLabel = col.label ? col.label : col.name
+    const finalLabel = col.label ? col.label : col.name;
     if (col.format) {
-      return col.format(finalLabel)
+      return col.format(finalLabel);
     }
     if (col.firstToUpper) {
-      return finalLabel.charAt(0).toUpperCase() + finalLabel.slice(1)
+      return finalLabel.charAt(0).toUpperCase() + finalLabel.slice(1);
     }
-    return finalLabel
-  })
-})
+    return finalLabel;
+  });
+});
 
-const handleEvent = (event: 'refresh' | 'change' | 'filter', itemsPerPage: number) => {
-  const start = (internalPage.value - 1) * itemsPerPage
-  const order_field = sortColumn.value
-  const order_direction = ascending.value ? 'ASC' : 'DESC'
+const onEvent = (event: 'refresh' | 'change' | 'filter', itemsPerPage: number) => {
+  const start = (internalPage.value - 1) * itemsPerPage;
+  const order_field = sortColumn.value;
+  const order_direction = ascending.value ? 'ASC' : 'DESC';
   emit(event, {
     start,
     to: start + itemsPerPage,
@@ -207,49 +216,50 @@ const handleEvent = (event: 'refresh' | 'change' | 'filter', itemsPerPage: numbe
     order_field,
     order_direction,
     filters: { ...filterValues.value },
-  })
-}
+  });
+};
 const onUpdatePage = (page: number) => {
-  internalPage.value = page
-  handleEvent('change', internalItemsPerPage.value)
-}
+  internalPage.value = page;
+  onEvent('change', internalItemsPerPage.value);
+};
 const onUpdateItemsPerPage = (itemsPerPage: number) => {
-  internalPage.value = 1
-  internalItemsPerPage.value = itemsPerPage
-  handleEvent('change', itemsPerPage)
-}
+  internalPage.value = 1;
+  internalItemsPerPage.value = itemsPerPage;
+  onEvent('change', itemsPerPage);
+};
 const onFilter = () => {
   if (showFilters.value) {
-    internalPage.value = 1
-    handleEvent('filter', internalItemsPerPage.value)
+    internalPage.value = 1;
+    onEvent('filter', internalItemsPerPage.value);
   } else {
-    showFilters.value = true
+    showFilters.value = true;
   }
-}
+};
 const onHideFilter = () => {
-  showFilters.value = false
-  resetValues()
-  onUpdatePage(1)
-}
-const sortTable = (col: string) => {
-  if (sortColumn.value === col) {
-    ascending.value = !ascending.value
-  } else {
-    sortColumn.value = col
-    ascending.value = true
+  showFilters.value = false;
+  if (!filtersAreFalsy.value) {
+    resetValues();
+    onUpdatePage(1);
   }
-  onUpdateItemsPerPage(1)
-}
-const hasSlot = (slotName: string) => {
-  return slots[slotName] && typeof slots[slotName] === 'function'
-}
+};
+const onSort = (col: string) => {
+  if (sortColumn.value === col) {
+    ascending.value = !ascending.value;
+  } else {
+    sortColumn.value = col;
+    ascending.value = true;
+  }
+  onUpdatePage(1);
+};
+const onRefresh = () => {
+  onEvent('refresh', internalItemsPerPage.value);
+};
 
 defineExpose({
   onUpdateItemsPerPage,
   onUpdatePage,
-})
+  onRefresh,
+});
 </script>
 
-<style lang="scss" scoped>
-@import './SmTable.scss';
-</style>
+<style scoped lang="scss" src="./SmTable.scss" />

@@ -5,7 +5,6 @@ export function SmComponentsResolver(): ComponentResolver {
     type: 'component',
     resolve: (name: string) => {
       return { importName: name, path: '@smile-ui/vue' };
-      //if (/^Sm[A-Z]/.test(name))
     },
   };
 }
@@ -15,7 +14,6 @@ export function SmDirectiveResolver(): ComponentResolver {
     type: 'directive',
     resolve: (name: string) => {
       return { importName: name, path: '@smile-ui/vue' };
-      //if (/^Sm[A-Z]/.test(name))
     },
   };
 }

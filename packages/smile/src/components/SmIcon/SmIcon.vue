@@ -8,27 +8,27 @@
 </template>
 
 <script lang="ts" setup>
-import smileIcons from '@alegradev/smile-icons/dist/smile-icons.svg'
-import type { IconType } from '../../types'
+import type { IconType } from '../../interfaces';
+import smileIcons from '@alegradev/smile-icons/dist/smile-icons.svg';
 
 const props = withDefaults(
   defineProps<{
-    icon?: IconType
-    size?: 'small' | 'medium' | 'large' | 'huge'
-    type?: 'primary' | 'secondary' | 'error'
-    hoverColor?: string
-    disabled?: boolean
-    width?: string
-    height?: string
-    color?: string
+    icon?: IconType;
+    size?: 'small' | 'medium' | 'large' | 'huge';
+    type?: 'primary' | 'secondary' | 'error';
+    hoverColor?: string;
+    disabled?: boolean;
+    width?: string;
+    height?: string;
+    color?: string;
   }>(),
   {
     size: 'medium',
     icon: 'help',
   }
-)
+);
 
-const iconUrl = computed(() => `${smileIcons}#${props.icon}`)
+const iconUrl = computed(() => `${smileIcons}#${props.icon}`);
 </script>
 
 <style lang="scss" scoped>

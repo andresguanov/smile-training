@@ -1,0 +1,26 @@
+/* Tomar en consideración: https://github.com/valgeirb/vue3-popper */
+
+.tippy-box[data-theme~='smile-next'] {
+  @apply bg-slate-800;
+  @apply rounded-lg;
+
+  > .tippy-content {
+    @apply px-3 py-1.5;
+    @apply text-white text-xs font-semibold;
+  }
+  > .tippy-arrow::before {
+    transform: scale(0.6);
+  }
+  &[data-placement^='top'] > .tippy-arrow::before {
+    @apply border-t-slate-800;
+  }
+  &[data-placement^='bottom'] > .tippy-arrow::before {
+    @apply border-b-slate-800;
+  }
+  &[data-placement^='left'] > .tippy-arrow::before {
+    @apply border-l-slate-800;
+  }
+  &[data-placement^='right'] > .tippy-arrow::before {
+    @apply border-r-slate-800;
+  }
+}

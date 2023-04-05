@@ -31,16 +31,16 @@
 </template>
 
 <script lang="ts" setup>
-import { smSimpleUid as vSmSimpleUid } from '../../directives'
-import { useVModel } from '@vueuse/core'
-import { SmHint, SmLabel, SmErrorList } from '~/components/index'
+import { smSimpleUid as vSmSimpleUid } from '../../directives';
+import { useVModel } from '@vueuse/core';
+import { SmHint, SmLabel, SmErrorList } from '../index';
 import {
   LabelProps as labelProps,
   InputProps as inputProps,
   ValidateProps as validateProps,
   ToggleProps as toggleProps,
   useValidate,
-} from '../../composables'
+} from '../../composables';
 
 const props = defineProps({
   modelValue: {
@@ -51,25 +51,25 @@ const props = defineProps({
   ...inputProps,
   ...toggleProps,
   ...validateProps,
-})
-const emit = defineEmits(['update:modelValue', 'on:focusout'])
-const data = useVModel(props, 'modelValue', emit)
-const toggleElement = ref<HTMLSpanElement | null>(null)
+});
+const emit = defineEmits(['update:modelValue', 'on:focusout']);
+const data = useVModel(props, 'modelValue', emit);
+const toggleElement = ref<HTMLSpanElement | null>(null);
 const { validate, hasError, errorListContent, validateOnFocusout } = useValidate(
   data,
   props.rules || [],
   props.error,
   props.errorMessages
-)
+);
 
 const onFocusOut = () => {
   if (validateOnFocusout.value) {
-    validate()
+    validate();
   }
-  emit('on:focusout')
-}
+  emit('on:focusout');
+};
 
-defineExpose({ validate })
+defineExpose({ validate });
 </script>
 
 <style lang="scss" scoped>

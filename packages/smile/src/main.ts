@@ -17,10 +17,12 @@ setDefaultProps({
   arrow: true,
   interactive: true,
 });
+
 /* Comentar al compilar */
 /*
 import { createApp } from 'vue'
-import App from "./components/App.vue"
+import App from './components/App.vue'
 import { $SmAlert, ISmAlertProvide, useSmAlert } from './utils/alerts'
 
-createApp(App).provide<ISmAlertProvide>($SmAlert, useSmAlert()).mount('#app') */
+createApp(App).provide<ISmAlertProvide>($SmAlert, useSmAlert()).mount('#app')
+*/

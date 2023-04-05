@@ -12,6 +12,7 @@
         :step="step"
         :disabled="disabled"
         :placeholder="placeholder"
+        :required="required"
         :class="[
           'sm-input',
           `sm-input-${size}`,
@@ -33,25 +34,26 @@
 </template>
 
 <script lang="ts" setup>
-import { smSimpleUid as vSmSimpleUid } from '../../directives'
-import { useValidate } from '~/composables'
+import { smSimpleUid as vSmSimpleUid } from '../../directives';
+import { useValidate } from '~/composables';
 
 const props = withDefaults(
   defineProps<{
-    modelValue?: string | null | number
-    label?: string
-    size?: 'small' | 'medium' | 'large'
-    error?: boolean
-    dataPrefix?: string
-    dataSufix?: string
-    min?: number
-    max?: number
-    decimalPrecision?: number
-    decimalSeparator?: '.' | ','
-    disabled?: boolean
-    placeholder?: string
-    errorMessages?: Array<string>
-    rules?: Array<(value: any) => boolean | string>
+    modelValue?: string | null | number;
+    label?: string;
+    size?: 'small' | 'medium' | 'large';
+    error?: boolean;
+    dataPrefix?: string;
+    dataSufix?: string;
+    min?: number;
+    max?: number;
+    decimalPrecision?: number;
+    decimalSeparator?: '.' | ',';
+    disabled?: boolean;
+    placeholder?: string;
+    required?: boolean;
+    errorMessages?: Array<string>;
+    rules?: Array<(value: any) => boolean | string>;
   }>(),
   {
     decimalPrecision: 0,
@@ -59,27 +61,27 @@ const props = withDefaults(
     max: Infinity,
     decimalSeparator: '.',
   }
-)
-const emit = defineEmits(['update:modelValue', 'on:focusout'])
-const data = useVModel(props, 'modelValue', emit)
-const inputElement = ref<HTMLDivElement | null>(null)
+);
+const emit = defineEmits(['update:modelValue', 'on:focusout']);
+const data = useVModel(props, 'modelValue', emit);
+const inputElement = ref<HTMLDivElement | null>(null);
 const { validate, hasError, errorListContent, validateOnFocusout } = useValidate(
   data,
   props.rules || [],
   props.error,
   props.errorMessages
-)
+);
 
-const isNaN = Number.isNaN || window.isNaN
+const isNaN = Number.isNaN || window.isNaN;
 
 const step = computed(() => {
-  return 1 / 10 ** getDecimalPart()
-})
+  return 1 / 10 ** getDecimalPart();
+});
 
 const getDecimalPart = () => {
-  const value = Number(data.value)
+  const value = Number(data.value);
   if (isNaN(value)) {
-    return 0
+    return 0;
   }
   /* for evaluate number as "5e-6"
       const textValue = value.toString()
@@ -91,33 +93,33 @@ const getDecimalPart = () => {
       }
       */
   if (Math.floor(value) !== value) {
-    return value.toString().split(props.decimalSeparator)[1].length || 0
+    return value.toString().split(props.decimalSeparator)[1].length || 0;
   }
-  return 0
-}
+  return 0;
+};
 const updateValue = () => {
-  const value = data.value
+  const value = data.value;
   if (value) {
-    let newValue = typeof value !== 'number' ? parseFloat(value) : value
+    let newValue = typeof value !== 'number' ? parseFloat(value) : value;
     if (!isNaN(newValue)) {
       if (props.min <= props.max) {
-        newValue = Math.min(props.max, Math.max(props.min, newValue))
+        newValue = Math.min(props.max, Math.max(props.min, newValue));
       }
-      newValue = Number(newValue.toFixed(props.decimalPrecision))
-      data.value = newValue
+      newValue = Number(newValue.toFixed(props.decimalPrecision));
+      data.value = newValue;
     } else {
-      data.value = ''
+      data.value = '';
     }
   }
-}
+};
 const onFocusOut = () => {
   if (validateOnFocusout.value) {
-    validate()
+    validate();
   }
-  emit('on:focusout')
-}
+  emit('on:focusout');
+};
 
-defineExpose({ validate })
+defineExpose({ validate });
 </script>
 
 <style lang="scss" scoped>

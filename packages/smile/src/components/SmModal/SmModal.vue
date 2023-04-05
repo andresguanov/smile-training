@@ -18,17 +18,17 @@
 
 <script lang="ts" setup>
 // TODO: sustituir por useVModel para tener la prop show reactiva
-import { SmModalBody, SmModalContent, SmModalHeader, SmModalFooter } from '..'
+import { SmModalBody, SmModalContent, SmModalHeader, SmModalFooter } from '../index';
 
-const props = defineProps<{ modelValue: boolean }>()
+const props = defineProps<{ modelValue: boolean }>();
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue']);
 
-const data = useVModel(props, 'modelValue', emit)
+const data = useVModel(props, 'modelValue', emit);
 
 const close = () => {
-  data.value = false
-}
+  data.value = false;
+};
 </script>
 
 <style lang="scss" scoped>

@@ -30,40 +30,40 @@
 </template>
 <!-- TODO: crear un form para revisar reactividad de la implementacion -->
 <script lang="ts" setup>
-import { smSimpleUid as vSmSimpleUid } from '../../directives'
-import { useVModel } from '@vueuse/core'
-import { SmHint, SmLabel } from '~/components/index'
-import { useValidate } from '../../composables'
+import { smSimpleUid as vSmSimpleUid } from '../../directives';
+import { useVModel } from '@vueuse/core';
+import { SmHint, SmLabel } from '../index';
+import { useValidate } from '../../composables';
 
 const props = defineProps<{
-  nativeValue: any
-  label: string
-  modelValue?: any
-  error?: boolean
-  size?: 'small' | 'medium' | 'large'
-  required?: boolean
-  errorMessages?: Array<string>
-  disabled?: boolean
-  labelToLeft?: boolean
-  rules?: Array<(value: any) => boolean | string>
-}>()
+  nativeValue: any;
+  label: string;
+  modelValue?: any;
+  error?: boolean;
+  size?: 'small' | 'medium' | 'large';
+  required?: boolean;
+  errorMessages?: Array<string>;
+  disabled?: boolean;
+  labelToLeft?: boolean;
+  rules?: Array<(value: any) => boolean | string>;
+}>();
 
-const emit = defineEmits(['update:modelValue'])
-const data = useVModel(props, 'modelValue', emit)
-const radioElement = ref<HTMLSpanElement | null>(null)
+const emit = defineEmits(['update:modelValue']);
+const data = useVModel(props, 'modelValue', emit);
+const radioElement = ref<HTMLSpanElement | null>(null);
 const { validate, hasError, errorListContent } = useValidate(
   data,
   props.rules || [],
   props.error,
   props.errorMessages
-)
+);
 
 const sizeClass = computed(() => {
-  let size = props.size || 'medium'
-  return `sm-radio-${size}`
-})
+  let size = props.size || 'medium';
+  return `sm-radio-${size}`;
+});
 
-defineExpose({ validate })
+defineExpose({ validate });
 </script>
 
 <style lang="scss" scoped>
