@@ -10,10 +10,12 @@
       />
     </div>
     <s-empty-state />
-    <s-empty-state is-on-component secondary-action="ssss" />
     <sm-card class="mt-1">
       <sm-form ref="smFormEl" validation-mode="on-focusout">
         <template #default="{ validate, reset }">
+          <s-input v-model="text" size="small" icon-left="lock" icon-right="view-eye" />
+          <s-input v-model="text" icon-left="lock" icon-right="view-eye" readonly />
+          <s-input v-model="text" size="large" icon-left="lock" icon-right="view-eye" disabled />
           <sm-datepicker v-model="datepicker" label="Nombre" :rules="sRules" range size="large" />
           <sm-select v-model="select" :options="options" label="Nombre" search :rules="sRules" />
           <sm-button type="primary" @click="validate()">Submit</sm-button>
@@ -106,7 +108,6 @@
         <sm-select v-model="select" :options="options" />
       </template>
     </sm-table>
-    <!-- <sm-button type="primary" @click="testSmTable?.onRefresh()">Submit</sm-button> -->
   </div>
 </template>
 
@@ -156,6 +157,7 @@ const modal = ref(true)
 const check = ref([])
 const radio = ref('')
 // const number = ref(3)
+const text = ref('')
 const select = ref([])
 const datepicker = ref('')
 const options = ref([
