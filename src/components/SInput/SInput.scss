@@ -1,0 +1,78 @@
+.s-input {
+  @apply space-y-1;
+
+  &__label {
+    @apply text-slate-700 text-sm font-medium;
+  }
+  &__helper {
+    @apply text-slate-500 text-xs font-normal;
+  }
+  &__container {
+    @apply flex items-center;
+    @apply bg-white border border-slate-300;
+    @apply rounded-[10px] pl-2.5 h-10;
+
+    &:hover {
+      @apply border-slate-400;
+    }
+    &:focus-within {
+      @apply border-2 border-sm-primary-500;
+    }
+    &.filled {
+      @apply border-2 border-slate-300;
+
+      &:focus-within {
+        @apply border-sm-primary-500;
+      }
+    }
+
+    .s-input__input {
+      @apply text-base;
+      @apply py-1.5;
+    }
+    .s-input__icon {
+      &.trailing {
+        @apply p-2.5;
+      }
+    }
+
+    &.small {
+      @apply rounded-lg pl-2 h-8;
+
+      .s-input__input {
+        @apply text-sm;
+      }
+      .s-input__icon {
+        &.trailing {
+          @apply p-2;
+        }
+      }
+    }
+    &.large {
+      @apply rounded-xl pl-3.5 h-12;
+
+      .s-input__icon {
+        &.trailing {
+          @apply p-3.5;
+        }
+      }
+    }
+  }
+  &__input {
+    @apply h-full w-full font-normal text-slate-700;
+
+    &::placeholder {
+      @apply text-slate-400;
+    }
+  }
+  &__icon {
+    @apply text-slate-500 flex;
+
+    &.trailing {
+      @apply cursor-pointer;
+    }
+    &.leading {
+      @apply mr-2;
+    }
+  }
+}
