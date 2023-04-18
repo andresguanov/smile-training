@@ -9,6 +9,13 @@
         @click-step="step = $event"
       />
     </div>
+
+    <s-modal v-model="modal" header-text="Modal Title">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, adipisci velit ab aliquam
+      veniam odit vitae non ipsam dolorem quaerat, totam quia ut vel error ducimus eveniet
+      accusantium enim quam!
+    </s-modal>
+
     <s-empty-state />
     <s-empty-state is-on-component secondary-action="ssss" />
     <sm-card class="mt-1">
@@ -63,7 +70,7 @@
         </template>
       </sm-form>
     </sm-card>
-    <sm-modal v-model="modal">
+    <!-- <sm-modal v-model="modal">
       <template v-slot:header>Header</template>
       <template v-slot:body>
         <div class="w-[500px]">
@@ -78,7 +85,7 @@
       <template v-slot:footer>
         <s-button size="small" label="hola" loading></s-button>
       </template>
-    </sm-modal>
+    </sm-modal> -->
     <sm-table
       ref="testSmTable"
       :filter-config="{

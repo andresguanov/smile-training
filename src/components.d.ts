@@ -35,6 +35,7 @@ declare module 'vue' {
     SmModalHeader: typeof import('./components/SmModal/SmModalHeader.vue')['default']
     SmNameAvatar: typeof import('./components/SmNameAvatar/SmNameAvatar.vue')['default']
     SmNumberInput: typeof import('./components/SmNumberInput/SmNumberInput.vue')['default']
+    SModal: typeof import('./components/SModal/SModal.vue')['default']
     SmPagination: typeof import('./components/SmPagination/SmPagination.vue')['default']
     SmProgressBar: typeof import('./components/SmProgressBar/SmProgressBar.vue')['default']
     SmProgressCircle: typeof import('./components/SmProgressCircle/SmProgressCircle.vue')['default']
