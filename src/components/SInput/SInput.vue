@@ -1,10 +1,17 @@
 <template>
-  <div class="s-input">
+  <div
+    class="s-input"
+    :class="{
+      's-input--disabled': disabled,
+      's-input--readonly': readonly,
+      's-input--error': error,
+    }"
+  >
     <div class="s-input__header">
       <p class="s-input__label">Label</p>
       <small class="s-input__helper">{{ cornerHelper }}</small>
     </div>
-    <div class="s-input__container" :class="[size, { filled: Boolean(value), disabled, readonly }]">
+    <div class="s-input__container" :class="[size, { filled: Boolean(value) }]">
       <div v-if="leading" class="s-input__leading">Label</div>
       <div v-if="iconLeft" class="s-input__icon leading">
         <sm-icon :icon="iconLeft" :width="iconSize" :height="iconSize" />
@@ -17,6 +24,15 @@
         :readonly="readonly"
         class="s-input__input"
       />
+      <div v-if="success" class="s-input__icon success">
+        <sm-icon icon="success" :width="iconSize" :height="iconSize" />
+      </div>
+      <div v-if="loading" class="s-input__icon loading">
+        <sm-icon icon="loading" :width="iconSize" :height="iconSize" />
+      </div>
+      <div v-if="error" class="s-input__icon error">
+        <sm-icon icon="alert-circle" :width="iconSize" :height="iconSize" />
+      </div>
       <div v-if="iconRight" class="s-input__icon trailing">
         <sm-icon :icon="iconRight" :width="iconSize" :height="iconSize" />
       </div>
@@ -44,6 +60,9 @@ const props = withDefaults(
     placeholder?: string
     disabled?: boolean
     readonly?: boolean
+    error?: boolean
+    success?: boolean
+    loading?: boolean
   }>(),
   {
     placeholder: 'Placeholder',
