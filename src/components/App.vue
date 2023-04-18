@@ -10,6 +10,8 @@
       />
     </div>
 
+    <s-breadcrumb label="Hola mundo" active></s-breadcrumb>
+
     <s-modal v-model="modal" header-text="Modal Title">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, adipisci velit ab aliquam
       veniam odit vitae non ipsam dolorem quaerat, totam quia ut vel error ducimus eveniet

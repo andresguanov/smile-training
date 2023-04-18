@@ -5,6 +5,7 @@
 declare module 'vue' {
   export interface GlobalComponents {
     App: typeof import('./components/App.vue')['default']
+    SBreadcrumb: typeof import('./components/SBreadcrumb/SBreadcrumb.vue')['default']
     SButton: typeof import('./components/SButton/SButton.vue')['default']
     SCheckbox: typeof import('./components/SCheckbox/SCheckbox.vue')['default']
     SEmptyState: typeof import('./components/SEmptyState/SEmptyState.vue')['default']
