@@ -13,9 +13,9 @@
     <sm-card class="mt-1">
       <sm-form ref="smFormEl" validation-mode="on-focusout">
         <template #default="{ validate, reset }">
-          <s-input v-model="text" size="small" icon-left="lock" icon-right="view-eye" />
-          <s-input v-model="text" icon-left="lock" icon-right="view-eye" error />
-          <s-input v-model="text" size="large" icon-left="lock" icon-right="view-eye" loading />
+          <s-input v-model="text" size="small" icon-right="view-eye" />
+          <s-input v-model="text" icon-right="view-eye" error />
+          <s-input v-model="text" size="large" icon-right="view-eye" loading />
           <sm-datepicker v-model="datepicker" label="Nombre" :rules="sRules" range size="large" />
           <sm-select v-model="select" :options="options" label="Nombre" search :rules="sRules" />
           <sm-button type="primary" @click="validate()">Submit</sm-button>
