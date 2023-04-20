@@ -12,6 +12,7 @@ declare module 'vue' {
     SEmptyState: typeof import('./components/SEmptyState/SEmptyState.vue')['default']
     SError: typeof import('./components/SError/SError.vue')['default']
     SInput: typeof import('./components/SInput/SInput.vue')['default']
+    SInputLeading: typeof import('./components/SInput/addons/SInputLeading.vue')['default']
     SmAccordion: typeof import('./components/SmAccordion/SmAccordion.vue')['default']
     SmAccordionItem: typeof import('./components/SmAccordion/SmAccordionItem.vue')['default']
     SmAccordionItemBody: typeof import('./components/SmAccordion/SmAccordionItemBody.vue')['default']
