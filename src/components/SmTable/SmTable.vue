@@ -49,15 +49,20 @@
             :header-name="col.name"
             :style="{ width: col.width }"
           >
-            <template v-if="col.name == sortColumn">
-              <sm-icon :class="{ asc: ascending }" icon="caret-up" size="small" />
-            </template>
-            <span v-if="col.order" @click="onSort(col.name)">
-              {{ columnNames[i] }}
-            </span>
-            <span v-else>
-              {{ columnNames[i] }}
-            </span>
+            <slot :name="(('head.' + col.name) as string)" :col="col">
+              <sm-icon
+                v-if="col.name == sortColumn"
+                :class="{ asc: ascending }"
+                icon="caret-up"
+                size="small"
+              />
+              <span v-if="col.order" @click="onSort(col.name)">
+                {{ columnNames[i] }}
+              </span>
+              <span v-else>
+                {{ columnNames[i] }}
+              </span>
+            </slot>
           </th>
           <th
             v-if="hasActionsColumn"
