@@ -102,11 +102,16 @@
       @change="onChange"
       @filter="onChange"
     >
+      <template #head.a>
+        <input v-model="selectAll" type="checkbox" name="test" id="test" />
+      </template>
+      <template #bodyRow.a="{ row }">
+        <input v-model="selected" :value="row.a" type="checkbox" name="test" id="test" />
+      </template>
       <template #actionsCol>
         <sm-select v-model="select" :options="options" />
       </template>
     </sm-table>
-    <!-- <sm-button type="primary" @click="testSmTable?.onRefresh()">Submit</sm-button> -->
   </div>
 </template>
 
@@ -151,6 +156,8 @@ import {
 interface radioTest {
   card: string
 }
+const selectAll = ref(false)
+const selected = ref([])
 const step = ref(1)
 const modal = ref(true)
 const check = ref([])
@@ -169,7 +176,7 @@ const cols: smTableColumn[] = reactive([
     bodyAlign: 'left',
     headerAlign: 'left',
     filterable: true,
-    order: false,
+    order: true,
     format: (value: string) => value.toUpperCase(),
     label: 'A',
     name: 'a',
