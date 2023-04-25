@@ -52,20 +52,12 @@
         }
       }
     }
-
-    .s-input__input {
-      @apply text-base;
-      @apply py-1.5;
-    }
-    .s-input__icon {
-      &.trailing {
-        @apply p-2.5;
-      }
-    }
   }
   &__input {
-    @apply h-full w-full font-normal text-slate-700;
+    @apply h-full w-full;
+    @apply font-normal text-slate-700 text-base;
     @apply bg-transparent;
+    @apply px-2 py-1.5;
 
     &::placeholder {
       @apply text-slate-400;
@@ -75,10 +67,10 @@
     @apply text-slate-500 flex;
 
     &.trailing {
-      @apply cursor-pointer;
+      @apply cursor-pointer p-2.5;
     }
     &.leading {
-      @apply mr-2 ml-2.5;
+      @apply ml-2.5;
     }
     &.error {
       @apply text-rose-600;

@@ -13,7 +13,7 @@
     <sm-card class="mt-1">
       <sm-form ref="smFormEl" validation-mode="on-focusout">
         <template #default="{ validate, reset }">
-          <s-input v-model="text" size="small" icon-right="view-eye" />
+          <s-input v-model="text" size="small" icon-right="view-eye" icon-left="accounting" />
           <s-input v-model="text" icon-right="view-eye" error />
           <s-input v-model="text" size="large" icon-right="view-eye" loading />
           <sm-datepicker v-model="datepicker" label="Nombre" :rules="sRules" range size="large" />
