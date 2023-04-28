@@ -89,7 +89,6 @@ const props = withDefaults(
     error?: string
   }>(),
   {
-    placeholder: 'Placeholder',
     size: 'medium',
     rules: () => [],
   }

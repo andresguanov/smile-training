@@ -9,7 +9,7 @@
         { 'sm-input-error': hasError },
         { 'sm-input-disabled': disabled },
       ]"
-      v-sm-simple-uid
+      v-sm-simple-uid="'sm-input'"
     >
       <slot name="before" />
       <input
