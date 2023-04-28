@@ -12,6 +12,14 @@
 
     <s-breadcrumb label="Hola mundo" active></s-breadcrumb>
 
+    <s-page-heading title="[Heading Title]" description="Description......">
+      <template #actions>
+        <s-button>Label</s-button>
+        <s-button>Label</s-button>
+        <s-button>Label</s-button>
+      </template>
+    </s-page-heading>
+
     <s-modal v-model="modal" header-text="Modal Title">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, adipisci velit ab aliquam
       veniam odit vitae non ipsam dolorem quaerat, totam quia ut vel error ducimus eveniet
