@@ -20,6 +20,7 @@
             :leading="{ label: 'Leading', icon: 'accounting', actionable: true }"
           />
           <s-dropdown v-model="text" />
+          <s-number-input v-model="number" icon-left="accounting" />
           <sm-button type="primary" @click="validate()">Submit</sm-button>
           <sm-button type="primary" @click="reset">Reset</sm-button>
         </template>
@@ -119,7 +120,7 @@ const step = ref(1)
 const modal = ref(true)
 const check = ref([])
 const radio = ref('')
-// const number = ref(3)
+const number = ref(3)
 const text = ref('')
 const select = ref([])
 const options = ref([

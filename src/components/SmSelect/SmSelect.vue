@@ -8,7 +8,7 @@
         :disabled="disabled"
         :placeholder="currentValue || placeholder"
         :class="{ 'sm-input-disabled': disabled }"
-        v-sm-simple-uid
+        v-sm-simple-uid="'sm-select'"
         @focusin="show = true"
         @focusout="hide"
         @beforeinput="filter"

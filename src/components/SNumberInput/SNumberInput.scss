@@ -1,0 +1,121 @@
+.s-number {
+  @apply space-y-1;
+
+  &__label {
+    @apply text-slate-700 text-sm font-medium;
+  }
+  &__divider {
+    @apply h-1/2 w-[1px] bg-slate-300;
+  }
+  &__container {
+    @apply flex items-center overflow-hidden;
+    @apply bg-white border border-slate-300;
+    @apply rounded-[10px] h-10;
+
+    &:hover {
+      @apply border-slate-400;
+    }
+    &:focus-within {
+      @apply border-2 border-sm-primary-500;
+    }
+    &.filled {
+      @apply border-2 border-slate-300;
+
+      &:focus-within {
+        @apply border-sm-primary-500;
+      }
+    }
+    &.small {
+      @apply rounded-lg h-8;
+
+      .s-number__input {
+        @apply text-sm;
+      }
+      .s-number__icon {
+        &.leading {
+          @apply ml-2;
+        }
+      }
+    }
+    &.large {
+      @apply rounded-xl h-12;
+
+      .s-number__icon {
+        &.leading {
+          @apply ml-3.5;
+        }
+      }
+    }
+  }
+  &__input {
+    @apply h-full w-full;
+    @apply font-normal text-slate-700 text-base;
+    @apply bg-transparent;
+    @apply px-2 py-1.5;
+    -moz-appearance: textfield;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    &::placeholder {
+      @apply text-slate-400;
+    }
+  }
+  &__icon {
+    @apply text-slate-500 flex;
+
+    &.leading {
+      @apply ml-2.5;
+    }
+    &.error {
+      @apply text-rose-600;
+    }
+    &.success,
+    &.loading {
+      @apply text-sm-primary-600;
+    }
+    &.loading {
+      @apply animate-spin;
+    }
+  }
+  &.disabled {
+    .s-number__icon,
+    .s-number__helper,
+    .s-number__label,
+    .s-number__input,
+    .s-number__input::placeholder {
+      @apply text-slate-300;
+      @apply cursor-default;
+    }
+    .s-number__container {
+      @apply border-slate-200;
+      @apply bg-slate-50;
+    }
+  }
+  &.readonly {
+    .s-number__container {
+      @apply border-slate-200;
+      @apply bg-slate-50;
+
+      &:hover,
+      &:focus-within {
+        @apply border-slate-200;
+      }
+    }
+  }
+  &.error {
+    .s-number__container {
+      @apply border-rose-600;
+
+      &:hover,
+      &:focus-within {
+        @apply border-rose-600;
+      }
+    }
+    .s-number__footer .s-number__helper {
+      @apply text-rose-600;
+    }
+  }
+}

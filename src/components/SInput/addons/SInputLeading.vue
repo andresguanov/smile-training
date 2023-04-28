@@ -1,8 +1,8 @@
 <template>
   <div class="s-leading" :class="[size, { inline, actionable, trailing }]">
-    <div class="s-leading__wrapper">
-      <p>{{ label }}</p>
-      <sm-icon v-if="icon" :icon="icon" />
+    <div class="s-leading__wrapper" :class="{ disabled }">
+      <p v-if="label">{{ label }}</p>
+      <sm-icon v-if="icon" class="s-leading__icon" :icon="icon" />
     </div>
   </div>
 </template>
@@ -17,6 +17,7 @@ defineProps<{
   label?: string
   icon?: IconType
   trailing?: boolean
+  disabled?: boolean
 }>()
 </script>
 
@@ -26,11 +27,12 @@ defineProps<{
 
   &__wrapper {
     @apply flex items-center gap-0.5;
-    @apply h-full px-2;
-    @apply border-r border-solid bg-slate-50 border-slate-300;
+    @apply h-full bg-slate-50 px-2;
+    @apply border-r border-solid border-slate-300;
     @apply text-slate-500 font-normal;
+    @apply rounded-lg;
 
-    svg {
+    :deep(.s-leading__icon) {
       @apply w-5 h-5;
     }
   }
@@ -46,27 +48,38 @@ defineProps<{
     .s-leading__wrapper {
       @apply bg-white cursor-pointer;
 
-      &:hover {
-        @apply bg-slate-200/40;
+      &:not(.disabled) {
+        &:hover {
+          @apply bg-slate-200/40;
+        }
+        &:active,
+        &:focus {
+          @apply bg-slate-200/70;
+        }
       }
-      &:active,
-      &:focus {
-        @apply bg-slate-200/70;
+      &.disabled {
+        @apply text-slate-300 cursor-auto;
       }
     }
   }
   &.small {
     .s-leading__wrapper {
-      @apply text-sm;
+      @apply text-sm rounded-md;
 
-      svg {
+      :deep(.s-leading__icon) {
         @apply w-4 h-4;
       }
+    }
+  }
+  &.large {
+    .s-leading__wrapper {
+      @apply rounded-[10px];
     }
   }
   &.trailing {
     .s-leading__wrapper {
       @apply flex-row-reverse;
+      @apply border-0 border-l;
     }
   }
 }

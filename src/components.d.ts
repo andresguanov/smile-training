@@ -51,6 +51,8 @@ declare module 'vue' {
     SmTabSelectors: typeof import('./components/SmTab/SmTabSelectors.vue')['default']
     SmTextarea: typeof import('./components/SmTextarea/SmTextarea.vue')['default']
     SmToggle: typeof import('./components/SmToggle/SmToggle.vue')['default']
+    SNumberInput: typeof import('./components/SNumberInput/SNumberInput.vue')['default']
+    SOverflowMenu: typeof import('./components/SOverflowMenu/SOverflowMenu.vue')['default']
     SRadio: typeof import('./components/SRadio/SRadio.vue')['default']
     SStep: typeof import('./components/SStepper/SStep.vue')['default']
     SStepper: typeof import('./components/SStepper/SStepper.vue')['default']
