@@ -12,6 +12,17 @@
 
     <s-breadcrumb label="Hola mundo" active></s-breadcrumb>
 
+    <s-tabs filled>
+      <template #selectors>
+        <s-tab-label target="1" selected> Label </s-tab-label>
+        <s-tab-label target="2"> Label </s-tab-label>
+        <s-tab-label target="3"> Label </s-tab-label>
+      </template>
+      <s-tab-content name="1" style="width: 200px; height: 200px"> Tab Content 1 </s-tab-content>
+      <s-tab-content name="2" style="width: 200px; height: 200px"> Tab Content 2 </s-tab-content>
+      <s-tab-content name="3" style="width: 200px; height: 200px"> Tab Content 3 </s-tab-content>
+    </s-tabs>
+
     <s-page-heading title="[Heading Title]" description="Description......">
       <template #actions>
         <s-button>Label</s-button>
