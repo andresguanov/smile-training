@@ -1,0 +1,7 @@
+.s-dropdown {
+  @apply relative;
+
+  &__menu {
+    @apply mt-1 w-full;
+  }
+}
