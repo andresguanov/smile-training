@@ -47,6 +47,12 @@
             :rules="sRules"
             :leading="{ label: 'Leading', icon: 'accounting', actionable: true }"
           />
+          <s-input
+            v-model="text"
+            icon-left="search"
+            :rules="sRules"
+            :trailing="{ icon: 'close', actionable: true, inline: true }"
+          />
           <s-dropdown v-model="text" />
           <s-number-input v-model="number" icon-left="accounting" />
           <sm-button type="primary" @click="validate()">Submit</sm-button>

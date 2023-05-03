@@ -1,9 +1,9 @@
 <template>
-  <div ref="menuEl" class="s-menu" :style="{ top: distance }">
-    <header class="s-menu__header">
-      <h4></h4>
-    </header>
-    <div class="s-meny__body"></div>
+  <div ref="menuEl" class="s-menu" :style="{ top, left, right, bottom }">
+    <header class="s-menu__header"></header>
+    <div class="s-menu__body">
+      <slot />
+    </div>
     <footer class="s-menu__footer"></footer>
   </div>
 </template>
@@ -11,13 +11,18 @@
 <script setup lang="ts">
 const props = withDefaults(
   defineProps<{
+    top?: string
+    left?: string
+    bottom?: string
+    right?: string
     /**
-     * La distancia del menú con respecto a su contenedor padre
+     * Especifica la forma en la que se desencadenará el evento clickOutside.
+     * Por defecto el evento se dispara como capture
      */
-    distance?: string
+    bubbling?: boolean
     items?: string[]
   }>(),
-  { distance: '0px' }
+  {}
 )
 if (!props.items?.length) {
   console.warn('Missing data in %citems', 'color: red;font-weight: bold;padding: 1px', 'prop.')
@@ -28,11 +33,7 @@ const emit = defineEmits<{
 
 const menuEl = ref<HTMLDivElement | null>(null)
 
-onClickOutside(menuEl, event => emit('clickOutside', event))
+onClickOutside(menuEl, event => emit('clickOutside', event), { capture: !props.bubbling })
 </script>
 
-<style lang="scss" scoped>
-.s-menu {
-  @apply absolute;
-}
-</style>
+<style lang="scss" scoped src="./SOverflowMenu.scss"></style>

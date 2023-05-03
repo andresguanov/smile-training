@@ -1,0 +1,46 @@
+.s-menu-item {
+  @apply flex space-x-2 px-2 py-1.5;
+  @apply cursor-pointer rounded-[10px] md:rounded-lg;
+  @apply text-slate-700;
+
+  &.destructive {
+    @apply text-rose-600;
+
+    &:not(.disabled) {
+      &:hover,
+      &:focus,
+      &:active {
+        @apply bg-rose-100;
+      }
+    }
+  }
+  &.disabled {
+    @apply opacity-30 cursor-default;
+  }
+  &:not(.disabled) {
+    &:hover {
+      @apply bg-slate-200/[45%];
+    }
+    &:focus,
+    &:active {
+      @apply bg-slate-200/70;
+    }
+  }
+  &__text {
+    @apply flex items-center space-x-2;
+    @apply text-sm font-normal;
+
+    &.block {
+      @apply flex-col items-start space-y-1 space-x-0;
+    }
+    &__title {
+      @apply font-semibold;
+    }
+    &__description {
+      @apply text-slate-500 text-xs;
+    }
+  }
+  &__image {
+    @apply h-5 w-5 rounded-full;
+  }
+}

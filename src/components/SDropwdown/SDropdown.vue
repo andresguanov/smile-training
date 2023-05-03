@@ -1,13 +1,15 @@
 <template>
   <div class="s-dropdown">
-    <s-input
-      v-model="value"
-      :size="size"
-      :icon-left="search ? 'search' : undefined"
-      :icon-right="trailingIcon"
-      @click="open = !open"
-    />
-    <div v-if="open" ref="menuEl" class="s-dropdown__menu"></div>
+    <s-input v-model="value" :size="size" :icon-right="trailingIcon" @click.stop="open = !open" />
+    <s-overflow-menu
+      v-if="open"
+      class="s-dropdown__menu"
+      top="100%"
+      bubbling
+      @click-outside="open = false"
+    >
+      <s-menu-item title="dasdasd" />
+    </s-overflow-menu>
   </div>
 </template>
 
@@ -50,10 +52,7 @@ const emit = defineEmits<{
 const value = useVModel(props, 'modelValue', emit)
 
 const open = ref(false)
-const trailingIcon = computed<IconType>(() => {
-  if (props.search) return 'close'
-  return open.value ? 'chevron-up' : 'chevron-down'
-})
+const trailingIcon = computed<IconType>(() => (open.value ? 'chevron-up' : 'chevron-down'))
 </script>
 
 <style scoped lang="scss" src="./SDropdown.scss"></style>

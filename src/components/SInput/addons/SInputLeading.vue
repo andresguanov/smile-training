@@ -50,7 +50,7 @@ defineProps<{
 
       &:not(.disabled) {
         &:hover {
-          @apply bg-slate-200/40;
+          @apply bg-slate-200/[45%];
         }
         &:active,
         &:focus {
