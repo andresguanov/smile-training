@@ -50,10 +50,25 @@
           <s-input
             v-model="text"
             icon-left="search"
+            label="label"
+            hint="hint"
             :rules="sRules"
             :trailing="{ icon: 'close', actionable: true, inline: true }"
           />
-          <s-dropdown v-model="text" />
+          <s-dropdown v-model="text" label="dddd" hint="dasdasd"> </s-dropdown>
+          <s-dropdown
+            v-model="text"
+            label="Lenguaje favorito"
+            placeholder="Escoge tu lenguaje favorito"
+            object
+            :options="[
+              { text: 'Javascript', code: 'js', icon: 'flag-3' },
+              { text: 'PHP', code: 'php', icon: 'flag-3' },
+              { text: 'Python', code: 'py', icon: 'flag-3' },
+              { text: 'C++', code: 'cc', icon: 'flag-3' },
+            ]"
+          />
+          <code>{{ text }}</code>
           <s-number-input v-model="number" icon-left="accounting" />
           <sm-button type="primary" @click="validate()">Submit</sm-button>
           <sm-button type="primary" @click="reset">Reset</sm-button>
