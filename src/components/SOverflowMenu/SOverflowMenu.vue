@@ -17,16 +17,12 @@ const props = withDefaults(
     right?: string
     /**
      * Especifica la forma en la que se desencadenará el evento clickOutside.
-     * Por defecto el evento se dispara como capture
+     * Por defecto el evento se dispara usando capture.
      */
     bubbling?: boolean
-    items?: string[]
   }>(),
   {}
 )
-if (!props.items?.length) {
-  console.warn('Missing data in %citems', 'color: red;font-weight: bold;padding: 1px', 'prop.')
-}
 const emit = defineEmits<{
   (event: 'clickOutside', value: PointerEvent): void
 }>()

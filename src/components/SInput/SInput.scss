@@ -7,6 +7,9 @@
   &__helper {
     @apply text-slate-500 text-xs font-normal;
   }
+  &__header {
+    @apply flex items-center justify-between;
+  }
   &__container {
     @apply flex items-center overflow-hidden;
     @apply bg-white border border-slate-300;

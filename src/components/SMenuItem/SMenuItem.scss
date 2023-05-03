@@ -1,5 +1,5 @@
 .s-menu-item {
-  @apply flex space-x-2 px-2 py-1.5;
+  @apply flex items-center space-x-2 px-2 py-1.5;
   @apply cursor-pointer rounded-[10px] md:rounded-lg;
   @apply text-slate-700;
 
