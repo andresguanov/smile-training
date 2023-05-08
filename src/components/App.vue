@@ -9,6 +9,34 @@
         @click-step="step = $event"
       />
     </div>
+
+    <s-breadcrumb label="Hola mundo" active></s-breadcrumb>
+
+    <s-tabs filled>
+      <template #selectors>
+        <s-tab-label target="1" selected> Label </s-tab-label>
+        <s-tab-label target="2"> Label </s-tab-label>
+        <s-tab-label target="3"> Label </s-tab-label>
+      </template>
+      <s-tab-content name="1" style="width: 200px; height: 200px"> Tab Content 1 </s-tab-content>
+      <s-tab-content name="2" style="width: 200px; height: 200px"> Tab Content 2 </s-tab-content>
+      <s-tab-content name="3" style="width: 200px; height: 200px"> Tab Content 3 </s-tab-content>
+    </s-tabs>
+
+    <s-page-heading title="[Heading Title]" description="Description......">
+      <template #actions>
+        <s-button>Label</s-button>
+        <s-button>Label</s-button>
+        <s-button>Label</s-button>
+      </template>
+    </s-page-heading>
+
+    <s-modal v-model="modal" header-text="Modal Title">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, adipisci velit ab aliquam
+      veniam odit vitae non ipsam dolorem quaerat, totam quia ut vel error ducimus eveniet
+      accusantium enim quam!
+    </s-modal>
+
     <s-empty-state />
     <s-empty-state is-on-component secondary-action="ssss" />
     <sm-card class="mt-1">
@@ -63,7 +91,7 @@
         </template>
       </sm-form>
     </sm-card>
-    <sm-modal v-model="modal">
+    <!-- <sm-modal v-model="modal">
       <template v-slot:header>Header</template>
       <template v-slot:body>
         <div class="w-[500px]">
@@ -78,7 +106,7 @@
       <template v-slot:footer>
         <s-button size="small" label="hola" loading></s-button>
       </template>
-    </sm-modal>
+    </sm-modal> -->
     <sm-table
       ref="testSmTable"
       :filter-config="{
