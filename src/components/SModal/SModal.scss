@@ -1,0 +1,31 @@
+.sn-modal-area {
+  @apply fixed w-screen bottom-0 left-0 h-screen
+      bg-black/20 flex justify-center items-center;
+  @apply z-10;
+}
+
+.s-modal {
+  @apply rounded-lg bg-white drop-shadow-lg p-4;
+
+  &-title {
+    @apply text-lg font-semibold text-slate-900 pb-2;
+  }
+
+  &-body {
+    @apply pb-4 text-sm font-normal text-slate-700;
+  }
+
+  &-footer {
+    @apply flex justify-end space-x-2;
+  }
+
+  &.small {
+    @apply w-80;
+  }
+  &.medium {
+    @apply w-[480px];
+  }
+  &.large {
+    @apply w-[640px];
+  }
+}
