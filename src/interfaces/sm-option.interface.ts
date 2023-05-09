@@ -1,6 +1,6 @@
 import type { IconType } from './sm-icon.interface'
 
-export interface smOption {
+export interface smMenuOption {
   destructive?: boolean
   disabled?: boolean
   // textStyle?: 'inline' | 'block'

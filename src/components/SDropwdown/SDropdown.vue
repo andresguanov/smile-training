@@ -45,11 +45,11 @@
 </template>
 
 <script setup lang="ts">
-import type { IconType, smOption } from '../../interfaces'
+import type { IconType, smMenuOption } from '../../interfaces'
 
-interface MenuOption extends smOption {
+type MenuOption = {
   [key: string]: unknown
-}
+} & smMenuOption
 
 const props = withDefaults(
   defineProps<{
