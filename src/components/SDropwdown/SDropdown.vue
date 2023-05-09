@@ -47,13 +47,13 @@
 <script setup lang="ts">
 import type { IconType, smOption } from '../../interfaces'
 
-interface Option extends smOption {
+interface MenuOption extends smOption {
   [key: string]: unknown
 }
 
 const props = withDefaults(
   defineProps<{
-    modelValue: Option | string | number | Array<string | number>
+    modelValue: MenuOption | string | number | Array<string | number>
     size?: 'small' | 'medium' | 'large'
     hint?: string
     placeholder?: string
@@ -63,7 +63,7 @@ const props = withDefaults(
     loadingText?: string
     search?: boolean
     label?: string
-    options?: Array<Option>
+    options?: Array<MenuOption>
     /**
      * Disponible solo cuando el componente está dentro de SmForm.
      * Permite establecer las validaciones del componente.
@@ -100,7 +100,7 @@ if (!props.options?.length) {
   console.warn('Missing data in %coptions', 'color: red;font-weight: bold;padding: 1px', 'prop.')
 }
 const emit = defineEmits<{
-  (event: 'update:modelValue', value: Option | string | number): void
+  (event: 'update:modelValue', value: MenuOption | string | number): void
   (event: 'search', value: string): void
 }>()
 const data = useVModel(props, 'modelValue', emit)
@@ -116,7 +116,7 @@ const formattedValue = computed<string>(() => {
       }, [])
       .join(', ')
   }
-  if (props.object) return getText((data.value as Option)[props.valueKey] as string | number)
+  if (props.object) return getText((data.value as MenuOption)[props.valueKey] as string | number)
   return getText(data.value as string | number)
 })
 const currentValue = computed({
@@ -137,17 +137,17 @@ const getText = (value: string | number) => {
   if (selectedValue) return String(selectedValue[props.textKey])
   return ''
 }
-const isSelected = (value: Option) => {
+const isSelected = (value: MenuOption) => {
   console.log('is selected invoker')
 
   const realValue = value[props.valueKey] as string | number
   if (props.multiple) {
     return (data.value as Array<string | number>).includes(realValue)
   }
-  if (props.object) return (data.value as Option)[props.valueKey] === realValue
+  if (props.object) return (data.value as MenuOption)[props.valueKey] === realValue
   return data.value === realValue
 }
-const onClickOption = (value: Option) => {
+const onClickOption = (value: MenuOption) => {
   const realValue = value[props.valueKey]
   if (typeof realValue !== 'number' && typeof realValue !== 'string') {
     throw new Error(
