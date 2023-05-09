@@ -1,10 +1,14 @@
 <template>
   <div ref="menuEl" class="s-menu" :style="{ top, left, right, bottom }">
-    <header class="s-menu__header"></header>
+    <header class="s-menu__header">
+      <slot name="header" />
+    </header>
     <div class="s-menu__body">
       <slot />
     </div>
-    <footer class="s-menu__footer"></footer>
+    <footer class="s-menu__footer">
+      <slot name="footer" />
+    </footer>
   </div>
 </template>
 
