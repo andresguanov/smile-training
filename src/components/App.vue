@@ -60,6 +60,7 @@
             v-model="text"
             label="Lenguaje favorito"
             placeholder="Escoge tu lenguaje favorito"
+            :rules="sRules"
             object
             :options="[
               { text: 'Javascript', code: 'js', icon: 'flag-3' },
