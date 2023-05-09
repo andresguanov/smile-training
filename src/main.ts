@@ -5,7 +5,7 @@ export * from './interfaces'
 
 // import 'package/styles/dist/main.css'
 import './index.css'
-// import 'tippy.js/dist/tippy.css'
+import 'tippy.js/dist/tippy.css'
 // import 'tippy.js/themes/light-border.css'
 // import 'vue-datepicker-next/index.css'
 

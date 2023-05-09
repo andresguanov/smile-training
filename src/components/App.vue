@@ -38,12 +38,39 @@
     </s-modal>
 
     <s-empty-state />
-    <s-empty-state is-on-component secondary-action="ssss" />
     <sm-card class="mt-1">
       <sm-form ref="smFormEl" validation-mode="on-focusout">
         <template #default="{ validate, reset }">
-          <sm-datepicker v-model="datepicker" label="Nombre" :rules="sRules" range size="large" />
-          <sm-select v-model="select" :options="options" label="Nombre" search :rules="sRules" />
+          <s-input
+            v-model="text"
+            icon-right="view-eye"
+            :rules="sRules"
+            :leading="{ label: 'Leading', icon: 'accounting', actionable: true }"
+          />
+          <s-input
+            v-model="text"
+            icon-left="search"
+            label="label"
+            hint="hint"
+            :rules="sRules"
+            :trailing="{ icon: 'close', actionable: true, inline: true }"
+          />
+          <s-dropdown v-model="text" label="dddd" hint="dasdasd"> </s-dropdown>
+          <s-dropdown
+            v-model="text"
+            label="Lenguaje favorito"
+            placeholder="Escoge tu lenguaje favorito"
+            :rules="sRules"
+            object
+            :options="[
+              { text: 'Javascript', code: 'js', icon: 'flag-3' },
+              { text: 'PHP', code: 'php', icon: 'flag-3' },
+              { text: 'Python', code: 'py', icon: 'flag-3' },
+              { text: 'C++', code: 'cc', icon: 'flag-3' },
+            ]"
+          />
+          <code>{{ text }}</code>
+          <s-number-input v-model="number" icon-left="accounting" />
           <sm-button type="primary" @click="validate()">Submit</sm-button>
           <sm-button type="primary" @click="reset">Reset</sm-button>
         </template>
@@ -110,12 +137,6 @@
     <sm-table
       ref="testSmTable"
       :filter-config="{
-        a: {
-          type: 'input',
-          attrs: {
-            label: 'name',
-          },
-        },
         b: {
           type: 'datepicker',
         },
@@ -144,43 +165,10 @@
 </template>
 
 <script setup lang="ts">
-// import type { DefineComponent } from 'vue'
 import { SmForm, SmTable } from './index'
 import { $SmAlert, ISmAlertProvide } from '../utils/alerts'
-import {
-  smTableChangeEvent,
-  smTableColumn,
-  // smStepWizard
-} from '~/interfaces'
-// import page1 from './pages/page1.vue'
-// import page2 from './pages/page2.vue'
+import { smTableChangeEvent, smTableColumn } from '~/interfaces'
 
-// const views: smStepWizard[] = [
-//   {
-//     title: 'Este es un titulo',
-//     description: 'Esta es una description',
-//     label: 'Paso 1',
-//     components: [page1, page2, page2, page2] as DefineComponent<{}, {}, any>[],
-//   },
-//   {
-//     title: 'Este es un titulo',
-//     description: 'Esta es una description',
-//     label: 'Paso 2',
-//     components: [page1] as DefineComponent<{}, {}, any>[],
-//   },
-//   {
-//     title: 'Este es un titulo',
-//     description: 'Esta es una description',
-//     label: 'Paso 3',
-//     components: [page1] as DefineComponent<{}, {}, any>[],
-//   },
-// ]
-
-// const activePage = ref(0)
-// const showWizard = ref(true)
-// const closeWizard = () => {
-//   showWizard.value = false
-// }
 interface radioTest {
   card: string
 }
@@ -190,9 +178,9 @@ const step = ref(1)
 const modal = ref(true)
 const check = ref([])
 const radio = ref('')
-// const number = ref(3)
+const number = ref(3)
+const text = ref('')
 const select = ref([])
-const datepicker = ref('')
 const options = ref([
   { text: '1', value: '1' },
   { text: '2', value: '2' },
@@ -245,26 +233,10 @@ const onChange = (data: smTableChangeEvent) => {
 }
 
 const sRules = ref([
-  (v: any) => {
-    return !!v || 'Fecha es requerida'
+  (v: string) => {
+    return !!v || 'El valor es requerido'
   },
 ])
-// const numberRules = ref([
-//   (v: any) => {
-//     return !!v || 'Número es requerido'
-//   },
-//   (v: any) => {
-//     return v < 2 || 'Número debe ser menor a 2'
-//   },
-// ])
-// const rRules = ref([
-//   (v: any) => {
-//     return !!v || 'Nombre es requerido'
-//   },
-//   (v: any) => {
-//     return v === 'B' || 'Nombre debe ser B'
-//   },
-// ])
 const smFormEl = ref<InstanceType<typeof SmForm> | null>()
 const onSubmit = (e?: string) => {
   console.log({ e })

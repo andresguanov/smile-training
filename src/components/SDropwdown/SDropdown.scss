@@ -1,0 +1,24 @@
+.s-dropdown {
+  @apply relative;
+
+  &__menu {
+    @apply mt-1 w-full;
+  }
+  &__check {
+    @apply w-4 h-4 flex items-center justify-center;
+    @apply text-sm-primary-600 opacity-0;
+
+    &.selected {
+      @apply opacity-100;
+    }
+    &.multiple {
+      @apply opacity-100 text-white;
+      @apply border border-solid border-sm-primary-600 rounded-[4px];
+      @apply transition-colors;
+
+      &.selected {
+        @apply bg-sm-primary-600;
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+.s-menu {
+  @apply absolute;
+  @apply bg-white z-10;
+  @apply rounded-2xl drop-shadow-lg;
+
+  &__body {
+    @apply p-2;
+  }
+}
