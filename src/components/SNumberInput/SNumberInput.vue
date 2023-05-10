@@ -28,20 +28,22 @@
         icon="minus"
         class="s-number__trailing"
         :size="size"
+        :disabled="disabledMinus"
         inline
         actionable
         trailing
-        @click="changeValue(-step)"
+        @click="clickMinus"
       />
       <div class="s-number__divider" />
       <s-input-leading
         icon="plus"
         class="s-number__trailing"
         :size="size"
+        :disabled="disabledPlus"
         inline
         actionable
         trailing
-        @click="changeValue(step)"
+        @click="clickPlus"
       />
     </div>
     <div class="s-number__footer">
@@ -90,7 +92,7 @@ const props = withDefaults(
 const emit = defineEmits<{
   (event: 'update:modelValue', value: string | number): void
   (event: 'focusOut', value: FocusEvent): void
-  (event: 'clickLeading' | 'clickTrailing' | 'clickIconRight', value: PointerEvent): void
+  (event: 'clickPlus' | 'clickMinus', value: PointerEvent): void
 }>()
 
 const value = useVModel(props, 'modelValue', emit)
@@ -109,8 +111,15 @@ const onFocusOut = (event: FocusEvent) => {
   }
   emit('focusOut', event)
 }
-const changeValue = (step: number) => {
-  value.value = Number(value.value || 0) + step
+const clickPlus = (event: PointerEvent) => {
+  if (props.disabledPlus) return
+  emit('clickPlus', event)
+  value.value = Number(value.value || 0) + props.step
+}
+const clickMinus = (event: PointerEvent) => {
+  if (props.disabledMinus) return
+  emit('clickMinus', event)
+  value.value = Number(value.value || 0) - props.step
 }
 </script>
 
