@@ -30,7 +30,6 @@ defineProps<{
     @apply h-full bg-slate-50 px-2;
     @apply border-r border-solid border-slate-300;
     @apply text-slate-500 font-normal;
-    @apply rounded-lg;
 
     :deep(.s-leading__icon) {
       @apply w-5 h-5;
@@ -64,7 +63,7 @@ defineProps<{
   }
   &.small {
     .s-leading__wrapper {
-      @apply text-sm rounded-md;
+      @apply text-sm rounded-md px-[6px];
 
       :deep(.s-leading__icon) {
         @apply w-4 h-4;
@@ -73,7 +72,7 @@ defineProps<{
   }
   &.large {
     .s-leading__wrapper {
-      @apply rounded-[10px];
+      @apply rounded-[10px] px-3;
     }
   }
   &.trailing {

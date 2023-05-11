@@ -9,9 +9,7 @@
         @click-step="step = $event"
       />
     </div>
-
     <s-breadcrumb label="Hola mundo" active></s-breadcrumb>
-
     <s-tabs filled>
       <template #selectors>
         <s-tab-label target="1" selected> Label </s-tab-label>
@@ -22,7 +20,6 @@
       <s-tab-content name="2" style="width: 200px; height: 200px"> Tab Content 2 </s-tab-content>
       <s-tab-content name="3" style="width: 200px; height: 200px"> Tab Content 3 </s-tab-content>
     </s-tabs>
-
     <s-page-heading title="[Heading Title]" description="Description......">
       <template #actions>
         <s-button>Label</s-button>
@@ -30,20 +27,21 @@
         <s-button>Label</s-button>
       </template>
     </s-page-heading>
-
     <s-modal v-model="modal" header-text="Modal Title">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, adipisci velit ab aliquam
       veniam odit vitae non ipsam dolorem quaerat, totam quia ut vel error ducimus eveniet
       accusantium enim quam!
     </s-modal>
-
     <s-empty-state />
     <sm-card class="mt-1">
       <sm-form ref="smFormEl" validation-mode="on-focusout">
         <template #default="{ validate, reset }">
+          <s-chip label="test" selected avatar="Carlos" />
+          <s-chip label="test" disabled selected />
           <s-input
             v-model="text"
-            icon-right="view-eye"
+            supportive-text="dasdasd"
+            icon-right="bolt"
             :rules="sRules"
             :leading="{ label: 'Leading', icon: 'accounting', actionable: true }"
           />
@@ -60,8 +58,6 @@
             v-model="text"
             label="Lenguaje favorito"
             placeholder="Escoge tu lenguaje favorito"
-            :rules="sRules"
-            object
             :options="[
               { text: 'Javascript', code: 'js', icon: 'flag-3' },
               { text: 'PHP', code: 'php', icon: 'flag-3' },
@@ -69,8 +65,7 @@
               { text: 'C++', code: 'cc', icon: 'flag-3' },
             ]"
           />
-          <code>{{ text }}</code>
-          <s-number-input v-model="number" icon-left="accounting" />
+          <s-number-input v-model="number" icon-left="accounting" size="large" />
           <sm-button type="primary" @click="validate()">Submit</sm-button>
           <sm-button type="primary" @click="reset">Reset</sm-button>
         </template>
@@ -118,22 +113,6 @@
         </template>
       </sm-form>
     </sm-card>
-    <!-- <sm-modal v-model="modal">
-      <template v-slot:header>Header</template>
-      <template v-slot:body>
-        <div class="w-[500px]">
-          <s-tooltip placement="bottom-end">
-            <template #content>
-              <p>Nuevo tooltip</p>
-            </template>
-            <p>Nuevo tooltip</p>
-          </s-tooltip>
-        </div>
-      </template>
-      <template v-slot:footer>
-        <s-button size="small" label="hola" loading></s-button>
-      </template>
-    </sm-modal> -->
     <sm-table
       ref="testSmTable"
       :filter-config="{
@@ -231,7 +210,6 @@ const testSmTable = ref(null)
 const onChange = (data: smTableChangeEvent) => {
   console.log({ data })
 }
-
 const sRules = ref([
   (v: string) => {
     return !!v || 'El valor es requerido'

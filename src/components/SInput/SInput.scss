@@ -76,7 +76,7 @@
       @apply ml-2.5;
     }
     &.error {
-      @apply text-rose-600;
+      @apply text-rose-600 mr-2;
     }
     &.success,
     &.loading {

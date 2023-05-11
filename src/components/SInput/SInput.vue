@@ -57,7 +57,7 @@
       />
     </div>
     <div class="s-input__footer">
-      <p class="s-input__helper">{{ currentError }}</p>
+      <p class="s-input__helper">{{ currentError || supportiveText }}</p>
     </div>
   </div>
 </template>
@@ -81,6 +81,7 @@ const props = withDefaults(
     success?: boolean
     loading?: boolean
     label?: string
+    supportiveText?: string
     /**
      * Disponible solo cuando el componente está dentro de SmForm.
      * Permite establecer las validaciones del componente.
