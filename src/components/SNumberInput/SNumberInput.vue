@@ -106,7 +106,7 @@ const iconSize = computed(() => (props.size === 'small' ? '16px' : '20px'))
 const filled = computed(() => typeof value.value === 'number')
 
 const onFocusOut = (event: FocusEvent) => {
-  if (validateOnFocusout) {
+  if (validateOnFocusout.value) {
     validate()
   }
   emit('focusOut', event)
