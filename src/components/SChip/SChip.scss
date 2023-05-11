@@ -1,0 +1,42 @@
+.s-chip {
+  @apply flex items-center justify-center;
+  @apply h-6 px-1.5 py-0.5 rounded-full;
+  @apply w-fit space-x-1.5;
+  @apply opacity-100 border border-solid border-slate-300;
+  @apply cursor-pointer text-slate-700;
+
+  &__label {
+    @apply text-xs font-normal;
+  }
+  &__avatar {
+    @apply flex items-center justify-center;
+    @apply h-5 w-5 rounded-full;
+    @apply bg-blue-600 text-white;
+    @apply uppercase text-[9px];
+  }
+  &:not(.disabled) {
+    &:hover {
+      @apply bg-slate-200/[45%];
+    }
+  }
+  &.disabled {
+    @apply opacity-30 cursor-default;
+  }
+  &.selected {
+    @apply bg-sm-primary-50 border-sm-primary-600/50;
+    @apply text-sm-primary-900;
+
+    &:not(.disabled) {
+      &:hover {
+        @apply bg-sm-primary-100;
+      }
+    }
+  }
+  &.input {
+    @apply px-0.5 py-0.5;
+
+    .s-chip__trailing {
+      @apply p-0.5;
+    }
+  }
+}

@@ -58,7 +58,7 @@ const { validate, validateOnFocusout, hasError, currentError } = useSmileValidat
 >(internalValue, props.rules, props.error)
 
 const onFocusOut = (event: FocusEvent) => {
-  if (validateOnFocusout) {
+  if (validateOnFocusout.value) {
     validate()
   }
   emit('focusOut', event)

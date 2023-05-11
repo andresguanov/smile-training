@@ -9,8 +9,6 @@
       :icon-right="trailingIcon"
       :loading="loading"
       :disabled="disabled"
-      :error="error"
-      :rules="rules"
       @click.stop="toggleOverflow"
     />
     <s-overflow-menu
@@ -18,7 +16,7 @@
       class="s-dropdown__menu"
       top="100%"
       bubbling
-      @click-outside="open = false"
+      @click-outside="onClickOutside"
     >
       <slot v-if="loading" name="loading">
         <p>{{ loadingText }}</p>
@@ -46,6 +44,7 @@
 
 <script setup lang="ts">
 import type { IconType, smMenuOption } from '../../interfaces'
+// import { useSmileValidate } from '~/composables'
 
 type MenuOption = {
   [key: string]: unknown
@@ -61,15 +60,16 @@ const props = withDefaults(
     success?: boolean
     loading?: boolean
     loadingText?: string
-    search?: boolean
     label?: string
     options?: Array<MenuOption>
     /**
      * Disponible solo cuando el componente está dentro de SmForm.
      * Permite establecer las validaciones del componente.
      */
-    rules?: Array<(value: string) => boolean | string>
-    error?: string
+    // rules?: Array<
+    //   (value: MenuOption | string | number | Array<string | number>) => boolean | string
+    // >
+    // error?: string
     /**
      * Indica si deseas que modelValue trabaje con objetos
      */
@@ -100,10 +100,13 @@ if (!props.options?.length) {
   console.warn('Missing data in %coptions', 'color: red;font-weight: bold;padding: 1px', 'prop.')
 }
 const emit = defineEmits<{
-  (event: 'update:modelValue', value: MenuOption | string | number): void
+  (event: 'update:modelValue', value: MenuOption | string | number | Array<string | number>): void
   (event: 'search', value: string): void
 }>()
 const data = useVModel(props, 'modelValue', emit)
+// const { validate, validateOnFocusout, currentError } = useSmileValidate<
+//   MenuOption | string | number | Array<string | number>
+// >(data, props.rules, props.error)
 
 const open = ref(false)
 const trailingIcon = computed<IconType>(() => (open.value ? 'chevron-up' : 'chevron-down'))
@@ -138,8 +141,6 @@ const getText = (value: string | number) => {
   return ''
 }
 const isSelected = (value: MenuOption) => {
-  console.log('is selected invoker')
-
   const realValue = value[props.valueKey] as string | number
   if (props.multiple) {
     return (data.value as Array<string | number>).includes(realValue)
@@ -147,11 +148,11 @@ const isSelected = (value: MenuOption) => {
   if (props.object) return (data.value as MenuOption)[props.valueKey] === realValue
   return data.value === realValue
 }
-const onClickOption = (value: MenuOption) => {
-  const realValue = value[props.valueKey]
-  if (typeof realValue !== 'number' && typeof realValue !== 'string') {
+const onClickOption = (option: MenuOption) => {
+  const value = option[props.valueKey]
+  if (typeof value !== 'number' && typeof value !== 'string') {
     throw new Error(
-      `This component does not yet support the provided parameter type ${typeof realValue}. Please check the documentation for the expected parameter type.`
+      `This component does not yet support the provided parameter type ${typeof value}. Please check the documentation for the expected parameter type.`
     )
   }
   if (props.multiple) {
@@ -159,18 +160,25 @@ const onClickOption = (value: MenuOption) => {
       if (props.object) {
         console.warn('Prop multiple not support prop object')
       }
-      return el === realValue
+      return el === value
     })
     if (opIndex >= 0) {
       ;(data.value as Array<string | number>).splice(opIndex, 1)
       return
     }
-    ;(data.value as Array<string | number>).push(realValue)
+    ;(data.value as Array<string | number>).push(value)
     return
   }
-  data.value = props.object ? value : realValue
+  data.value = props.object ? option : value
   open.value = false
 }
+const onClickOutside = () => {
+  // if (validateOnFocusout.value) {
+  //   validate()
+  // }
+  open.value = false
+}
+
 if (props.multiple && !data.value) {
   data.value = []
 }

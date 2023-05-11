@@ -67,7 +67,7 @@ const { validate, validateOnFocusout, hasError, currentError } = useSmileValidat
 )
 
 const onFocusOut = (event: FocusEvent) => {
-  if (validateOnFocusout) {
+  if (validateOnFocusout.value) {
     validate()
   }
   emit('focusOut', event)
