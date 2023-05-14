@@ -3,9 +3,9 @@
     <div>
       <slot></slot>
     </div>
-    <button class="ml-auto" @click="emit('close')">
+    <div class="ml-auto" @click="emit('close')">
       <sm-icon icon="close"></sm-icon>
-    </button>
+    </div>
   </div>
 </template>
 

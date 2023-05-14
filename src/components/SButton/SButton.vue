@@ -1,11 +1,11 @@
 <template>
   <s-tooltip
     v-bind="$attrs"
-    class="sm-button"
+    class="s-button"
     :tag="tag"
     :content="isOnlyIcon ? label : ''"
     :placement="tooltipPosition"
-    :class="[size, type, emphasis, { 'sm-button--only-icon': isOnlyIcon }]"
+    :class="[size, type, emphasis, { 's-button--only-icon': isOnlyIcon }]"
     :disabled="disabled"
     :loading="loading"
     :type="nativeType"
@@ -23,10 +23,10 @@
       v-if="loading"
       icon="loading"
       type="primary"
-      class="sm-button__loading"
+      class="s-button__loading"
       :height="iconSize"
       :width="iconSize"
-      :class="{ 'sm-button__icon': isOnlyIcon }"
+      :class="{ 's-button__icon': isOnlyIcon }"
     />
     <template v-else>
       <sm-icon
@@ -34,7 +34,7 @@
         :icon="onlyIcon"
         :height="iconSize"
         :width="iconSize"
-        class="sm-button__icon"
+        class="s-button__icon"
       />
       <slot v-else>
         <sm-icon v-if="iconLeft" :icon="iconLeft" :height="iconSize" :width="iconSize" />
