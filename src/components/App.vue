@@ -27,11 +27,11 @@
         <s-button>Label</s-button>
       </template>
     </s-page-heading>
-    <s-modal v-model="modal" header-text="Modal Title">
+    <sm-modal v-model="modal" header-text="Modal Title">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, adipisci velit ab aliquam
       veniam odit vitae non ipsam dolorem quaerat, totam quia ut vel error ducimus eveniet
       accusantium enim quam!
-    </s-modal>
+    </sm-modal>
     <s-empty-state />
     <sm-card class="mt-1">
       <sm-form ref="smFormEl" validation-mode="on-focusout">
