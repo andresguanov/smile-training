@@ -52,6 +52,8 @@
             hint="hint"
             :rules="sRules"
             :trailing="{ icon: 'close', actionable: true, inline: true }"
+            @blur="logEvent"
+            @focus="logEvent"
           />
           <s-dropdown v-model="text" label="dddd" hint="dasdasd"> </s-dropdown>
           <s-dropdown
@@ -108,8 +110,8 @@
               ]"
             />
           </div>
-          <sm-button type="primary" native-type="submit">Submit</sm-button>
-          <sm-button type="primary" @click="reset">Reset</sm-button>
+          <s-button emphasis="subtle" native-type="submit">Submit</s-button>
+          <s-button emphasis="outline" @click="reset">Reset</s-button>
         </template>
       </sm-form>
     </sm-card>
@@ -210,6 +212,9 @@ const items = computed(() => {
 const testSmTable = ref(null)
 const onChange = (data: smTableChangeEvent) => {
   console.log({ data })
+}
+const logEvent = (event: any) => {
+  console.log({ event })
 }
 const sRules = ref([
   (v: string) => {

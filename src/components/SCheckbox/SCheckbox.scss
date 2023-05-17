@@ -28,10 +28,9 @@
       @apply text-slate-700;
     }
     &__input {
-      @apply block;
-      @apply relative;
+      @apply block relative;
       @apply w-4 h-4;
-      @apply rounded;
+      @apply rounded outline-none;
       @apply appearance-none;
       @apply border border-solid border-slate-300;
 

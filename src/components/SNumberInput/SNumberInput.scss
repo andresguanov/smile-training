@@ -50,7 +50,7 @@
   &__input {
     @apply h-full w-full;
     @apply font-normal text-slate-700 text-base;
-    @apply bg-transparent;
+    @apply bg-transparent outline-none;
     @apply px-2 py-1.5;
     -moz-appearance: textfield;
 

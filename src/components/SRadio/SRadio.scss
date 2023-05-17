@@ -30,7 +30,7 @@
     &__input {
       @apply block;
       @apply w-4 h-4;
-      @apply rounded-full;
+      @apply rounded-full outline-none;
       @apply appearance-none;
       @apply border border-solid border-slate-300;
 

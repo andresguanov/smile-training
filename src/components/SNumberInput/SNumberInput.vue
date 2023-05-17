@@ -13,7 +13,9 @@
         :placeholder="placeholder"
         :disabled="disabled"
         :readonly="readonly"
-        @focusout="onFocusOut"
+        @blur="onBlur"
+        @focus="e => emit('focus', e)"
+        @keypress="e => emit('keypress', e)"
       />
       <div v-if="success" class="s-number__icon success">
         <sm-icon icon="success" :width="iconSize" :height="iconSize" />
@@ -91,7 +93,8 @@ const props = withDefaults(
 )
 const emit = defineEmits<{
   (event: 'update:modelValue', value: string | number): void
-  (event: 'focusOut', value: FocusEvent): void
+  (event: 'blur' | 'focus', value: FocusEvent): void
+  (event: 'keypress', value: KeyboardEvent): void
   (event: 'clickPlus' | 'clickMinus', value: PointerEvent): void
 }>()
 
@@ -105,11 +108,11 @@ const { validate, validateOnFocusout, hasError, currentError } = useSmileValidat
 const iconSize = computed(() => (props.size === 'small' ? '16px' : '20px'))
 const filled = computed(() => typeof value.value === 'number')
 
-const onFocusOut = (event: FocusEvent) => {
+const onBlur = (event: FocusEvent) => {
   if (validateOnFocusout.value) {
     validate()
   }
-  emit('focusOut', event)
+  emit('blur', event)
 }
 const clickPlus = (event: PointerEvent) => {
   if (props.disabledPlus) return
