@@ -56,7 +56,7 @@
       is-fixed
     />
     <sm-button type="primary" @click="valid = !valid">Submit</sm-button>
-    <sm-select v-model="selectedItem" :options="options" @filter="filter" multiple> </sm-select>
+    <sm-select v-model="selectedItem" :options="options" @filter="filter"> </sm-select>
     {{ selectedItem }}
   </div>
 </template>

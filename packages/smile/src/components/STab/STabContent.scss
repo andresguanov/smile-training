@@ -1,0 +1,6 @@
+.s-tab-content {
+  @apply hidden;
+  &.sm-active {
+    @apply block;
+  }
+}

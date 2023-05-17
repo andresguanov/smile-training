@@ -74,6 +74,9 @@ const theme = colors => {
       // sans: ["Mulish", "Roboto", "sans-serif"]
     },
     extend: {
+      borderWidth: {
+        5: '5px',
+      },
       strokeWidth: {
         8: '8px',
       },

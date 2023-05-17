@@ -45,10 +45,10 @@
   }
 }
 
-* {
-  /* @apply outline-1 outline-sm-primary-500; */
+/* * {
+  @apply outline-1 outline-sm-primary-500;
   @apply outline-none;
-}
+} */
 
 body {
   @apply box-border

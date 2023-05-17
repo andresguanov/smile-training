@@ -1,0 +1,95 @@
+.s-checkbox {
+  @apply inline-block;
+  @apply space-y-2;
+
+  &__group {
+    &.vertical {
+      @apply space-y-2;
+    }
+    &.horizontal {
+      @apply flex;
+      @apply space-x-4;
+    }
+  }
+  &__label {
+    @apply text-sm font-medium text-[#0F172A];
+  }
+  &__checkbox {
+    @apply flex items-center;
+    @apply space-x-2;
+    @apply cursor-pointer;
+
+    &--disabled {
+      @apply cursor-default;
+    }
+    &__label {
+      @apply block;
+      @apply text-sm font-normal;
+      @apply text-slate-700;
+    }
+    &__input {
+      @apply block relative;
+      @apply w-4 h-4;
+      @apply rounded outline-none;
+      @apply appearance-none;
+      @apply border border-solid border-slate-300;
+
+      &:not(:disabled) {
+        @apply cursor-pointer;
+
+        &:hover {
+          @apply border-slate-400;
+        }
+        &:focus {
+          @apply ring-2 ring-offset-1 ring-sm-primary-500;
+        }
+      }
+      &:disabled {
+        @apply opacity-30;
+
+        + .s-radio__radio__label {
+          @apply text-slate-300;
+        }
+      }
+      &:checked::after {
+        @apply absolute;
+        @apply ml-[5.25px];
+        @apply mt-[1.75px];
+        @apply block;
+        @apply h-[9px];
+        @apply w-[4px];
+        @apply rotate-45;
+        @apply border;
+        @apply border-t-0;
+        @apply border-l-0;
+        @apply border-solid;
+        @apply border-white;
+        @apply bg-transparent;
+        @apply content-[''];
+      }
+      &:indeterminate::after {
+        @apply absolute;
+        @apply inset-0;
+        @apply m-auto;
+        @apply block;
+        @apply h-[1px];
+        @apply w-[8px];
+        @apply bg-white;
+        @apply content-[''];
+      }
+      &:checked,
+      &:indeterminate {
+        @apply bg-sm-primary-500;
+        @apply border-sm-primary-500;
+
+        &:hover {
+          @apply bg-sm-primary-600;
+          @apply border-sm-primary-600;
+        }
+        + .s-radio__radio__label {
+          @apply text-slate-700;
+        }
+      }
+    }
+  }
+}

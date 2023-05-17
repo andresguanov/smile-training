@@ -1,0 +1,29 @@
+.s-tab-label {
+  @apply h-10 px-6 py-2 text-base font-normal text-slate-500 border-b border-slate-300 cursor-pointer;
+  &.sm-active {
+    @apply bg-white text-slate-700 border-b-2 border-sm-primary-500;
+  }
+
+  &:hover {
+    @apply text-slate-700;
+  }
+}
+
+.s-tab-label-filled {
+  @apply h-8 py-1.5 cursor-pointer;
+
+  &__text {
+    @apply px-6 text-sm font-semibold text-slate-600 border-r;
+  }
+  &.sm-active {
+    @apply bg-white rounded-md drop-shadow;
+
+    .s-tab-label-filled__text {
+      @apply text-slate-700 border-0;
+    }
+  }
+
+  &:hover {
+    @apply text-slate-700;
+  }
+}

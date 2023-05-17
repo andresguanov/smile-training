@@ -49,15 +49,20 @@
             :header-name="col.name"
             :style="{ width: col.width }"
           >
-            <template v-if="col.name == sortColumn">
-              <sm-icon :class="{ asc: ascending }" icon="caret-up" size="small" />
-            </template>
-            <span v-if="col.order" @click="onSort(col.name)">
-              {{ columnNames[i] }}
-            </span>
-            <span v-else>
-              {{ columnNames[i] }}
-            </span>
+            <slot :name="(('head.' + col.name) as string)" :col="col">
+              <sm-icon
+                v-if="col.name == sortColumn"
+                :class="{ desc: !ascending }"
+                icon="caret-up"
+                size="small"
+              />
+              <span v-if="col.order" @click="onSort(col.name)">
+                {{ columnNames[i] }}
+              </span>
+              <span v-else>
+                {{ columnNames[i] }}
+              </span>
+            </slot>
           </th>
           <th
             v-if="hasActionsColumn"
@@ -115,6 +120,7 @@
     <div v-if="loading" class="sm-table-loading">
       <sm-inner-loading :loading-text="loadingText" />
     </div>
+    {{ ascending }}
   </div>
 </template>
 
@@ -148,6 +154,7 @@ const props = withDefaults(
     filterBtnText?: string;
     closeFilterBtnText?: string;
     isFixed?: boolean;
+    initialOrder?: 'ASC' | 'DESC';
   }>(),
   {
     hoverable: true,
@@ -162,6 +169,7 @@ const props = withDefaults(
     actionsColHeadText: 'Acciones',
     filterBtnText: 'Filtrar',
     closeFilterBtnText: 'Cerrar',
+    initialOrder: 'ASC',
   }
 );
 
@@ -173,7 +181,7 @@ const emit = defineEmits<{
 }>();
 
 const sortColumn = ref('');
-const ascending = ref(true);
+const ascending = ref(props.initialOrder === 'ASC');
 const internalPage = ref(props.page);
 const internalItemsPerPage = ref(props.itemsPerPage);
 const internalTotal = computed(() =>
@@ -247,7 +255,7 @@ const onSort = (col: string) => {
     ascending.value = !ascending.value;
   } else {
     sortColumn.value = col;
-    ascending.value = true;
+    ascending.value = props.initialOrder === 'ASC';
   }
   onUpdatePage(1);
 };

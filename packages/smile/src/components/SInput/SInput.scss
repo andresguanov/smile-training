@@ -1,0 +1,127 @@
+.s-input {
+  @apply space-y-1;
+
+  &__label {
+    @apply text-slate-700 text-sm font-medium;
+  }
+  &__helper {
+    @apply text-slate-500 text-xs font-normal;
+  }
+  &__header {
+    @apply flex items-center justify-between;
+  }
+  &__container {
+    @apply flex items-center overflow-hidden;
+    @apply bg-white border border-slate-300;
+    @apply rounded-[10px] h-10;
+
+    &:hover {
+      @apply border-slate-400;
+    }
+    &:focus-within {
+      @apply border-2 border-sm-primary-500;
+    }
+    &.filled {
+      @apply border-2 border-slate-300;
+
+      &:focus-within {
+        @apply border-sm-primary-500;
+      }
+    }
+    &.small {
+      @apply rounded-lg h-8;
+
+      .s-input__input {
+        @apply text-sm;
+      }
+      .s-input__icon {
+        &.leading {
+          @apply ml-2;
+        }
+        &.trailing {
+          @apply p-2;
+        }
+      }
+    }
+    &.large {
+      @apply rounded-xl h-12;
+
+      .s-input__icon {
+        &.leading {
+          @apply ml-3.5;
+        }
+        &.trailing {
+          @apply p-3.5;
+        }
+      }
+    }
+  }
+  &__input {
+    @apply h-full w-full;
+    @apply font-normal text-slate-700 text-base;
+    @apply bg-transparent outline-none;
+    @apply px-2 py-1.5;
+
+    &::placeholder {
+      @apply text-slate-400;
+    }
+  }
+  &__icon {
+    @apply text-slate-500 flex;
+
+    &.trailing {
+      @apply cursor-pointer p-2.5;
+    }
+    &.leading {
+      @apply ml-2.5;
+    }
+    &.error {
+      @apply text-rose-600 mr-2;
+    }
+    &.success,
+    &.loading {
+      @apply text-sm-primary-600;
+    }
+    &.loading {
+      @apply animate-spin;
+    }
+  }
+  &.disabled {
+    .s-input__icon,
+    .s-input__helper,
+    .s-input__label,
+    .s-input__input,
+    .s-input__input::placeholder {
+      @apply text-slate-300;
+      @apply cursor-default;
+    }
+    .s-input__container {
+      @apply border-slate-200;
+      @apply bg-slate-50;
+    }
+  }
+  &.readonly {
+    .s-input__container {
+      @apply border-slate-200;
+      @apply bg-slate-50;
+
+      &:hover,
+      &:focus-within {
+        @apply border-slate-200;
+      }
+    }
+  }
+  &.error {
+    .s-input__container {
+      @apply border-rose-600;
+
+      &:hover,
+      &:focus-within {
+        @apply border-rose-600;
+      }
+    }
+    .s-input__footer .s-input__helper {
+      @apply text-rose-600;
+    }
+  }
+}

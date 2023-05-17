@@ -33,7 +33,7 @@
       }
       &.sortable > .sm-icon {
         @apply transition-transform duration-300;
-        &.asc {
+        &.desc {
           @apply rotate-180;
         }
       }

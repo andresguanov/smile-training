@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts" setup>
-import 'tippy.js/dist/tippy.css';
+// import 'tippy.js/dist/tippy.css'
 import { Tippy as SmTooltip } from 'vue-tippy';
 
 const slots = useSlots();

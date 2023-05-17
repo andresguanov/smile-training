@@ -5,7 +5,7 @@
       class="sm-input-container"
       :data-prefix="dataPrefix"
       :data-sufix="dataSufix"
-      v-sm-simple-uid
+      v-sm-simple-uid="'sm-number'"
     >
       <input
         v-model="data"

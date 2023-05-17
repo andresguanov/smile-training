@@ -1,0 +1,13 @@
+.s-breadcrumb {
+  .icon {
+    @apply text-slate-400;
+  }
+
+  span {
+    @apply text-xs font-medium text-slate-500;
+  }
+
+  .active {
+    @apply text-sm-primary-800;
+  }
+}

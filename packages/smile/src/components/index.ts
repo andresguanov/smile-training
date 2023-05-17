@@ -36,6 +36,7 @@ export { default as SmDatepicker } from './SmDatepicker/SmDatepicker.vue';
 export { default as SmForm } from './SmForm/SmForm.vue';
 export { default as SmInnerLoading } from './SmInnerLoading/SmInnerLoading.vue';
 export { default as SmFileInput } from './SmFileInput/SmFileInput.vue';
+export { default as SmNumberInput } from './SmNumberInput/SmNumberInput.vue';
 // TODO: agregar sm-input-* sm-filter sm-list-controller sm-context-menu
 // New Smile
 export { default as SButton } from './SButton/SButton.vue';
@@ -43,3 +44,18 @@ export { default as SStepper } from './SStepper/SStepper.vue';
 export { default as SWizard } from './SWizard/SWizard.vue';
 export { default as STooltip } from './STooltip/STooltip.vue';
 export { default as STag } from './STag/STag.vue';
+export { default as SRadio } from './SRadio/SRadio.vue';
+export { default as SCheckbox } from './SCheckbox/SCheckbox.vue';
+export { default as SEmptyState } from './SEmptyState/SEmptyState.vue';
+export { default as SError } from './SError/SError.vue';
+export { default as STabs } from './STab/STabs.vue';
+export { default as STabLabel } from './STab/STabLabel.vue';
+export { default as STabContent } from './STab/STabContent.vue';
+export { default as SModal } from './SModal/SModal.vue';
+export { default as SBreadcrumb } from './SBreadcrumb/SBreadcrumb.vue';
+export { default as SPageHeading } from './SPageHeading/SPageHeading.vue';
+export { default as SInput } from './SInput/SInput.vue';
+export { default as SNumberInput } from './SNumberInput/SNumberInput.vue';
+export { default as SDropwdown } from './SDropwdown/SDropdown.vue';
+export { default as SOverflowMenu } from './SOverflowMenu/SOverflowMenu.vue';
+export { default as SChip } from './SChip/SChip.vue';
