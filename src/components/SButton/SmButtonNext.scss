@@ -1,7 +1,7 @@
 .s-button {
   @apply flex items-center gap-1;
   @apply px-5 py-2;
-  @apply rounded-[10px];
+  @apply rounded-[10px] outline-none;
   @apply text-base font-medium;
   @apply bg-sm-primary-600 text-white;
 
