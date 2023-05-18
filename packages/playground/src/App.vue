@@ -1,0 +1,284 @@
+<template>
+  <div class="app_container">
+    <sm-alert-stack />
+    <div class="m-3">
+      <s-stepper
+        :steps="['nombre', 'ciudad', 'test', 'label']"
+        current-step-has-error
+        v-model="step"
+        @click-step="step = $event"
+      />
+    </div>
+    <s-breadcrumb label="Hola mundo" active></s-breadcrumb>
+    <s-tabs filled>
+      <template #selectors>
+        <s-tab-label target="1" selected> Label </s-tab-label>
+        <s-tab-label target="2"> Label </s-tab-label>
+        <s-tab-label target="3"> Label </s-tab-label>
+      </template>
+      <s-tab-content name="1" style="width: 200px; height: 200px"> Tab Content 1 </s-tab-content>
+      <s-tab-content name="2" style="width: 200px; height: 200px"> Tab Content 2 </s-tab-content>
+      <s-tab-content name="3" style="width: 200px; height: 200px"> Tab Content 3 </s-tab-content>
+    </s-tabs>
+    <s-page-heading title="[Heading Title]" description="Description......">
+      <template #actions>
+        <s-button>Label</s-button>
+        <s-button>Label</s-button>
+        <s-button>Label</s-button>
+      </template>
+    </s-page-heading>
+    <sm-modal v-model="modal" header-text="Modal Title">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, adipisci velit ab aliquam
+      veniam odit vitae non ipsam dolorem quaerat, totam quia ut vel error ducimus eveniet
+      accusantium enim quam!
+    </sm-modal>
+    <s-empty-state />
+    <sm-card class="mt-1">
+      <sm-form ref="smFormEl" validation-mode="on-focusout">
+        <template #default="{ validate, reset }">
+          <<<<<<< HEAD:src/components/App.vue
+          <s-chip label="test" selected avatar="Carlos" />
+          <s-chip label="test" disabled selected />
+          <s-input
+            v-model="text"
+            supportive-text="dasdasd"
+            icon-right="bolt"
+            :rules="sRules"
+            :leading="{ label: 'Leading', icon: 'accounting', actionable: true }"
+          />
+          <s-input
+            v-model="text"
+            icon-left="search"
+            label="label"
+            hint="hint"
+            :rules="sRules"
+            :trailing="{ icon: 'close', actionable: true, inline: true }"
+            @blur="logEvent"
+            @focus="logEvent"
+          />
+          <s-dropdown v-model="text" label="dddd" hint="dasdasd"> </s-dropdown>
+          <s-dropdown
+            v-model="text"
+            label="Lenguaje favorito"
+            placeholder="Escoge tu lenguaje favorito"
+            :options="[
+              { text: 'Javascript', code: 'js', icon: 'flag-3' },
+              { text: 'PHP', code: 'php', icon: 'flag-3' },
+              { text: 'Python', code: 'py', icon: 'flag-3' },
+              { text: 'C++', code: 'cc', icon: 'flag-3' },
+            ]"
+          />
+          <s-number-input v-model="number" icon-left="accounting" size="large" />
+          =======
+          <sm-datepicker v-model="datepicker" label="Nombre" :rules="sRules" range size="large" />
+          >>>>>>> epic/Sm-1203941758704984-refactor-packages:packages/playground/src/App.vue
+          <sm-button type="primary" @click="validate()">Submit</sm-button>
+          <sm-button type="primary" @click="reset">Reset</sm-button>
+        </template>
+      </sm-form>
+    </sm-card>
+    <sm-card>
+      <sm-form ref="smFormEl" validation-mode="on-type" container-is-form @submit="onSubmit">
+        <template #default="{ isValid, reset }">
+          <h4>El formulario es: {{ isValid ? 'válido' : 'no válido' }}</h4>
+          <div class="flex flex-col">
+            <s-radio
+              v-model="radio"
+              label="test"
+              orientation="horizontal"
+              :options="[
+                { value: { card: '1' }, label: 'card-1' },
+                { value: { card: '2' }, label: 'card-2' },
+              ]"
+              :rules="[
+                (val) => {
+                  return (val as radioTest).card === '1' || 'Debe escoger el valord card 1'
+                }
+              ]"
+            />
+            <s-checkbox
+              v-model="check"
+              name="test"
+              label="test"
+              orientation="horizontal"
+              :options="[
+                { value: '1', label: 'card-1' },
+                { value: '2', label: 'card-2', disabled: true },
+                { value: '3', label: 'card-3', disabled: true, indeterminate: true },
+                { value: '4', label: 'card-4', indeterminate: true },
+              ]"
+              :rules="[
+                val => {
+                  return val.length > 0 || 'Debe escoger al menos una opción';
+                },
+              ]"
+            />
+          </div>
+          <s-button emphasis="subtle" native-type="submit">Submit</s-button>
+          <s-button emphasis="outline" @click="reset">Reset</s-button>
+        </template>
+      </sm-form>
+    </sm-card>
+    <sm-table
+      ref="testSmTable"
+      :filter-config="{
+        b: {
+          type: 'datepicker',
+        },
+      }"
+      :rows="items"
+      :column-config="cols"
+      :items-per-page="20"
+      actions-col-width="100px"
+      class="my-table"
+      initial-order="DESC"
+      is-fixed
+      @refresh="onChange"
+      @change="onChange"
+      @filter="onChange"
+    >
+      <template #head.a>
+        <input v-model="selectAll" type="checkbox" name="test" id="test" />
+      </template>
+      <template #bodyRow.a="{ row }">
+        <input v-model="selected" :value="row.a" type="checkbox" name="test" id="test" />
+      </template>
+      <template #actionsCol>
+        <sm-select v-model="select" :options="options" />
+      </template>
+    </sm-table>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { SmForm, SmTable } from './index';
+import { $SmAlert, ISmAlertProvide } from '../utils/alerts';
+import { smTableChangeEvent, smTableColumn } from '~/interfaces';
+import { ref, reactive, computed, inject, onMounted } from 'vue';
+
+interface radioTest {
+  card: string;
+}
+const selectAll = ref(false);
+const selected = ref([]);
+const step = ref(1);
+const modal = ref(true);
+const check = ref([]);
+const radio = ref('');
+const number = ref(3);
+const text = ref('');
+const select = ref([]);
+const options = ref([
+  {
+    text: 'A',
+    value: 3,
+  },
+  {
+    text: 'Ab',
+    value: 2,
+  },
+  {
+    text: 'casadjhkbsahjd',
+    value: 3,
+  },
+  {
+    text: 'dsadjhgasdjhgxc',
+    value: 4,
+    disabled: true,
+  },
+]);
+
+const cols: smTableColumn[] = reactive([
+  {
+    bodyAlign: 'left',
+    headerAlign: 'left',
+    filterable: true,
+    order: true,
+    format: (value: string) => value.toUpperCase(),
+    label: 'A',
+    name: 'a',
+    width: '100px',
+  },
+  {
+    bodyAlign: 'left',
+    headerAlign: 'left',
+    filterable: true,
+    order: true,
+    format: (value: string) => value.toUpperCase(),
+    label: 'B es un nombre muy largo lorem ipsum -----',
+    name: 'b',
+    width: '100px',
+    bodyClass: 'b-column whitespace-nowrap text-ellipsis overflow-x-hidden',
+  },
+  {
+    bodyAlign: 'left',
+    headerAlign: 'left',
+    format: (value: string) => value.toUpperCase(),
+    label: 'C',
+    name: 'c',
+    width: '100px',
+  },
+]);
+
+const items = computed(() => {
+  const totalItems = 35;
+  const obj: any[] = [];
+  for (let i = 0; i < totalItems; i++) {
+    obj.push({ a: i, b: 'a'.repeat(totalItems), c: 'test test test test test test' });
+  }
+  return obj;
+});
+const testSmTable = ref(null);
+const onChange = (data: smTableChangeEvent) => {
+  console.log({ data });
+};
+const logEvent = (event: any) => {
+  console.log({ event });
+};
+const sRules = ref([
+  (v: string) => {
+    return !!v || 'El valor es requerido';
+  },
+]);
+const smFormEl = ref<InstanceType<typeof SmForm> | null>();
+const onSubmit = (e?: string) => {
+  console.log({ e });
+};
+
+const smAlert = inject<ISmAlertProvide>($SmAlert);
+onMounted(() => {
+  smFormEl.value?.validateInputs(true);
+  smAlert?.success('Hola mundo');
+  smAlert?.error('Hola mundo');
+  smAlert?.warning('Hola mundo', { title: '<h2>Grande</h2> pequeño' });
+  smAlert?.info(
+    `
+  Errores:
+    <ul class="flex gap-4">
+      <li>1: Error al cargar los datos bla bla bla...</li>
+      <li>2: No se pudo generar la factura de venta a por los sig. motivos...</li>
+    </ul>
+    `,
+    {
+      title: 'Titulo de info',
+      persistent: true,
+    }
+  );
+});
+</script>
+
+<style lang="scss" scoped>
+.app_container {
+  @apply flex flex-col;
+  @apply m-5;
+  @apply max-w-5xl;
+}
+.my-table:deep() {
+  .b-column {
+    @apply whitespace-nowrap text-ellipsis overflow-x-hidden;
+  }
+  [data-name='b'] {
+    @apply whitespace-nowrap text-ellipsis overflow-x-hidden;
+  }
+}
+</style>
