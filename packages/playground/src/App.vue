@@ -36,7 +36,6 @@
     <sm-card class="mt-1">
       <sm-form ref="smFormEl" validation-mode="on-focusout">
         <template #default="{ validate, reset }">
-          <<<<<<< HEAD:src/components/App.vue
           <s-chip label="test" selected avatar="Carlos" />
           <s-chip label="test" disabled selected />
           <s-input
@@ -69,9 +68,7 @@
             ]"
           />
           <s-number-input v-model="number" icon-left="accounting" size="large" />
-          =======
           <sm-datepicker v-model="datepicker" label="Nombre" :rules="sRules" range size="large" />
-          >>>>>>> epic/Sm-1203941758704984-refactor-packages:packages/playground/src/App.vue
           <sm-button type="primary" @click="validate()">Submit</sm-button>
           <sm-button type="primary" @click="reset">Reset</sm-button>
         </template>
@@ -151,9 +148,9 @@
 </template>
 
 <script setup lang="ts">
-import { SmForm, SmTable } from './index';
-import { $SmAlert, ISmAlertProvide } from '../utils/alerts';
-import { smTableChangeEvent, smTableColumn } from '~/interfaces';
+import { SmForm, SmTable } from '@alegradev/smile-ui-next';
+import { $SmAlert, ISmAlertProvide } from '@alegradev/smile-ui-next';
+import { smTableChangeEvent, smTableColumn } from '@alegradev/smile-ui-next';
 import { ref, reactive, computed, inject, onMounted } from 'vue';
 
 interface radioTest {
