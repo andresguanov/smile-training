@@ -194,9 +194,6 @@ const hasActionsColumn = computed(
 const { hasFilterableData, filterAttrs, filterValues, showFilters, resetValues, filtersAreFalsy } =
   useFilters(props.columnConfig, props.filterConfig);
 
-const { hasFilterableData, filterAttrs, filterValues, showFilters, resetValues, filtersAreFalsy } =
-  useFilters(props.columnConfig, props.filterConfig);
-
 const tableData = computed((): Array<any> => {
   if (props.rows.length > internalItemsPerPage.value) {
     return [...props.rows].slice(0, internalItemsPerPage.value);

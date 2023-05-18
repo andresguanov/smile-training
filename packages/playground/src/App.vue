@@ -68,7 +68,6 @@
             ]"
           />
           <s-number-input v-model="number" icon-left="accounting" size="large" />
-          <sm-datepicker v-model="datepicker" label="Nombre" :rules="sRules" range size="large" />
           <sm-button type="primary" @click="validate()">Submit</sm-button>
           <sm-button type="primary" @click="reset">Reset</sm-button>
         </template>
@@ -166,23 +165,9 @@ const number = ref(3);
 const text = ref('');
 const select = ref([]);
 const options = ref([
-  {
-    text: 'A',
-    value: 3,
-  },
-  {
-    text: 'Ab',
-    value: 2,
-  },
-  {
-    text: 'casadjhkbsahjd',
-    value: 3,
-  },
-  {
-    text: 'dsadjhgasdjhgxc',
-    value: 4,
-    disabled: true,
-  },
+  { text: '1', value: '1' },
+  { text: '2', value: '2' },
+  { text: '3', value: '3' },
 ]);
 
 const cols: smTableColumn[] = reactive([
@@ -219,7 +204,7 @@ const cols: smTableColumn[] = reactive([
 
 const items = computed(() => {
   const totalItems = 35;
-  const obj: any[] = [];
+  const obj = [];
   for (let i = 0; i < totalItems; i++) {
     obj.push({ a: i, b: 'a'.repeat(totalItems), c: 'test test test test test test' });
   }
