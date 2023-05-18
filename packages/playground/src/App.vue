@@ -55,8 +55,8 @@
             @blur="logEvent"
             @focus="logEvent"
           />
-          <s-dropdown v-model="text" label="dddd" hint="dasdasd"> </s-dropdown>
-          <s-dropdown
+          <SDropwdown v-model="text" label="dddd" hint="dasdasd"> </SDropwdown>
+          <SDropwdown
             v-model="text"
             label="Lenguaje favorito"
             placeholder="Escoge tu lenguaje favorito"
@@ -147,7 +147,24 @@
 </template>
 
 <script setup lang="ts">
-import { SmForm, SmTable } from '@alegradev/smile-ui-next';
+import {
+  SmForm,
+  SmTable,
+  SEmptyState,
+  SStepper,
+  SBreadcrumb,
+  SDropwdown,
+  SInput,
+  SChip,
+  STabs,
+  SNumberInput,
+  STabContent,
+  SPageHeading,
+  STabLabel,
+  SButton,
+  SRadio,
+  SCheckbox,
+} from '@alegradev/smile-ui-next';
 import { $SmAlert, ISmAlertProvide } from '@alegradev/smile-ui-next';
 import { smTableChangeEvent, smTableColumn } from '@alegradev/smile-ui-next';
 import { ref, reactive, computed, inject, onMounted } from 'vue';
