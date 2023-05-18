@@ -1,8 +1,14 @@
+const { theme } = require('@alegradev/smile-ui-next/public/theme');
 const colors = require('tailwindcss/colors');
-const { theme } = require('@alegradev/smile-ui-next/dist/theme');
+const plugin = require('tailwindcss/plugin');
 
 module.exports = {
-  content: ['./*.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+  content: ['./index.html', './src/components/*.{vue,js,ts,jsx,tsx}'],
   theme: theme(colors),
-  plugins: [],
+  plugins: [
+    plugin(function ({ addVariant }) {
+      addVariant('scrollbar', 'rounded');
+    }),
+    require('tailwind-scrollbar'),
+  ],
 };
