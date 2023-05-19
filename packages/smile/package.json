@@ -1,6 +1,6 @@
 {
   "name": "@alegradev/smile-ui-next",
-  "version": "0.1.0-beta.7",
+  "version": "0.0.33",
   "files": [
     "dist"
   ],
