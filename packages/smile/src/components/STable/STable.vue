@@ -1,18 +1,6 @@
 <template>
   <div class="sm-table">
-    <div v-if="hasFilterableData" class="sm-table-filter-buttons">
-      <sm-button size="small" @click="onFilter">
-        {{ filterBtnText }}
-      </sm-button>
-      <sm-button v-if="showFilters" size="small" style="margin-left: 5px" @click="onHideFilter">
-        {{ closeFilterBtnText }}
-      </sm-button>
-    </div>
-    <sm-markup-table
-      :hoverable="hoverable"
-      :is-fixed="isFixed"
-      :class="{ 'sm-table-fixed': isFixed }"
-    >
+    <table>
       <thead class="sm-table-container-thead">
         <tr v-if="hasFilterableData" :class="['sm-table-filter', { open: showFilters }]">
           <th
@@ -98,33 +86,11 @@
           </td>
         </tr>
       </tbody>
-    </sm-markup-table>
-    <slot name="empty" v-if="!tableData.length">
-      <div class="sm-table-empty">
-        {{ noContentText }}
-      </div>
-    </slot>
-    <slot name="pagination">
-      <sm-pagination
-        :page="internalPage"
-        :items-per-page="internalItemsPerPage"
-        :total="internalTotal"
-        :item-limit-options="itemsPerPageOptions"
-        :text="textPagination"
-        class="sm-table-pagination"
-        @refresh="onRefresh"
-        @update:page="onUpdatePage"
-        @update:itemsPerPage="onUpdateItemsPerPage"
-      />
-    </slot>
-    <div v-if="loading" class="sm-table-loading">
-      <sm-inner-loading :loading-text="loadingText" />
-    </div>
+    </table>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { SmPagination, SmInnerLoading, SmMarkupTable } from '../index';
 import { useSlots } from 'vue';
 import { smPaginationText } from '../../interfaces/sm-pagination.interface';
 import {
@@ -183,15 +149,14 @@ const sortColumn = ref('');
 const ascending = ref(props.initialOrder === 'ASC');
 const internalPage = ref(props.page);
 const internalItemsPerPage = ref(props.itemsPerPage);
-const internalTotal = computed(() =>
-  props.total ? props.total : props.rows.length ? props.rows.length : 1
-);
 const hasActionsColumn = computed(
   () => slots['actionsCol'] && typeof slots['actionsCol'] === 'function'
 );
 
-const { hasFilterableData, filterAttrs, filterValues, showFilters, resetValues, filtersAreFalsy } =
-  useFilters(props.columnConfig, props.filterConfig);
+const { hasFilterableData, filterAttrs, filterValues, showFilters } = useFilters(
+  props.columnConfig,
+  props.filterConfig
+);
 
 const tableData = computed((): Array<any> => {
   if (props.rows.length > internalItemsPerPage.value) {
@@ -240,13 +205,6 @@ const onFilter = () => {
     onEvent('filter', internalItemsPerPage.value);
   } else {
     showFilters.value = true;
-  }
-};
-const onHideFilter = () => {
-  showFilters.value = false;
-  if (!filtersAreFalsy.value) {
-    resetValues();
-    onUpdatePage(1);
   }
 };
 const onSort = (col: string) => {

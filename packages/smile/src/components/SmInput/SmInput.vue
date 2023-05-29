@@ -45,9 +45,13 @@ const props = defineProps({
   ...inputProps,
   ...validateProps,
 });
-const emit = defineEmits(['update:modelValue', 'on:focusout']);
+const emit = defineEmits<{
+  (event: 'update:modelValue', value?: string): void;
+  (event: 'blur' | 'focus', value: FocusEvent): void;
+}>();
 const data = useVModel(props, 'modelValue', emit);
 const inputElement = ref<HTMLInputElement | null>(null);
+// const internalError = toRef(props.error)
 const { validate, hasError, errorListContent, validateOnFocusout } = useValidate(
   data,
   props.rules || [],
@@ -55,11 +59,11 @@ const { validate, hasError, errorListContent, validateOnFocusout } = useValidate
   props.errorMessages
 );
 
-const onFocusOut = () => {
+const onFocusOut = (event: FocusEvent) => {
   if (validateOnFocusout.value) {
     validate();
   }
-  emit('on:focusout');
+  emit('blur', event);
 };
 
 defineExpose({ validate, hasError: hasError.value });
