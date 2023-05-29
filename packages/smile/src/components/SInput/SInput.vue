@@ -20,8 +20,8 @@
       </div>
       <input
         v-model="value"
-        type="text"
         class="s-input__input"
+        :type="nativeType"
         :placeholder="placeholder"
         :disabled="disabled"
         :readonly="readonly"
@@ -84,11 +84,26 @@ const props = withDefaults(
     loading?: boolean;
     label?: string;
     supportiveText?: string;
+    nativeType?:
+      | 'text'
+      | 'password'
+      | 'date'
+      | 'month'
+      | 'email'
+      | 'search'
+      | 'time'
+      | 'url'
+      | 'color'
+      | 'week';
     /**
      * Disponible solo cuando el componente está dentro de SmForm.
      * Permite establecer las validaciones del componente.
      */
     rules?: Array<(value: string) => boolean | string>;
+    /**
+     * Mensaje de error, los mensajes de error proporcionados por rules tendrán
+     * prioridad sobre este.
+     */
     error?: string;
   }>(),
   {
@@ -107,7 +122,7 @@ const value = useVModel(props, 'modelValue', emit);
 const { validate, validateOnFocusout, hasError, currentError } = useSmileValidate<string>(
   value,
   props.rules,
-  props.error
+  toRef(props, 'error')
 );
 
 const iconSize = computed(() => (props.size === 'small' ? '16px' : '20px'));

@@ -143,7 +143,7 @@ const getText = (value: string | number) => {
 const isSelected = (value: MenuOption) => {
   const realValue = value[props.valueKey] as string | number;
   if (props.multiple) {
-    return (data.value as Array<string | number>).includes(realValue);
+    return (data.value as Array<string | number>)?.includes(realValue);
   }
   if (props.object) return (data.value as MenuOption)[props.valueKey] === realValue;
   return data.value === realValue;

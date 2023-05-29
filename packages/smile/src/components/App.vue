@@ -50,10 +50,13 @@
             icon-left="search"
             label="label"
             hint="hint"
+            native-type="week"
+            :error="number === 3 ? 'primer error' : ''"
             :rules="sRules"
             :trailing="{ icon: 'close', actionable: true, inline: true }"
             @blur="logEvent"
             @focus="logEvent"
+            @click-trailing="number = 3"
           />
           <s-dropdown v-model="text" label="dddd" hint="dasdasd"> </s-dropdown>
           <s-dropdown

@@ -5,7 +5,7 @@ import type { Ref, WritableComputedRef } from 'vue';
 export const useSmileValidate = <T = string>(
   data: Ref<T> | WritableComputedRef<T>,
   rules: Array<(value: T) => boolean | string>,
-  externalError?: string
+  externalError?: Ref<string | undefined>
 ) => {
   const stopWatchValidate = watch(data, () => validate());
   const errorBucket = ref<Array<string>>([]);
@@ -49,14 +49,14 @@ export const useSmileValidate = <T = string>(
   }
 
   const hasError = computed(() => {
-    return Boolean(externalError) || errorBucket.value.length > 0;
+    return Boolean(externalError?.value) || errorBucket.value.length > 0;
   });
   const validateOnFocusout = computed(() => formProvide?.validationMode === 'on-focusout');
   const currentError = computed(() => {
     if (errorBucket.value.length > 0) {
       return errorBucket.value[0];
     }
-    return externalError || '';
+    return externalError?.value || '';
   });
 
   return {
