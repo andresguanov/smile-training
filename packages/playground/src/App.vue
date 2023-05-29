@@ -164,6 +164,7 @@ import {
   SButton,
   SRadio,
   SCheckbox,
+  SmSelect,
 } from '@alegradev/smile-ui-next';
 import { $SmAlert, ISmAlertProvide } from '@alegradev/smile-ui-next';
 import { smTableChangeEvent, smTableColumn } from '@alegradev/smile-ui-next';

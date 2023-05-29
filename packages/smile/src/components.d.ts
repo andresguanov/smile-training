@@ -69,6 +69,7 @@ declare module 'vue' {
     SStepper: typeof import('./components/SStepper/SStepper.vue')['default'];
     STabContent: typeof import('./components/STab/STabContent.vue')['default'];
     STabLabel: typeof import('./components/STab/STabLabel.vue')['default'];
+    STable: typeof import('./components/STable/STable.vue')['default'];
     STabs: typeof import('./components/STab/STabs.vue')['default'];
     STabSelectors: typeof import('./components/STab/STabSelectors.vue')['default'];
     STag: typeof import('./components/STag/STag.vue')['default'];

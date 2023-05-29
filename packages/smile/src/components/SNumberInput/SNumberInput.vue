@@ -102,7 +102,7 @@ const value = useVModel(props, 'modelValue', emit);
 const { validate, validateOnFocusout, hasError, currentError } = useSmileValidate<string | number>(
   value,
   props.rules,
-  props.error
+  toRef(props, 'error')
 );
 
 const iconSize = computed(() => (props.size === 'small' ? '16px' : '20px'));

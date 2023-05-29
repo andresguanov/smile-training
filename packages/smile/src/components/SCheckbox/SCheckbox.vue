@@ -63,7 +63,7 @@ const internalValue = useVModel(props, 'modelValue', emit);
 const { validate, validateOnFocusout, hasError, currentError } = useSmileValidate<string[]>(
   internalValue,
   props.rules,
-  props.error
+  toRef(props, 'error')
 );
 
 const onFocusOut = (event: FocusEvent) => {

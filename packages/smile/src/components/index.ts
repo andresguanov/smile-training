@@ -56,6 +56,6 @@ export { default as SBreadcrumb } from './SBreadcrumb/SBreadcrumb.vue';
 export { default as SPageHeading } from './SPageHeading/SPageHeading.vue';
 export { default as SInput } from './SInput/SInput.vue';
 export { default as SNumberInput } from './SNumberInput/SNumberInput.vue';
-export { default as SDropwdown } from './SDropwdown/SDropdown.vue';
+export { default as SDropdown } from './SDropwdown/SDropdown.vue';
 export { default as SOverflowMenu } from './SOverflowMenu/SOverflowMenu.vue';
 export { default as SChip } from './SChip/SChip.vue';
