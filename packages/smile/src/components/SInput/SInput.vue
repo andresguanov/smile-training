@@ -108,6 +108,7 @@ const props = withDefaults(
   }>(),
   {
     size: 'medium',
+    nativeType: 'text',
     rules: () => [],
   }
 );
