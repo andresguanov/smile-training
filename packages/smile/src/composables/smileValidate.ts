@@ -1,11 +1,13 @@
-import { provideSmFormSymbol } from './validate';
-import type { smFormProvide } from '../interfaces/sm-form.interface';
+import type { smFormProvide2 } from '../interfaces/sm-form.interface';
 import type { Ref, WritableComputedRef } from 'vue';
+import { provideSmFormSymbol } from './validate';
+import { simpleUid } from '~/utils/uid';
 
 export const useSmileValidate = <T = string>(
   data: Ref<T> | WritableComputedRef<T>,
   rules: Array<(value: T) => boolean | string>,
-  externalError?: Ref<string | undefined>
+  externalError?: Ref<string | undefined>,
+  id: string = simpleUid()
 ) => {
   const stopWatchValidate = watch(data, () => validate());
   const errorBucket = ref<Array<string>>([]);
@@ -14,44 +16,36 @@ export const useSmileValidate = <T = string>(
   /**
    * @param ignoreUpdate Se usa para no actualizar los estados de error del componente
    */
-  const validate = (ignoreUpdate?: boolean): boolean => {
+  const validate = (silent = false): string[] => {
     const errors = [];
-    const value = data.value;
-    for (let index = 0; index < rules.length; index++) {
-      const rule = rules[index];
-      const valid = typeof rule === 'function' ? rule(value) : rule;
+    for (const rule of rules) {
+      const handler = typeof rule === 'function' ? rule : () => rule;
+      const result = handler(data.value);
 
-      if (valid === false || typeof valid === 'string') {
-        errors.push(valid || 'Error de validación');
-      } else if (typeof valid !== 'boolean') {
+      if (result === true) continue;
+      if (typeof result !== 'string') {
         console.error(
-          `Rules should return a string or boolean, received '${typeof valid}' instead`
+          `Rules should return a string or boolean, received '${typeof result}' instead`
         );
+        continue;
       }
+      errors.push(result);
     }
-    if (!ignoreUpdate) {
+    if (!silent) {
       errorBucket.value = [...errors];
     }
-    return errors.length === 0;
+    return errors;
   };
-  const resetValidation = () => {
+  const reset = () => {
     errorBucket.value = [];
   };
 
-  const formProvide = inject<smFormProvide | null>(provideSmFormSymbol, null);
-  if (formProvide) {
-    formProvide.register(validate);
-    formProvide.registerReset(resetValidation);
-    if (formProvide.validationMode !== 'on-type') stopWatchValidate();
-    // if (formProvide.validationMode === 'on-focusout') validateOnFocusout.value = true
-  } else {
-    stopWatchValidate();
-  }
+  const formInject = inject<smFormProvide2 | null>(provideSmFormSymbol, null);
 
   const hasError = computed(() => {
     return Boolean(externalError?.value) || errorBucket.value.length > 0;
   });
-  const validateOnFocusout = computed(() => formProvide?.validationMode === 'on-focusout');
+  const validateOnFocusout = computed(() => formInject?.validateOn.value === 'focusout');
   const currentError = computed(() => {
     if (errorBucket.value.length > 0) {
       return errorBucket.value[0];
@@ -59,12 +53,28 @@ export const useSmileValidate = <T = string>(
     return externalError?.value || '';
   });
 
+  onBeforeMount(() => {
+    if (formInject?.validateOn.value !== 'type') {
+      stopWatchValidate();
+      console.log('stopWatchValidate();');
+    }
+    formInject?.register({
+      id,
+      validate,
+      reset,
+    });
+  });
+
+  onBeforeUnmount(() => {
+    formInject?.unregister(id);
+  });
+
   return {
     errorBucket,
     validate,
+    reset,
     validateOnFocusout,
     hasError,
-    resetValidation,
     currentError,
   };
 };

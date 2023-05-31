@@ -136,6 +136,12 @@
       @change="onChange"
       @filter="onChange"
     >
+      <template #aboveFilterButtons>
+        <div>------</div>
+      </template>
+      <template #belowFilterButtons>
+        <div>------</div>
+      </template>
       <template #head.a>
         <input v-model="selectAll" type="checkbox" name="test" id="test" />
       </template>

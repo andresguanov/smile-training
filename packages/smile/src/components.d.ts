@@ -12,6 +12,7 @@ declare module 'vue' {
     SDropdown: typeof import('./components/SDropwdown/SDropdown.vue')['default'];
     SEmptyState: typeof import('./components/SEmptyState/SEmptyState.vue')['default'];
     SError: typeof import('./components/SError/SError.vue')['default'];
+    SForm: typeof import('./components/SForm/SForm.vue')['default'];
     SInput: typeof import('./components/SInput/SInput.vue')['default'];
     SInputLeading: typeof import('./components/SInput/addons/SInputLeading.vue')['default'];
     SmAccordion: typeof import('./components/SmAccordion/SmAccordion.vue')['default'];
