@@ -1,12 +1,19 @@
 {
   "name": "@alegradev/smile-ui-next",
-  "version": "0.0.34",
+  "version": "0.0.35-beta.1",
   "files": [
     "dist"
   ],
   "main": "./dist/main.umd.js",
   "module": "./dist/main.es.js",
   "types": "./dist/types/main.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/main.es.js",
+      "require": "./dist/main.umd.js"
+    },
+    "./styles": "./dist/style.css"
+  },
   "scripts": {
     "dev": "cross-env NODE_ENV=development vite",
     "build": "vite build && vue-tsc --emitDeclarationOnly",

@@ -34,8 +34,9 @@
     </sm-modal>
     <s-empty-state />
     <sm-card class="mt-1">
-      <sm-form ref="smFormEl" validation-mode="on-focusout">
-        <template #default="{ validate, reset }">
+      <s-form ref="smFormEl" validate-on="focusout">
+        <template #default="{ validate, reset, isValid }">
+          {{ isValid }}
           <s-chip label="test" selected avatar="Carlos" />
           <s-chip label="test" disabled selected />
           <s-input
@@ -46,21 +47,20 @@
             :leading="{ label: 'Leading', icon: 'accounting', actionable: true }"
           />
           <s-input
-            v-model="text"
+            v-if="number === 3"
+            v-model="text2"
             icon-left="search"
             label="label"
             hint="hint"
             native-type="week"
-            :error="number === 3 ? 'primer error' : ''"
             :rules="sRules"
             :trailing="{ icon: 'close', actionable: true, inline: true }"
             @blur="logEvent"
             @focus="logEvent"
             @click-trailing="number = 3"
           />
-          <s-dropdown v-model="text" label="dddd" hint="dasdasd"> </s-dropdown>
           <s-dropdown
-            v-model="text"
+            v-model="text3"
             label="Lenguaje favorito"
             placeholder="Escoge tu lenguaje favorito"
             :options="[
@@ -74,7 +74,7 @@
           <sm-button type="primary" @click="validate()">Submit</sm-button>
           <sm-button type="primary" @click="reset">Reset</sm-button>
         </template>
-      </sm-form>
+      </s-form>
     </sm-card>
     <sm-card>
       <sm-form ref="smFormEl" validation-mode="on-type" container-is-form @submit="onSubmit">
@@ -165,6 +165,8 @@ const check = ref([]);
 const radio = ref('');
 const number = ref(3);
 const text = ref('');
+const text2 = ref('');
+const text3 = ref('');
 const select = ref([]);
 const options = ref([
   { text: '1', value: '1' },

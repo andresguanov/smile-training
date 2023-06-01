@@ -10,6 +10,8 @@
         type="number"
         class="s-number__input"
         :step="step"
+        :id="id"
+        :required="required"
         :placeholder="placeholder"
         :disabled="disabled"
         :readonly="readonly"
@@ -66,6 +68,11 @@ const props = withDefaults(
     placeholder?: string;
     disabled?: boolean;
     readonly?: boolean;
+    required?: boolean;
+    /**
+     * Id, del input. Cuando se usa con SForm actúa como identificación de su validación.
+     */
+    id?: string;
     success?: boolean;
     loading?: boolean;
     label?: string;
@@ -102,7 +109,8 @@ const value = useVModel(props, 'modelValue', emit);
 const { validate, validateOnFocusout, hasError, currentError } = useSmileValidate<string | number>(
   value,
   props.rules,
-  toRef(props, 'error')
+  toRef(props, 'error'),
+  props.id
 );
 
 const iconSize = computed(() => (props.size === 'small' ? '16px' : '20px'));

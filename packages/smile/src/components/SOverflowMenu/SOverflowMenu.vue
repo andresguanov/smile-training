@@ -24,6 +24,7 @@ const props = withDefaults(
      * Por defecto el evento se dispara usando capture.
      */
     bubbling?: boolean;
+    detectIframe?: boolean;
   }>(),
   {}
 );
@@ -33,7 +34,10 @@ const emit = defineEmits<{
 
 const menuEl = ref<HTMLDivElement | null>(null);
 
-onClickOutside(menuEl, event => emit('clickOutside', event), { capture: !props.bubbling });
+onClickOutside(menuEl, event => emit('clickOutside', event), {
+  capture: !props.bubbling,
+  detectIframe: props.detectIframe,
+});
 </script>
 
 <style lang="scss" scoped src="./SOverflowMenu.scss"></style>
