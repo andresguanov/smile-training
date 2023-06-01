@@ -40,6 +40,7 @@ const props = withDefaults(
      * Identificador para los checkbox, se usa para diferenciar un grupo de checkbox de otro
      */
     name: string;
+    id?: string;
     label?: string;
     orientation?: 'horizontal' | 'vertical';
     /**
@@ -63,7 +64,8 @@ const internalValue = useVModel(props, 'modelValue', emit);
 const { validate, validateOnFocusout, hasError, currentError } = useSmileValidate<string[]>(
   internalValue,
   props.rules,
-  toRef(props, 'error')
+  toRef(props, 'error'),
+  props.id
 );
 
 const onFocusOut = (event: FocusEvent) => {

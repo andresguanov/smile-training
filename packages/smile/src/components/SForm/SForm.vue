@@ -1,6 +1,6 @@
 <template>
   <component :is="containerIsForm ? 'form' : 'div'" @submit.prevent="onSubmit">
-    <slot :isValid="isValid" :validate="validateInputs" :reset="resetValidation" />
+    <slot :isValid="isValid" :validate="validateForm" :reset="resetInputs" />
   </component>
 </template>
 
@@ -36,48 +36,54 @@ const props = withDefaults(
   { validateOn: 'submit' }
 );
 const emits = defineEmits(['submit', 'validation:error']);
-// const inputsValidation = ref<Array<(ignoreUpdate?: boolean) => boolean>>([]);
-const inputsReset = ref<Array<() => void>>([]);
-const isValid = ref(true);
-const fields = ref<FormField[]>([]);
 
-const validateInputs = (silent?: boolean): boolean => {
-  let errorQty = 0;
-  fields.value.forEach(field => {
-    const errors = field.validate(silent);
-    if (errors.length > 0) {
-      errorQty += 1;
+const isValidating = ref(true);
+const errors = ref<{ id: string; errorMessages: string[] }[]>([]);
+const fields = ref<FormField[]>([]);
+const isValid = computed(() => errors.value.length === 0);
+
+const validateForm = (silent?: boolean) => {
+  let valid = true;
+  const results = [];
+  isValidating.value = true;
+
+  for (const field of fields.value) {
+    const fieldErrorMessages = field.validate(silent);
+
+    if (fieldErrorMessages.length > 0) {
+      valid = false;
+      results.push({
+        id: field.id,
+        errorMessages: fieldErrorMessages,
+      });
     }
-  });
-  isValid.value = errorQty === 0;
-  return errorQty === 0;
+    if (!valid) break;
+  }
+  errors.value = [...results];
+  isValidating.value = false;
+
+  return { valid, results };
 };
-const resetValidation = () => {
-  inputsReset.value.forEach(reset => reset());
-  isValid.value = true;
+const resetInputs = () => {
+  fields.value.forEach(({ reset }) => reset());
+  errors.value = [];
 };
 const onSubmit = () => {
   try {
-    if (!validateInputs()) throw new Error('Error Validation');
+    const result = validateForm();
+    if (!result.valid) {
+      throw new Error('Error Validation');
+    }
     emits('submit');
   } catch (e: any) {
     emits('validation:error', e);
   }
 };
-// const registerValidation = (validate: () => boolean) => {
-//   if (typeof validate === 'function') {
-//     inputsValidation.value.push(validate);
-//   } else {
-//     console.warn('Inject validation is not a function');
-//   }
-// };
-// const registerInputReset = (reset: () => void) => {
-//   if (typeof reset === 'function') {
-//     inputsReset.value.push(reset);
-//   } else {
-//     console.warn('Inject validation is not a function');
-//   }
-// };
+const validateInput = (id: string) => {
+  const field = fields.value.find(el => el.id === id);
+  if (!field) throw new Error(`El input con id ${id}, no se encuentra en el formulario`);
+  field.validate();
+};
 
 provide<smFormProvide2>(provideSmFormSymbol, {
   register: ({ id, validate, reset }) => {
@@ -88,8 +94,6 @@ provide<smFormProvide2>(provideSmFormSymbol, {
       id,
       validate,
       reset,
-      //   isValid: null,
-      //   errorMessages: [],
     });
   },
   unregister: id => {
@@ -103,7 +107,9 @@ provide<smFormProvide2>(provideSmFormSymbol, {
 defineExpose({
   isValid,
   onSubmit,
-  validateInputs,
-  resetValidation,
+  validateInput,
+  validateForm,
+  resetInputs,
+  errors,
 });
 </script>
