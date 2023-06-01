@@ -1,5 +1,6 @@
 <template>
   <div class="sm-table">
+    <slot name="aboveFilterButtons" />
     <div v-if="hasFilterableData" class="sm-table-filter-buttons">
       <sm-button size="small" @click="onFilter">
         {{ filterBtnText }}
@@ -8,6 +9,7 @@
         {{ closeFilterBtnText }}
       </sm-button>
     </div>
+    <slot name="belowFilterButtons" />
     <sm-markup-table
       :hoverable="hoverable"
       :is-fixed="isFixed"

@@ -34,6 +34,7 @@ const props = withDefaults(
       disabled?: boolean;
     }[];
     label?: string;
+    id?: string;
     orientation?: 'horizontal' | 'vertical';
     /**
      * Disponible solo cuando el componente está dentro de SmForm.
@@ -55,7 +56,7 @@ const emit = defineEmits<{
 const internalValue = useVModel(props, 'modelValue', emit);
 const { validate, validateOnFocusout, hasError, currentError } = useSmileValidate<
   string | number | object
->(internalValue, props.rules, toRef(props, 'error'));
+>(internalValue, props.rules, toRef(props, 'error'), props.id);
 
 const onFocusOut = (event: FocusEvent) => {
   if (validateOnFocusout.value) {

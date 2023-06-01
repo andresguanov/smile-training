@@ -55,8 +55,8 @@
             @blur="logEvent"
             @focus="logEvent"
           />
-          <SDropwdown v-model="text" label="dddd" hint="dasdasd"> </SDropwdown>
-          <SDropwdown
+          <SDropdown v-model="text" label="dddd" hint="dasdasd"> </SDropdown>
+          <SDropdown
             v-model="text"
             label="Lenguaje favorito"
             placeholder="Escoge tu lenguaje favorito"
@@ -153,7 +153,7 @@ import {
   SEmptyState,
   SStepper,
   SBreadcrumb,
-  SDropwdown,
+  SDropdown,
   SInput,
   SChip,
   STabs,
