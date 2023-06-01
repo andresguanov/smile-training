@@ -2,6 +2,7 @@ import { PropType, Ref } from 'vue';
 import { smFormProvide } from '../interfaces/sm-form.interface';
 
 export const provideSmFormSymbol = Symbol('smForm');
+export const provideSFormSymbol = Symbol('sForm');
 
 export const ValidateProps = {
   rules: Array as PropType<Array<(value: any) => boolean | string>>,

@@ -10,6 +10,8 @@
         type="number"
         class="s-number__input"
         :step="step"
+        :id="id"
+        :required="required"
         :placeholder="placeholder"
         :disabled="disabled"
         :readonly="readonly"

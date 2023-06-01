@@ -6,7 +6,7 @@
 
 <script lang="ts" setup>
 import type { smFormProvide2 } from '~/interfaces';
-import { provideSmFormSymbol } from '../../composables';
+import { provideSFormSymbol } from '../../composables';
 
 type FormField = {
   id: string;
@@ -32,6 +32,7 @@ const props = withDefaults(
      * Para los inputs de tipo radio y checkbox on-focusout y on-type hacen la misma acción.
      */
     validateOn?: 'submit' | 'focusout' | 'type';
+    breakOnFirstError?: boolean;
   }>(),
   { validateOn: 'submit' }
 );
@@ -57,7 +58,7 @@ const validateForm = (silent?: boolean) => {
         errorMessages: fieldErrorMessages,
       });
     }
-    if (!valid) break;
+    if (!valid && props.breakOnFirstError) break;
   }
   errors.value = [...results];
   isValidating.value = false;
@@ -85,7 +86,7 @@ const validateInput = (id: string) => {
   field.validate();
 };
 
-provide<smFormProvide2>(provideSmFormSymbol, {
+provide<smFormProvide2>(provideSFormSymbol, {
   register: ({ id, validate, reset }) => {
     if (fields.value.some(field => field.id === id)) {
       console.warn(`Duplicate input name "${id}"`);

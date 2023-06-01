@@ -1,6 +1,6 @@
 import type { smFormProvide2 } from '../interfaces/sm-form.interface';
 import type { Ref, WritableComputedRef } from 'vue';
-import { provideSmFormSymbol } from './validate';
+import { provideSFormSymbol } from './validate';
 import { simpleUid } from '~/utils/uid';
 
 export const useSmileValidate = <T = string>(
@@ -11,12 +11,12 @@ export const useSmileValidate = <T = string>(
 ) => {
   const stopWatchValidate = watch(data, () => validate());
   const errorBucket = ref<Array<string>>([]);
-  //   const validateOnFocusout = ref(false)
 
   /**
    * @param ignoreUpdate Se usa para no actualizar los estados de error del componente
    */
   const validate = (silent = false): string[] => {
+    console.log(data.value);
     const errors = [];
     for (const rule of rules) {
       const handler = typeof rule === 'function' ? rule : () => rule;
@@ -40,7 +40,7 @@ export const useSmileValidate = <T = string>(
     errorBucket.value = [];
   };
 
-  const formInject = inject<smFormProvide2 | null>(provideSmFormSymbol, null);
+  const formInject = inject<smFormProvide2 | null>(provideSFormSymbol, null);
 
   const hasError = computed(() => {
     return Boolean(externalError?.value) || errorBucket.value.length > 0;

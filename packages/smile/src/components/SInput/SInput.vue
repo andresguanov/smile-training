@@ -137,7 +137,7 @@ const { validate, validateOnFocusout, hasError, currentError } = useSmileValidat
 const iconSize = computed(() => (props.size === 'small' ? '16px' : '20px'));
 
 const onBlur = (event: FocusEvent) => {
-  if (validateOnFocusout) {
+  if (validateOnFocusout.value) {
     validate();
   }
   emit('blur', event);

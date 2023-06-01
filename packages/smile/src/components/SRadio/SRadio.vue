@@ -34,6 +34,10 @@ const props = withDefaults(
       disabled?: boolean;
     }[];
     label?: string;
+    /**
+     * Identificador para la validación, solo funciona para el dientificador
+     * de validación. No se usa como id de los inputs.
+     */
     id?: string;
     orientation?: 'horizontal' | 'vertical';
     /**
