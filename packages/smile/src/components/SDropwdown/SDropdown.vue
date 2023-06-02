@@ -1,16 +1,22 @@
 <template>
   <div class="s-dropdown">
-    <s-input
-      v-model="currentValue"
-      :label="label"
-      :size="size"
-      :hint="hint"
-      :placeholder="placeholder"
-      :icon-right="trailingIcon"
-      :loading="loading"
-      :disabled="disabled"
-      @click.stop="toggleOverflow"
-    />
+    <div class="s-dropdown__wrapper">
+      <s-input
+        class="s-dropdown__input"
+        v-model="textValue"
+        :label="label"
+        :size="size"
+        :hint="hint"
+        :leading="leading"
+        :placeholder="placeholder"
+        :icon-right="trailingIcon"
+        :loading="loading"
+        :disabled="disabled"
+        :error="currentError"
+        :readonly="!search"
+        @click.stop="toggleOverflow"
+      />
+    </div>
     <s-overflow-menu
       v-if="open"
       class="s-dropdown__menu"
@@ -19,32 +25,40 @@
       @click-outside="onClickOutside"
     >
       <slot v-if="loading" name="loading">
-        <p>{{ loadingText }}</p>
+        <div>
+          <p>{{ loadingText }}</p>
+        </div>
       </slot>
-      <ul v-else>
-        <li v-for="(option, i) in options" :key="i">
-          <slot name="item" :index="i" :option="option">
-            <s-menu-item
-              v-bind="option"
-              :title="String(option[textKey])"
-              @click="onClickOption(option)"
-            >
-              <template #leading>
-                <div class="s-dropdown__check" :class="{ multiple, selected: isSelected(option) }">
-                  <sm-icon icon="success-outline" fluid />
-                </div>
-              </template>
-            </s-menu-item>
-          </slot>
-        </li>
-      </ul>
+      <div v-else>
+        <slot name="beforeOptions" />
+        <ul>
+          <li v-for="(option, i) in options" :key="i">
+            <slot name="item" :index="i" :option="option">
+              <s-menu-item
+                v-bind="option"
+                :title="String(option[textKey])"
+                @click="onClickOption(option)"
+              >
+                <template #leading>
+                  <div
+                    class="s-dropdown__check"
+                    :class="{ multiple, selected: isSelected(option) }"
+                  >
+                    <sm-icon icon="success-outline" fluid />
+                  </div>
+                </template>
+              </s-menu-item>
+            </slot>
+          </li>
+        </ul>
+      </div>
     </s-overflow-menu>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { IconType, smMenuOption } from '../../interfaces';
-// import { useSmileValidate } from '~/composables'
+import type { IconType, smInputAddon, smMenuOption } from '../../interfaces';
+import { useSmileValidate } from '~/composables';
 
 type MenuOption = {
   [key: string]: unknown;
@@ -66,10 +80,10 @@ const props = withDefaults(
      * Disponible solo cuando el componente está dentro de SmForm.
      * Permite establecer las validaciones del componente.
      */
-    // rules?: Array<
-    //   (value: MenuOption | string | number | Array<string | number>) => boolean | string
-    // >
-    // error?: string
+    rules?: Array<
+      (value: MenuOption | string | number | Array<string | number>) => boolean | string
+    >;
+    error?: string;
     /**
      * Indica si deseas que modelValue trabaje con objetos
      */
@@ -86,6 +100,14 @@ const props = withDefaults(
      */
     valueKey?: string;
     multiple?: boolean;
+    id?: string;
+    /**
+     * Permite activar el evento search así como un campo de búsqueda.
+     * No realizar un filtro en local
+     */
+    search?: boolean;
+    canDeselect?: boolean;
+    leading?: smInputAddon;
   }>(),
   {
     size: 'medium',
@@ -104,9 +126,9 @@ const emit = defineEmits<{
   (event: 'search', value: string): void;
 }>();
 const data = useVModel(props, 'modelValue', emit);
-// const { validate, validateOnFocusout, currentError } = useSmileValidate<
-//   MenuOption | string | number | Array<string | number>
-// >(data, props.rules, props.error)
+const { validate, validateOnFocusout, currentError } = useSmileValidate<
+  MenuOption | string | number | Array<string | number>
+>(data, props.rules, toRef(props, 'error'), props.id);
 
 const open = ref(false);
 const trailingIcon = computed<IconType>(() => (open.value ? 'chevron-up' : 'chevron-down'));
@@ -122,7 +144,7 @@ const formattedValue = computed<string>(() => {
   if (props.object) return getText((data.value as MenuOption)[props.valueKey] as string | number);
   return getText(data.value as string | number);
 });
-const currentValue = computed({
+const textValue = computed({
   get: () => {
     return formattedValue.value;
   },
@@ -149,7 +171,9 @@ const isSelected = (value: MenuOption) => {
   return data.value === realValue;
 };
 const onClickOption = (option: MenuOption) => {
+  // emit click option
   const value = option[props.valueKey];
+  console.log({ value });
   if (typeof value !== 'number' && typeof value !== 'string') {
     throw new Error(
       `This component does not yet support the provided parameter type ${typeof value}. Please check the documentation for the expected parameter type.`
@@ -169,13 +193,20 @@ const onClickOption = (option: MenuOption) => {
     (data.value as Array<string | number>).push(value);
     return;
   }
-  data.value = props.object ? option : value;
+  if (
+    props.canDeselect &&
+    (props.object ? (data.value as MenuOption)[props.valueKey] : data.value) === value
+  ) {
+    data.value = '';
+  } else {
+    data.value = props.object ? option : value;
+  }
   open.value = false;
 };
 const onClickOutside = () => {
-  // if (validateOnFocusout.value) {
-  //   validate()
-  // }
+  if (validateOnFocusout.value) {
+    validate();
+  }
   open.value = false;
 };
 

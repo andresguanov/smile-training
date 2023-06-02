@@ -21,4 +21,18 @@
       }
     }
   }
+  &__input {
+    &.readonly {
+      :deep(.s-input__container) {
+        @apply bg-white border-slate-300;
+
+        &:hover {
+          @apply border-slate-400;
+        }
+        &:focus-within {
+          @apply border-sm-primary-500;
+        }
+      }
+    }
+  }
 }

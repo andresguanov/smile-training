@@ -16,7 +16,6 @@ export const useSmileValidate = <T = string>(
    * @param ignoreUpdate Se usa para no actualizar los estados de error del componente
    */
   const validate = (silent = false): string[] => {
-    console.log(data.value);
     const errors = [];
     for (const rule of rules) {
       const handler = typeof rule === 'function' ? rule : () => rule;
@@ -56,7 +55,6 @@ export const useSmileValidate = <T = string>(
   onBeforeMount(() => {
     if (formInject?.validateOn.value !== 'type') {
       stopWatchValidate();
-      console.log('stopWatchValidate();');
     }
     formInject?.register({
       id,
