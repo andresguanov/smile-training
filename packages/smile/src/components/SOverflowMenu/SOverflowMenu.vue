@@ -24,6 +24,11 @@ const props = withDefaults(
      * Por defecto el evento se dispara usando capture.
      */
     bubbling?: boolean;
+    /**
+     * Permite detectar si el componente esta en un iframe o no, esta prop debería usarse
+     * solo si esta seguro de que el componente vivirá dentro de un iframe para evitar
+     * posibles errores.
+     */
     detectIframe?: boolean;
   }>(),
   {}

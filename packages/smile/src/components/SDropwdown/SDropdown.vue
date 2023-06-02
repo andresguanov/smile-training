@@ -106,6 +106,10 @@ const props = withDefaults(
      * No realizar un filtro en local
      */
     search?: boolean;
+    /**
+     * Permite indicar si el valor puede deseleccionarse.
+     * Se ignora cuando prop "multiple" esta activa.
+     */
     canDeselect?: boolean;
     leading?: smInputAddon;
   }>(),
@@ -124,6 +128,7 @@ if (!props.options?.length) {
 const emit = defineEmits<{
   (event: 'update:modelValue', value: MenuOption | string | number | Array<string | number>): void;
   (event: 'search', value: string): void;
+  (event: 'select', value: MenuOption): void;
 }>();
 const data = useVModel(props, 'modelValue', emit);
 const { validate, validateOnFocusout, currentError } = useSmileValidate<
@@ -171,9 +176,8 @@ const isSelected = (value: MenuOption) => {
   return data.value === realValue;
 };
 const onClickOption = (option: MenuOption) => {
-  // emit click option
+  emit('select', { option });
   const value = option[props.valueKey];
-  console.log({ value });
   if (typeof value !== 'number' && typeof value !== 'string') {
     throw new Error(
       `This component does not yet support the provided parameter type ${typeof value}. Please check the documentation for the expected parameter type.`
@@ -213,6 +217,9 @@ const onClickOutside = () => {
 if (props.multiple && !data.value) {
   data.value = [];
 }
+defineExpose({
+  toggleOverflow,
+});
 </script>
 
 <style scoped lang="scss" src="./SDropdown.scss"></style>
