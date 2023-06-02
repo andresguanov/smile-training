@@ -51,6 +51,7 @@
               { text: 'Python', code: 'py', icon: 'flag-3' },
               { text: 'C++', code: 'cc', icon: 'flag-3' },
             ]"
+            @select="logEvent"
           />
           <s-input
             v-model="text"
@@ -85,6 +86,7 @@
               { text: 'C++', code: 'cc', icon: 'flag-3' },
             ]"
             @search="logEvent"
+            @select="logEvent"
           />
           {{ text3 }}
           <s-number-input v-model="number" icon-left="accounting" size="large" />
