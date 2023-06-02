@@ -39,6 +39,19 @@
           {{ isValid }}
           <s-chip label="test" selected avatar="Carlos" />
           <s-chip label="test" disabled selected />
+          {{ text2 }}
+          <s-dropdown
+            v-model="text2"
+            placeholder="dasdasd"
+            multiple
+            :rules="selectRules"
+            :options="[
+              { text: 'Javascript', code: 'js', icon: 'flag-3' },
+              { text: 'PHP', code: 'php', icon: 'flag-3' },
+              { text: 'Python', code: 'py', icon: 'flag-3' },
+              { text: 'C++', code: 'cc', icon: 'flag-3' },
+            ]"
+          />
           <s-input
             v-model="text"
             supportive-text="dasdasd"
@@ -48,11 +61,10 @@
           />
           <s-input
             v-if="number === 3"
-            v-model="text2"
+            v-model="text"
             icon-left="search"
             label="label"
             hint="hint"
-            native-type="week"
             :rules="sRules"
             :trailing="{ icon: 'close', actionable: true, inline: true }"
             @blur="logEvent"
@@ -62,6 +74,9 @@
           <s-dropdown
             v-model="text3"
             label="Lenguaje favorito"
+            can-deselect
+            object
+            search
             placeholder="Escoge tu lenguaje favorito"
             :options="[
               { text: 'Javascript', code: 'js', icon: 'flag-3' },
@@ -69,7 +84,9 @@
               { text: 'Python', code: 'py', icon: 'flag-3' },
               { text: 'C++', code: 'cc', icon: 'flag-3' },
             ]"
+            @search="logEvent"
           />
+          {{ text3 }}
           <s-number-input v-model="number" icon-left="accounting" size="large" />
           <sm-button type="primary" @click="validate()">Submit</sm-button>
           <sm-button type="primary" @click="reset">Reset</sm-button>
@@ -224,6 +241,11 @@ const logEvent = (event: any) => {
 const sRules = ref([
   (v: string) => {
     return !!v || 'El valor es requerido';
+  },
+]);
+const selectRules = ref([
+  (v: any) => {
+    return Boolean(v?.length) || 'Algo falta';
   },
 ]);
 const smFormEl = ref<InstanceType<typeof SmForm> | null>();
