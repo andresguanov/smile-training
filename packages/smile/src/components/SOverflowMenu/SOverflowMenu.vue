@@ -1,5 +1,5 @@
 <template>
-  <div ref="menuEl" class="s-menu" :style="{ top, left, right, bottom }">
+  <div ref="menuEl" class="s-menu" :style="{ top, left, right, bottom, maxHeight }">
     <header class="s-menu__header">
       <slot name="header" />
     </header>
@@ -30,8 +30,9 @@ const props = withDefaults(
      * posibles errores.
      */
     detectIframe?: boolean;
+    maxHeight?: string;
   }>(),
-  {}
+  { maxHeight: '352px' }
 );
 const emit = defineEmits<{
   (event: 'clickOutside', value: PointerEvent): void;

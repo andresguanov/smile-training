@@ -1,6 +1,8 @@
 <template>
   <div class="s-number" :class="{ disabled, readonly, error: hasError }">
-    <p v-if="label" class="s-number__label">{{ label }}</p>
+    <p v-if="label" class="s-number__label" :class="{ required }">
+      {{ label }}<span v-if="showMark" class="s-input__mark">{{ textMark }}</span>
+    </p>
     <div class="s-number__container" :class="[size, { filled }]">
       <div v-if="iconLeft" class="s-number__icon leading">
         <sm-icon :icon="iconLeft" :width="iconSize" :height="iconSize" />
@@ -90,6 +92,16 @@ const props = withDefaults(
      */
     rules?: Array<(value: string | number) => boolean | string>;
     error?: string;
+    /**
+     * Al pasar esta prop indicas que deseas mostrar al lado del label la marca
+     * que indica si el input es requerido u opcional.
+     */
+    showMark?: boolean;
+    /**
+     * Texto que se mostrará cuando `showMark` esta activo y el input no es `required`
+     * @default Opcional
+     */
+    optionalText?: string;
   }>(),
   {
     placeholder: '0',
@@ -112,7 +124,7 @@ const { validate, validateOnFocusout, hasError, currentError } = useSmileValidat
   toRef(props, 'error'),
   props.id
 );
-
+const textMark = computed(() => (props.required ? '*' : `(${props.optionalText})`));
 const iconSize = computed(() => (props.size === 'small' ? '16px' : '20px'));
 const filled = computed(() => typeof value.value === 'number');
 
