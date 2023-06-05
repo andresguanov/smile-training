@@ -52,6 +52,7 @@
               { text: 'C++', code: 'cc', icon: 'flag-3' },
             ]"
             @select="logEvent"
+            @open="logEvent"
           />
           <s-input
             v-model="text"
@@ -65,6 +66,8 @@
             v-model="text"
             icon-left="search"
             label="label"
+            show-mark
+            required
             hint="hint"
             :rules="sRules"
             :trailing="{ icon: 'close', actionable: true, inline: true }"
@@ -79,17 +82,19 @@
             object
             search
             placeholder="Escoge tu lenguaje favorito"
-            :options="[
-              { text: 'Javascript', code: 'js', icon: 'flag-3' },
-              { text: 'PHP', code: 'php', icon: 'flag-3' },
-              { text: 'Python', code: 'py', icon: 'flag-3' },
-              { text: 'C++', code: 'cc', icon: 'flag-3' },
-            ]"
+            :options="options"
+            :loading="isLoadingOptions"
+            max-height="125px"
             @search="logEvent"
             @select="logEvent"
-          />
+            @open="openLanguajes"
+          >
+            <template #beforeOptions>
+              <button>Añadir lenguaje</button>
+            </template>
+          </s-dropdown>
           {{ text3 }}
-          <s-number-input v-model="number" icon-left="accounting" size="large" />
+          <s-number-input v-model="number" label="number" icon-left="accounting" />
           <sm-button type="primary" @click="validate()">Submit</sm-button>
           <sm-button type="primary" @click="reset">Reset</sm-button>
         </template>
@@ -161,9 +166,6 @@
       <template #bodyRow.a="{ row }">
         <input v-model="selected" :value="row.a" type="checkbox" name="test" id="test" />
       </template>
-      <template #actionsCol>
-        <sm-select v-model="select" :options="options" />
-      </template>
     </sm-table>
   </div>
 </template>
@@ -186,12 +188,7 @@ const number = ref(3);
 const text = ref('');
 const text2 = ref('');
 const text3 = ref('');
-const select = ref([]);
-const options = ref([
-  { text: '1', value: '1' },
-  { text: '2', value: '2' },
-  { text: '3', value: '3' },
-]);
+const options = ref<any[]>([]);
 
 const cols: smTableColumn[] = reactive([
   {
@@ -253,6 +250,19 @@ const selectRules = ref([
 const smFormEl = ref<InstanceType<typeof SmForm> | null>();
 const onSubmit = (e?: string) => {
   console.log({ e });
+};
+const isLoadingOptions = ref(false);
+const openLanguajes = () => {
+  isLoadingOptions.value = true;
+  setTimeout(() => {
+    options.value = [
+      { text: 'Javascript', code: 'js', icon: 'flag-3' },
+      { text: 'PHP', code: 'php', icon: 'flag-3' },
+      { text: 'Python', code: 'py', icon: 'flag-3' },
+      { text: 'C++', code: 'cc', icon: 'flag-3' },
+    ];
+    isLoadingOptions.value = false;
+  }, 3000);
 };
 
 const smAlert = inject<ISmAlertProvide>($SmAlert);

@@ -12,6 +12,8 @@
         :icon-right="trailingIcon"
         :loading="loading"
         :disabled="disabled"
+        :show-mark="showMark"
+        :optional-text="optionalText"
         :error="currentError"
         :readonly="!search"
         @click.stop="toggleOverflow"
@@ -24,11 +26,11 @@
       bubbling
       @click-outside="onClickOutside"
     >
-      <slot v-if="loading" name="loading">
-        <div>
+      <div v-if="loading">
+        <slot name="loading">
           <p>{{ loadingText }}</p>
-        </div>
-      </slot>
+        </slot>
+      </div>
       <div v-else>
         <slot name="beforeOptions" />
         <ul>
@@ -112,6 +114,17 @@ const props = withDefaults(
      */
     canDeselect?: boolean;
     leading?: smInputAddon;
+    maxHeight?: string;
+    /**
+     * Al pasar esta prop indicas que deseas mostrar al lado del label la marca
+     * que indica si el input es requerido u opcional.
+     */
+    showMark?: boolean;
+    /**
+     * Texto que se mostrará cuando `showMark` esta activo y el input no es `required`
+     * @default Opcional
+     */
+    optionalText?: string;
   }>(),
   {
     size: 'medium',
@@ -120,6 +133,7 @@ const props = withDefaults(
     loadingText: 'Cargando contenido...',
     textKey: 'text',
     valueKey: 'code',
+    maxHeight: '300px',
   }
 );
 if (!props.options?.length) {
@@ -129,6 +143,7 @@ const emit = defineEmits<{
   (event: 'update:modelValue', value: MenuOption | string | number | Array<string | number>): void;
   (event: 'search', value: string): void;
   (event: 'select', value: MenuOption): void;
+  (event: 'open'): void;
 }>();
 const data = useVModel(props, 'modelValue', emit);
 const { validate, validateOnFocusout, currentError } = useSmileValidate<
@@ -160,6 +175,7 @@ const textValue = computed({
 
 const toggleOverflow = () => {
   if (props.disabled) return;
+  if (!open.value) emit('open');
   open.value = !open.value;
 };
 const getText = (value: string | number) => {

@@ -1,7 +1,9 @@
 <template>
   <div class="s-input" :class="{ disabled, readonly, error: hasError }">
     <div v-if="label" class="s-input__header">
-      <p class="s-input__label">{{ label }}</p>
+      <p class="s-input__label" :class="{ required }">
+        {{ label }}<span v-if="showMark" class="s-input__mark">{{ textMark }}</span>
+      </p>
       <small class="s-input__helper">{{ hint }}</small>
     </div>
     <div class="s-input__container" :class="[size, { filled: Boolean(value) }]">
@@ -112,11 +114,22 @@ const props = withDefaults(
      * prioridad sobre este.
      */
     error?: string;
+    /**
+     * Al pasar esta prop indicas que deseas mostrar al lado del label la marca
+     * que indica si el input es requerido u opcional.
+     */
+    showMark?: boolean;
+    /**
+     * Texto que se mostrará cuando `showMark` esta activo y el input no es `required`
+     * @default Opcional
+     */
+    optionalText?: string;
   }>(),
   {
     size: 'medium',
     nativeType: 'text',
     rules: () => [],
+    optionalText: 'Opcional',
   }
 );
 const emit = defineEmits<{
@@ -133,7 +146,7 @@ const { validate, validateOnFocusout, hasError, currentError } = useSmileValidat
   toRef(props, 'error'),
   props.id
 );
-
+const textMark = computed(() => (props.required ? '*' : `(${props.optionalText})`));
 const iconSize = computed(() => (props.size === 'small' ? '16px' : '20px'));
 
 const onBlur = (event: FocusEvent) => {
