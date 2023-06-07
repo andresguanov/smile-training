@@ -152,9 +152,8 @@ const { validate, validateOnFocusout, currentError } = useSmileValidate<
 
 const open = ref(false);
 const menuTopDistance = computed(() => {
-  if (props.size === 'small') return '36px';
-  if (props.size === 'medium') return '44px';
-  return '52px';
+  if (currentError.value) return '80%';
+  return '100%';
 });
 const trailingIcon = computed<IconType>(() => (open.value ? 'chevron-up' : 'chevron-down'));
 const formattedValue = computed<string>(() => {
