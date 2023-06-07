@@ -23,6 +23,7 @@
           {{ text2 }}
           <s-dropdown
             v-model="text2"
+            label="elije"
             placeholder="dasdasd"
             multiple
             :rules="selectRules"

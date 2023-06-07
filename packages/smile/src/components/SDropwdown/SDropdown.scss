@@ -23,6 +23,11 @@
   }
   &__input {
     &.readonly {
+      &.error {
+        :deep(.s-input__container) {
+          @apply bg-white;
+        }
+      }
       &:not(.disabled):not(.error) {
         :deep(.s-input__container) {
           @apply bg-white border-slate-300;
