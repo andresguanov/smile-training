@@ -25,6 +25,7 @@
 
   &-content {
     @apply m-auto grid grid-cols-1 px-4 gap-y-2 pb-12;
+    @apply relative;
 
     @screen md {
       @apply grid-cols-2 max-w-[738px] px-2;
@@ -32,6 +33,26 @@
 
     @screen lg {
       @apply grid-cols-2 max-w-[1120px];
+    }
+
+    .sm-wzd-back {
+      @apply absolute -top-14 left-4;
+
+      @screen md {
+        @apply left-2;
+      }
+
+      &-button {
+        @apply px-0;
+
+        &:not(:disabled, [loading='true']) {
+          &:hover,
+          &:active,
+          &:focus {
+            @apply ring-0 ring-offset-0 bg-transparent;
+          }
+        }
+      }
     }
   }
 
@@ -52,7 +73,7 @@
 
     @screen md {
       .wd-footer-btn {
-        @apply w-full text-right;
+        @apply w-full flex justify-end items-center;
       }
     }
   }
