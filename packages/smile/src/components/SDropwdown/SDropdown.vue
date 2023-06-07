@@ -22,7 +22,7 @@
     <s-overflow-menu
       v-if="open"
       class="s-dropdown__menu"
-      top="100%"
+      :top="menuTopDistance"
       bubbling
       @click-outside="onClickOutside"
     >
@@ -151,6 +151,11 @@ const { validate, validateOnFocusout, currentError } = useSmileValidate<
 >(data, props.rules, toRef(props, 'error'), props.id);
 
 const open = ref(false);
+const menuTopDistance = computed(() => {
+  if (props.size === 'small') return '36px';
+  if (props.size === 'medium') return '44px';
+  return '52px';
+});
 const trailingIcon = computed<IconType>(() => (open.value ? 'chevron-up' : 'chevron-down'));
 const formattedValue = computed<string>(() => {
   if (!data.value) return '';

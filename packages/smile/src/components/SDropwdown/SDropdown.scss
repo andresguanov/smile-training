@@ -2,7 +2,7 @@
   @apply relative;
 
   &__menu {
-    @apply mt-1 w-full;
+    @apply w-full;
   }
   &__check {
     @apply w-4 h-4 flex items-center justify-center;
@@ -23,7 +23,7 @@
   }
   &__input {
     &.readonly {
-      &:not(.disabled) {
+      &:not(.disabled):not(.error) {
         :deep(.s-input__container) {
           @apply bg-white border-slate-300;
 

@@ -2,19 +2,26 @@
   <div class="sm-wzd-next">
     <div class="sm-wzd-next-topbar">
       <div class="sm-wzd-next-logo"></div>
-
       <div class="sm-wzd-next-stepper">
         <s-stepper v-model="activePage" :steps="stepsLabels" />
       </div>
-
       <sm-icon icon="close" color="#0F172A" size="medium" @click="closeWizard" />
     </div>
     <div :class="[`sm-wzd-next-content`, { 'sm-wzd-next-grid-cols-1': !isMultiRow }]">
+      <div class="sm-wzd-back" v-if="showBackButton">
+        <s-button
+          class="sm-wzd-back-button"
+          icon-left="arrow-alt-left"
+          emphasis="text"
+          :label="backText"
+          :disabled="disabledBack"
+          @click="previousPage"
+        />
+      </div>
       <div class="sm-wzd-next-col-2">
         <div class="sm-wzd-next-title">{{ steps[activePage].title }}</div>
         <div class="sm-wzd-next-description">{{ steps[activePage].description }}</div>
       </div>
-
       <div
         v-for="(item, i) in steps[activePage].components"
         :key="i"
@@ -22,17 +29,15 @@
       >
         <component
           :is="item"
-          @previusPage="previousPage"
+          @previous-page="previousPage"
           @next-page="nextPage"
           @set-page="setPage"
         />
       </div>
-
       <div class="sm-wzd-next-footer">
         <slot v-if="slots.footer" name="footer"></slot>
-
         <div v-else class="wd-footer-btn">
-          <sm-button type="primary" @click="nextPage">Continuar</sm-button>
+          <s-button :label="continueText" :disabled="disabledNext" @click="nextPage" />
         </div>
       </div>
     </div>
@@ -47,8 +52,13 @@ const props = withDefaults(
   defineProps<{
     steps: smStepWizard[];
     modelValue: number;
+    hasBackButton?: boolean;
+    disabledBack?: boolean;
+    disabledNext?: boolean;
+    backText?: string;
+    continueText?: string;
   }>(),
-  {}
+  { backText: 'Atrás', continueText: 'Continuar' }
 );
 
 const emits = defineEmits<{
@@ -63,6 +73,8 @@ const activePage = useVModel(props, 'modelValue', emits);
 const isMultiRow = computed(() => props.steps[activePage.value].components.length > 1);
 
 const stepsLabels = computed(() => props.steps.map(el => el.label));
+
+const showBackButton = computed(() => props.hasBackButton && activePage.value > 0);
 
 const nextPage = () => activePage.value < props.steps.length - 1 && activePage.value++;
 
