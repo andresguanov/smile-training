@@ -12,6 +12,7 @@
         :icon-right="trailingIcon"
         :loading="loading"
         :disabled="disabled"
+        :required="required"
         :show-mark="showMark"
         :optional-text="optionalText"
         :error="currentError"
@@ -73,6 +74,7 @@ const props = withDefaults(
     hint?: string;
     placeholder?: string;
     disabled?: boolean;
+    required?: boolean;
     success?: boolean;
     loading?: boolean;
     loadingText?: string;
