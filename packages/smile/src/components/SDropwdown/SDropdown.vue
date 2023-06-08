@@ -136,6 +136,7 @@ const props = withDefaults(
     textKey: 'text',
     valueKey: 'code',
     maxHeight: '300px',
+    optionalText: 'Opcional',
   }
 );
 if (!props.options?.length) {
