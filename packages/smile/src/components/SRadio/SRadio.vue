@@ -1,6 +1,8 @@
 <template>
   <div class="s-radio">
-    <p v-if="label" class="s-radio__label">{{ label }}</p>
+    <p v-if="label" class="s-radio__label" :class="{ required }">
+      {{ label }}<span v-if="showMark" class="s-radio__mark">{{ textMark }}</span>
+    </p>
     <div class="s-radio__group" :class="[orientation]" @focusout="onFocusOut">
       <label
         v-for="(option, i) in options"
@@ -34,6 +36,7 @@ const props = withDefaults(
       disabled?: boolean;
     }[];
     label?: string;
+    required?: boolean;
     /**
      * Identificador para la validación, solo funciona para el dientificador
      * de validación. No se usa como id de los inputs.
@@ -46,8 +49,18 @@ const props = withDefaults(
      */
     rules?: Array<(value: object | string | number) => boolean | string>;
     error?: string;
+    /**
+     * Al pasar esta prop indicas que deseas mostrar al lado del label la marca
+     * que indica si el input es requerido u opcional.
+     */
+    showMark?: boolean;
+    /**
+     * Texto que se mostrará cuando `showMark` esta activo y el input no es `required`
+     * @default Opcional
+     */
+    optionalText?: string;
   }>(),
-  { orientation: 'vertical', options: () => [], rules: () => [] }
+  { orientation: 'vertical', options: () => [], rules: () => [], optionalText: 'Opcional' }
 );
 if (props.options.length < 1) {
   console.warn('Missing data in %coptions', 'color: red;font-weight: bold;padding: 1px', 'prop.');
@@ -61,6 +74,7 @@ const internalValue = useVModel(props, 'modelValue', emit);
 const { validate, validateOnFocusout, hasError, currentError } = useSmileValidate<
   string | number | object
 >(internalValue, props.rules, toRef(props, 'error'), props.id);
+const textMark = computed(() => (props.required ? '*' : `(${props.optionalText})`));
 
 const onFocusOut = (event: FocusEvent) => {
   if (validateOnFocusout.value) {

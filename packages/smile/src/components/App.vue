@@ -48,8 +48,6 @@
             v-model="text"
             icon-left="search"
             label="label"
-            show-mark
-            required
             hint="hint"
             :rules="sRules"
             :trailing="{ icon: 'close', actionable: true, inline: true }"
@@ -62,6 +60,8 @@
             label="Lenguaje favorito"
             can-deselect
             object
+            show-mark
+            required
             search
             placeholder="Escoge tu lenguaje favorito"
             :options="options"
@@ -76,7 +76,7 @@
             </template>
           </s-dropdown>
           {{ text3 }}
-          <s-number-input v-model="number" label="number" icon-left="accounting" />
+          <s-number-input v-model="number" label="number" show-mark icon-left="accounting" />
           <sm-button type="primary" @click="validate()">Submit</sm-button>
           <sm-button type="primary" @click="reset">Reset</sm-button>
         </template>
@@ -90,6 +90,7 @@
             <s-radio
               v-model="radio"
               label="test"
+              show-mark
               orientation="horizontal"
               :options="[
                 { value: { card: '1' }, label: 'card-1' },

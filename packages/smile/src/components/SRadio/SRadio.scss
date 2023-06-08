@@ -13,6 +13,16 @@
   }
   &__label {
     @apply text-sm font-medium text-[#0F172A];
+
+    &.required {
+      .s-radio__mark {
+        @apply text-rose-600;
+      }
+    }
+    .s-radio__mark {
+      @apply ml-1;
+      @apply font-normal text-xs text-slate-500;
+    }
   }
   &__radio {
     @apply flex items-center;

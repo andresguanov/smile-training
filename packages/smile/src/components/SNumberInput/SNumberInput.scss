@@ -5,11 +5,11 @@
     @apply text-slate-700 text-sm font-medium;
 
     &.required {
-      .s-input__mark {
+      .s-number__mark {
         @apply text-rose-600;
       }
     }
-    .s-input__mark {
+    .s-number__mark {
       @apply ml-1;
       @apply font-normal text-xs text-slate-500;
     }

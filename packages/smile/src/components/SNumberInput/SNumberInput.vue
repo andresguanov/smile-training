@@ -1,7 +1,7 @@
 <template>
   <div class="s-number" :class="{ disabled, readonly, error: hasError }">
     <p v-if="label" class="s-number__label" :class="{ required }">
-      {{ label }}<span v-if="showMark" class="s-input__mark">{{ textMark }}</span>
+      {{ label }}<span v-if="showMark" class="s-number__mark">{{ textMark }}</span>
     </p>
     <div class="s-number__container" :class="[size, { filled }]">
       <div v-if="iconLeft" class="s-number__icon leading">
@@ -108,6 +108,7 @@ const props = withDefaults(
     step: 1,
     size: 'medium',
     rules: () => [],
+    optionalText: 'Opcional',
   }
 );
 const emit = defineEmits<{
