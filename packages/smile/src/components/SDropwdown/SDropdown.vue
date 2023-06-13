@@ -8,7 +8,7 @@
         :size="size"
         :hint="hint"
         :leading="leading"
-        :placeholder="placeholder"
+        :placeholder="internalPlaceholder"
         :icon-right="trailingIcon"
         :loading="loading"
         :disabled="disabled"
@@ -154,6 +154,7 @@ const { validate, validateOnFocusout, currentError } = useSmileValidate<
 >(data, props.rules, toRef(props, 'error'), props.id);
 
 const open = ref(false);
+const searchText = ref('');
 const menuTopDistance = computed(() => {
   if (currentError.value) return '80%';
   return '100%';
@@ -171,11 +172,14 @@ const formattedValue = computed<string>(() => {
   if (props.object) return getText((data.value as MenuOption)[props.valueKey] as string | number);
   return getText(data.value as string | number);
 });
+const internalPlaceholder = computed(() => (open.value ? formattedValue.value : props.placeholder));
 const textValue = computed({
   get: () => {
+    if (open.value) return searchText.value;
     return formattedValue.value;
   },
   set: value => {
+    searchText.value = value;
     emit('search', value);
   },
 });
@@ -206,6 +210,7 @@ const onClickOption = (option: MenuOption) => {
       `This component does not yet support the provided parameter type ${typeof value}. Please check the documentation for the expected parameter type.`
     );
   }
+  searchText.value = '';
   if (props.multiple) {
     const opIndex = (data.value as Array<string | number>).findIndex(el => {
       if (props.object) {

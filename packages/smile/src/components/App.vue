@@ -26,6 +26,7 @@
             label="elije"
             placeholder="dasdasd"
             multiple
+            search
             :rules="selectRules"
             :options="[
               { text: 'Javascript', code: 'js', icon: 'flag-3' },
@@ -35,6 +36,7 @@
             ]"
             @select="logEvent"
             @open="logEvent"
+            @search="logEvent"
           />
           <s-input
             v-model="text"

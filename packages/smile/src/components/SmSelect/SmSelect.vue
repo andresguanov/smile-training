@@ -229,17 +229,14 @@ const elementIsSelected = (index: number) => {
   return selectedIndex.value.has(index);
 };
 
-const emitNewValue = (newVal?: Set<Item | string | number> | Item | string | number) => {
-  if (!newVal) {
-    !props.multiple ? emit('update:modelValue', undefined) : emit('update:modelValue', []);
-    return;
-  }
+const emitNewValue = (value?: Set<Item | string | number> | Item | string | number) => {
+  let newVal;
   if (!props.multiple) {
-    emit('update:modelValue', newVal);
+    newVal = value;
   } else {
-    const modelArray = Array.from(newVal as Set<Item | number | string>);
-    emit('update:modelValue', modelArray);
+    newVal = value ? Array.from(value as Set<Item | number | string>) : [];
   }
+  emit('update:modelValue', newVal);
   formatInputText();
 };
 
@@ -300,7 +297,7 @@ const hide = () => {
   selected = false;
 };
 
-const initSelect = async () => {
+const initSelect = () => {
   if (!hasRenderError.value) {
     if (!props.multiple) {
       findItem();
@@ -383,12 +380,14 @@ watch(
 
 watch(
   () => props.modelValue,
-  () => {
-    initSelect();
-  },
-  { immediate: true }
+  v => {
+    if (v !== props.modelValue) {
+      initSelect();
+    }
+  }
 );
 
+initSelect();
 // Expose
 defineExpose({ validate });
 </script>
