@@ -64,7 +64,6 @@
             object
             show-mark
             required
-            search
             placeholder="Escoge tu lenguaje favorito"
             :options="options"
             :loading="isLoadingOptions"

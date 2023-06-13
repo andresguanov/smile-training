@@ -172,10 +172,12 @@ const formattedValue = computed<string>(() => {
   if (props.object) return getText((data.value as MenuOption)[props.valueKey] as string | number);
   return getText(data.value as string | number);
 });
-const internalPlaceholder = computed(() => (open.value ? formattedValue.value : props.placeholder));
+const internalPlaceholder = computed(() =>
+  props.search && open.value ? formattedValue.value : props.placeholder
+);
 const textValue = computed({
   get: () => {
-    if (open.value) return searchText.value;
+    if (props.search && open.value) return searchText.value;
     return formattedValue.value;
   },
   set: value => {
