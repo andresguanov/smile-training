@@ -5,15 +5,8 @@
       <template #actions>
         <s-button>Label</s-button>
         <s-button>Label</s-button>
-        <s-button>Label</s-button>
       </template>
     </s-page-heading>
-    <sm-modal v-model="modal" header-text="Modal Title">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, adipisci velit ab aliquam
-      veniam odit vitae non ipsam dolorem quaerat, totam quia ut vel error ducimus eveniet
-      accusantium enim quam!
-    </sm-modal>
-    <s-empty-state />
     <sm-card class="mt-1">
       <s-form ref="smFormEl" validate-on="focusout">
         <template #default="{ validate, reset, isValid }">
@@ -126,7 +119,7 @@
         </template>
       </sm-form>
     </sm-card>
-    <sm-table
+    <s-table
       ref="testSmTable"
       :filter-config="{
         b: {
@@ -150,12 +143,13 @@
       <template #bodyRow.a="{ row }">
         <input v-model="selected" :value="row.a" type="checkbox" name="test" id="test" />
       </template>
-    </sm-table>
+    </s-table>
+    <!-- <s-table /> -->
   </div>
 </template>
 
 <script setup lang="ts">
-import { SmForm, SmTable } from './index';
+import { SmForm } from './index';
 import { $SmAlert, ISmAlertProvide } from '../utils/alerts';
 import { smTableChangeEvent, smTableColumn } from '~/interfaces';
 
@@ -164,7 +158,6 @@ interface radioTest {
 }
 const selectAll = ref(false);
 const selected = ref([]);
-const modal = ref(true);
 const check = ref([]);
 const radio = ref('');
 const number = ref(3);

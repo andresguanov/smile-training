@@ -1,0 +1,41 @@
+.s-pagination {
+  @apply flex items-center justify-center md:justify-end;
+  @apply h-12 px-2 gap-4;
+
+  &.extended {
+    @apply justify-center md:justify-between;
+  }
+  &__left,
+  &__right {
+    @apply flex items-center justify-center md:justify-end;
+    @apply text-slate-700 text-sm;
+    @apply space-x-4;
+  }
+  &__left {
+    @apply pl-2;
+  }
+  &__buttons {
+    @apply flex space-x-0.5;
+  }
+  &__select {
+    @apply bg-white border border-solid border-slate-300;
+    @apply rounded-lg outline-none;
+    @apply w-14 h-8 px-0.5;
+    @apply text-slate-700 text-sm font-normal;
+  }
+  &__divider {
+    @apply w-px h-6 bg-slate-200;
+  }
+  &__total {
+    @apply text-slate-500;
+  }
+  &__pages {
+    @apply flex items-center space-x-2;
+
+    &__input {
+      @apply bg-white border border-solid border-slate-300;
+      @apply rounded-lg outline-none;
+      @apply w-14 h-8 px-2;
+    }
+  }
+}

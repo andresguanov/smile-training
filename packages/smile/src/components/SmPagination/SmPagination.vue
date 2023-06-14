@@ -1,10 +1,10 @@
 <template>
   <div class="sm-pagination">
     <div class="sm-pagination-left">
-      <button class="sm-pagination-button" :disabled="isAtStart" @click="goTo(1)">
+      <button class="sm-pagination-button" :disabled="isAtStart" @click="changePage(1)">
         <img :src="isAtStart ? firstDisabled : first" />
       </button>
-      <button class="sm-pagination-button" :disabled="isAtStart" @click="goTo(page - 1)">
+      <button class="sm-pagination-button" :disabled="isAtStart" @click="changePage(page - 1)">
         <img :src="isAtStart ? prevDisabled : prev" />
       </button>
       <div class="sm-pagination-vr"></div>
@@ -15,16 +15,16 @@
             :value="currentPage"
             :disabled="total <= itemsPerPage"
             class="sm-pagination-input"
-            @beforeinput="testGoTo"
+            @beforeinput="onInputPage"
           />
         </label>
         <div class="sm-pagination-lastpage">{{ text?.of }} {{ lastPage }}</div>
       </div>
       <div class="sm-pagination-vr"></div>
-      <button class="sm-pagination-button" :disabled="isAtEnd" @click="goTo(page + 1)">
+      <button class="sm-pagination-button" :disabled="isAtEnd" @click="changePage(page + 1)">
         <img :src="isAtEnd ? nextDisabled : next" />
       </button>
-      <button class="sm-pagination-button" :disabled="isAtEnd" @click="goTo(lastPage)">
+      <button class="sm-pagination-button" :disabled="isAtEnd" @click="changePage(lastPage)">
         <img :src="isAtEnd ? lastDisabled : last" />
       </button>
       <div class="sm-pagination-vr" v-if="refresh"></div>
@@ -34,7 +34,7 @@
     </div>
     <div class="sm-pagination-right">
       <p class="sm-pagination-showing">
-        {{ `${text?.showing} ${showingItemsRange.join('-')} ${text?.of} ${total}` }}
+        {{ `${text?.showing} ${itemsRangeText} ${text?.of} ${total}` }}
       </p>
       <div class="sm-pagination-vr"></div>
       <p class="sm-pagination-results">
@@ -61,7 +61,7 @@ import first from '../../assets/page-first.png';
 import firstDisabled from '../../assets/page-first-disabled.png';
 import re from '../../assets/refresh.png';
 import { SmSelect } from '../index';
-import { usePagination, paginationEmits } from '../../composables';
+import { usePagination } from '../../composables';
 import { smPaginationText } from '../../interfaces/sm-pagination.interface';
 
 const props = withDefaults(
@@ -87,32 +87,20 @@ const props = withDefaults(
     refresh: true,
   }
 );
-const emit = defineEmits([...paginationEmits, 'refresh']);
-const { goTo, isAtEnd, isAtStart, lastPage, showingItemsRange, limit, currentPage } = usePagination(
-  props,
-  emit
-);
+const emit = defineEmits<{
+  (event: 'update:itemsPerPage', value: number): void;
+  (event: 'update:page', value: number): void;
+  (event: 'refresh'): void;
+}>();
+
+const limit = useVModel(props, 'itemsPerPage', emit);
+const selectedPage = useVModel(props, 'page', emit);
+const { isAtEnd, isAtStart, lastPage, currentPage, changePage, itemsRangeText, onInputPage } =
+  usePagination(limit, selectedPage, toRef(props, 'total'));
 
 const selectLimitOptions = computed(() => {
   return props.itemLimitOptions.map(v => ({ text: v.toString(), value: v }));
 });
-
-const testGoTo = (event: Event) => {
-  if ((event as InputEvent).inputType !== 'insertLineBreak') {
-    return;
-  }
-  const target = event.target as HTMLInputElement;
-  const page = Number(target?.value);
-  if (isValidPageValue(page)) {
-    goTo(page);
-  } else {
-    target.value = currentPage.value.toString();
-  }
-};
-const isValidPageValue = (value: number) => {
-  const lastPageValue = Math.ceil(props.total / limit.value);
-  return !isNaN(value) && value > 0 && value <= lastPageValue;
-};
 </script>
 
 <style lang="scss" scoped>

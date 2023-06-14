@@ -65,6 +65,7 @@ declare module 'vue' {
     SNumberInput: typeof import('./components/SNumberInput/SNumberInput.vue')['default'];
     SOverflowMenu: typeof import('./components/SOverflowMenu/SOverflowMenu.vue')['default'];
     SPageHeading: typeof import('./components/SPageHeading/SPageHeading.vue')['default'];
+    SPagination: typeof import('./components/SPagination/SPagination.vue')['default'];
     SRadio: typeof import('./components/SRadio/SRadio.vue')['default'];
     SStep: typeof import('./components/SStepper/SStep.vue')['default'];
     SStepper: typeof import('./components/SStepper/SStepper.vue')['default'];
