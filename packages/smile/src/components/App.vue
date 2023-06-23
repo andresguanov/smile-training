@@ -1,19 +1,12 @@
 <template>
   <div class="app_container">
     <sm-alert-stack />
-    <s-page-heading title="[Heading Title]" description="Description......">
-      <template #actions>
-        <s-button>Label</s-button>
-        <s-button>Label</s-button>
-        <s-button>Label</s-button>
-      </template>
-    </s-page-heading>
-    <sm-modal v-model="modal" header-text="Modal Title">
+    <s-wizard v-model="step" :steps="steps" has-back-button :is-on-component="true" />
+    <s-modal v-model="modal" header-text="Modal Title">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, adipisci velit ab aliquam
       veniam odit vitae non ipsam dolorem quaerat, totam quia ut vel error ducimus eveniet
       accusantium enim quam!
-    </sm-modal>
-    <s-empty-state />
+    </s-modal>
     <sm-card class="mt-1">
       <s-form ref="smFormEl" validate-on="focusout">
         <template #default="{ validate, reset, isValid }">
@@ -135,10 +128,8 @@
       }"
       :rows="items"
       :column-config="cols"
-      :items-per-page="20"
       actions-col-width="100px"
       class="my-table"
-      initial-order="DESC"
       is-fixed
       @refresh="onChange"
       @change="onChange"
@@ -155,9 +146,9 @@
 </template>
 
 <script setup lang="ts">
-import { SmForm, SmTable } from './index';
+import { SButton, SmForm, SmTable } from './index';
 import { $SmAlert, ISmAlertProvide } from '../utils/alerts';
-import { smTableChangeEvent, smTableColumn } from '~/interfaces';
+import { smStepWizard, smTableChangeEvent, smTableColumn } from '~/interfaces';
 
 interface radioTest {
   card: string;
@@ -204,6 +195,33 @@ const cols: smTableColumn[] = reactive([
     width: '100px',
   },
 ]);
+const step = ref(1);
+const step1 = h('div', [h('p', 'Formulario 1'), h('input', { placeholder: 'User' })]);
+const step2 = h('div', [h('p', 'Formulario 2'), h('input', { placeholder: 'Email' })]);
+const step3 = h('div', [
+  h('p', 'Formulario 2'),
+  h('input', { placeholder: 'Fecha', type: 'date' }),
+]);
+const steps: smStepWizard[] = [
+  {
+    title: 'STEP 1',
+    description: 'Descripción del step 1',
+    label: 'user',
+    components: [step1, SButton],
+  },
+  {
+    title: 'STEP 2',
+    description: 'Descripción del step 2',
+    label: 'email',
+    components: [step2],
+  },
+  {
+    title: 'STEP 3',
+    description: 'Descripción del step 3',
+    label: 'date',
+    components: [step3],
+  },
+];
 
 const items = computed(() => {
   const totalItems = 35;

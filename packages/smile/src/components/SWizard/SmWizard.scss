@@ -1,17 +1,30 @@
 .sm-wzd-next {
-  @apply w-full space-y-16 bg-slate-100;
+  @apply fixed w-full h-full inset-0 z-[999];
+  @apply flex flex-col;
+  @apply bg-slate-100;
 
+  &.sm-wzd-next-on-component {
+    @apply static inset-auto z-auto h-auto;
+
+    .sm-wzd-next-topbar {
+      @screen md {
+        @apply h-14;
+      }
+    }
+  }
+  &-close {
+    @apply cursor-pointer;
+  }
   &-topbar {
     @apply px-4 flex justify-between items-center flex-wrap bg-white;
 
     @screen md {
-      @apply px-20 h-14;
+      @apply px-20 h-full max-h-14;
     }
   }
 
   &-logo {
     @apply w-[90px] h-[34px] bg-cover bg-no-repeat;
-
     background-image: url('../../assets/logo-alegra.svg');
   }
 
@@ -22,21 +35,26 @@
       @apply basis-auto order-none py-0 w-9/12;
     }
   }
-
   &-content {
-    @apply m-auto grid grid-cols-1 px-4 gap-y-2 pb-12;
+    @apply pt-16 pb-12;
+    @apply overflow-auto;
+  }
+  &-body {
+    @apply grid grid-cols-1 px-4 gap-y-2;
     @apply relative;
 
+    @screen sm {
+      @apply mx-auto;
+    }
     @screen md {
       @apply grid-cols-2 max-w-[738px] px-2;
     }
-
     @screen lg {
       @apply grid-cols-2 max-w-[1120px];
     }
 
     .sm-wzd-back {
-      @apply absolute -top-14 left-4;
+      @apply absolute -top-[52px] left-4;
 
       @screen md {
         @apply left-2;
