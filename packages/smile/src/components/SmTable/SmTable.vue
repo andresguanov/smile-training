@@ -71,7 +71,9 @@
             class="sm-table-container-th"
             :style="{ width: actionsColWidth }"
           >
-            {{ actionsColHeadText }}
+            <slot name="actionsHeader">
+              {{ actionsColHeadText }}
+            </slot>
           </th>
         </tr>
       </thead>
@@ -116,7 +118,7 @@
         class="sm-table-pagination"
         @refresh="onRefresh"
         @update:page="onUpdatePage"
-        @update:itemsPerPage="onUpdateItemsPerPage"
+        @update:items-per-page="onUpdateItemsPerPage"
       />
     </slot>
     <div v-if="loading" class="sm-table-loading">
@@ -156,6 +158,7 @@ const props = withDefaults(
     closeFilterBtnText?: string;
     isFixed?: boolean;
     initialOrder?: 'ASC' | 'DESC';
+    initialSortColumn?: string;
   }>(),
   {
     hoverable: true,
@@ -181,7 +184,7 @@ const emit = defineEmits<{
   (e: 'update:itemsPerPage', data: number): void;
 }>();
 
-const sortColumn = ref('');
+const sortColumn = ref(props.initialSortColumn || '');
 const ascending = ref(props.initialOrder === 'ASC');
 const internalPage = ref(props.page);
 const internalItemsPerPage = ref(props.itemsPerPage);
@@ -232,9 +235,11 @@ const onUpdatePage = (page: number) => {
   onEvent('change', internalItemsPerPage.value);
 };
 const onUpdateItemsPerPage = (itemsPerPage: number) => {
-  internalPage.value = 1;
-  internalItemsPerPage.value = itemsPerPage;
-  onEvent('change', itemsPerPage);
+  if (itemsPerPage !== internalItemsPerPage.value) {
+    internalPage.value = 1;
+    internalItemsPerPage.value = itemsPerPage;
+    onEvent('change', itemsPerPage);
+  }
 };
 const onFilter = () => {
   if (showFilters.value) {

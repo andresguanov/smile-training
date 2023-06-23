@@ -1,4 +1,7 @@
 .sm-stepper {
   @apply flex justify-evenly;
-  @apply min-w-[367px];
+
+  @screen sm {
+    @apply min-w-[367px];
+  }
 }

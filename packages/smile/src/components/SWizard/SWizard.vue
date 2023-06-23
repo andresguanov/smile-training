@@ -1,43 +1,51 @@
 <template>
-  <div class="sm-wzd-next">
+  <div class="sm-wzd-next" :class="{ 'sm-wzd-next-on-component': isOnComponent }">
     <div class="sm-wzd-next-topbar">
-      <div class="sm-wzd-next-logo"></div>
+      <div class="sm-wzd-next-logo" />
       <div class="sm-wzd-next-stepper">
         <s-stepper v-model="activePage" :steps="stepsLabels" />
       </div>
-      <sm-icon icon="close" color="#0F172A" size="medium" @click="closeWizard" />
+      <sm-icon
+        class="sm-wzd-next-close"
+        icon="close"
+        color="#0F172A"
+        size="medium"
+        @click="closeWizard"
+      />
     </div>
-    <div :class="[`sm-wzd-next-content`, { 'sm-wzd-next-grid-cols-1': !isMultiRow }]">
-      <div class="sm-wzd-back" v-if="showBackButton">
-        <s-button
-          class="sm-wzd-back-button"
-          icon-left="arrow-alt-left"
-          emphasis="text"
-          :label="backText"
-          :disabled="disabledBack"
-          @click="previousPage"
-        />
-      </div>
-      <div class="sm-wzd-next-col-2">
-        <div class="sm-wzd-next-title">{{ steps[activePage].title }}</div>
-        <div class="sm-wzd-next-description">{{ steps[activePage].description }}</div>
-      </div>
-      <div
-        v-for="(item, i) in steps[activePage].components"
-        :key="i"
-        :class="{ 'sm-wzd-next-col-2': i > 1 }"
-      >
-        <component
-          :is="item"
-          @previous-page="previousPage"
-          @next-page="nextPage"
-          @set-page="setPage"
-        />
-      </div>
-      <div class="sm-wzd-next-footer">
-        <slot v-if="slots.footer" name="footer"></slot>
-        <div v-else class="wd-footer-btn">
-          <s-button :label="continueText" :disabled="disabledNext" @click="nextPage" />
+    <div class="sm-wzd-next-content">
+      <div :class="['sm-wzd-next-body', { 'sm-wzd-next-grid-cols-1': !isMultiRow }]">
+        <div class="sm-wzd-back" v-if="showBackButton">
+          <s-button
+            class="sm-wzd-back-button"
+            icon-left="arrow-alt-left"
+            emphasis="text"
+            :label="backText"
+            :disabled="disabledBack"
+            @click="previousPage"
+          />
+        </div>
+        <div class="sm-wzd-next-col-2">
+          <div class="sm-wzd-next-title">{{ steps[activePage].title }}</div>
+          <div class="sm-wzd-next-description">{{ steps[activePage].description }}</div>
+        </div>
+        <div
+          v-for="(item, i) in steps[activePage].components"
+          :key="i"
+          :class="{ 'sm-wzd-next-col-2': i > 1 }"
+        >
+          <component
+            :is="item"
+            @previous-page="previousPage"
+            @next-page="nextPage"
+            @set-page="setPage"
+          />
+        </div>
+        <div class="sm-wzd-next-footer">
+          <slot v-if="slots.footer" name="footer"></slot>
+          <div v-else class="wd-footer-btn">
+            <s-button :label="continueText" :disabled="disabledNext" @click="nextPage" />
+          </div>
         </div>
       </div>
     </div>
@@ -57,6 +65,7 @@ const props = withDefaults(
     disabledNext?: boolean;
     backText?: string;
     continueText?: string;
+    isOnComponent?: boolean;
   }>(),
   { backText: 'Atrás', continueText: 'Continuar' }
 );
