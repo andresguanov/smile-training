@@ -12,7 +12,7 @@
             :style="{ width: col.width }"
             @click="onSort(col.name, col.order)"
           >
-            <slot :name="'head(' + col.name + ')'" :col="col">
+            <slot :name="'headerCell(' + col.name + ')'" :col="col">
               {{ columnNames[i] }}
               <sm-icon
                 v-if="col.name == sortColumn"
@@ -33,24 +33,22 @@
       </thead>
       <tbody class="s-table__body">
         <tr v-for="(row, i) in tableData" :key="'smTableTr-' + i" class="s-table__row">
-          <slot name="bodyRow" :columns="columnConfig" :row="row" :rowIndex="i">
-            <td
-              v-for="(col, j) in columnConfig"
-              :key="`smTableTd-${i}-${j}`"
-              :class="['s-table__body__cell', col.bodyAlign, col.bodyClass]"
-              :data-name="col.name"
+          <td
+            v-for="(col, j) in columnConfig"
+            :key="`smTableTd-${i}-${j}`"
+            :class="['s-table__body__cell', col.bodyAlign, col.bodyClass]"
+            :data-name="col.name"
+          >
+            <slot
+              :name="'rowCell(' + col.name + ')'"
+              :row-index="i"
+              :col-index="j"
+              :col="col"
+              :row="row"
             >
-              <slot
-                :name="'bodyRow(' + col.name + ')'"
-                :row-index="i"
-                :col-index="j"
-                :col="col"
-                :row="row"
-              >
-                {{ row[col.name] }}
-              </slot>
-            </td>
-          </slot>
+              {{ row[col.name] }}
+            </slot>
+          </td>
           <td v-if="hasActionsColumn" class="sm-table-container-td">
             <slot name="actionsCol" :row="row" />
           </td>

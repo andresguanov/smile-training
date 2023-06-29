@@ -128,7 +128,7 @@
       }"
       :rows="items"
       :column-config="cols"
-      :items-per-page="20"
+      :items-per-page="10"
       actions-col-width="100px"
       class="my-table"
       initial-order="DESC"
@@ -140,8 +140,8 @@
       <template #head.a>
         <input v-model="selectAll" type="checkbox" name="test" id="test" />
       </template>
-      <template #bodyRow.a="{ row }">
-        <input v-model="selected" :value="row.a" type="checkbox" name="test" id="test" />
+      <template #rowCell(a)="{ row }">
+        <s-cell :text="row.a" second-line="Second Line" avatar="Hola Mundo" right-content />
       </template>
     </s-table>
     <!-- <s-table /> -->
@@ -157,7 +157,6 @@ interface radioTest {
   card: string;
 }
 const selectAll = ref(false);
-const selected = ref([]);
 const check = ref([]);
 const radio = ref('');
 const number = ref(3);

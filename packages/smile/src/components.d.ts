@@ -7,6 +7,7 @@ declare module 'vue' {
     App: typeof import('./components/App.vue')['default'];
     SBreadcrumb: typeof import('./components/SBreadcrumb/SBreadcrumb.vue')['default'];
     SButton: typeof import('./components/SButton/SButton.vue')['default'];
+    SCell: typeof import('./components/SCell/SCell.vue')['default'];
     SCheckbox: typeof import('./components/SCheckbox/SCheckbox.vue')['default'];
     SChip: typeof import('./components/SChip/SChip.vue')['default'];
     SDropdown: typeof import('./components/SDropwdown/SDropdown.vue')['default'];
