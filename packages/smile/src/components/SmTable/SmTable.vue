@@ -273,6 +273,7 @@ defineExpose({
   onUpdateItemsPerPage,
   onUpdatePage,
   onRefresh,
+  resetFilters: resetValues,
 });
 </script>
 
