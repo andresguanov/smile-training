@@ -1,6 +1,6 @@
 <template>
   <div class="s-table">
-    <div v-if="toolbar" class="s-table__toolbar"></div>
+    <s-toolbar v-if="toolbar" class="s-table__toolbar"></s-toolbar>
     <table class="s-table__wrapper">
       <thead class="s-table__head">
         <tr class="s-table__row">
@@ -15,9 +15,10 @@
             <slot :name="'headerCell(' + col.name + ')'" :col="col">
               {{ columnNames[i] }}
               <sm-icon
-                v-if="col.name == sortColumn"
-                :icon="internarlOrder === 'DESC' ? 'arrow-down' : 'arrow-up'"
                 size="small"
+                class="s-table__head__sort"
+                :class="{ active: col.name == sortColumn }"
+                :icon="sortIcon"
               />
             </slot>
             <span class="s-table__head__divider" />
@@ -104,6 +105,7 @@ const props = withDefaults(
     toolbar?: boolean;
   }>(),
   {
+    toolbar: true,
     hoverable: true,
     rows: (): Array<any> => [],
     columnConfig: (): Array<smTableColumn> => [],
@@ -116,7 +118,6 @@ const props = withDefaults(
     actionsColHeadText: 'Acciones',
     filterBtnText: 'Filtrar',
     closeFilterBtnText: 'Cerrar',
-    initialOrder: 'ASC',
   }
 );
 
@@ -128,7 +129,7 @@ const emit = defineEmits<{
 }>();
 
 const sortColumn = ref('');
-const internarlOrder = ref<'ASC' | 'DESC'>(props.initialOrder);
+const internarlOrder = ref<'ASC' | 'DESC' | undefined>(props.initialOrder);
 const internalPage = ref(props.page);
 const internalItemsPerPage = ref(props.itemsPerPage);
 const hasActionsColumn = computed(
@@ -136,6 +137,13 @@ const hasActionsColumn = computed(
 );
 const internalTotal = computed(() =>
   props.total ? props.total : props.rows.length ? props.rows.length : 1
+);
+const sortIcon = computed(() =>
+  internarlOrder.value
+    ? internarlOrder.value === 'DESC'
+      ? 'arrow-down'
+      : 'arrow-up'
+    : 'arrows-sort'
 );
 
 const { filterValues } = useFilters(props.columnConfig, props.filterConfig);
@@ -161,14 +169,12 @@ const columnNames = computed((): Array<string> => {
 
 const onEvent = (event: 'refresh' | 'change' | 'filter', itemsPerPage: number) => {
   const start = (internalPage.value - 1) * itemsPerPage;
-  const order_field = sortColumn.value;
-  const order_direction = internarlOrder.value;
   emit(event, {
     start,
     to: start + itemsPerPage,
     limit: itemsPerPage,
-    order_field,
-    order_direction,
+    order_field: sortColumn.value,
+    order_direction: internarlOrder.value || '',
     filters: { ...filterValues.value },
   });
 };
@@ -183,11 +189,14 @@ const onUpdateItemsPerPage = (itemsPerPage: number) => {
 };
 const onSort = (col: string, canSorter?: boolean) => {
   if (!canSorter) return;
+  // if (props.initialOrder === internarlOrder.value) {
+  //   sortColumn.value = '';
+  // }
   if (sortColumn.value === col) {
     internarlOrder.value = internarlOrder.value === 'ASC' ? 'DESC' : 'ASC';
   } else {
     sortColumn.value = col;
-    internarlOrder.value = props.initialOrder;
+    internarlOrder.value = props.initialOrder || 'ASC';
   }
   onUpdatePage(1);
 };

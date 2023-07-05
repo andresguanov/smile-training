@@ -16,6 +16,19 @@
       @apply text-xs font-medium text-slate-700;
       @apply relative;
 
+      &.right {
+        @apply text-right;
+      }
+      &.center {
+        @apply text-center;
+      }
+      &.sortable:hover {
+        @apply cursor-pointer;
+
+        .s-table__head__sort:not(.active) {
+          @apply opacity-25;
+        }
+      }
       &:last-of-type .s-table__head__divider {
         @apply hidden;
       }
@@ -24,6 +37,13 @@
       @apply absolute right-0 inset-y-2;
       @apply block ml-auto;
       @apply bg-slate-200 w-px h-3/5;
+    }
+    &__sort {
+      @apply opacity-0;
+
+      &.active {
+        @apply opacity-100;
+      }
     }
   }
   &__header {

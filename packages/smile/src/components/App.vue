@@ -131,7 +131,6 @@
       :items-per-page="10"
       actions-col-width="100px"
       class="my-table"
-      initial-order="DESC"
       is-fixed
       @refresh="onChange"
       @change="onChange"

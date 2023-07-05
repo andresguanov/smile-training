@@ -62,8 +62,8 @@
         @click="e => emit('clickTrailing', e)"
       />
     </div>
-    <div class="s-input__footer">
-      <p class="s-input__helper">{{ currentError || supportiveText }}</p>
+    <div class="s-input__footer" v-if="helperText">
+      <p class="s-input__helper">{{ helperText }}</p>
     </div>
   </div>
 </template>
@@ -148,6 +148,7 @@ const { validate, validateOnFocusout, hasError, currentError } = useSmileValidat
 );
 const textMark = computed(() => (props.required ? '*' : `(${props.optionalText})`));
 const iconSize = computed(() => (props.size === 'small' ? '16px' : '20px'));
+const helperText = computed(() => currentError.value || props.supportiveText);
 
 const onBlur = (event: FocusEvent) => {
   if (validateOnFocusout.value) {
