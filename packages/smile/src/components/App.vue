@@ -231,7 +231,6 @@ const items = computed(() => {
   }
   return obj;
 });
-const testSmTable = ref(null);
 const onChange = (data: smTableChangeEvent) => {
   console.log({ data });
 };
