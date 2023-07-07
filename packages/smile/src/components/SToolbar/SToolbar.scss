@@ -18,4 +18,11 @@
       @apply space-x-2 flex items-center;
     }
   }
+  &__menu {
+    @apply w-64;
+
+    &__label {
+      @apply mb-2 px-2;
+    }
+  }
 }
