@@ -1,15 +1,5 @@
 <template>
   <div class="s-table">
-    <s-toolbar
-      v-if="toolbar"
-      class="s-table__toolbar"
-      :filters="[
-        { type: 'datepicker', label: 'Fecha' },
-        { type: 'checkbox', label: 'Fecha' },
-        { type: 'input', label: 'Fecha' },
-        { type: 'select', label: 'Fecha' },
-      ]"
-    ></s-toolbar>
     <table class="s-table__wrapper">
       <thead class="s-table__head">
         <tr class="s-table__row">

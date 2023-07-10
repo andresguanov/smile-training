@@ -1,3 +1,5 @@
+import type { IconType } from './sm-icon.interface';
+
 export type ToolbarFilterType = 'input' | 'select' | 'checkbox' | 'datepicker';
 
 export interface smTableColumn {
@@ -32,6 +34,8 @@ export interface smTableChangeEvent {
 }
 
 export interface ToolbarFilter {
+  key: string;
   type: ToolbarFilterType;
   label: string;
+  icon?: IconType;
 }

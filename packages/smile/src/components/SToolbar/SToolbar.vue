@@ -9,18 +9,35 @@
           size="small"
           icon-left="search"
         />
-        <s-button emphasis="filled" type="reversed" size="small" @click="toggleMenu()">
-          <sm-icon icon="filter" size="small" />
-          <span>{{ toolbarTexts.filter }}</span>
-        </s-button>
+        <div class="s-toolbar__actions__filter">
+          <s-button emphasis="text" type="ghost" size="small" @click.stop="toggleMenu()">
+            <sm-icon icon="filter" size="small" />
+            <span>{{ toolbarTexts.filter }}</span>
+          </s-button>
+          <s-overflow-menu
+            v-if="menuOpen"
+            class="s-toolbar__menu"
+            bubbling
+            @click-outside="toggleMenu()"
+          >
+            <p class="s-toolbar__menu__label">{{ toolbarTexts.filter }} {{ toolbarTexts.by }}</p>
+            <s-menu-item
+              v-for="filter in filters"
+              :key="filter.key"
+              :title="filter.label"
+              :icon="filter.icon || icons[filter.type]"
+              @click="onSelectFilter(filter)"
+            />
+          </s-overflow-menu>
+        </div>
         <slot name="actions">
           <s-button
             v-for="action in actions"
             :key="action.name"
             :label="action.label"
             :icon-left="action.icon"
-            emphasis="filled"
-            type="reversed"
+            emphasis="text"
+            type="ghost"
             size="small"
             @click="emit('action', action.name)"
           />
@@ -30,15 +47,22 @@
         <slot name="rightContent" />
       </div>
     </div>
-    <div v-show="filtersOpen" class="s-toolbar__filters">
+    <div v-show="showToolbarFilters" class="s-toolbar__filters">
       <div class="s-toolbar__filters__chips">
-        <s-chip :label="'dasd'" type="filter" />
+        <s-chip
+          v-for="activeFilter in activeFilters"
+          :key="activeFilter.key"
+          :label="activeFilter.label"
+          :icon="activeFilter.icon || icons[activeFilter.type]"
+          type="filter"
+          @click="onDeleteFilter(activeFilter.key)"
+        />
         <s-button
           only-icon="plus"
-          emphasis="filled"
-          type="reversed"
+          emphasis="text"
+          type="ghost"
           size="small"
-          @click="toggleMenu()"
+          @click.stop="toggleMenu()"
         />
       </div>
       <s-button
@@ -46,18 +70,9 @@
         emphasis="filled"
         type="reversed"
         size="small"
-        @click="toggleFilters(false)"
+        @click="deleteAllFilters()"
       />
     </div>
-    <s-overflow-menu v-if="menuOpen" class="s-toolbar__menu" @click-outside="toggleMenu()">
-      <p class="s-toolbar__menu__label">{{ toolbarTexts.filter }} {{ toolbarTexts.by }}</p>
-      <s-menu-item
-        v-for="filter in filters"
-        :title="filter.label"
-        :icon="icons[filter.type]"
-        @click="toggleFilters(true)"
-      />
-    </s-overflow-menu>
   </div>
 </template>
 
@@ -99,14 +114,29 @@ const emit = defineEmits<{
 }>();
 
 const search = ref('');
-const [filtersOpen, toggleFilters] = useToggle(false);
+const activeFilters = ref<ToolbarFilter[]>([]);
+const filterValues = ref<Record<string, unknown>>({});
 const [menuOpen, toggleMenu] = useToggle(false);
+const showToolbarFilters = computedEager(() => activeFilters.value.length);
 
 const icons: Record<ToolbarFilterType, IconType> = {
-  checkbox: 'circle',
+  checkbox: 'circle-dashed',
   datepicker: 'calendar',
   input: 'edit',
-  select: 'view-list',
+  select: 'list',
+};
+const onSelectFilter = (filter: ToolbarFilter) => {
+  if (activeFilters.value.findIndex(el => el.key === filter.key) === -1) {
+    activeFilters.value.push(filter);
+    filterValues.value[filter.key] = null;
+  }
+};
+const onDeleteFilter = (key: string) => {
+  const index = activeFilters.value.findIndex(el => el.key === key);
+  if (index >= 0) activeFilters.value.splice(index, 1);
+};
+const deleteAllFilters = () => {
+  activeFilters.value = [];
 };
 </script>
 
