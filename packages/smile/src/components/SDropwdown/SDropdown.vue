@@ -60,106 +60,51 @@
 </template>
 
 <script setup lang="ts">
-import type { IconType, smInputAddon, smMenuOption } from '../../interfaces';
+// Composables
 import { useSmileValidate } from '~/composables';
 
-type MenuOption = {
-  [key: string]: unknown;
-} & smMenuOption;
+// Types
+import { MenuOption, SDropdownProps } from '~/types';
+import type { IconType } from '../../interfaces';
 
-const props = withDefaults(
-  defineProps<{
-    modelValue: MenuOption | string | number | Array<string | number>;
-    size?: 'small' | 'medium' | 'large';
-    hint?: string;
-    placeholder?: string;
-    disabled?: boolean;
-    required?: boolean;
-    success?: boolean;
-    loading?: boolean;
-    loadingText?: string;
-    label?: string;
-    options?: Array<MenuOption>;
-    /**
-     * Disponible solo cuando el componente está dentro de SmForm.
-     * Permite establecer las validaciones del componente.
-     */
-    rules?: Array<
-      (value: MenuOption | string | number | Array<string | number>) => boolean | string
-    >;
-    error?: string;
-    /**
-     * Indica si deseas que modelValue trabaje con objetos
-     */
-    object?: boolean;
-    /**
-     * El valor que se mostrará como texto
-     * @default text
-     */
-    textKey?: string;
-    /**
-     * Clave valor para la opción,
-     * si la prop "object" no está activa modelValue usará este identificador para us valor
-     * @default code
-     */
-    valueKey?: string;
-    multiple?: boolean;
-    id?: string;
-    /**
-     * Permite activar el evento search así como un campo de búsqueda.
-     * No realizar un filtro en local
-     */
-    search?: boolean;
-    /**
-     * Permite indicar si el valor puede deseleccionarse.
-     * Se ignora cuando prop "multiple" esta activa.
-     */
-    canDeselect?: boolean;
-    leading?: smInputAddon;
-    maxHeight?: string;
-    /**
-     * Al pasar esta prop indicas que deseas mostrar al lado del label la marca
-     * que indica si el input es requerido u opcional.
-     */
-    showMark?: boolean;
-    /**
-     * Texto que se mostrará cuando `showMark` esta activo y el input no es `required`
-     * @default Opcional
-     */
-    optionalText?: string;
-  }>(),
-  {
-    size: 'medium',
-    rules: () => [],
-    options: () => [],
-    loadingText: 'Cargando contenido...',
-    textKey: 'text',
-    valueKey: 'code',
-    maxHeight: '300px',
-    optionalText: 'Opcional',
-  }
-);
-if (!props.options?.length) {
-  console.warn('Missing data in %coptions', 'color: red;font-weight: bold;padding: 1px', 'prop.');
-}
+// Emits
 const emit = defineEmits<{
   (event: 'update:modelValue', value: MenuOption | string | number | Array<string | number>): void;
   (event: 'search', value: string): void;
   (event: 'select', value: MenuOption): void;
   (event: 'open'): void;
 }>();
+
+// Props
+const props = withDefaults(defineProps<SDropdownProps>(), {
+  size: 'medium',
+  rules: () => [],
+  options: () => [],
+  loadingText: 'Cargando contenido...',
+  textKey: 'text',
+  valueKey: 'code',
+  maxHeight: '300px',
+  optionalText: 'Opcional',
+});
+
 const data = useVModel(props, 'modelValue', emit);
+
+// Propiedades desde store/composables
 const { validate, validateOnFocusout, currentError } = useSmileValidate<
   MenuOption | string | number | Array<string | number>
 >(data, props.rules, toRef(props, 'error'), props.id);
 
-const open = ref(false);
-const searchText = ref('');
+// Propiedades reactivas
 const menuTopDistance = computed(() => {
   if (currentError.value) return '80%';
   return '100%';
 });
-const trailingIcon = computed<IconType>(() => (open.value ? 'chevron-up' : 'chevron-down'));
+
+const open = ref(false);
+
+const searchText = ref('');
+
+// Propiedades computadas
 const formattedValue = computed<string>(() => {
   if (!data.value) return '';
   if (props.multiple) {
@@ -172,9 +117,11 @@ const formattedValue = computed<string>(() => {
   if (props.object) return getText((data.value as MenuOption)[props.valueKey] as string | number);
   return getText(data.value as string | number);
 });
+
 const internalPlaceholder = computed(() =>
   props.search && open.value ? formattedValue.value : props.placeholder
 );
+
 const textValue = computed({
   get: () => {
     if (props.search && open.value) return searchText.value;
@@ -186,16 +133,15 @@ const textValue = computed({
   },
 });
 
-const toggleOverflow = () => {
-  if (props.disabled) return;
-  if (!open.value) emit('open');
-  open.value = !open.value;
-};
+const trailingIcon = computed<IconType>(() => (open.value ? 'chevron-up' : 'chevron-down'));
+
+// Métodos
 const getText = (value: string | number) => {
   const selectedValue = props.options.find(op => op[props.valueKey] === value);
   if (selectedValue) return String(selectedValue[props.textKey]);
   return '';
 };
+
 const isSelected = (value: MenuOption) => {
   const realValue = value[props.valueKey] as string | number;
   if (props.multiple) {
@@ -204,6 +150,7 @@ const isSelected = (value: MenuOption) => {
   if (props.object) return (data.value as MenuOption)[props.valueKey] === realValue;
   return data.value === realValue;
 };
+
 const onClickOption = (option: MenuOption) => {
   emit('select', { option });
   const value = option[props.valueKey];
@@ -237,6 +184,7 @@ const onClickOption = (option: MenuOption) => {
   }
   open.value = false;
 };
+
 const onClickOutside = () => {
   if (validateOnFocusout.value) {
     validate();
@@ -244,9 +192,29 @@ const onClickOutside = () => {
   open.value = false;
 };
 
+const validateProps = (props: SDropdownProps) => {
+  const isOptionsArray = Array.isArray(props.options);
+  if (!isOptionsArray) {
+    throw new Error(`The prop options must be an array`);
+  }
+};
+
+const toggleOverflow = () => {
+  if (props.disabled) return;
+  if (!open.value) emit('open');
+  open.value = !open.value;
+};
+
 if (props.multiple && !data.value) {
   data.value = [];
 }
+
+// Métodos del ciclo de vida Vue
+onMounted(() => {
+  validateProps(props);
+});
+
+// Exposes
 defineExpose({
   toggleOverflow,
 });
