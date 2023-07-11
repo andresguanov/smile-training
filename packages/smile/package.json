@@ -12,7 +12,8 @@
       "import": "./dist/main.es.js",
       "require": "./dist/main.umd.js"
     },
-    "./styles": "./dist/style.css"
+    "./styles": "./dist/style.css",
+    "./theme": "./public/theme.js"
   },
   "scripts": {
     "dev": "cross-env NODE_ENV=development vite",
