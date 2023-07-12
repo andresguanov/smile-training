@@ -64,7 +64,7 @@
 import { useSmileValidate } from '~/composables';
 
 // Types
-import { MenuOption, SDropdownProps } from '~/types';
+import type { MenuOption, SDropdownProps } from '~/types';
 import type { IconType } from '../../interfaces';
 
 // Emits

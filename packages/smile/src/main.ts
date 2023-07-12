@@ -2,6 +2,7 @@ export * from './components';
 export * from './utils';
 export * from './directives';
 export * from './interfaces';
+export * from './types';
 
 // import 'package/styles/dist/main.css'
 import './index.css';
@@ -17,12 +18,3 @@ setDefaultProps({
   arrow: true,
   interactive: true,
 });
-
-/* Comentar al compilar */
-/*
-import { createApp } from 'vue';
-import App from './components/App.vue';
-import { $SmAlert, ISmAlertProvide, useSmAlert } from './utils/alerts';
-
-createApp(App).provide<ISmAlertProvide>($SmAlert, useSmAlert()).mount('#app');
-*/

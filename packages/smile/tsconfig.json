@@ -3,11 +3,14 @@
   "include": ["src"],
   "compilerOptions": {
     "baseUrl": ".",
-    "outDir": "./dist/types",
+    "outDir": "./dist",
     "skipLibCheck": true,
+    "declaration": true,
+    "declarationDir": "./dist/types",
+    "types": ["node", "vite/client"],
     "paths": {
-      "~/*": ["src/*"],
-      "types": ["node", "vite/client"]
-    }
+      "~/*": ["src/*"]
+    },
+    "rootDir": "src"
   }
 }

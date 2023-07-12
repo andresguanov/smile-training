@@ -1,7 +1,9 @@
-import type { IconType, smInputAddon, smMenuOption } from '../../interfaces';
+import type { smInputAddon } from '../interfaces';
+
+import type { MenuOption } from './generic';
 
 export type SDropdownProps = {
-  modelValue?: MenuOption | string | number | Array<string | number>;
+  modelValue: MenuOption | string | number | Array<string | number>;
   size?: 'small' | 'medium' | 'large';
   hint?: string;
   placeholder?: string;
