@@ -3,6 +3,9 @@
     <template #append-item>
       <SButton class="w-full"> Botón en slot append </SButton>
     </template>
+    <template #prepend-item>
+      <SButton class="w-full"> Botón en slot append </SButton>
+    </template>
   </SDropdown>
 </template>
 <script lang="ts" setup>

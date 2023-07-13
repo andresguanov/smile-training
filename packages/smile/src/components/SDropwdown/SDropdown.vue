@@ -56,6 +56,9 @@
               </s-menu-item>
             </slot>
           </li>
+          <li>
+            <slot name="prepend-item" />
+          </li>
         </ul>
       </div>
     </s-overflow-menu>
