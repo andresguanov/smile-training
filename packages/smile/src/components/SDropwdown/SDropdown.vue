@@ -35,6 +35,9 @@
       <div v-else>
         <slot name="beforeOptions" />
         <ul>
+          <li>
+            <slot name="append-item" />
+          </li>
           <li v-for="(option, i) in options" :key="i">
             <slot name="item" :index="i" :option="option">
               <s-menu-item

@@ -26,7 +26,7 @@
       v-sm-simple-uid
     >
       <template v-for="slot in slotsList" v-slot:[slot]>
-        <slot :name="(slot as string)"></slot>
+        <slot :name="slot as string"></slot>
       </template>
     </date-picker>
     <sm-hint
@@ -34,7 +34,7 @@
       :to="`#${datePickerElement.id}`"
     >
       <template #content>
-        <sm-error-list :error-messages="(errorListContent as Array<string>)" />
+        <sm-error-list :error-messages="errorListContent as Array<string>" />
       </template>
     </sm-hint>
   </div>
@@ -44,8 +44,8 @@
 import { smSimpleUid as vSmSimpleUid } from '../../directives';
 import { useValidate } from '../../composables';
 import DatePicker from 'vue-datepicker-next';
-import 'vue-datepicker-next/locale/en';
-import 'vue-datepicker-next/locale/es';
+import 'vue-datepicker-next/locale/en.es.js';
+import 'vue-datepicker-next/locale/es.es.js';
 import 'vue-datepicker-next/index.css';
 
 const slots = useSlots();
