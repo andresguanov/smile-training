@@ -240,7 +240,6 @@ watch(
   () => props,
   () => {
     hasTheComponentErrors.value = areInvalidProps();
-    console.log(hasTheComponentErrors.value);
   },
   { deep: true }
 );
@@ -248,7 +247,6 @@ watch(
 // Métodos del ciclo de vida Vue
 onMounted(() => {
   hasTheComponentErrors.value = areInvalidProps();
-  console.log('watch', hasTheComponentErrors.value);
 });
 
 // Exposes
