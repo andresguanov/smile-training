@@ -3,6 +3,8 @@
 .sm-textarea {
   @apply block w-full;
   @apply border rounded border-gray-300 focus:border-sm-primary-500 transition-colors;
+  @apply outline-none;
+
   &.sm-input-disabled {
     @apply bg-gray-50;
   }
