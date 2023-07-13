@@ -1,5 +1,15 @@
 <template>
   <div class="s-table">
+    <s-toolbar
+      :actions="[{ label: 'Action1', name: 'Action 1' }]"
+      :filters="[
+        {
+          key: 'date',
+          label: 'Fecha',
+          type: 'datepicker',
+        },
+      ]"
+    />
     <table class="s-table__wrapper">
       <thead class="s-table__head">
         <tr class="s-table__row">

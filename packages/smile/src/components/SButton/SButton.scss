@@ -63,7 +63,7 @@
       @apply text-slate-700;
       &:not(:disabled, [loading='true']) {
         &:focus {
-          @apply ring-slate-600;
+          @apply ring-slate-200/70;
         }
       }
     }
