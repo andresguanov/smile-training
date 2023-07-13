@@ -38,7 +38,11 @@
           <li>
             <slot name="append-item" />
           </li>
-          <li v-for="(option, i) in options" :key="i">
+          <li
+            v-for="(option, i) in options"
+            :key="i"
+            :style="`margin-left: ${0.5 * (option.level ?? 0)}rem;`"
+          >
             <slot name="item" :index="i" :option="option">
               <s-menu-item
                 v-bind="option"

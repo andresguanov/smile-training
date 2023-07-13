@@ -1,10 +1,11 @@
 import type { IconType } from './sm-icon.interface';
 
 export interface smMenuOption {
+  avatar?: string;
+  description?: string;
   destructive?: boolean;
   disabled?: boolean;
-  // textStyle?: 'inline' | 'block'
-  avatar?: string;
   icon?: IconType;
-  description?: string;
+  level?: number;
+  // textStyle?: 'inline' | 'block'
 }
