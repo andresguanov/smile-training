@@ -4,8 +4,10 @@
     <img v-if="avatar" class="s-menu-item__image" :src="avatar" :alt="title" />
     <sm-icon v-if="icon" :icon="icon" width="20px" height="20px" />
     <div class="s-menu-item__text" :class="[textStyle]">
-      <p :class="{ 's-menu-item__text__title': description }">{{ title }}</p>
-      <p v-if="description" class="s-menu-item__text__description">{{ description }}</p>
+      <p :class="{ 's-menu-item__text__title': description }" :style="titleStyle">{{ title }}</p>
+      <p v-if="description" class="s-menu-item__text__description" :style="descriptionStyle">
+        {{ description }}
+      </p>
     </div>
     <slot name="trailing" />
   </div>
@@ -18,11 +20,13 @@ withDefaults(
   defineProps<{
     title: string;
     destructive?: boolean;
+    descriptionStyle?: string;
     disabled?: boolean;
     textStyle?: 'inline' | 'block';
     avatar?: string;
     icon?: IconType;
     description?: string;
+    titleStyle?: string;
   }>(),
   { textStyle: 'inline' }
 );

@@ -1,5 +1,5 @@
 <template>
-  <div class="s-dropdown">
+  <div v-if="!hasTheComponentErrors" class="s-dropdown">
     <div class="s-dropdown__wrapper">
       <s-input
         class="s-dropdown__input"
@@ -42,12 +42,13 @@
             v-for="(option, i) in options"
             :key="i"
             :style="`margin-left: ${0.5 * (option.level ?? 0)}rem;`"
+            @click="onClickOption(option)"
           >
             <slot name="item" :index="i" :option="option">
               <s-menu-item
                 v-bind="option"
                 :title="String(option[textKey])"
-                @click="onClickOption(option)"
+                :description="option.description ?? ''"
               >
                 <template #leading>
                   <div
@@ -110,6 +111,8 @@ const menuTopDistance = computed(() => {
   return '100%';
 });
 
+const hasTheComponentErrors = ref<boolean>(false);
+
 const open = ref(false);
 
 const searchText = ref('');
@@ -146,6 +149,16 @@ const textValue = computed({
 const trailingIcon = computed<IconType>(() => (open.value ? 'chevron-up' : 'chevron-down'));
 
 // Métodos
+const areInvalidProps = () => {
+  try {
+    validateProps(props);
+    return false;
+  } catch (e) {
+    console.error(e);
+    return true;
+  }
+};
+
 const getText = (value: string | number) => {
   const selectedValue = props.options.find(op => op[props.valueKey] === value);
   if (selectedValue) return String(selectedValue[props.textKey]);
@@ -207,8 +220,12 @@ const onClickOutside = () => {
 
 const validateProps = (props: SDropdownProps) => {
   const isOptionsArray = Array.isArray(props.options);
+  const isModelValueAnArray = Array.isArray(props.modelValue);
   if (!isOptionsArray) {
     throw new Error(`The prop options must be an array`);
+  }
+  if (props.multiple && !isModelValueAnArray) {
+    throw new Error(`When the prop multiple is true, the model value must be an array`);
   }
 };
 
@@ -218,13 +235,20 @@ const toggleOverflow = () => {
   open.value = !open.value;
 };
 
-if (props.multiple && !data.value) {
-  data.value = [];
-}
+// Watchers
+watch(
+  () => props,
+  () => {
+    hasTheComponentErrors.value = areInvalidProps();
+    console.log(hasTheComponentErrors.value);
+  },
+  { deep: true }
+);
 
 // Métodos del ciclo de vida Vue
 onMounted(() => {
-  validateProps(props);
+  hasTheComponentErrors.value = areInvalidProps();
+  console.log('watch', hasTheComponentErrors.value);
 });
 
 // Exposes
