@@ -9,14 +9,13 @@
     <div class="s-input__container" :class="size">
       <s-input-leading
         v-if="Boolean(leading)"
-        class="s-input__leading"
+        v-bind="leading"
         :size="size"
-        :label="leading?.label"
-        :icon="leading?.icon"
-        :inline="leading?.inline"
-        :actionable="leading?.actionable"
+        class="s-input__leading"
         @click="e => emit('clickLeading', e)"
-      />
+      >
+        <slot name="leading" />
+      </s-input-leading>
       <div v-if="iconLeft" class="s-input__icon leading">
         <sm-icon :icon="iconLeft" :width="iconSize" :height="iconSize" />
       </div>
@@ -52,15 +51,14 @@
       </div>
       <s-input-leading
         v-if="Boolean(trailing)"
-        class="s-input__trailing"
+        v-bind="trailing"
         :size="size"
-        :label="trailing?.label"
-        :icon="trailing?.icon"
-        :inline="trailing?.inline"
-        :actionable="trailing?.actionable"
+        class="s-input__trailing"
         trailing
         @click="e => emit('clickTrailing', e)"
-      />
+      >
+        <slot name="trailing" />
+      </s-input-leading>
     </div>
     <div class="s-input__footer">
       <p class="s-input__helper">{{ currentError || supportiveText }}</p>
@@ -70,14 +68,14 @@
 
 <script setup lang="ts">
 import { useSmileValidate } from '~/composables';
-import type { IconType, smInputAddon } from '../../interfaces';
+import type { IconType, SInputAddon } from '../../interfaces';
 
 const props = withDefaults(
   defineProps<{
     modelValue: string;
     size?: 'small' | 'medium' | 'large';
-    leading?: smInputAddon;
-    trailing?: smInputAddon;
+    leading?: SInputAddon;
+    trailing?: SInputAddon;
     iconLeft?: IconType;
     iconRight?: IconType;
     hint?: string;
