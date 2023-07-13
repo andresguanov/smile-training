@@ -21,7 +21,7 @@ import type { MenuOption } from '@alegradev/smile-ui-next';
 
 // Propiedades reactivas
 const options = ref<MenuOption[]>([
-  { text: 'Texto 1', code: '1' },
+  { text: 'Texto 1', code: '1', disabled: true },
   { text: 'Texto 2', code: '2' },
   { text: 'Texto 3', code: '3' },
 ]);

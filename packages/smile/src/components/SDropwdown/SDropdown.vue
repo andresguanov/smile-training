@@ -158,6 +158,9 @@ const isSelected = (value: MenuOption) => {
 };
 
 const onClickOption = (option: MenuOption) => {
+  if (option.disabled) {
+    return;
+  }
   emit('select', { option });
   const value = option[props.valueKey];
   if (typeof value !== 'number' && typeof value !== 'string') {
