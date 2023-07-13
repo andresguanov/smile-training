@@ -28,13 +28,6 @@
     &:focus-within {
       @apply border-2 border-sm-primary-500;
     }
-    &.filled {
-      @apply border-2 border-slate-300;
-
-      &:focus-within {
-        @apply border-sm-primary-500;
-      }
-    }
     &.small {
       @apply rounded-lg h-8;
 

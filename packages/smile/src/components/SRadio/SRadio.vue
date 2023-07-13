@@ -1,7 +1,7 @@
 <template>
   <div class="s-radio">
-    <p v-if="label" class="s-radio__label" :class="{ required }">
-      {{ label }}<span v-if="showMark" class="s-radio__mark">{{ textMark }}</span>
+    <p v-if="label" class="s-radio__label" :class="{ required: markType === 'required' }">
+      {{ label }}<span v-if="markType" class="s-radio__mark">{{ textMark }}</span>
     </p>
     <div class="s-radio__group" :class="[orientation]" @focusout="onFocusOut">
       <label
@@ -53,9 +53,9 @@ const props = withDefaults(
      * Al pasar esta prop indicas que deseas mostrar al lado del label la marca
      * que indica si el input es requerido u opcional.
      */
-    showMark?: boolean;
+    markType?: 'required' | 'optional';
     /**
-     * Texto que se mostrará cuando `showMark` esta activo y el input no es `required`
+     * Texto que se mostrará cuando `markType` es `optional`
      * @default Opcional
      */
     optionalText?: string;
@@ -74,7 +74,7 @@ const internalValue = useVModel(props, 'modelValue', emit);
 const { validate, validateOnFocusout, hasError, currentError } = useSmileValidate<
   string | number | object
 >(internalValue, props.rules, toRef(props, 'error'), props.id);
-const textMark = computed(() => (props.required ? '*' : `(${props.optionalText})`));
+const textMark = computed(() => (props.markType === 'required' ? '*' : `(${props.optionalText})`));
 
 const onFocusOut = (event: FocusEvent) => {
   if (validateOnFocusout.value) {

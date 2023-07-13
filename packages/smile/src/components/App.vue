@@ -7,17 +7,6 @@
       veniam odit vitae non ipsam dolorem quaerat, totam quia ut vel error ducimus eveniet
       accusantium enim quam!
     </s-modal>
-    <sm-input />
-    <sm-textarea />
-    <sm-number-input />
-    <sm-select
-      :options="[
-        { text: 'Javascript', value: 'js', icon: 'flag-3' },
-        { text: 'PHP', value: 'php', icon: 'flag-3' },
-        { text: 'Python', value: 'py', icon: 'flag-3' },
-        { text: 'C++', value: 'cc', icon: 'flag-3' },
-      ]"
-    />
     <sm-card class="mt-1">
       <s-form ref="smFormEl" validate-on="focusout">
         <template #default="{ validate, reset, isValid }">
@@ -45,7 +34,10 @@
           <s-input
             v-model="text"
             supportive-text="dasdasd"
+            native-type="password"
             icon-right="bolt"
+            label="password"
+            mark-type="optional"
             :rules="sRules"
             :leading="{ label: 'Leading', icon: 'accounting', actionable: true }"
           />
@@ -66,7 +58,7 @@
             label="Lenguaje favorito"
             can-deselect
             object
-            show-mark
+            mark-type="required"
             required
             placeholder="Escoge tu lenguaje favorito"
             :options="options"
