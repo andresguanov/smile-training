@@ -3,7 +3,7 @@ import type { smInputAddon } from '../interfaces';
 import type { MenuOption } from './generic';
 
 export type SDropdownProps = {
-  modelValue: MenuOption | string | number | Array<string | number>;
+  modelValue?: MenuOption | string | number | Array<string | number>;
   size?: 'small' | 'medium' | 'large';
   hint?: string;
   placeholder?: string;
@@ -18,7 +18,9 @@ export type SDropdownProps = {
    * Disponible solo cuando el componente está dentro de SmForm.
    * Permite establecer las validaciones del componente.
    */
-  rules?: Array<(value: MenuOption | string | number | Array<string | number>) => boolean | string>;
+  rules?: Array<
+    (value?: MenuOption | string | number | Array<string | number>) => boolean | string
+  >;
   error?: string;
   /**
    * Indica si deseas que modelValue trabaje con objetos

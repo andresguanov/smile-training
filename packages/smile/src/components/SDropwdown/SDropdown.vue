@@ -72,7 +72,7 @@
 
 <script setup lang="ts">
 // Composables
-import { useSmileValidate } from '~/composables';
+import { useSmileValidator } from '~/composables';
 
 // Types
 import type { MenuOption, SDropdownProps } from '~/types';
@@ -80,7 +80,7 @@ import type { IconType } from '../../interfaces';
 
 // Emits
 const emit = defineEmits<{
-  (event: 'update:modelValue', value: MenuOption | string | number | Array<string | number>): void;
+  (event: 'update:modelValue', value?: MenuOption | string | number | Array<string | number>): void;
   (event: 'search', value: string): void;
   (event: 'select', value: MenuOption): void;
   (event: 'open'): void;
@@ -101,9 +101,9 @@ const props = withDefaults(defineProps<SDropdownProps>(), {
 const data = useVModel(props, 'modelValue', emit);
 
 // Propiedades desde store/composables
-const { validate, validateOnFocusout, currentError } = useSmileValidate<
-  MenuOption | string | number | Array<string | number>
->(data, props.rules, toRef(props, 'error'), props.id);
+const { validate, validateOnFocusout, currentError } = useSmileValidator<
+  MenuOption | string | number | Array<string | number> | undefined
+>({ data, id: props.id, rules: props.rules, externalError: toRef(props, 'error') });
 
 // Propiedades reactivas
 const menuTopDistance = computed(() => {

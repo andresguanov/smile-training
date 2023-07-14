@@ -1,25 +1,42 @@
 <template>
-  <SDropdown v-model="selectedOption" :options="options" multiple>
-    <template #append-item>
-      <SButton class="w-full"> Botón en slot append </SButton>
-    </template>
-    <template #prepend-item>
-      <SButton class="w-full"> Botón en slot append </SButton>
-    </template>
-  </SDropdown>
+  <SForm validate-on="type" ref="form">
+    <SInput v-model="text" :rules="rules" />
+    <SDropdown v-model="selectedOption" :options="options" :rules="rules">
+      <template #append-item>
+        <SButton class="w-full"> Botón en slot append </SButton>
+      </template>
+      <template #prepend-item>
+        <SButton class="w-full"> Botón en slot append </SButton>
+      </template>
+    </SDropdown>
+    <SButton class="w-full" @click="validate"> Validar </SButton>
+  </SForm>
 </template>
 <script lang="ts" setup>
 // Componentes
-import { SDropdown } from '@alegradev/smile-ui-next';
+import { SDropdown, SForm, SInput } from '@alegradev/smile-ui-next';
 import { SButton } from '@alegradev/smile-ui-next';
 
 // Importaciones
 import { ref } from 'vue';
 
 // Types
+import type { ComponentPublicInstance } from 'vue';
 import type { MenuOption } from '@alegradev/smile-ui-next';
 
 // Propiedades reactivas
+const form = ref<
+  ComponentPublicInstance & {
+    validateForm: () => {
+      valid: boolean;
+      results: {
+        id: string;
+        errorMessages: string[];
+      }[];
+    };
+  }
+>();
+
 const options = ref<MenuOption[]>([
   {
     text: 'Texto 1',
@@ -35,5 +52,16 @@ const options = ref<MenuOption[]>([
   { text: 'Texto 3', code: '3', level: 3 },
 ]);
 
-const selectedOption = ref<string[]>([]);
+const rules = [(v: string) => !!v || 'Requerido'];
+
+const selectedOption = ref<string>();
+
+const text = ref<string>('');
+
+// Métodos
+const validate = () => {
+  if (form.value) {
+    console.log(form.value.validateForm());
+  }
+};
 </script>
