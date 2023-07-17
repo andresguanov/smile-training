@@ -6,6 +6,10 @@ export type SDropdownProps = {
   modelValue?: MenuOption | string | number | Array<string | number>;
   size?: 'small' | 'medium' | 'large';
   hint?: string;
+  /**
+   * Se envía para forzar el re-renderizado de items
+   */
+  hideLoadingText?: boolean;
   placeholder?: string;
   disabled?: boolean;
   required?: boolean;
@@ -56,10 +60,10 @@ export type SDropdownProps = {
    * que indica si el input es requerido u opcional.
    */
   showMark?: boolean;
+
   /**
    * Texto que se mostrará cuando `showMark` esta activo y el input no es `required`
    * @default Opcional
    */
   optionalText?: string;
-  titleStyle?: 'block' | 'inline';
 };

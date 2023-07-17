@@ -27,7 +27,7 @@
       bubbling
       @click-outside="onClickOutside"
     >
-      <div v-if="loading">
+      <div v-if="loading && !hideLoadingText">
         <slot name="loading">
           <p>{{ loadingText }}</p>
         </slot>
@@ -47,7 +47,6 @@
             <slot name="item" :index="i" :option="option">
               <s-menu-item
                 v-bind="option"
-                :title-style="titleStyle"
                 :title="String(option[textKey])"
                 :description="option.description ?? ''"
               >
