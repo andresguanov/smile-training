@@ -61,4 +61,5 @@ export type SDropdownProps = {
    * @default Opcional
    */
   optionalText?: string;
+  titleStyle?: 'block' | 'inline';
 };

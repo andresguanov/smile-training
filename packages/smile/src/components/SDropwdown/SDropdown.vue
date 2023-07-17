@@ -35,7 +35,7 @@
       <div v-else>
         <slot name="beforeOptions" />
         <ul>
-          <li>
+          <li class="s-appended-item">
             <slot name="append-item" />
           </li>
           <li
@@ -47,6 +47,7 @@
             <slot name="item" :index="i" :option="option">
               <s-menu-item
                 v-bind="option"
+                :title-style="titleStyle"
                 :title="String(option[textKey])"
                 :description="option.description ?? ''"
               >
@@ -61,7 +62,7 @@
               </s-menu-item>
             </slot>
           </li>
-          <li>
+          <li class="s-prepended-item">
             <slot name="prepend-item" />
           </li>
         </ul>
