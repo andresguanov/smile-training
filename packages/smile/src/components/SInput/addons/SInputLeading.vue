@@ -1,8 +1,17 @@
 <template>
   <div class="s-leading" :class="[size, { inline, actionable, trailing }]">
     <div class="s-leading__wrapper" :class="{ disabled }">
-      <p v-if="label">{{ label }}</p>
-      <sm-icon v-if="icon" class="s-leading__icon" :icon="icon" />
+      <slot>
+        <sm-icon v-if="leadingIcon" class="s-leading__icon" :icon="leadingIcon" />
+        <!-- <img
+        v-else-if="leadingImage"
+        :src="leadingImage"
+        :alt="label || 'Leading image'"
+        class="s-leading__img"
+      /> -->
+        <p v-if="label">{{ label }}</p>
+        <sm-icon v-if="trailingIcon" class="s-leading__icon" :icon="trailingIcon" />
+      </slot>
     </div>
   </div>
 </template>
@@ -15,7 +24,8 @@ defineProps<{
   actionable?: boolean;
   size?: 'small' | 'medium' | 'large';
   label?: string;
-  icon?: IconType;
+  leadingIcon?: IconType;
+  trailingIcon?: IconType;
   trailing?: boolean;
   disabled?: boolean;
 }>();
@@ -39,13 +49,13 @@ defineProps<{
     @apply p-0.5;
 
     .s-leading__wrapper {
-      @apply text-slate-700 border-none bg-transparent;
+      @apply border-none bg-transparent;
       @apply rounded-lg;
     }
   }
   &.actionable {
     .s-leading__wrapper {
-      @apply bg-white cursor-pointer;
+      @apply bg-white cursor-pointer text-slate-700;
 
       &:not(.disabled) {
         &:hover {
@@ -77,7 +87,6 @@ defineProps<{
   }
   &.trailing {
     .s-leading__wrapper {
-      @apply flex-row-reverse;
       @apply border-0 border-l;
     }
   }

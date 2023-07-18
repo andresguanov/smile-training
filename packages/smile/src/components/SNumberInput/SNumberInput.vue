@@ -1,9 +1,9 @@
 <template>
   <div class="s-number" :class="{ disabled, readonly, error: hasError }">
-    <p v-if="label" class="s-number__label" :class="{ required }">
-      {{ label }}<span v-if="showMark" class="s-number__mark">{{ textMark }}</span>
+    <p v-if="label" class="s-number__label" :class="{ required: markType === 'required' }">
+      {{ label }}<span v-if="markType" class="s-number__mark">{{ textMark }}</span>
     </p>
-    <div class="s-number__container" :class="[size, { filled }]">
+    <div class="s-number__container" :class="size">
       <div v-if="iconLeft" class="s-number__icon leading">
         <sm-icon :icon="iconLeft" :width="iconSize" :height="iconSize" />
       </div>
@@ -96,9 +96,9 @@ const props = withDefaults(
      * Al pasar esta prop indicas que deseas mostrar al lado del label la marca
      * que indica si el input es requerido u opcional.
      */
-    showMark?: boolean;
+    markType?: 'required' | 'optional';
     /**
-     * Texto que se mostrará cuando `showMark` esta activo y el input no es `required`
+     * Texto que se mostrará cuando `markType` es `optional`
      * @default Opcional
      */
     optionalText?: string;
@@ -125,9 +125,8 @@ const { validate, validateOnFocusout, hasError, currentError } = useSmileValidat
   toRef(props, 'error'),
   props.id
 );
-const textMark = computed(() => (props.required ? '*' : `(${props.optionalText})`));
+const textMark = computed(() => (props.markType === 'required' ? '*' : `(${props.optionalText})`));
 const iconSize = computed(() => (props.size === 'small' ? '16px' : '20px'));
-const filled = computed(() => typeof value.value === 'number');
 
 const onBlur = (event: FocusEvent) => {
   if (validateOnFocusout.value) {

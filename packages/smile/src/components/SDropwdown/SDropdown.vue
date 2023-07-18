@@ -13,7 +13,7 @@
         :loading="loading"
         :disabled="disabled"
         :required="required"
-        :show-mark="showMark"
+        :mark-type="markType"
         :optional-text="optionalText"
         :error="currentError"
         :readonly="!search"
@@ -152,6 +152,9 @@ const isSelected = (value: MenuOption) => {
 };
 
 const onClickOption = (option: MenuOption) => {
+  if (option.disabled) {
+    return;
+  }
   emit('select', { option });
   const value = option[props.valueKey];
   if (typeof value !== 'number' && typeof value !== 'string') {
