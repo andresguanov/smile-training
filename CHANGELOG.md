@@ -1,5 +1,9 @@
 ## [0.0.36-beta.4] (2023-07-13)
 
+### :warning: BREAKING CHANGES:
+
+- **Todos los inputs**: La prop showMark pasa a llamarse markType y acepta dos valores 'required' | 'optional';
+
 ### :bug: Bug fixes
 
 - **SDropdown**:
