@@ -1,22 +1,21 @@
 <template>
   <div class="s-input" :class="{ disabled, readonly, error: hasError }">
     <div v-if="label" class="s-input__header">
-      <p class="s-input__label" :class="{ required }">
-        {{ label }}<span v-if="showMark" class="s-input__mark">{{ textMark }}</span>
+      <p class="s-input__label" :class="{ required: markType === 'required' }">
+        {{ label }}<span v-if="markType" class="s-input__mark">{{ textMark }}</span>
       </p>
       <small class="s-input__helper">{{ hint }}</small>
     </div>
-    <div class="s-input__container" :class="[size, { filled: Boolean(value) }]">
+    <div class="s-input__container" :class="size">
       <s-input-leading
         v-if="Boolean(leading)"
-        class="s-input__leading"
+        v-bind="leading"
         :size="size"
-        :label="leading?.label"
-        :icon="leading?.icon"
-        :inline="leading?.inline"
-        :actionable="leading?.actionable"
+        class="s-input__leading"
         @click="e => emit('clickLeading', e)"
-      />
+      >
+        <slot name="leading" />
+      </s-input-leading>
       <div v-if="iconLeft" class="s-input__icon leading">
         <sm-icon :icon="iconLeft" :width="iconSize" :height="iconSize" />
       </div>
@@ -52,15 +51,14 @@
       </div>
       <s-input-leading
         v-if="Boolean(trailing)"
-        class="s-input__trailing"
+        v-bind="trailing"
         :size="size"
-        :label="trailing?.label"
-        :icon="trailing?.icon"
-        :inline="trailing?.inline"
-        :actionable="trailing?.actionable"
+        class="s-input__trailing"
         trailing
         @click="e => emit('clickTrailing', e)"
-      />
+      >
+        <slot name="trailing" />
+      </s-input-leading>
     </div>
     <div class="s-input__footer">
       <p class="s-input__helper">{{ currentError || supportiveText }}</p>
@@ -70,14 +68,14 @@
 
 <script setup lang="ts">
 import { useSmileValidate } from '~/composables';
-import type { IconType, smInputAddon } from '../../interfaces';
+import type { IconType, SInputAddon } from '../../interfaces';
 
 const props = withDefaults(
   defineProps<{
     modelValue: string;
     size?: 'small' | 'medium' | 'large';
-    leading?: smInputAddon;
-    trailing?: smInputAddon;
+    leading?: SInputAddon;
+    trailing?: SInputAddon;
     iconLeft?: IconType;
     iconRight?: IconType;
     hint?: string;
@@ -118,9 +116,9 @@ const props = withDefaults(
      * Al pasar esta prop indicas que deseas mostrar al lado del label la marca
      * que indica si el input es requerido u opcional.
      */
-    showMark?: boolean;
+    markType?: 'required' | 'optional';
     /**
-     * Texto que se mostrará cuando `showMark` esta activo y el input no es `required`
+     * Texto que se mostrará cuando `markType` es `optional`
      * @default Opcional
      */
     optionalText?: string;
@@ -146,7 +144,7 @@ const { validate, validateOnFocusout, hasError, currentError } = useSmileValidat
   toRef(props, 'error'),
   props.id
 );
-const textMark = computed(() => (props.required ? '*' : `(${props.optionalText})`));
+const textMark = computed(() => (props.markType === 'required' ? '*' : `(${props.optionalText})`));
 const iconSize = computed(() => (props.size === 'small' ? '16px' : '20px'));
 
 const onBlur = (event: FocusEvent) => {

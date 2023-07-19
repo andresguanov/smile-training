@@ -1,4 +1,4 @@
-import type { smInputAddon } from '../interfaces';
+import type { SInputAddon } from '../interfaces';
 
 import type { MenuOption } from './generic';
 
@@ -53,16 +53,15 @@ export type SDropdownProps = {
    * Se ignora cuando prop "multiple" esta activa.
    */
   canDeselect?: boolean;
-  leading?: smInputAddon;
+  leading?: SInputAddon;
   maxHeight?: string;
   /**
    * Al pasar esta prop indicas que deseas mostrar al lado del label la marca
    * que indica si el input es requerido u opcional.
    */
-  showMark?: boolean;
-
+  markType?: 'required' | 'optional';
   /**
-   * Texto que se mostrará cuando `showMark` esta activo y el input no es `required`
+   * Texto que se mostrará cuando `markType` es `optional`
    * @default Opcional
    */
   optionalText?: string;

@@ -11,7 +11,7 @@
   @apply py-[9px];
   @apply px-[8px];
   @apply bg-white;
-  @apply text-[#474747];
+  @apply text-sm-grey7;
 
   &-small {
     @apply px-[8px];
@@ -28,5 +28,8 @@
   &.sm-input-error {
     @apply border-fire-opal;
     @apply focus:border-fire-opal;
+  }
+  input {
+    @apply outline-none;
   }
 }
