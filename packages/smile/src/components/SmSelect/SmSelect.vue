@@ -225,6 +225,23 @@ const compare = (a: string, b: string) => {
   return 0;
 };
 
+const isEqual = (a: unknown, b: unknown) => {
+  /**
+   * Si los valores son objetos, se comparan como JSON
+   * para evitar problemas con referencias
+   *
+   * Consideraciones:
+   * - Mantener el mismo orden de propiedades en los objetos a comparar
+   * - Los valores de las propiedades deben ser primitivos puesto que JSON no puede
+   *   representar todos los tipos de datos (undefined, function, symbol, etc.)
+   * - Por esa razón, también los objetos a comparar deben ser de tipo Object o Array
+   */
+  if (a !== null && b !== null && typeof a === 'object' && typeof b === 'object') {
+    return JSON.stringify(a) === JSON.stringify(b);
+  }
+  return a === b;
+};
+
 const elementIsSelected = (index: number) => {
   return selectedIndex.value.has(index);
 };
@@ -242,7 +259,7 @@ const emitNewValue = (value?: Set<Item | string | number> | Item | string | numb
 
 const findItem = () => {
   let index: number;
-  index = localOptions.value.findIndex(option => (option as Item).value === props.modelValue);
+  index = localOptions.value.findIndex(option => isEqual((option as Item).value, props.modelValue));
   if (index != -1) {
     selectedItem.value = (localOptions.value[index] as Item).value;
     addToIndexes(index);
@@ -255,7 +272,7 @@ const findItem = () => {
 const findItems = () => {
   for (let item of props.modelValue) {
     let index: number;
-    index = localOptions.value.findIndex(option => (option as Item).value === item);
+    index = localOptions.value.findIndex(option => isEqual((option as Item).value, item));
     if (index != -1 && !isItemDisabled(index)) {
       addSelectedItem(index);
     }
