@@ -1,9 +1,9 @@
 <template>
   <div class="s-input" :class="{ disabled, readonly, error: hasError }">
     <div v-if="label" class="s-input__header">
-      <p class="s-input__label" :class="{ required: markType === 'required' }">
+      <label :for="id" class="s-input__label" :class="{ required: markType === 'required' }">
         {{ label }}<span v-if="markType" class="s-input__mark">{{ textMark }}</span>
-      </p>
+      </label>
       <small class="s-input__helper">{{ hint }}</small>
     </div>
     <div class="s-input__container" :class="size">
