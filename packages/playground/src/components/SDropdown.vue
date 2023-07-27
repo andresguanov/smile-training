@@ -1,7 +1,7 @@
 <template>
   <SForm validate-on="type" ref="form">
     <SInput v-model="text" :rules="rules" />
-    <SDropdown v-model="selectedOption" :options="options" :rules="rules">
+    <SDropdown v-model="selectedOption" :options="options" :rules="rules" object>
       <template #append-item>
         <SButton class="w-full"> Botón en slot append </SButton>
       </template>
@@ -40,7 +40,7 @@ const form = ref<
 const options = ref<MenuOption[]>([
   {
     text: 'Texto 1',
-    code: '1',
+    code: 1,
     disabled: true,
     level: 1,
     description: 'Valor aleatorio',
@@ -48,8 +48,8 @@ const options = ref<MenuOption[]>([
     descriptionStyle: 'color: red',
     titleStyle: 'color: red',
   },
-  { text: 'Texto 2', code: '2', level: 2 },
-  { text: 'Texto 3', code: '3', level: 3 },
+  { text: 'Texto 2', code: 2, level: 2 },
+  { text: 'Texto 3', code: 3, level: 3 },
 ]);
 
 const rules = [(v: string) => !!v || 'Requerido'];

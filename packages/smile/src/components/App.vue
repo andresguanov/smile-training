@@ -109,9 +109,9 @@
                 { value: { card: '2' }, label: 'card-2' },
               ]"
               :rules="[
-                (val) => {
-                  return (val as radioTest).card === '1' || 'Debe escoger el valord card 1'
-                }
+                val => {
+                  return (val as radioTest).card === '1' || 'Debe escoger el valord card 1';
+                },
               ]"
             />
             <s-checkbox

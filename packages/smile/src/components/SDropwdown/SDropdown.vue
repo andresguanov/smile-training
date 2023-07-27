@@ -127,7 +127,9 @@ const formattedValue = computed<string>(() => {
       }, [])
       .join(', ');
   }
-  if (props.object) return getText((data.value as MenuOption)[props.valueKey] as string | number);
+  if (props.object) {
+    return getText((data.value as MenuOption)[props.valueKey] as string | number);
+  }
   return getText(data.value as string | number);
 });
 
@@ -170,7 +172,12 @@ const isSelected = (value: MenuOption) => {
   if (props.multiple) {
     return (data.value as Array<string | number>)?.includes(realValue);
   }
-  if (props.object) return (data.value as MenuOption)[props.valueKey] === realValue;
+  if (props.object) {
+    if (!data?.value || !(props.valueKey in (data.value as MenuOption))) {
+      return false;
+    }
+    return (data.value as MenuOption)[props.valueKey] === realValue;
+  }
   return data.value === realValue;
 };
 
@@ -179,8 +186,8 @@ const onClickOption = (option: MenuOption) => {
     return;
   }
   emit('select', { option });
-  const value = option[props.valueKey];
-  if (typeof value !== 'number' && typeof value !== 'string') {
+  const value = option[props.valueKey] as string | number;
+  if (!props.object && typeof value !== 'number' && typeof value !== 'string') {
     throw new Error(
       `This component does not yet support the provided parameter type ${typeof value}. Please check the documentation for the expected parameter type.`
     );
