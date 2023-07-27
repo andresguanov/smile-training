@@ -2,10 +2,12 @@
   <div class="app_container">
     <sm-alert-stack />
     <s-wizard v-model="step" :steps="steps" has-back-button :is-on-component="true" />
-    <s-modal v-model="modal" header-text="Modal Title">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, adipisci velit ab aliquam
-      veniam odit vitae non ipsam dolorem quaerat, totam quia ut vel error ducimus eveniet
-      accusantium enim quam!
+    <s-modal
+      v-model="modal"
+      header-text="Carga un archivo o documento"
+      success-text="Cargar Archivo"
+      cancel-text="Cancelar"
+    >
     </s-modal>
     <sm-card class="mt-1">
       <s-form ref="smFormEl" validate-on="focusout">
@@ -34,10 +36,22 @@
           <s-input
             v-model="text"
             supportive-text="dasdasd"
+            native-type="password"
             icon-right="bolt"
+            label="password"
+            mark-type="optional"
             :rules="sRules"
-            :leading="{ label: 'Leading', icon: 'accounting', actionable: true }"
-          />
+            :leading="{
+              label: 'Leading',
+              actionable: true,
+              leadingIcon: 'accounting',
+            }"
+          >
+            <template #leading>
+              &COPY;
+              <p>dasdasd</p>
+            </template>
+          </s-input>
           <s-input
             v-if="number === 3"
             v-model="text"
@@ -45,7 +59,11 @@
             label="label"
             hint="hint"
             :rules="sRules"
-            :trailing="{ icon: 'close', actionable: true, inline: true }"
+            :leading="{
+              label: 'Leading',
+              leadingIcon: 'accounting',
+              actionable: true,
+            }"
             @blur="logEvent"
             @focus="logEvent"
             @click-trailing="number = 3"
@@ -55,7 +73,7 @@
             label="Lenguaje favorito"
             can-deselect
             object
-            show-mark
+            mark-type="required"
             required
             placeholder="Escoge tu lenguaje favorito"
             :options="options"

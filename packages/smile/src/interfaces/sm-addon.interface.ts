@@ -1,8 +1,9 @@
 import type { IconType } from './sm-icon.interface';
 
-export interface smInputAddon {
+export interface InputAddon {
   inline?: boolean;
   actionable?: boolean;
   label?: string;
-  icon?: IconType;
+  leadingIcon?: IconType;
+  trailingIcon?: IconType;
 }

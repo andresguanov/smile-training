@@ -4,6 +4,8 @@
 
 .sm-file-input {
   @apply bg-no-repeat bg-white border border-r-0 border-slate-300 max-w-[90%] px-[0.5rem] py-[7px] rounded-l-[0.5rem] text-slate-700 transition-colors w-[90%];
+  @apply outline-none;
+
   &::placeholder {
     @apply text-slate-400;
   }

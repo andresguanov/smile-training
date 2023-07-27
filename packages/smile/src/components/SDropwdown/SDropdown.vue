@@ -13,7 +13,7 @@
         :loading="loading"
         :disabled="disabled"
         :required="required"
-        :show-mark="showMark"
+        :mark-type="markType"
         :optional-text="optionalText"
         :error="currentError"
         :readonly="!search"

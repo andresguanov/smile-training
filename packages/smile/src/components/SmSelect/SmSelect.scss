@@ -5,6 +5,7 @@
   input {
     background-image: url("data:image/svg+xml;utf8,<svg fill='gray' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
     background-position: right;
+    @apply outline-none;
     @apply px-1 bg-no-repeat rounded-md border h-10 focus:border-sm-primary-500 border-gray-300 transition-colors caret-transparent w-full;
     &:not(:disabled) {
       @apply hover:border-sm-primary-500 cursor-pointer;
