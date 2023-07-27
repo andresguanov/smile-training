@@ -1,6 +1,6 @@
 import type { IconType } from './sm-icon.interface';
 
-export interface SInputAddon {
+export interface InputAddon {
   inline?: boolean;
   actionable?: boolean;
   label?: string;

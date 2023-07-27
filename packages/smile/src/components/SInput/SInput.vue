@@ -68,14 +68,14 @@
 
 <script setup lang="ts">
 import { useSmileValidate } from '~/composables';
-import type { IconType, SInputAddon } from '../../interfaces';
+import type { IconType, InputAddon } from '../../interfaces';
 
 const props = withDefaults(
   defineProps<{
     modelValue: string;
     size?: 'small' | 'medium' | 'large';
-    leading?: SInputAddon;
-    trailing?: SInputAddon;
+    leading?: InputAddon;
+    trailing?: InputAddon;
     iconLeft?: IconType;
     iconRight?: IconType;
     hint?: string;
