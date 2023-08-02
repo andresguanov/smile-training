@@ -2,7 +2,7 @@
   <div class="s-menu-item" :class="{ destructive, disabled }">
     <slot name="leading" />
     <img v-if="avatar" class="s-menu-item__image" :src="avatar" :alt="title" />
-    <sm-icon v-if="icon" :icon="icon" width="20px" height="20px" />
+    <sm-icon v-if="icon" :icon="icon" width="20px" height="20px" fluid />
     <div class="s-menu-item__text" :class="[textStyle]">
       <p :class="{ 's-menu-item__text__title': description }" :style="titleStyle">{{ title }}</p>
       <p v-if="description" class="s-menu-item__text__description" :style="descriptionStyle">

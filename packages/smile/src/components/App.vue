@@ -24,12 +24,7 @@
             search
             id="dropdown-test"
             :rules="selectRules"
-            :options="[
-              { text: 'Javascript', code: 'js', icon: 'flag-3' },
-              { text: 'PHP', code: 'php', icon: 'flag-3' },
-              { text: 'Python', code: 'py', icon: 'flag-3' },
-              { text: 'C++', code: 'cc', icon: 'flag-3' },
-            ]"
+            :options="options"
             :leading="{
               label: 'Leading',
               leadingIcon: 'accounting',
@@ -193,7 +188,17 @@ const number = ref(3);
 const text = ref('');
 const text2 = ref([]);
 const text3 = ref('');
-const options = ref<any[]>([]);
+const options = ref<any[]>([
+  {
+    text: 'Javascript Javascript Javascript Javascript Javascript Javascript',
+    description: 'Javascript Javascript Javascript Javascript Javascript Javascript',
+    code: 'js',
+    icon: 'flag-3',
+  },
+  { text: 'PHP', code: 'php', icon: 'flag-3' },
+  { text: 'Python', code: 'py', icon: 'flag-3' },
+  { text: 'C++', code: 'cc', icon: 'flag-3' },
+]);
 
 const cols: smTableColumn[] = reactive([
   {
@@ -286,12 +291,7 @@ const isLoadingOptions = ref(false);
 const openLanguajes = () => {
   isLoadingOptions.value = true;
   setTimeout(() => {
-    options.value = [
-      { text: 'Javascript', code: 'js', icon: 'flag-3' },
-      { text: 'PHP', code: 'php', icon: 'flag-3' },
-      { text: 'Python', code: 'py', icon: 'flag-3' },
-      { text: 'C++', code: 'cc', icon: 'flag-3' },
-    ];
+    options.value = [...options.value];
     isLoadingOptions.value = false;
   }, 3000);
 };
