@@ -1,4 +1,4 @@
-import type { SInputAddon } from '../interfaces';
+import type { InputAddon } from '../interfaces';
 
 import type { MenuOption } from './generic';
 
@@ -53,7 +53,7 @@ export type SDropdownProps = {
    * Se ignora cuando prop "multiple" esta activa.
    */
   canDeselect?: boolean;
-  leading?: SInputAddon;
+  leading?: InputAddon;
   maxHeight?: string;
   /**
    * Al pasar esta prop indicas que deseas mostrar al lado del label la marca

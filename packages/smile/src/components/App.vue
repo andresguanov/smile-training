@@ -22,6 +22,7 @@
             placeholder="dasdasd"
             multiple
             search
+            id="dropdown-test"
             :rules="selectRules"
             :options="[
               { text: 'Javascript', code: 'js', icon: 'flag-3' },
@@ -29,10 +30,19 @@
               { text: 'Python', code: 'py', icon: 'flag-3' },
               { text: 'C++', code: 'cc', icon: 'flag-3' },
             ]"
+            :leading="{
+              label: 'Leading',
+              leadingIcon: 'accounting',
+            }"
             @select="logEvent"
             @open="logEvent"
             @search="logEvent"
-          />
+          >
+            <template #leading>
+              <p>🏴</p>
+              yo
+            </template>
+          </s-dropdown>
           <s-input
             v-model="text"
             supportive-text="dasdasd"
@@ -41,14 +51,8 @@
             label="password"
             mark-type="optional"
             :rules="sRules"
-            :leading="{
-              label: 'Leading',
-              actionable: true,
-              leadingIcon: 'accounting',
-            }"
           >
             <template #leading>
-              &COPY;
               <p>dasdasd</p>
             </template>
           </s-input>
@@ -88,7 +92,16 @@
             </template>
           </s-dropdown>
           {{ text3 }}
-          <s-number-input v-model="number" label="number" show-mark icon-left="accounting" />
+          <s-number-input
+            v-model="number"
+            label="number"
+            show-mark
+            icon-left="accounting"
+            :leading="{
+              label: '$',
+              inline: true,
+            }"
+          />
           <sm-button type="primary" @click="validate()">Submit</sm-button>
           <sm-button type="primary" @click="reset">Reset</sm-button>
         </template>
@@ -178,7 +191,7 @@ const check = ref([]);
 const radio = ref('');
 const number = ref(3);
 const text = ref('');
-const text2 = ref('');
+const text2 = ref([]);
 const text3 = ref('');
 const options = ref<any[]>([]);
 
@@ -310,13 +323,5 @@ onMounted(() => {
   @apply flex flex-col;
   @apply m-5;
   @apply max-w-5xl;
-}
-.my-table:deep() {
-  .b-column {
-    @apply whitespace-nowrap text-ellipsis overflow-x-hidden;
-  }
-  [data-name='b'] {
-    @apply whitespace-nowrap text-ellipsis overflow-x-hidden;
-  }
 }
 </style>
