@@ -1,5 +1,23 @@
 <template>
   <div class="app_container">
+    <SPopOver
+      v-model="showPopOver"
+      title="Título del popover"
+      description="Los popovers son desplegados al hacer click o un tap en lugar de hacer hover, como un tooltip"
+    >
+      <span>Paragraph with PopOver</span>
+      <template #actions>
+        <div style="display: flex; justify-content: flex-end">
+          <s-button type="reversed" size="small" emphasis="text" @click="showPopOver = false">
+            Cerrar
+          </s-button>
+          <s-button type="reversed" size="small">Label</s-button>
+        </div>
+      </template>
+    </SPopOver>
+
+    <br />
+
     <sm-alert-stack />
     <s-wizard v-model="step" :steps="steps" has-back-button :is-on-component="true" />
     <s-modal
@@ -13,7 +31,10 @@
       <s-form ref="smFormEl" validate-on="focusout">
         <template #default="{ validate, reset, isValid }">
           {{ isValid }}
-          <s-chip label="test" selected avatar="Carlos" />
+          <div id="popover-target-1" @click="showPopOver = true">
+            <s-chip label="test" selected avatar="Carlos" />
+          </div>
+
           <s-chip label="test" disabled selected />
           {{ text2 }}
           <s-dropdown
@@ -102,6 +123,7 @@
         </template>
       </s-form>
     </sm-card>
+
     <sm-card>
       <sm-form ref="smFormEl" validation-mode="on-type" container-is-form @submit="onSubmit">
         <template #default="{ isValid, reset }">
@@ -188,6 +210,7 @@ const number = ref(3);
 const text = ref('');
 const text2 = ref([]);
 const text3 = ref('');
+const showPopOver = ref(true);
 const options = ref<any[]>([
   {
     text: 'Javascript Javascript Javascript Javascript Javascript Javascript',

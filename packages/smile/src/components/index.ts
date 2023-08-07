@@ -60,3 +60,4 @@ export { default as SDropdown } from './SDropwdown/SDropdown.vue';
 export { default as SOverflowMenu } from './SOverflowMenu/SOverflowMenu.vue';
 export { default as SChip } from './SChip/SChip.vue';
 export { default as SForm } from './SForm/SForm.vue';
+export { default as SPopOver } from './SPopover/SPopOver.vue';

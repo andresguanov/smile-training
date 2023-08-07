@@ -1,0 +1,35 @@
+/* Tomar en consideración: https://github.com/valgeirb/vue3-popper */
+
+.tippy-box[data-theme~='smile-next'] {
+  @apply bg-slate-800;
+  @apply rounded-xl;
+
+  > .tippy-content {
+    @apply p-4;
+    @apply text-white text-xs font-semibold;
+  }
+  > .tippy-arrow::before {
+    transform: scale(0.6);
+  }
+  &[data-placement^='top'] > .tippy-arrow::before {
+    @apply border-t-slate-800;
+  }
+  &[data-placement^='bottom'] > .tippy-arrow::before {
+    @apply border-b-slate-800;
+  }
+  &[data-placement^='left'] > .tippy-arrow::before {
+    @apply border-l-slate-800;
+  }
+  &[data-placement^='right'] > .tippy-arrow::before {
+    @apply border-r-slate-800;
+  }
+}
+
+.s-popover {
+  &-title {
+    @apply text-base font-medium text-white mb-2 mt-0 w-full flex justify-between items-center;
+  }
+  &-description {
+    @apply text-xs leading-4 font-normal text-white mb-4 mt-0 opacity-70;
+  }
+}
