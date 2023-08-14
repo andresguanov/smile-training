@@ -8,6 +8,9 @@ const rootDir = resolve(__dirname);
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  server: {
+    port: 3000,
+  },
   build: {
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled

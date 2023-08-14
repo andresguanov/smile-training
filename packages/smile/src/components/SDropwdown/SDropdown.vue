@@ -18,7 +18,11 @@
         :error="currentError"
         :readonly="!search"
         @click.stop="toggleOverflow"
-      />
+      >
+        <template #leading>
+          <slot name="leading" />
+        </template>
+      </s-input>
     </div>
     <s-overflow-menu
       v-if="open"

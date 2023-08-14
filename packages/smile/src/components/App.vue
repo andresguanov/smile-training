@@ -1,5 +1,23 @@
 <template>
   <div class="app_container">
+    <SPopOver
+      v-model="showPopOver"
+      title="Título del popover"
+      description="Los popovers son desplegados al hacer click o un tap en lugar de hacer hover, como un tooltip"
+    >
+      <span>Paragraph with PopOver</span>
+      <template #actions>
+        <div style="display: flex; justify-content: flex-end">
+          <s-button type="reversed" size="small" emphasis="text" @click="showPopOver = false">
+            Cerrar
+          </s-button>
+          <s-button type="reversed" size="small">Label</s-button>
+        </div>
+      </template>
+    </SPopOver>
+
+    <br />
+
     <sm-alert-stack />
     <s-wizard v-model="step" :steps="steps" has-back-button :is-on-component="true" />
     <s-modal
@@ -13,7 +31,10 @@
       <s-form ref="smFormEl" validate-on="focusout">
         <template #default="{ validate, reset, isValid }">
           {{ isValid }}
-          <s-chip label="test" selected avatar="Carlos" />
+          <div id="popover-target-1" @click="showPopOver = true">
+            <s-chip label="test" selected avatar="Carlos" />
+          </div>
+
           <s-chip label="test" disabled selected />
           {{ text2 }}
           <s-dropdown
@@ -22,17 +43,22 @@
             placeholder="dasdasd"
             multiple
             search
+            id="dropdown-test"
             :rules="selectRules"
-            :options="[
-              { text: 'Javascript', code: 'js', icon: 'flag-3' },
-              { text: 'PHP', code: 'php', icon: 'flag-3' },
-              { text: 'Python', code: 'py', icon: 'flag-3' },
-              { text: 'C++', code: 'cc', icon: 'flag-3' },
-            ]"
+            :options="options"
+            :leading="{
+              label: 'Leading',
+              leadingIcon: 'accounting',
+            }"
             @select="logEvent"
             @open="logEvent"
             @search="logEvent"
-          />
+          >
+            <template #leading>
+              <p>🏴</p>
+              yo
+            </template>
+          </s-dropdown>
           <s-input
             v-model="text"
             supportive-text="dasdasd"
@@ -41,14 +67,8 @@
             label="password"
             mark-type="optional"
             :rules="sRules"
-            :leading="{
-              label: 'Leading',
-              actionable: true,
-              leadingIcon: 'accounting',
-            }"
           >
             <template #leading>
-              &COPY;
               <p>dasdasd</p>
             </template>
           </s-input>
@@ -88,12 +108,22 @@
             </template>
           </s-dropdown>
           {{ text3 }}
-          <s-number-input v-model="number" label="number" show-mark icon-left="accounting" />
+          <s-number-input
+            v-model="number"
+            label="number"
+            show-mark
+            icon-left="accounting"
+            :leading="{
+              label: '$',
+              inline: true,
+            }"
+          />
           <sm-button type="primary" @click="validate()">Submit</sm-button>
           <sm-button type="primary" @click="reset">Reset</sm-button>
         </template>
       </s-form>
     </sm-card>
+
     <sm-card>
       <sm-form ref="smFormEl" validation-mode="on-type" container-is-form @submit="onSubmit">
         <template #default="{ isValid, reset }">
@@ -178,9 +208,20 @@ const check = ref([]);
 const radio = ref('');
 const number = ref(3);
 const text = ref('');
-const text2 = ref('');
+const text2 = ref([]);
 const text3 = ref('');
-const options = ref<any[]>([]);
+const showPopOver = ref(true);
+const options = ref<any[]>([
+  {
+    text: 'Javascript Javascript Javascript Javascript Javascript Javascript',
+    description: 'Javascript Javascript Javascript Javascript Javascript Javascript',
+    code: 'js',
+    icon: 'flag-3',
+  },
+  { text: 'PHP', code: 'php', icon: 'flag-3' },
+  { text: 'Python', code: 'py', icon: 'flag-3' },
+  { text: 'C++', code: 'cc', icon: 'flag-3' },
+]);
 
 const cols: smTableColumn[] = reactive([
   {
@@ -273,12 +314,7 @@ const isLoadingOptions = ref(false);
 const openLanguajes = () => {
   isLoadingOptions.value = true;
   setTimeout(() => {
-    options.value = [
-      { text: 'Javascript', code: 'js', icon: 'flag-3' },
-      { text: 'PHP', code: 'php', icon: 'flag-3' },
-      { text: 'Python', code: 'py', icon: 'flag-3' },
-      { text: 'C++', code: 'cc', icon: 'flag-3' },
-    ];
+    options.value = [...options.value];
     isLoadingOptions.value = false;
   }, 3000);
 };
@@ -310,13 +346,5 @@ onMounted(() => {
   @apply flex flex-col;
   @apply m-5;
   @apply max-w-5xl;
-}
-.my-table:deep() {
-  .b-column {
-    @apply whitespace-nowrap text-ellipsis overflow-x-hidden;
-  }
-  [data-name='b'] {
-    @apply whitespace-nowrap text-ellipsis overflow-x-hidden;
-  }
 }
 </style>

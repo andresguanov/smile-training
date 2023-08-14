@@ -1,12 +1,20 @@
 <template>
   <div class="s-number" :class="{ disabled, readonly, error: hasError }">
-    <p v-if="label" class="s-number__label" :class="{ required: markType === 'required' }">
-      {{ label }}<span v-if="markType" class="s-number__mark">{{ textMark }}</span>
-    </p>
+    <div v-if="label" class="s-number__header">
+      <label :for="id" class="s-number__label" :class="{ required: markType === 'required' }">
+        {{ label }}<span v-if="markType" class="s-number__mark">{{ textMark }}</span>
+      </label>
+    </div>
     <div class="s-number__container" :class="size">
-      <div v-if="iconLeft" class="s-number__icon leading">
-        <sm-icon :icon="iconLeft" :width="iconSize" :height="iconSize" />
-      </div>
+      <s-input-leading
+        v-if="Boolean(leading)"
+        v-bind="leading"
+        :size="size"
+        class="s-number__leading"
+        @click="e => emit('clickLeading', e)"
+      >
+        <slot name="leading" />
+      </s-input-leading>
       <input
         v-model="value"
         type="number"
@@ -31,7 +39,7 @@
         <sm-icon icon="alert-circle" :width="iconSize" :height="iconSize" />
       </div>
       <s-input-leading
-        icon="minus"
+        trailing-icon="minus"
         class="s-number__trailing"
         :size="size"
         :disabled="disabledMinus"
@@ -42,8 +50,8 @@
       />
       <div class="s-number__divider" />
       <s-input-leading
-        icon="plus"
         class="s-number__trailing"
+        leading-icon="plus"
         :size="size"
         :disabled="disabledPlus"
         inline
@@ -60,13 +68,13 @@
 
 <script setup lang="ts">
 import { useSmileValidate } from '~/composables';
-import type { IconType } from '../../interfaces';
+import type { InputAddon } from '../../interfaces';
 
 const props = withDefaults(
   defineProps<{
     modelValue: string | number;
     size?: 'small' | 'medium' | 'large';
-    iconLeft?: IconType;
+    leading?: InputAddon;
     placeholder?: string;
     disabled?: boolean;
     readonly?: boolean;
@@ -115,7 +123,7 @@ const emit = defineEmits<{
   (event: 'update:modelValue', value: string | number): void;
   (event: 'blur' | 'focus', value: FocusEvent): void;
   (event: 'keypress', value: KeyboardEvent): void;
-  (event: 'clickPlus' | 'clickMinus', value: PointerEvent): void;
+  (event: 'clickPlus' | 'clickMinus' | 'clickLeading', value: PointerEvent): void;
 }>();
 
 const value = useVModel(props, 'modelValue', emit);
