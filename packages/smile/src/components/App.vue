@@ -149,7 +149,14 @@
       ref="testSmTable"
       :filter-config="{
         b: {
-          type: 'datepicker',
+          type: 'select',
+          options: [
+            { text: '1', value: 1 },
+            { text: '2', value: 2 },
+          ],
+          attrs: {
+            multiple: true,
+          },
         },
       }"
       :rows="items"

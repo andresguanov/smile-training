@@ -41,7 +41,7 @@
     </div>
     <sm-hint v-if="hasError && searchField && errorListContent" :to="`#${searchField.id}`">
       <template #content>
-        <sm-error-list :error-messages="(errorListContent as Array<string>)" />
+        <sm-error-list :error-messages="errorListContent" />
       </template>
     </sm-hint>
   </div>
@@ -188,6 +188,8 @@ const addToIndexes = (index: number) => {
 };
 
 const addToSelectedItem = (index: number) => {
+  console.log({ index });
+
   const itemSet = selectedItem.value as Set<number | string | Item>;
   if (!itemSet.has((localOptions.value[index] as Item).value)) {
     itemSet.add((localOptions.value[index] as Item).value);
@@ -246,15 +248,16 @@ const elementIsSelected = (index: number) => {
   return selectedIndex.value.has(index);
 };
 
-const emitNewValue = (value?: Set<Item | string | number> | Item | string | number) => {
+const emitNewValue = (value?: any[] | Item | string | number) => {
   let newVal;
   if (!props.multiple) {
     newVal = value;
   } else {
-    newVal = value ? Array.from(value as Set<Item | number | string>) : [];
+    newVal = value || [];
   }
+  console.log({ newVal });
   emit('update:modelValue', newVal);
-  formatInputText();
+  // formatInputText();
 };
 
 const findItem = () => {
@@ -263,9 +266,6 @@ const findItem = () => {
   if (index != -1) {
     selectedItem.value = (localOptions.value[index] as Item).value;
     addToIndexes(index);
-    emitNewValue(selectedItem.value);
-  } else {
-    emitNewValue();
   }
 };
 
@@ -276,11 +276,6 @@ const findItems = () => {
     if (index != -1 && !isItemDisabled(index)) {
       addSelectedItem(index);
     }
-  }
-  if (selectedIndex.value.size == 0) {
-    emitNewValue();
-  } else {
-    emitNewValue(selectedItem.value);
   }
 };
 
@@ -336,20 +331,30 @@ const select = (index: number) => {
   if (isItemDisabled(index)) {
     return;
   }
+  let newVal: any;
   if (!props.multiple) {
     addToIndexes(index);
     show.value = false;
     if (optionsType.value == 'object') {
-      selectedItem.value = (localOptions.value as Item[])[index].value;
+      newVal = (localOptions.value as Item[])[index].value;
       //inputText.value = (localOptions.value as Item[])[index].text;
     } else {
-      selectedItem.value = localOptions.value[index];
+      newVal = localOptions.value[index];
       //inputText.value = localOptions.value[index].toString();
     }
   } else {
     addSelectedItem(index);
+    // const itemValue = (localOptions.value[index] as Item).value;
+    // newVal = Array.from(selectedItem.value as Set<number | string | Item>);
+    // console.log(itemValue);
+    // if (!(selectedItem.value as Set<number | string | Item>).has(itemValue)) {
+    //   // itemSet.add(itemValue);
+    //   newVal.push(itemValue);
+    // } else {
+    //   newVal = newVal.filter((v: any) => v !== itemValue);
+    // }
   }
-  emitNewValue(selectedItem.value);
+  emitNewValue(newVal);
 };
 
 const selecting = () => {
@@ -384,25 +389,18 @@ watch(
         emit('filter', inputText.value);
       } else {
         selectedIndex.value.clear();
-        if (props.multiple) {
-          (selectedItem.value as Set<Item | number | string>).clear();
-        } else {
-          selectedItem.value = undefined;
-        }
+        // if (props.multiple) {
+        //   (selectedItem.value as Set<Item | number | string>).clear();
+        // } else {
+        //   selectedItem.value = undefined;
+        // }
         emitNewValue();
       }
     }
   }
 );
 
-watch(
-  () => props.modelValue,
-  v => {
-    if (v !== props.modelValue) {
-      initSelect();
-    }
-  }
-);
+watch(() => props.modelValue, initSelect);
 
 initSelect();
 // Expose
