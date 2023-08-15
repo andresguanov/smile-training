@@ -148,6 +148,9 @@
     <sm-table
       ref="testSmTable"
       :filter-config="{
+        a: {
+          type: 'input',
+        },
         b: {
           type: 'select',
           options: [

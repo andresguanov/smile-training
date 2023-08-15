@@ -188,15 +188,12 @@ const addToIndexes = (index: number) => {
 };
 
 const addToSelectedItem = (index: number) => {
-  console.log({ index });
-
   const itemSet = selectedItem.value as Set<number | string | Item>;
   if (!itemSet.has((localOptions.value[index] as Item).value)) {
     itemSet.add((localOptions.value[index] as Item).value);
   } else {
     itemSet.delete((localOptions.value[index] as Item).value);
   }
-  formatInputText();
 };
 
 const addSelectedItem = (index: number) => {
@@ -248,28 +245,38 @@ const elementIsSelected = (index: number) => {
   return selectedIndex.value.has(index);
 };
 
-const emitNewValue = (value?: any[] | Item | string | number) => {
+const emitNewValue = (value?: Set<Item | string | number> | Item | string | number) => {
   let newVal;
   if (!props.multiple) {
     newVal = value;
   } else {
-    newVal = value || [];
+    newVal = value ? Array.from(value as Set<Item | number | string>) : [];
   }
-  console.log({ newVal });
   emit('update:modelValue', newVal);
-  // formatInputText();
 };
 
 const findItem = () => {
-  let index: number;
-  index = localOptions.value.findIndex(option => isEqual((option as Item).value, props.modelValue));
+  const index = localOptions.value.findIndex(option =>
+    isEqual((option as Item).value, props.modelValue)
+  );
   if (index != -1) {
     selectedItem.value = (localOptions.value[index] as Item).value;
     addToIndexes(index);
+  } else {
+    resetInternalValues();
   }
+};
+const resetInternalValues = () => {
+  if (!props.multiple) {
+    selectedItem.value = null;
+  } else {
+    selectedItem.value.clear();
+  }
+  selectedIndex.value.clear();
 };
 
 const findItems = () => {
+  resetInternalValues();
   for (let item of props.modelValue) {
     let index: number;
     index = localOptions.value.findIndex(option => isEqual((option as Item).value, item));
@@ -317,6 +324,7 @@ const initSelect = () => {
       selectedItem.value ??= new Set();
       findItems();
     }
+    formatInputText();
   }
 };
 
@@ -331,30 +339,19 @@ const select = (index: number) => {
   if (isItemDisabled(index)) {
     return;
   }
-  let newVal: any;
+  const newVal = (localOptions.value[index] as Item).value;
   if (!props.multiple) {
-    addToIndexes(index);
     show.value = false;
-    if (optionsType.value == 'object') {
-      newVal = (localOptions.value as Item[])[index].value;
-      //inputText.value = (localOptions.value as Item[])[index].text;
-    } else {
-      newVal = localOptions.value[index];
-      //inputText.value = localOptions.value[index].toString();
-    }
+    emitNewValue(newVal);
   } else {
-    addSelectedItem(index);
-    // const itemValue = (localOptions.value[index] as Item).value;
-    // newVal = Array.from(selectedItem.value as Set<number | string | Item>);
-    // console.log(itemValue);
-    // if (!(selectedItem.value as Set<number | string | Item>).has(itemValue)) {
-    //   // itemSet.add(itemValue);
-    //   newVal.push(itemValue);
-    // } else {
-    //   newVal = newVal.filter((v: any) => v !== itemValue);
-    // }
+    const newSetVal = new Set(selectedItem.value as Set<number | string | Item>);
+    if (!newSetVal.has(newVal)) {
+      newSetVal.add(newVal);
+    } else {
+      newSetVal.delete(newVal);
+    }
+    emitNewValue(newSetVal);
   }
-  emitNewValue(newVal);
 };
 
 const selecting = () => {
@@ -388,25 +385,17 @@ watch(
       if (isValidInputText.value) {
         emit('filter', inputText.value);
       } else {
-        selectedIndex.value.clear();
-        // if (props.multiple) {
-        //   (selectedItem.value as Set<Item | number | string>).clear();
-        // } else {
-        //   selectedItem.value = undefined;
-        // }
         emitNewValue();
       }
     }
   }
 );
 
-watch(() => props.modelValue, initSelect);
+watch(() => props.modelValue, initSelect, { immediate: true });
 
-initSelect();
+// initSelect();
 // Expose
 defineExpose({ validate });
 </script>
 
-<style lang="scss" scoped>
-@import './SmSelect.scss';
-</style>
+<style lang="scss" scoped src="./SmSelect.scss"></style>
