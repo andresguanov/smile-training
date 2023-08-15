@@ -20,6 +20,7 @@ setDefaultProps({
 });
 
 /* Comentar al compilar */
+
 /*
 import { createApp } from 'vue';
 import App from './components/App.vue';
