@@ -2,7 +2,7 @@
   <div class="s-pagination" :class="{ extended: fullMode }">
     <div v-if="fullMode" class="s-pagination__left">
       <p>{{ text.resultsPerPage }}:</p>
-      <select class="s-pagination__select">
+      <select v-model="limit" class="s-pagination__select">
         <option v-for="option in itemLimitOptions" :value="option">{{ option }}</option>
       </select>
       <div class="s-pagination__divider" />
@@ -26,14 +26,14 @@
           emphasis="text"
           size="small"
           :disabled="isAtStart"
-          @click="changePage(page + 1)"
+          @click="changePage(currentPage - 1)"
         />
         <s-button
           only-icon="arrow-right"
           emphasis="text"
           size="small"
           :disabled="isAtEnd"
-          @click="changePage(page - 1)"
+          @click="changePage(currentPage + 1)"
         />
       </div>
     </div>
@@ -77,10 +77,6 @@ const limit = useVModel(props, 'itemsPerPage', emit);
 const selectedPage = useVModel(props, 'page', emit);
 const { isAtEnd, isAtStart, lastPage, currentPage, changePage, itemsRangeText, onInputPage } =
   usePagination(limit, selectedPage, toRef(props, 'total'));
-
-// const selectLimitOptions = computed(() => {
-//   return props.itemLimitOptions.map(v => ({ text: v.toString(), value: v }));
-// });
 </script>
 
 <style scoped lang="scss" src="./SPagination.scss" />

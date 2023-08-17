@@ -4,13 +4,20 @@
       <div class="s-toolbar__actions__left">
         <s-input
           v-model="search"
-          :placeholder="searchPlaceholder"
+          :placeholder="toolbarTexts.searchPlaceholder"
           class="s-toolbar__actions__search"
           size="small"
           icon-left="search"
+          @update:model-value="emit('search', search)"
         />
         <div class="s-toolbar__actions__filter">
-          <s-button emphasis="text" type="ghost" size="small" @click.stop="toggleMenu()">
+          <s-button
+            v-if="filters.length"
+            emphasis="text"
+            type="ghost"
+            size="small"
+            @click.stop="toggleMenu()"
+          >
             <sm-icon icon="filter" size="small" />
             <span>{{ toolbarTexts.filter }}</span>
           </s-button>
@@ -21,13 +28,15 @@
             @click-outside="toggleMenu()"
           >
             <p class="s-toolbar__menu__label">{{ toolbarTexts.filter }} {{ toolbarTexts.by }}</p>
-            <s-menu-item
-              v-for="filter in filters"
-              :key="filter.key"
-              :title="filter.label"
-              :icon="filter.icon || icons[filter.type]"
-              @click="onSelectFilter(filter)"
-            />
+            <slot name="filters">
+              <s-menu-item
+                v-for="filter in filters"
+                :key="filter.key"
+                :title="filter.label"
+                :icon="filter.icon || DEFAULT_ICONS[filter.type]"
+                @click="onSelectFilter(filter)"
+              />
+            </slot>
           </s-overflow-menu>
         </div>
         <slot name="actions">
@@ -53,7 +62,7 @@
           v-for="activeFilter in activeFilters"
           :key="activeFilter.key"
           :label="activeFilter.label"
-          :icon="activeFilter.icon || icons[activeFilter.type]"
+          :icon="activeFilter.icon || DEFAULT_ICONS[activeFilter.type]"
           type="filter"
           @click="onDeleteFilter(activeFilter.key)"
         />
@@ -77,30 +86,27 @@
 </template>
 
 <script setup lang="ts">
-import type { IconType, ToolbarFilterType, ToolbarFilter } from '~/interfaces';
+import type { IconType, ToolbarFilterType, ToolbarFilter, ToolbarAction } from '~/interfaces';
 
 withDefaults(
   defineProps<{
-    searchPlaceholder?: string;
     toolbarTexts?: {
       filter: string;
       by: string;
       removeFilters: string;
+      searchPlaceholder?: string;
     };
     /**
      * Acciones secundarias para el toolbar,
      * cada una emite un evento `action` el cual devuelve
      * la propiedad name como parámetro.
      */
-    actions?: {
-      name: string;
-      label: string;
-      icon?: IconType;
-    }[];
-    filters: ToolbarFilter[];
+    actions?: ToolbarAction[];
+    filters?: ToolbarFilter[];
   }>(),
   {
     searchPlaceholder: 'Buscar',
+    filters: () => [],
     actions: () => [],
     toolbarTexts: () => ({
       by: 'por',
@@ -111,6 +117,7 @@ withDefaults(
 );
 const emit = defineEmits<{
   (event: 'action', value: string): void;
+  (event: 'search', value: string): void;
 }>();
 
 const search = ref('');
@@ -119,7 +126,7 @@ const filterValues = ref<Record<string, unknown>>({});
 const [menuOpen, toggleMenu] = useToggle(false);
 const showToolbarFilters = computedEager(() => activeFilters.value.length);
 
-const icons: Record<ToolbarFilterType, IconType> = {
+const DEFAULT_ICONS: Record<ToolbarFilterType, IconType> = {
   checkbox: 'circle-dashed',
   datepicker: 'calendar',
   input: 'edit',

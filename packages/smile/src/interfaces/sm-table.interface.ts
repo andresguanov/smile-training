@@ -39,3 +39,9 @@ export interface ToolbarFilter {
   label: string;
   icon?: IconType;
 }
+
+export interface ToolbarAction {
+  name: string;
+  label: string;
+  icon?: IconType;
+}

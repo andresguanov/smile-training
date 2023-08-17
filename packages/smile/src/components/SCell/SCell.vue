@@ -10,7 +10,7 @@
 
 <script lang="ts" setup>
 defineProps<{
-  text: string;
+  text: string | number;
   avatar?: string;
   secondLine?: string;
   rightContent?: boolean;

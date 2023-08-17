@@ -37,7 +37,6 @@ export { default as SmForm } from './SmForm/SmForm.vue';
 export { default as SmInnerLoading } from './SmInnerLoading/SmInnerLoading.vue';
 export { default as SmFileInput } from './SmFileInput/SmFileInput.vue';
 export { default as SmNumberInput } from './SmNumberInput/SmNumberInput.vue';
-// TODO: agregar sm-input-* sm-filter sm-list-controller sm-context-menu
 // New Smile
 export { default as SButton } from './SButton/SButton.vue';
 export { default as SStepper } from './SStepper/SStepper.vue';
@@ -61,3 +60,7 @@ export { default as SOverflowMenu } from './SOverflowMenu/SOverflowMenu.vue';
 export { default as SChip } from './SChip/SChip.vue';
 export { default as SForm } from './SForm/SForm.vue';
 export { default as SPopOver } from './SPopover/SPopOver.vue';
+export { default as STable } from './STable/STable.vue';
+export { default as SToolbar } from './SToolbar/SToolbar.vue';
+export { default as SPagination } from './SPagination/SPagination.vue';
+export { default as SCell } from './SCell/SCell.vue';

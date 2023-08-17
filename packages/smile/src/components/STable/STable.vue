@@ -1,15 +1,23 @@
 <template>
   <div class="s-table">
     <s-toolbar
-      :actions="[{ label: 'Action1', name: 'Action 1' }]"
-      :filters="[
-        {
-          key: 'date',
-          label: 'Fecha',
-          type: 'datepicker',
-        },
-      ]"
-    />
+      v-if="toolbar"
+      :actions="actions"
+      :filters="filters"
+      :toolbar-texts="toolbarTexts"
+      @action="e => emit('toolbarAction', e)"
+      @search="v => emit('search', v)"
+    >
+      <template #actions>
+        <slot name="actions" />
+      </template>
+      <template #filters>
+        <slot name="filters" />
+      </template>
+      <template #rightContent>
+        <slot name="toolbarRightContent" />
+      </template>
+    </s-toolbar>
     <table class="s-table__wrapper">
       <thead class="s-table__head">
         <tr class="s-table__row">
@@ -37,12 +45,17 @@
             class="sm-table-container-th"
             :style="{ width: actionsColWidth }"
           >
-            {{ actionsColHeadText }}
+            <slot name="actionsHead">{{ DEFAULT_ACTIONS_TEXT }}</slot>
           </th>
         </tr>
       </thead>
       <tbody class="s-table__body">
-        <tr v-for="(row, i) in tableData" :key="'smTableTr-' + i" class="s-table__row">
+        <tr
+          v-for="(row, i) in tableData"
+          :key="'smTableTr-' + i"
+          class="s-table__row"
+          :class="{ hoverable }"
+        >
           <td
             v-for="(col, j) in columnConfig"
             :key="`smTableTd-${i}-${j}`"
@@ -81,37 +94,50 @@
 </template>
 
 <script lang="ts" setup>
-import { useSlots } from 'vue';
-import { smPaginationText } from '../../interfaces/sm-pagination.interface';
-import {
+import type { smPaginationText } from '../../interfaces/sm-pagination.interface';
+import type {
   smTableColumn,
-  smTableFilter,
   smTableChangeEvent,
+  ToolbarAction,
+  ToolbarFilter,
 } from '../../interfaces/sm-table.interface';
-import { useFilters } from '../../composables';
+// import { useFilters } from '../../composables';
 
 const props = withDefaults(
   defineProps<{
     rows?: Array<any>;
     hoverable?: boolean;
     total?: number;
-    page?: number;
-    itemsPerPage?: number;
-    itemsPerPageOptions?: Array<number>;
-    columnConfig?: Array<smTableColumn>;
-    loading?: boolean;
-    loadingText?: string;
-    noContentText?: string;
-    textPagination?: smPaginationText;
-    actionsColHeadText?: string;
-    actionsColWidth?: string;
-    filterConfig?: { [key: string]: smTableFilter };
-    filterBtnText?: string;
-    closeFilterBtnText?: string;
-    isFixed?: boolean;
+    initialPage?: number;
+    initialItemsPerPage?: number;
     initialOrder?: 'ASC' | 'DESC';
+    columnConfig?: Array<smTableColumn>;
+    itemsPerPageOptions?: Array<number>;
+    textPagination?: smPaginationText;
+
+    /**
+     * Indica si la paginación de la tabla mostrará otros datos como
+     * el selector de cantidad a mostrar, página actual, etc.
+     */
     paginationFullMode?: boolean;
+    actionsColWidth?: string;
+    /**
+     * Indica si la tabla presenta o no un toolbar
+     */
     toolbar?: boolean;
+    toolbarTexts?: {
+      filter: string;
+      by: string;
+      removeFilters: string;
+      searchPlaceholder?: string;
+    };
+    /**
+     * Acciones secundarias para el toolbar,
+     * cada una emite un evento `action` el cual devuelve
+     * la propiedad name como parámetro.
+     */
+    actions?: ToolbarAction[];
+    filters?: ToolbarFilter[];
   }>(),
   {
     toolbar: true,
@@ -119,29 +145,26 @@ const props = withDefaults(
     rows: (): Array<any> => [],
     columnConfig: (): Array<smTableColumn> => [],
     filterConfig: () => ({}),
-    loading: false,
-    page: 1,
-    itemsPerPage: 10,
-    loadingText: 'Cargando',
-    noContentText: 'No hay contenido disponible',
-    actionsColHeadText: 'Acciones',
-    filterBtnText: 'Filtrar',
-    closeFilterBtnText: 'Cerrar',
+    initialPage: 1,
+    initialItemsPerPage: 10,
   }
 );
-
 const slots = useSlots();
 const emit = defineEmits<{
   (e: 'refresh' | 'change' | 'filter', data: smTableChangeEvent): void;
   (e: 'update:page', data: number): void;
   (e: 'update:itemsPerPage', data: number): void;
+  (e: 'toolbarAction', value: string): void;
+  (e: 'search', value: string): void;
 }>();
+
+const DEFAULT_ACTIONS_TEXT = 'Acciones';
+const internalPage = ref(props.initialPage);
+const internalItemsPerPage = ref(props.initialItemsPerPage);
 
 const sortColumn = ref('');
 const internarlOrder = ref<'ASC' | 'DESC' | undefined>(props.initialOrder);
-const internalPage = ref(props.page);
-const internalItemsPerPage = ref(props.itemsPerPage);
-const hasActionsColumn = computed(
+const hasActionsColumn = computedEager(
   () => slots['actionsCol'] && typeof slots['actionsCol'] === 'function'
 );
 const internalTotal = computed(() =>
@@ -155,7 +178,7 @@ const sortIcon = computed(() =>
     : 'arrows-sort'
 );
 
-const { filterValues } = useFilters(props.columnConfig, props.filterConfig);
+// const { filterValues } = useFilters(props.columnConfig, props.filterConfig);
 
 const tableData = computed((): Array<any> => {
   if (props.rows.length > internalItemsPerPage.value) {
@@ -184,7 +207,8 @@ const onEvent = (event: 'refresh' | 'change' | 'filter', itemsPerPage: number) =
     limit: itemsPerPage,
     order_field: sortColumn.value,
     order_direction: internarlOrder.value || '',
-    filters: { ...filterValues.value },
+    filters: {},
+    // filters: { ...filterValues.value },
   });
 };
 const onUpdatePage = (page: number) => {
@@ -198,9 +222,6 @@ const onUpdateItemsPerPage = (itemsPerPage: number) => {
 };
 const onSort = (col: string, canSorter?: boolean) => {
   if (!canSorter) return;
-  // if (props.initialOrder === internarlOrder.value) {
-  //   sortColumn.value = '';
-  // }
   if (sortColumn.value === col) {
     internarlOrder.value = internarlOrder.value === 'ASC' ? 'DESC' : 'ASC';
   } else {

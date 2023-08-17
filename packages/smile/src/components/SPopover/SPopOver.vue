@@ -21,9 +21,7 @@
 </template>
 
 <script lang="ts" setup>
-// import 'tippy.js/dist/tippy.css'
 import { Tippy as SmTooltip } from 'vue-tippy';
-import { ref, computed, watch } from 'vue';
 
 const slots = useSlots();
 const props = defineProps<{
