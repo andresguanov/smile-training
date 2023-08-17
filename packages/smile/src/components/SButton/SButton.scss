@@ -58,6 +58,15 @@
   }
   &.text {
     @apply bg-transparent text-sm-primary-600;
+
+    &.ghost {
+      @apply text-slate-700;
+      &:not(:disabled, [loading='true']) {
+        &:focus {
+          @apply ring-slate-200/70;
+        }
+      }
+    }
   }
   &.text,
   &.outline {

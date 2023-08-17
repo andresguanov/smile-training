@@ -1,0 +1,23 @@
+.s-cell {
+  @apply space-x-2;
+  @apply flex items-center;
+
+  &.right-content {
+    @apply justify-end;
+  }
+  .s-cell__avatar {
+    @apply h-5 w-5 border border-solid border-slate-200/[0.45];
+
+    &::first-letter {
+      @apply text-sm;
+    }
+  }
+  &__text {
+    &__main {
+      @apply text-slate-700 text-sm font-normal;
+    }
+    &__secondary {
+      @apply text-slate-500 text-xs font-normal;
+    }
+  }
+}

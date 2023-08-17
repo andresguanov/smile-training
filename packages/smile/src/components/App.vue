@@ -167,7 +167,7 @@
         </template>
       </sm-form>
     </sm-card>
-    <sm-table
+    <s-table
       ref="testSmTable"
       :filter-config="{
         b: {
@@ -183,6 +183,7 @@
       }"
       :rows="items"
       :column-config="cols"
+      :items-per-page="10"
       actions-col-width="100px"
       class="my-table"
       is-fixed
@@ -193,10 +194,11 @@
       <template #head.a>
         <input v-model="selectAll" type="checkbox" name="test" id="test" />
       </template>
-      <template #bodyRow.a="{ row }">
-        <input v-model="selected" :value="row.a" type="checkbox" name="test" id="test" />
+      <template #rowCell(a)="{ row }">
+        <s-cell :text="row.a" second-line="Second Line" avatar="Hola Mundo" right-content />
       </template>
-    </sm-table>
+    </s-table>
+    <!-- <s-table /> -->
   </div>
 </template>
 
@@ -209,8 +211,6 @@ interface radioTest {
   card: string;
 }
 const selectAll = ref(false);
-const selected = ref([]);
-const modal = ref(true);
 const check = ref([]);
 const radio = ref('');
 const number = ref(3);
