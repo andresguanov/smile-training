@@ -15,9 +15,7 @@
         </div>
       </template>
     </SPopOver>
-
     <br />
-
     <sm-alert-stack />
     <s-wizard v-model="step" :steps="steps" has-back-button :is-on-component="true" />
     <s-modal
@@ -34,7 +32,6 @@
           <div id="popover-target-1" @click="showPopOver = true">
             <s-chip label="test" selected avatar="Carlos" />
           </div>
-
           <s-chip label="test" disabled selected />
           {{ text2 }}
           <s-dropdown
@@ -123,89 +120,36 @@
         </template>
       </s-form>
     </sm-card>
-
-    <sm-card>
-      <sm-form ref="smFormEl" validation-mode="on-type" container-is-form @submit="onSubmit">
-        <template #default="{ isValid, reset }">
-          <h4>El formulario es: {{ isValid ? 'válido' : 'no válido' }}</h4>
-          <div class="flex flex-col">
-            <s-radio
-              v-model="radio"
-              label="test"
-              show-mark
-              orientation="horizontal"
-              :options="[
-                { value: { card: '1' }, label: 'card-1' },
-                { value: { card: '2' }, label: 'card-2' },
-              ]"
-              :rules="[
-                val => {
-                  return (val as radioTest).card === '1' || 'Debe escoger el valord card 1';
-                },
-              ]"
-            />
-            <s-checkbox
-              v-model="check"
-              name="test"
-              label="test"
-              orientation="horizontal"
-              :options="[
-                { value: '1', label: 'card-1' },
-                { value: '2', label: 'card-2', disabled: true },
-                { value: '3', label: 'card-3', disabled: true, indeterminate: true },
-                { value: '4', label: 'card-4', indeterminate: true },
-              ]"
-              :rules="[
-                val => {
-                  return val.length > 0 || 'Debe escoger al menos una opción';
-                },
-              ]"
-            />
-          </div>
-          <s-button emphasis="subtle" native-type="submit">Submit</s-button>
-          <s-button emphasis="outline" @click="reset">Reset</s-button>
-        </template>
-      </sm-form>
-    </sm-card>
-    <sm-table
+    <s-table
       ref="testSmTable"
-      :filter-config="{
-        b: {
-          type: 'datepicker',
-        },
-      }"
       :rows="items"
       :column-config="cols"
-      actions-col-width="100px"
       class="my-table"
-      is-fixed
+      :actions="[{ label: 'Test', name: 'test', icon: 'add' }]"
+      pagination-full-mode
       @refresh="onChange"
       @change="onChange"
       @filter="onChange"
+      @toolbar-action="logEvent"
     >
       <template #head.a>
         <input v-model="selectAll" type="checkbox" name="test" id="test" />
       </template>
-      <template #bodyRow.a="{ row }">
-        <input v-model="selected" :value="row.a" type="checkbox" name="test" id="test" />
+      <template #rowCell(a)="{ row }">
+        <s-cell :text="row.a" second-line="Second Line" avatar="Hola Mundo" right-content />
       </template>
-    </sm-table>
+    </s-table>
+    <!-- <s-table /> -->
   </div>
 </template>
 
 <script setup lang="ts">
-import { SButton, SmForm, SmTable } from './index';
+import { SButton, SmForm } from './index';
 import { $SmAlert, ISmAlertProvide } from '../utils/alerts';
 import { smStepWizard, smTableChangeEvent, smTableColumn } from '~/interfaces';
 
-interface radioTest {
-  card: string;
-}
 const selectAll = ref(false);
-const selected = ref([]);
-const modal = ref(true);
-const check = ref([]);
-const radio = ref('');
+const modal = ref(false);
 const number = ref(3);
 const text = ref('');
 const text2 = ref([]);
@@ -307,9 +251,6 @@ const selectRules = ref([
   },
 ]);
 const smFormEl = ref<InstanceType<typeof SmForm> | null>();
-const onSubmit = (e?: string) => {
-  console.log({ e });
-};
 const isLoadingOptions = ref(false);
 const openLanguajes = () => {
   isLoadingOptions.value = true;
@@ -321,7 +262,6 @@ const openLanguajes = () => {
 
 const smAlert = inject<ISmAlertProvide>($SmAlert);
 onMounted(() => {
-  smFormEl.value?.validateInputs(true);
   smAlert?.success('Hola mundo');
   smAlert?.error('Hola mundo');
   smAlert?.warning('Hola mundo', { title: '<h2>Grande</h2> pequeño' });

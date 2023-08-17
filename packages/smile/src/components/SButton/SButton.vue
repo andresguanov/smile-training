@@ -54,7 +54,7 @@ const props = withDefaults(
     tag?: 'button' | 'a' | 'router-link';
     nativeType?: 'button' | 'submit' | 'reset';
     size?: 'small' | 'medium' | 'large';
-    type?: 'default' | 'destructive' | 'reversed';
+    type?: 'default' | 'destructive' | 'reversed' | 'ghost';
     emphasis?: 'filled' | 'subtle' | 'outline' | 'text';
     iconLeft?: IconType;
     iconRight?: IconType;
@@ -77,4 +77,4 @@ const iconSize = computed(() => (props.size === 'small' ? '16px' : '20px'));
 const isOnlyIcon = computed(() => Boolean(props.onlyIcon));
 </script>
 
-<style lang="scss" src="./SmButtonNext.scss" scoped></style>
+<style lang="scss" src="./SButton.scss" scoped></style>

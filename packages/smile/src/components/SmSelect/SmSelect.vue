@@ -41,7 +41,7 @@
     </div>
     <sm-hint v-if="hasError && searchField && errorListContent" :to="`#${searchField.id}`">
       <template #content>
-        <sm-error-list :error-messages="(errorListContent as Array<string>)" />
+        <sm-error-list :error-messages="errorListContent" />
       </template>
     </sm-hint>
   </div>
@@ -194,7 +194,6 @@ const addToSelectedItem = (index: number) => {
   } else {
     itemSet.delete((localOptions.value[index] as Item).value);
   }
-  formatInputText();
 };
 
 const addSelectedItem = (index: number) => {
@@ -254,33 +253,36 @@ const emitNewValue = (value?: Set<Item | string | number> | Item | string | numb
     newVal = value ? Array.from(value as Set<Item | number | string>) : [];
   }
   emit('update:modelValue', newVal);
-  formatInputText();
 };
 
 const findItem = () => {
-  let index: number;
-  index = localOptions.value.findIndex(option => isEqual((option as Item).value, props.modelValue));
+  const index = localOptions.value.findIndex(option =>
+    isEqual((option as Item).value, props.modelValue)
+  );
   if (index != -1) {
     selectedItem.value = (localOptions.value[index] as Item).value;
     addToIndexes(index);
-    emitNewValue(selectedItem.value);
   } else {
-    emitNewValue();
+    resetInternalValues();
   }
+};
+const resetInternalValues = () => {
+  if (!props.multiple) {
+    selectedItem.value = null;
+  } else {
+    selectedItem.value.clear();
+  }
+  selectedIndex.value.clear();
 };
 
 const findItems = () => {
+  resetInternalValues();
   for (let item of props.modelValue) {
     let index: number;
     index = localOptions.value.findIndex(option => isEqual((option as Item).value, item));
     if (index != -1 && !isItemDisabled(index)) {
       addSelectedItem(index);
     }
-  }
-  if (selectedIndex.value.size == 0) {
-    emitNewValue();
-  } else {
-    emitNewValue(selectedItem.value);
   }
 };
 
@@ -322,6 +324,7 @@ const initSelect = () => {
       selectedItem.value ??= new Set();
       findItems();
     }
+    formatInputText();
   }
 };
 
@@ -336,20 +339,19 @@ const select = (index: number) => {
   if (isItemDisabled(index)) {
     return;
   }
+  const newVal = (localOptions.value[index] as Item).value;
   if (!props.multiple) {
-    addToIndexes(index);
     show.value = false;
-    if (optionsType.value == 'object') {
-      selectedItem.value = (localOptions.value as Item[])[index].value;
-      //inputText.value = (localOptions.value as Item[])[index].text;
-    } else {
-      selectedItem.value = localOptions.value[index];
-      //inputText.value = localOptions.value[index].toString();
-    }
+    emitNewValue(newVal);
   } else {
-    addSelectedItem(index);
+    const newSetVal = new Set(selectedItem.value as Set<number | string | Item>);
+    if (!newSetVal.has(newVal)) {
+      newSetVal.add(newVal);
+    } else {
+      newSetVal.delete(newVal);
+    }
+    emitNewValue(newSetVal);
   }
-  emitNewValue(selectedItem.value);
 };
 
 const selecting = () => {
@@ -383,32 +385,17 @@ watch(
       if (isValidInputText.value) {
         emit('filter', inputText.value);
       } else {
-        selectedIndex.value.clear();
-        if (props.multiple) {
-          (selectedItem.value as Set<Item | number | string>).clear();
-        } else {
-          selectedItem.value = undefined;
-        }
         emitNewValue();
       }
     }
   }
 );
 
-watch(
-  () => props.modelValue,
-  v => {
-    if (v !== props.modelValue) {
-      initSelect();
-    }
-  }
-);
+watch(() => props.modelValue, initSelect, { immediate: true });
 
-initSelect();
+// initSelect();
 // Expose
 defineExpose({ validate });
 </script>
 
-<style lang="scss" scoped>
-@import './SmSelect.scss';
-</style>
+<style lang="scss" scoped src="./SmSelect.scss"></style>
