@@ -34,7 +34,7 @@
       :to="`#${datePickerElement.id}`"
     >
       <template #content>
-        <sm-error-list :error-messages="errorListContent as Array<string>" />
+        <sm-error-list :error-messages="errorListContent" />
       </template>
     </sm-hint>
   </div>
