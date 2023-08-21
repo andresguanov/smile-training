@@ -1,64 +1,43 @@
 @import '../SmInput/SmInput.scss';
 
 .sm-datepicker {
-  &-input {
-    @apply p-0;
-    @apply hover:border-sm-primary-500;
-    &:deep(.mx-input-wrapper) {
-      @apply flex;
-      .mx-input {
-        height: auto;
-        @apply border-none shadow-none;
+  &__calendar {
+    @apply font-normal;
+
+    :deep(.dp__theme_light) {
+      --dp-background-color: #ffffff;
+      --dp-text-color: #334155;
+      --dp-hover-color: rgba(226, 232, 240, 0.45);
+      --dp-hover-text-color: #334155;
+      --dp-hover-icon-color: #334155;
+      --dp-primary-color: rgb(var(--sm-color-primary-600));
+      --dp-primary-text-color: #ffffff;
+      --dp-secondary-color: #cbd5e1;
+      --dp-border-color: #e2e8f0;
+      --dp-menu-border-color: #e2e8f0;
+      --dp-border-color-hover: #cbd5e1;
+      --dp-disabled-color: #cbd5e1;
+      --dp-scroll-bar-background: #f1f5f9;
+      --dp-scroll-bar-color: #cbd5e1;
+      --dp-success-color: #16a34a;
+      --dp-success-color-disabled: rgba(22, 163, 74, 0.3);
+      --dp-icon-color: #334155;
+      --dp-danger-color: #e11d48;
+      --dp-highlight-color: rgb(var(--sm-color-primary-50));
+      --dp-border-radius: 16px;
+      --dp-cell-border-radius: 12px;
+    }
+    :deep(.dp__menu.dp__theme_light) {
+      @apply shadow-lg;
+
+      .dp__today {
+        @apply text-sm-primary-600;
       }
     }
-    &:deep(.mx-datepicker-main) {
-      .cell {
-        &.active:not(.not-current-month) {
-          @apply bg-sm-primary-500;
-        }
-        &.in-range:not(.not-current-month) {
-          @apply bg-sm-primary-500/10;
-        }
-        &.hover-in-range:not(.not-current-month) {
-          @apply bg-sm-primary-500/10;
-        }
+    .sm-input {
+      input {
+        @apply w-full;
       }
-    }
-    &.sm-input-disabled {
-      @apply hover:border-gray-300;
-      &:deep(.mx-input) {
-        @apply bg-gray-50 cursor-default;
-      }
-    }
-    &.sm-input-small {
-      &:deep(.mx-input) {
-        @apply text-[12px];
-        @apply leading-[18px];
-        @apply px-[8px];
-        @apply py-[3px];
-        .mx-icon-calendar > svg {
-          @apply h-3 w-3;
-        }
-      }
-    }
-    &.sm-input-medium {
-      &:deep(.mx-input) {
-        @apply py-[9px];
-        @apply px-[8px];
-        @apply text-[14px];
-        @apply leading-[21px];
-      }
-    }
-    &.sm-input-large {
-      &:deep(.mx-input) {
-        @apply text-[16px];
-        @apply leading-[24px];
-        @apply py-[12px];
-        @apply px-[8px];
-      }
-    }
-    &.sm-input-error {
-      @apply hover:border-fire-opal;
     }
   }
 }

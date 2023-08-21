@@ -3,36 +3,53 @@
     <sm-label
       v-if="label"
       v-bind="$props"
-      class="sm-datepicker-label"
+      class="sm-datepicker__label"
       :error="hasError"
-      @click="openDatepicker"
+      :for="`dp-input-${inputId}`"
     />
     <date-picker
-      ref="datePickerElement"
-      v-model:value="data"
-      v-model:open="open"
-      v-bind="$attrs"
-      :lang="lang"
+      :uid="inputId"
+      v-model="date"
       :format="format"
-      :append-to-body="appendToBody"
+      :locale="locale"
+      :clearable="clearable"
+      :placeholder="placeholder"
+      :auto-apply="autoApply"
       :disabled="disabled"
-      :class="[
-        'sm-input',
-        `sm-input-${size}`,
-        'sm-datepicker-input',
-        { 'sm-input-error': hasError },
-        { 'sm-input-disabled': disabled },
-      ]"
-      v-sm-simple-uid
+      :readonly="readonly"
+      :required="required"
+      :disabled-dates="disabledDates"
+      :text-input="!range"
+      :range="range"
+      :multi-calendars="range"
+      :enable-time-picker="false"
+      class="sm-datepicker__calendar"
     >
-      <template v-for="slot in slotsList" v-slot:[slot]>
-        <slot :name="slot as string"></slot>
+      <template #dp-input="{ value, onBlur, onInput }">
+        <div
+          ref="inputElement"
+          :class="[
+            'sm-input',
+            `sm-input-${size}`,
+            `sm-text-${size}`,
+            { 'sm-input-error': hasError },
+            { 'sm-input-disabled': disabled },
+          ]"
+        >
+          <input
+            :id="`dp-input-${inputId}`"
+            :value="value"
+            :disabled="disabled"
+            :placeholder="placeholder"
+            :required="required"
+            type="text"
+            @input="onInput"
+            @blur="onFocusOut(onBlur)"
+          />
+        </div>
       </template>
     </date-picker>
-    <sm-hint
-      v-if="datePickerElement && hasError && errorListContent"
-      :to="`#${datePickerElement.id}`"
-    >
+    <sm-hint v-if="hasError && errorListContent" :to="`#dp-input-${inputId}`">
       <template #content>
         <sm-error-list :error-messages="errorListContent" />
       </template>
@@ -41,64 +58,66 @@
 </template>
 
 <script lang="ts" setup>
-import { smSimpleUid as vSmSimpleUid } from '../../directives';
 import { useValidate } from '../../composables';
-import DatePicker from 'vue-datepicker-next';
-import 'vue-datepicker-next/locale/en.es.js';
-import 'vue-datepicker-next/locale/es.es.js';
-import 'vue-datepicker-next/index.css';
+import { simpleUid } from '~/utils/uid';
+import DatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css';
 
-const slots = useSlots();
 const props = withDefaults(
   defineProps<{
-    modelValue?: string | Date | Array<string | Date>;
+    modelValue: Date | string | Date[] | string[];
     locale?: 'es' | 'en';
     format?: string;
+
+    placeholder?: string;
+    clearable?: boolean;
+    readonly?: boolean;
+    uid?: string;
+
     label?: string;
-    error?: boolean;
-    size?: 'small' | 'medium' | 'large';
     required?: boolean;
-    errorMessages?: Array<string>;
-    appendToBody?: boolean;
     disabled?: boolean;
+    size?: 'small' | 'medium' | 'large';
+    range?: boolean;
+    disabledDates?: Date[] | string[] | ((date: Date) => boolean);
+
+    error?: boolean;
+    errorMessages?: Array<string>;
     rules?: Array<(value: any) => boolean | string>;
   }>(),
   {
-    modelValue: '',
     locale: 'es',
     label: '',
-    format: 'DD/MM/YYYY',
+    format: 'dd/MM/yyyy',
     size: 'medium',
     appendToBody: false,
+    clearable: true,
   }
 );
 
-const emit = defineEmits(['update:modelValue']);
-const data = useVModel(props, 'modelValue', emit);
-const lang = ref(props.locale);
-const open = ref(false);
-const datePickerElement = ref<HTMLDivElement | null>(null);
-const { validate, hasError, errorListContent } = useValidate(
-  data,
+const emit = defineEmits<{
+  (e: 'update:modelValue', v: Date | string | Date[] | string[]): void;
+}>();
+const date = useVModel(props, 'modelValue', emit);
+
+const autoApply = computed(() => true);
+const inputId = computed(() => props.uid || simpleUid());
+
+const { validate, hasError, errorListContent, validateOnFocusout } = useValidate(
+  date,
   props.rules || [],
   props.error,
   props.errorMessages
 );
-const slotsList = computed((): Array<string> => {
-  return Object.keys(slots);
-});
 
-const openDatepicker = () => {
-  open.value = true;
+const onFocusOut = (event: any) => {
+  if (validateOnFocusout.value) {
+    validate();
+  }
+  if (event && typeof event === 'function') event();
 };
-
-watch(props, () => {
-  lang.value = props.locale;
-});
 
 defineExpose({ validate });
 </script>
 
-<style scoped lang="scss">
-@import './SmDatepicker.scss';
-</style>
+<style scoped lang="scss" src="./SmDatepicker.scss"></style>

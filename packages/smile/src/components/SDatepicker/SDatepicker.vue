@@ -1,46 +1,33 @@
 <template>
-  <div class="sm-datepicker">
-    <sm-label
-      v-if="label"
-      v-bind="$props"
-      class="sm-datepicker__label"
-      :error="hasError"
-      :for="`dp-input-${inputId}`"
-    />
-    <date-picker
-      v-model="date"
-      :format="format"
-      :locale="locale"
-      :clearable="clearable"
-      :placeholder="placeholder"
-      :auto-apply="autoApply"
-      :disabled="disabled"
-      :readonly="readonly"
-      :required="required"
-      :text-input="!range"
-      :range="range"
-      :disabled-dates="disabledDates"
-      :uid="inputId"
-      :enable-time-picker="false"
-      :class="[
-        'sm-datepicker__input',
-        'sm-input',
-        `sm-input-${size}`,
-        'sm-datepicker-input',
-        { 'sm-input-error': hasError },
-        { 'sm-input-disabled': disabled },
-      ]"
-    />
-    <sm-hint v-if="hasError && errorListContent" :to="`#dp-input-${inputId}`">
-      <template #content>
-        <sm-error-list :error-messages="errorListContent" />
-      </template>
-    </sm-hint>
-  </div>
+  <date-picker
+    v-model="date"
+    :format="format"
+    :locale="locale"
+    :clearable="clearable"
+    :placeholder="placeholder"
+    :auto-apply="autoApply"
+    :disabled="disabled"
+    :readonly="readonly"
+    :required="required"
+    :range="range"
+    :disabled-dates="disabledDates"
+    :uid="inputId"
+    :enable-time-picker="false"
+    class="sm-datepicker__calendar"
+    text-input
+  >
+    <template #dp-input="{ value, onBlur }">
+      <s-input
+        :id="`dp-input-${inputId}`"
+        :model-value="value"
+        :placeholder="placeholder"
+        @blur="onBlur"
+      />
+    </template>
+  </date-picker>
 </template>
 
 <script lang="ts" setup>
-import { useValidate } from '../../composables';
 import { simpleUid } from '~/utils/uid';
 import DatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
@@ -84,15 +71,6 @@ const date = useVModel(props, 'modelValue', emit);
 
 const autoApply = computed(() => true);
 const inputId = computed(() => props.uid || simpleUid());
-
-const { validate, hasError, errorListContent } = useValidate(
-  date,
-  props.rules || [],
-  props.error,
-  props.errorMessages
-);
-
-defineExpose({ validate });
 </script>
 
 <style scoped lang="scss" src="./SDatepicker.scss"></style>

@@ -32,7 +32,6 @@
             <s-chip label="test" selected avatar="Carlos" />
           </div>
           <s-datepicker v-model="date" label="fecha test" />
-          <sm-datepicker v-model="text" />
           <s-chip label="test" disabled selected />
           {{ text2 }}
           <s-dropdown
@@ -121,9 +120,14 @@
         </template>
       </s-form>
     </sm-card>
-    <s-table
+    <sm-table
       ref="testSmTable"
       :rows="items"
+      :filter-config="{
+        b: {
+          type: 'datepicker',
+        },
+      }"
       :column-config="cols"
       class="my-table"
       :actions="[{ label: 'Test', name: 'test', icon: 'add' }]"
@@ -139,7 +143,7 @@
       <template #rowCell(a)="{ row }">
         <s-cell :text="row.a" second-line="Second Line" avatar="Hola Mundo" right-content />
       </template>
-    </s-table>
+    </sm-table>
     <!-- <s-table /> -->
   </div>
 </template>

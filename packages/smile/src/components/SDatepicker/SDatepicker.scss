@@ -1,5 +1,7 @@
+@import '../SmInput/SmInput.scss';
+
 .sm-datepicker {
-  &__input {
+  &__calendar {
     :deep(.dp__theme_light) {
       --dp-background-color: #ffffff;
       --dp-text-color: #334155;
@@ -20,6 +22,12 @@
       --dp-icon-color: #334155;
       --dp-danger-color: #e11d48;
       --dp-highlight-color: rgb(var(--sm-color-primary-50));
+      --dp-border-radius: 16px;
+      --dp-cell-border-radius: 12px;
+    }
+
+    :deep(.dp__menu.dp__theme_light) {
+      @apply shadow-lg;
     }
   }
 }
