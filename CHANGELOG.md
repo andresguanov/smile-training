@@ -1,3 +1,38 @@
+## [0.0.36-beta.8] (2023-08-22)
+
+### :warning: BREAKING CHANGES:
+
+- **SmDatepicker**: Se remueve soporte para este componente (se recomienda el usar SDtepicker en su lugar), slot 'sidebar' ya no es soportado. Nuevo rediseño aplicado.
+
+### :tada: Releases:
+
+- _SDatepicker_
+
+## [0.0.36-beta.7] (2023-08-17)
+
+### :bug: Bug fixes
+
+- **SmSelect**:
+  - Se soluciona error al actualizar 'v-model' de forma externa.
+
+### :tada: Releases:
+
+- _SCell_
+- _SToolbar_
+- _SPagination_
+- _STable_
+
+## [0.0.36-beta.6] (2023-08-08)
+
+### :bug: Bug fixes
+
+- **SMenuItem**:
+  - Se soluciona un error visual cuando este componente era usado en una lista como SDropdown.
+
+### :tada: Releases:
+
+- _SPopOver_
+
 ## [0.0.36-beta.5] (2023-07-27)
 
 ### :warning: BREAKING CHANGES:

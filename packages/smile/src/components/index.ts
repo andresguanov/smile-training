@@ -64,3 +64,4 @@ export { default as STable } from './STable/STable.vue';
 export { default as SToolbar } from './SToolbar/SToolbar.vue';
 export { default as SPagination } from './SPagination/SPagination.vue';
 export { default as SCell } from './SCell/SCell.vue';
+export { default as SDatepicker } from './SDatepicker/SDatepicker.vue';
