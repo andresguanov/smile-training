@@ -25,6 +25,7 @@
     "@vueuse/core": "9.3.0"
   },
   "devDependencies": {
+    "@vuepic/vue-datepicker": "6.0.1",
     "@alegradev/smile-icons": "1.0.5",
     "@vitejs/plugin-vue": "^4.2.3",
     "autoprefixer": "^10.4.14",
@@ -37,7 +38,6 @@
     "unplugin-vue-components": "^0.17.14",
     "vite": "^4.4.3",
     "vue": "^3.3.4",
-    "vue-datepicker-next": "1.0.3",
     "vue-tippy": "6.2.0",
     "vue-tsc": "^1.8.4"
   },

@@ -17,7 +17,6 @@
     </SPopOver>
     <br />
     <sm-alert-stack />
-    <s-wizard v-model="step" :steps="steps" has-back-button :is-on-component="true" />
     <s-modal
       v-model="modal"
       header-text="Carga un archivo o documento"
@@ -32,6 +31,7 @@
           <div id="popover-target-1" @click="showPopOver = true">
             <s-chip label="test" selected avatar="Carlos" />
           </div>
+          <s-datepicker v-model="date" label="fecha test" mode="range" multi-calendars />
           <s-chip label="test" disabled selected />
           {{ text2 }}
           <s-dropdown
@@ -120,9 +120,14 @@
         </template>
       </s-form>
     </sm-card>
-    <s-table
+    <sm-table
       ref="testSmTable"
       :rows="items"
+      :filter-config="{
+        b: {
+          type: 'datepicker',
+        },
+      }"
       :column-config="cols"
       class="my-table"
       :actions="[{ label: 'Test', name: 'test', icon: 'add' }]"
@@ -138,20 +143,21 @@
       <template #rowCell(a)="{ row }">
         <s-cell :text="row.a" second-line="Second Line" avatar="Hola Mundo" right-content />
       </template>
-    </s-table>
+    </sm-table>
     <!-- <s-table /> -->
   </div>
 </template>
 
 <script setup lang="ts">
+import type { smTableChangeEvent, smTableColumn } from '~/interfaces';
 import { SButton, SmForm } from './index';
 import { $SmAlert, ISmAlertProvide } from '../utils/alerts';
-import { smStepWizard, smTableChangeEvent, smTableColumn } from '~/interfaces';
 
 const selectAll = ref(false);
 const modal = ref(false);
 const number = ref(3);
 const text = ref('');
+const date = ref('');
 const text2 = ref([]);
 const text3 = ref('');
 const showPopOver = ref(true);
@@ -198,34 +204,6 @@ const cols: smTableColumn[] = reactive([
     width: '100px',
   },
 ]);
-const step = ref(1);
-const step1 = h('div', [h('p', 'Formulario 1'), h('input', { placeholder: 'User' })]);
-const step2 = h('div', [h('p', 'Formulario 2'), h('input', { placeholder: 'Email' })]);
-const step3 = h('div', [
-  h('p', 'Formulario 2'),
-  h('input', { placeholder: 'Fecha', type: 'date' }),
-]);
-const steps: smStepWizard[] = [
-  {
-    title: 'STEP 1',
-    description: 'Descripción del step 1',
-    label: 'user',
-    components: [step1, SButton],
-  },
-  {
-    title: 'STEP 2',
-    description: 'Descripción del step 2',
-    label: 'email',
-    components: [step2],
-  },
-  {
-    title: 'STEP 3',
-    description: 'Descripción del step 3',
-    label: 'date',
-    components: [step3],
-  },
-];
-
 const items = computed(() => {
   const totalItems = 35;
   const obj = [];

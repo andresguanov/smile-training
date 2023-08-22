@@ -8,7 +8,6 @@ export * from './types';
 import './index.css';
 import 'tippy.js/dist/tippy.css';
 // import 'tippy.js/themes/light-border.css'
-// import 'vue-datepicker-next/index.css'
 
 import { setDefaultProps } from 'vue-tippy';
 
