@@ -10,6 +10,7 @@ declare module 'vue' {
     SCell: typeof import('./components/SCell/SCell.vue')['default'];
     SCheckbox: typeof import('./components/SCheckbox/SCheckbox.vue')['default'];
     SChip: typeof import('./components/SChip/SChip.vue')['default'];
+    SDatepicker: typeof import('./components/SDatepicker/SDatepicker.vue')['default'];
     SDropdown: typeof import('./components/SDropwdown/SDropdown.vue')['default'];
     SEmptyState: typeof import('./components/SEmptyState/SEmptyState.vue')['default'];
     SError: typeof import('./components/SError/SError.vue')['default'];
