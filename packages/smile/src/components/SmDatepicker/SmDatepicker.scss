@@ -31,7 +31,9 @@
       @apply shadow-lg;
 
       .dp__today {
-        @apply text-sm-primary-600;
+        &:not(.dp__active_date) {
+          @apply text-sm-primary-600;
+        }
       }
     }
     .sm-input {

@@ -31,7 +31,7 @@
           <div id="popover-target-1" @click="showPopOver = true">
             <s-chip label="test" selected avatar="Carlos" />
           </div>
-          <s-datepicker v-model="date" label="fecha test" />
+          <s-datepicker v-model="date" label="fecha test" mode="range" multi-calendars />
           <s-chip label="test" disabled selected />
           {{ text2 }}
           <s-dropdown

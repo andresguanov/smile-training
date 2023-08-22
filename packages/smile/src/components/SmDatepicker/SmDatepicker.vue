@@ -90,7 +90,6 @@ const props = withDefaults(
     label: '',
     format: 'dd/MM/yyyy',
     size: 'medium',
-    appendToBody: false,
     clearable: true,
   }
 );
