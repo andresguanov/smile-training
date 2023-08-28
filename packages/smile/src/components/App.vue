@@ -31,7 +31,19 @@
           <div id="popover-target-1" @click="showPopOver = true">
             <s-chip label="test" selected avatar="Carlos" />
           </div>
-          <s-datepicker v-model="date" label="fecha test" mode="range" multi-calendars />
+          <s-datepicker
+            v-model="date"
+            label="fecha test"
+            mode="range"
+            mark-type="required"
+            error="dasdasdasd"
+            :sidebar-options="[
+              { id: '1', title: 'Semana pasada' },
+              { id: '2', title: 'TEST test' },
+              { id: '3', title: 'S-TEST' },
+            ]"
+            required
+          />
           <s-chip label="test" disabled selected />
           {{ text2 }}
           <s-dropdown
