@@ -1,5 +1,15 @@
 <template>
   <div class="s-datepicker">
+    <div v-if="label" class="s-datepicker__header">
+      <label
+        :for="`dp-input-${inputId}`"
+        class="s-datepicker__label"
+        :class="{ required: markType === 'required' }"
+      >
+        {{ label }}<span v-if="markType" class="s-datepicker__mark">{{ textMark }}</span>
+      </label>
+      <small class="s-datepicker__helper">{{ hint }}</small>
+    </div>
     <date-picker
       ref="datepickerEl"
       :uid="inputId"
@@ -31,7 +41,7 @@
         />
       </template>
       <template #action-row="{ selectDate, closePicker }">
-        <div class="s-datepicker__calendar__actions">
+        <div class="s-datepicker__calendar__actions left">
           <s-button
             emphasis="text"
             label="Hoy"
@@ -50,6 +60,16 @@
           />
           <s-button label="Aplicar" size="small" class="select-button" @click="selectDate" />
         </div>
+      </template>
+      <template v-if="sidebarOptions && sidebarOptions.length" #left-sidebar="{}">
+        <s-menu-item
+          v-for="option in sidebarOptions"
+          :key="option.id"
+          :title="option.title"
+          :description="option.description"
+          text-style="block"
+          @click="emit('clickOption', option.title)"
+        />
       </template>
     </date-picker>
   </div>
@@ -75,12 +95,32 @@ const props = withDefaults(
     disabled?: boolean;
     size?: 'small' | 'medium' | 'large';
     disabledDates?: Date[] | string[] | ((date: Date) => boolean);
-    error?: boolean;
-    errorMessages?: Array<string>;
-    rules?: Array<(value: any) => boolean | string>;
+    sidebarOptions?: { id: string; title: string; description?: string }[];
+    /**
+     * Disponible solo cuando el componente está dentro de SmForm.
+     * Permite establecer las validaciones del componente.
+     */
+    rules?: Array<(value: string) => boolean | string>;
+    /**
+     * Mensaje de error, los mensajes de error proporcionados por rules tendrán
+     * prioridad sobre este.
+     */
+    error?: string;
     mode?: 'simple' | 'range';
     multiCalendars?: boolean;
     autoApply?: boolean;
+    /**
+     * Al pasar esta prop indicas que deseas mostrar al lado del label la marca
+     * que indica si el input es requerido u opcional.
+     */
+    markType?: 'required' | 'optional';
+    /**
+     * Texto que se mostrará cuando `markType` es `optional`
+     * @default Opcional
+     */
+    optionalText?: string;
+    hint?: string;
+    supportiveText?: string;
   }>(),
   {
     locale: 'es',
@@ -93,19 +133,23 @@ const props = withDefaults(
 
 const emit = defineEmits<{
   (e: 'update:modelValue', v: Date | string | Date[] | string[]): void;
+  (e: 'clickOption', v: string): void;
 }>();
 const date = useVModel(props, 'modelValue', emit);
 
 const datepickerEl = ref<DatePickerInstance>(null);
-const internalAutoApply = computed(() => props.mode === 'range' || props.autoApply);
+const internalAutoApply = computed(() => props.mode === 'simple' || props.autoApply);
 const inputId = computed(() => props.uid || simpleUid());
+const textMark = computed(() => (props.markType === 'required' ? '*' : `(${props.optionalText})`));
 
 const selectToday = () => {
   if (!datepickerEl.value) {
     console.error('[Smile SDatepicker]: The element Datepicker norendered');
     return;
   }
-  datepickerEl.value.updateInternalModelValue(new Date());
+  datepickerEl.value.updateInternalModelValue(
+    props.mode === 'simple' ? new Date() : [new Date(), new Date()]
+  );
 };
 </script>
 
