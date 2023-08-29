@@ -1,0 +1,28 @@
+.s-slideover-area {
+  @apply fixed w-screen bottom-0 left-0 h-full
+      bg-slate-700/60 flex justify-end items-center;
+  @apply z-[300] pr-3;
+}
+
+.s-slideover {
+  @apply rounded-l-2xl bg-white drop-shadow-lg px-4 py-6 h-screen;
+
+  &-title {
+    @apply text-lg font-semibold text-slate-900 pb-2 flex justify-between;
+  }
+
+  &-body {
+    @apply pb-4 text-sm font-normal text-slate-700;
+  }
+
+  &-footer {
+    @apply flex justify-end space-x-2;
+  }
+
+  &.regular {
+    @apply w-[320px];
+  }
+  &.medium {
+    @apply w-[560px];
+  }
+}

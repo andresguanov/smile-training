@@ -70,6 +70,7 @@ declare module 'vue' {
     SPagination: typeof import('./components/SPagination/SPagination.vue')['default']
     SPopOver: typeof import('./components/SPopover/SPopOver.vue')['default']
     SRadio: typeof import('./components/SRadio/SRadio.vue')['default']
+    SSlideover: typeof import('./components/SSlideover/SSlideover.vue')['default']
     SStats: typeof import('./components/SStats/SStats.vue')['default']
     SStep: typeof import('./components/SStepper/SStep.vue')['default']
     SStepper: typeof import('./components/SStepper/SStepper.vue')['default']

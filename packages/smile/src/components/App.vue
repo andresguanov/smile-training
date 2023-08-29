@@ -1,5 +1,6 @@
 <template>
   <div class="app_container">
+    <SSlideover v-model="showSlideOver" header-text="Este es el titulo"></SSlideover>
     <SStats :items="statsItems"></SStats>
     <SPopOver
       v-model="showPopOver"
@@ -178,7 +179,7 @@ const statsItems = ref([
   },
   {
     icon: 'help',
-    trend: 20,
+    trend: -20,
     help: 'Hola mundo',
     label: 'Este es un label',
     value: '0,000',
@@ -199,7 +200,8 @@ const text = ref('');
 const date = ref('');
 const text2 = ref([]);
 const text3 = ref('');
-const showPopOver = ref(true);
+const showPopOver = ref(false);
+const showSlideOver = ref(true);
 const options = ref<any[]>([
   {
     text: 'Javascript Javascript Javascript Javascript Javascript Javascript',
