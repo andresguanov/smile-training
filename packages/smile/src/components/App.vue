@@ -1,5 +1,6 @@
 <template>
   <div class="app_container">
+    <SStats :items="statsItems"></SStats>
     <SPopOver
       v-model="showPopOver"
       title="Título del popover"
@@ -164,6 +165,32 @@
 import type { smTableChangeEvent, smTableColumn } from '~/interfaces';
 import { SButton, SmForm } from './index';
 import { $SmAlert, ISmAlertProvide } from '../utils/alerts';
+
+import SStats from './SStats/SStats.vue';
+
+const statsItems = ref([
+  {
+    icon: 'help',
+    trend: 20,
+    help: 'Hola mundo',
+    label: 'Este es un label',
+    value: '0,000',
+  },
+  {
+    icon: 'help',
+    trend: 20,
+    help: 'Hola mundo',
+    label: 'Este es un label',
+    value: '0,000',
+  },
+  {
+    icon: 'help',
+    trend: 20,
+    help: 'Hola mundo',
+    label: 'Este es un label',
+    value: '0,000',
+  },
+]);
 
 const selectAll = ref(false);
 const modal = ref(false);

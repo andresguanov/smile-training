@@ -6,3 +6,4 @@ export * from './sm-icon.interface';
 export * from './sm-wizard.interface';
 export * from './sm-addon.interface';
 export * from './sm-option.interface';
+export * from './s-stats.interface';
