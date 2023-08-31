@@ -65,3 +65,5 @@ export { default as SToolbar } from './SToolbar/SToolbar.vue';
 export { default as SPagination } from './SPagination/SPagination.vue';
 export { default as SCell } from './SCell/SCell.vue';
 export { default as SDatepicker } from './SDatepicker/SDatepicker.vue';
+export { default as SSlideover } from './SSlideover/SSlideover.vue';
+export { default as SStats } from './SStats/SStats.vue';
