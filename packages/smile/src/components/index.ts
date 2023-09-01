@@ -67,3 +67,4 @@ export { default as SCell } from './SCell/SCell.vue';
 export { default as SDatepicker } from './SDatepicker/SDatepicker.vue';
 export { default as SSlideover } from './SSlideover/SSlideover.vue';
 export { default as SStats } from './SStats/SStats.vue';
+export { default as SToggle } from './SToggle/SToggle.vue';

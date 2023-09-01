@@ -80,6 +80,7 @@ declare module 'vue' {
     STabs: typeof import('./components/STab/STabs.vue')['default']
     STabSelectors: typeof import('./components/STab/STabSelectors.vue')['default']
     STag: typeof import('./components/STag/STag.vue')['default']
+    SToggle: typeof import('./components/SToggle/SToggle.vue')['default']
     SToolbar: typeof import('./components/SToolbar/SToolbar.vue')['default']
     STooltip: typeof import('./components/STooltip/STooltip.vue')['default']
     SWizard: typeof import('./components/SWizard/SWizard.vue')['default']
