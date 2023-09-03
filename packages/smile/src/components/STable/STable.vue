@@ -78,6 +78,11 @@
         </tr>
       </tbody>
     </table>
+    <div v-if="!rows.length" class="s-table__empty">
+      <slot name="empty">
+        <p>No hay contenido disponible</p>
+      </slot>
+    </div>
     <s-pagination
       :page="internalPage"
       :items-per-page="internalItemsPerPage"

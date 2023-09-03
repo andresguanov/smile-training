@@ -68,3 +68,4 @@ export { default as SDatepicker } from './SDatepicker/SDatepicker.vue';
 export { default as SSlideover } from './SSlideover/SSlideover.vue';
 export { default as SStats } from './SStats/SStats.vue';
 export { default as SToggle } from './SToggle/SToggle.vue';
+export { default as SAvatar } from './SAvatar/SAvatar.vue';
