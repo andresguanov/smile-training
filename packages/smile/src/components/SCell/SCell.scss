@@ -6,11 +6,7 @@
     @apply justify-end;
   }
   .s-cell__avatar {
-    @apply h-5 w-5 border border-solid border-slate-200/[0.45];
-
-    &::first-letter {
-      @apply text-sm;
-    }
+    @apply bg-white;
   }
   &__text {
     &__main {

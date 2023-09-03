@@ -28,6 +28,7 @@
       <s-form ref="smFormEl" validate-on="focusout">
         <template #default="{ validate, reset, isValid }">
           {{ isValid }}
+          <s-avatar size="md" type="square" icon="accounting" text="Pequeño avatar" />
           <div id="popover-target-1" @click="showPopOver = true">
             <s-chip label="test" selected avatar="Carlos" />
           </div>
@@ -44,7 +45,6 @@
             ]"
             required
           />
-          <s-chip label="test" disabled selected />
           {{ text2 }}
           <s-dropdown
             v-model="text2"
@@ -63,10 +63,6 @@
             @open="logEvent"
             @search="logEvent"
           >
-            <template #leading>
-              <p>🏴</p>
-              yo
-            </template>
           </s-dropdown>
           <s-input
             v-model="text"
@@ -132,7 +128,7 @@
         </template>
       </s-form>
     </sm-card>
-    <sm-table
+    <s-table
       ref="testSmTable"
       :rows="items"
       :filter-config="{
@@ -153,9 +149,16 @@
         <input v-model="selectAll" type="checkbox" name="test" id="test" />
       </template>
       <template #rowCell(a)="{ row }">
-        <s-cell :text="row.a" second-line="Second Line" avatar="Hola Mundo" right-content />
+        <s-cell
+          :text="row.a"
+          :avatar="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
+            row.a + 1
+          }.png`"
+          right-content
+          second-line="Second Line"
+        />
       </template>
-    </sm-table>
+    </s-table>
     <!-- <s-table /> -->
   </div>
 </template>
@@ -204,7 +207,7 @@ const cols: smTableColumn[] = reactive([
     format: (value: string) => value.toUpperCase(),
     label: 'B es un nombre muy largo lorem ipsum -----',
     name: 'b',
-    width: '100px',
+    width: '200px',
     bodyClass: 'b-column whitespace-nowrap text-ellipsis overflow-x-hidden',
   },
   {
