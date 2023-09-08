@@ -21,7 +21,7 @@
       }
     }
     &-th {
-      @apply text-sm-primary-700 bg-slate-100;
+      @apply text-sm-primary-700 bg-slate-100 font-semibold;
       @apply first:rounded-tl last:rounded-tr;
       @apply whitespace-nowrap text-ellipsis overflow-x-hidden;
       &.filterable {
@@ -50,7 +50,9 @@
   &-filter {
     visibility: collapse;
     opacity: 0;
-    transition: visibility 0.2s linear, opacity 0.2s linear;
+    transition:
+      visibility 0.2s linear,
+      opacity 0.2s linear;
     &.open {
       @apply visible opacity-100;
     }

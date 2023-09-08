@@ -13,7 +13,7 @@
 import SmIcon from '../SmIcon/SmIcon.vue';
 
 defineProps<{
-  errorMessages: String[];
+  errorMessages: string[];
 }>();
 </script>
 

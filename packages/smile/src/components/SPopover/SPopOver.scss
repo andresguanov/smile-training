@@ -2,10 +2,10 @@
 
 .tippy-box[data-theme~='smile-next'] {
   @apply bg-slate-800;
-  @apply rounded-lg;
+  @apply rounded-xl;
 
   > .tippy-content {
-    @apply px-4 py-2;
+    @apply p-4;
     @apply text-white text-xs font-semibold;
   }
   > .tippy-arrow::before {
@@ -22,5 +22,14 @@
   }
   &[data-placement^='right'] > .tippy-arrow::before {
     @apply border-r-slate-800;
+  }
+}
+
+.s-popover {
+  &-title {
+    @apply text-base font-medium text-white mb-2 mt-0 w-full flex justify-between items-center;
+  }
+  &-description {
+    @apply text-xs leading-4 font-normal text-white mb-4 mt-0 opacity-70;
   }
 }

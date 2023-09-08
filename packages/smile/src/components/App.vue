@@ -1,7 +1,24 @@
 <template>
   <div class="app_container">
+    <SSlideover v-model="showSlideOver" header-text="Este es el titulo"></SSlideover>
+    <SStats :items="statsItems"></SStats>
+    <SPopOver
+      v-model="showPopOver"
+      title="Título del popover"
+      description="Los popovers son desplegados al hacer click o un tap en lugar de hacer hover, como un tooltip"
+    >
+      <span>Paragraph with PopOver</span>
+      <template #actions>
+        <div style="display: flex; justify-content: flex-end">
+          <s-button type="reversed" size="small" emphasis="text" @click="showPopOver = false">
+            Cerrar
+          </s-button>
+          <s-button type="reversed" size="small">Label</s-button>
+        </div>
+      </template>
+    </SPopOver>
+    <br />
     <sm-alert-stack />
-    <s-wizard v-model="step" :steps="steps" has-back-button :is-on-component="true" />
     <s-modal
       v-model="modal"
       header-text="Carga un archivo o documento"
@@ -13,8 +30,23 @@
       <s-form ref="smFormEl" validate-on="focusout">
         <template #default="{ validate, reset, isValid }">
           {{ isValid }}
-          <s-chip label="test" selected avatar="Carlos" />
-          <s-chip label="test" disabled selected />
+          <s-avatar size="md" type="square" icon="accounting" text="Pequeño avatar" />
+          <div id="popover-target-1" @click="showPopOver = true">
+            <s-chip label="test" selected avatar="Carlos" />
+          </div>
+          <s-datepicker
+            v-model="date"
+            label="fecha test"
+            mode="range"
+            mark-type="required"
+            error="dasdasdasd"
+            :sidebar-options="[
+              { id: '1', title: 'Semana pasada' },
+              { id: '2', title: 'TEST test' },
+              { id: '3', title: 'S-TEST' },
+            ]"
+            required
+          />
           {{ text2 }}
           <s-dropdown
             v-model="text2"
@@ -24,12 +56,7 @@
             search
             id="dropdown-test"
             :rules="selectRules"
-            :options="[
-              { text: 'Javascript', code: 'js', icon: 'flag-3' },
-              { text: 'PHP', code: 'php', icon: 'flag-3' },
-              { text: 'Python', code: 'py', icon: 'flag-3' },
-              { text: 'C++', code: 'cc', icon: 'flag-3' },
-            ]"
+            :options="options"
             :leading="{
               label: 'Leading',
               leadingIcon: 'accounting',
@@ -38,10 +65,6 @@
             @open="logEvent"
             @search="logEvent"
           >
-            <template #leading>
-              <p>🏴</p>
-              yo
-            </template>
           </s-dropdown>
           <s-input
             v-model="text"
@@ -107,93 +130,92 @@
         </template>
       </s-form>
     </sm-card>
-    <sm-card>
-      <sm-form ref="smFormEl" validation-mode="on-type" container-is-form @submit="onSubmit">
-        <template #default="{ isValid, reset }">
-          <h4>El formulario es: {{ isValid ? 'válido' : 'no válido' }}</h4>
-          <div class="flex flex-col">
-            <s-radio
-              v-model="radio"
-              label="test"
-              show-mark
-              orientation="horizontal"
-              :options="[
-                { value: { card: '1' }, label: 'card-1' },
-                { value: { card: '2' }, label: 'card-2' },
-              ]"
-              :rules="[
-                val => {
-                  return (val as radioTest).card === '1' || 'Debe escoger el valord card 1';
-                },
-              ]"
-            />
-            <s-checkbox
-              v-model="check"
-              name="test"
-              label="test"
-              orientation="horizontal"
-              :options="[
-                { value: '1', label: 'card-1' },
-                { value: '2', label: 'card-2', disabled: true },
-                { value: '3', label: 'card-3', disabled: true, indeterminate: true },
-                { value: '4', label: 'card-4', indeterminate: true },
-              ]"
-              :rules="[
-                val => {
-                  return val.length > 0 || 'Debe escoger al menos una opción';
-                },
-              ]"
-            />
-          </div>
-          <s-button emphasis="subtle" native-type="submit">Submit</s-button>
-          <s-button emphasis="outline" @click="reset">Reset</s-button>
-        </template>
-      </sm-form>
-    </sm-card>
-    <sm-table
+    <s-table
       ref="testSmTable"
+      :rows="items"
       :filter-config="{
         b: {
           type: 'datepicker',
         },
       }"
-      :rows="items"
       :column-config="cols"
-      actions-col-width="100px"
       class="my-table"
-      is-fixed
+      :actions="[{ label: 'Test', name: 'test', icon: 'add' }]"
+      pagination-full-mode
       @refresh="onChange"
       @change="onChange"
       @filter="onChange"
+      @toolbar-action="logEvent"
     >
       <template #head.a>
         <input v-model="selectAll" type="checkbox" name="test" id="test" />
       </template>
-      <template #bodyRow.a="{ row }">
-        <input v-model="selected" :value="row.a" type="checkbox" name="test" id="test" />
+      <template #rowCell(a)="{ row }">
+        <s-cell
+          :text="row.a"
+          :avatar="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
+            row.a + 1
+          }.png`"
+          right-content
+          second-line="Second Line"
+        />
       </template>
-    </sm-table>
+    </s-table>
+    <!-- <s-table /> -->
   </div>
 </template>
 
 <script setup lang="ts">
-import { SButton, SmForm, SmTable } from './index';
+import type { smTableChangeEvent, smTableColumn } from '~/interfaces';
+import { SButton, SmForm } from './index';
 import { $SmAlert, ISmAlertProvide } from '../utils/alerts';
-import { smStepWizard, smTableChangeEvent, smTableColumn } from '~/interfaces';
 
-interface radioTest {
-  card: string;
-}
+import SStats from './SStats/SStats.vue';
+
+const statsItems = ref([
+  {
+    icon: 'help',
+    trend: 20,
+    help: 'Hola mundo',
+    label: 'Este es un label',
+    value: '0,000',
+  },
+  {
+    icon: 'help',
+    trend: -20,
+    help: 'Hola mundo',
+    label: 'Este es un label',
+    value: '0,000',
+  },
+  {
+    icon: 'help',
+    trend: 20,
+    help: 'Hola mundo',
+    label: 'Este es un label',
+    value: '0,000',
+  },
+]);
+
 const selectAll = ref(false);
-const selected = ref([]);
-const modal = ref(true);
-const check = ref([]);
-const radio = ref('');
+const modal = ref(false);
 const number = ref(3);
 const text = ref('');
+const date = ref('');
 const text2 = ref([]);
 const text3 = ref('');
-const options = ref<any[]>([]);
+const showPopOver = ref(false);
+const showSlideOver = ref(true);
+const options = ref<any[]>([
+  {
+    text: 'Javascript Javascript Javascript Javascript Javascript Javascript',
+    description: 'Javascript Javascript Javascript Javascript Javascript Javascript',
+    code: 'js',
+    icon: 'flag-3',
+  },
+  { text: 'PHP', code: 'php', icon: 'flag-3' },
+  { text: 'Python', code: 'py', icon: 'flag-3' },
+  { text: 'C++', code: 'cc', icon: 'flag-3' },
+]);
 
 const cols: smTableColumn[] = reactive([
   {
@@ -214,7 +236,7 @@ const cols: smTableColumn[] = reactive([
     format: (value: string) => value.toUpperCase(),
     label: 'B es un nombre muy largo lorem ipsum -----',
     name: 'b',
-    width: '100px',
+    width: '200px',
     bodyClass: 'b-column whitespace-nowrap text-ellipsis overflow-x-hidden',
   },
   {
@@ -226,34 +248,6 @@ const cols: smTableColumn[] = reactive([
     width: '100px',
   },
 ]);
-const step = ref(1);
-const step1 = h('div', [h('p', 'Formulario 1'), h('input', { placeholder: 'User' })]);
-const step2 = h('div', [h('p', 'Formulario 2'), h('input', { placeholder: 'Email' })]);
-const step3 = h('div', [
-  h('p', 'Formulario 2'),
-  h('input', { placeholder: 'Fecha', type: 'date' }),
-]);
-const steps: smStepWizard[] = [
-  {
-    title: 'STEP 1',
-    description: 'Descripción del step 1',
-    label: 'user',
-    components: [step1, SButton],
-  },
-  {
-    title: 'STEP 2',
-    description: 'Descripción del step 2',
-    label: 'email',
-    components: [step2],
-  },
-  {
-    title: 'STEP 3',
-    description: 'Descripción del step 3',
-    label: 'date',
-    components: [step3],
-  },
-];
-
 const items = computed(() => {
   const totalItems = 35;
   const obj = [];
@@ -279,26 +273,17 @@ const selectRules = ref([
   },
 ]);
 const smFormEl = ref<InstanceType<typeof SmForm> | null>();
-const onSubmit = (e?: string) => {
-  console.log({ e });
-};
 const isLoadingOptions = ref(false);
 const openLanguajes = () => {
   isLoadingOptions.value = true;
   setTimeout(() => {
-    options.value = [
-      { text: 'Javascript', code: 'js', icon: 'flag-3' },
-      { text: 'PHP', code: 'php', icon: 'flag-3' },
-      { text: 'Python', code: 'py', icon: 'flag-3' },
-      { text: 'C++', code: 'cc', icon: 'flag-3' },
-    ];
+    options.value = [...options.value];
     isLoadingOptions.value = false;
   }, 3000);
 };
 
 const smAlert = inject<ISmAlertProvide>($SmAlert);
 onMounted(() => {
-  smFormEl.value?.validateInputs(true);
   smAlert?.success('Hola mundo');
   smAlert?.error('Hola mundo');
   smAlert?.warning('Hola mundo', { title: '<h2>Grande</h2> pequeño' });

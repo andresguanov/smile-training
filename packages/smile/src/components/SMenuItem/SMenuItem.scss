@@ -29,6 +29,7 @@
   &__text {
     @apply flex items-center space-x-2;
     @apply text-sm font-normal;
+    @apply flex-1;
 
     &.block {
       @apply flex-col items-start space-y-1 space-x-0;
