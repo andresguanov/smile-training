@@ -166,13 +166,13 @@
 </template>
 
 <script setup lang="ts">
-import type { smTableChangeEvent, smTableColumn } from '~/interfaces';
+import type { sStatItem, smTableChangeEvent, smTableColumn } from '~/interfaces';
 import { SButton, SmForm } from './index';
 import { $SmAlert, ISmAlertProvide } from '../utils/alerts';
 
 import SStats from './SStats/SStats.vue';
 
-const statsItems = ref([
+const statsItems = ref<sStatItem[]>([
   {
     icon: 'help',
     trend: 20,

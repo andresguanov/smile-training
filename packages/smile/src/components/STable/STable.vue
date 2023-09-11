@@ -98,7 +98,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup generic="T extends Record<string, any>">
 import type { smPaginationText } from '../../interfaces/sm-pagination.interface';
 import type {
   smTableColumn,
@@ -110,7 +110,7 @@ import type {
 
 const props = withDefaults(
   defineProps<{
-    rows?: Array<any>;
+    rows?: Array<T>;
     hoverable?: boolean;
     total?: number;
     initialPage?: number;
@@ -185,7 +185,7 @@ const sortIcon = computed(() =>
 
 // const { filterValues } = useFilters(props.columnConfig, props.filterConfig);
 
-const tableData = computed((): Array<any> => {
+const tableData = computed(() => {
   if (props.rows.length > internalItemsPerPage.value) {
     return [...props.rows].slice(0, internalItemsPerPage.value);
   }
