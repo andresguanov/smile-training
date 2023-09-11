@@ -133,11 +133,7 @@
     <s-table
       ref="testSmTable"
       :rows="items"
-      :filter-config="{
-        b: {
-          type: 'datepicker',
-        },
-      }"
+      :filters="[{ key: 'date', label: 'fecha', type: 'datepicker', icon: 'clock' }]"
       :column-config="cols"
       class="my-table"
       :actions="[{ label: 'Test', name: 'test', icon: 'add' }]"
