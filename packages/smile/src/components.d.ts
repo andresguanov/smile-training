@@ -5,6 +5,7 @@
 declare module 'vue' {
   export interface GlobalComponents {
     App: typeof import('./components/App.vue')['default'];
+    SAvatar: typeof import('./components/SAvatar/SAvatar.vue')['default'];
     SBreadcrumb: typeof import('./components/SBreadcrumb/SBreadcrumb.vue')['default'];
     SButton: typeof import('./components/SButton/SButton.vue')['default'];
     SCell: typeof import('./components/SCell/SCell.vue')['default'];
@@ -70,6 +71,8 @@ declare module 'vue' {
     SPagination: typeof import('./components/SPagination/SPagination.vue')['default'];
     SPopOver: typeof import('./components/SPopover/SPopOver.vue')['default'];
     SRadio: typeof import('./components/SRadio/SRadio.vue')['default'];
+    SSlideover: typeof import('./components/SSlideover/SSlideover.vue')['default'];
+    SStats: typeof import('./components/SStats/SStats.vue')['default'];
     SStep: typeof import('./components/SStepper/SStep.vue')['default'];
     SStepper: typeof import('./components/SStepper/SStepper.vue')['default'];
     STabContent: typeof import('./components/STab/STabContent.vue')['default'];
@@ -78,6 +81,7 @@ declare module 'vue' {
     STabs: typeof import('./components/STab/STabs.vue')['default'];
     STabSelectors: typeof import('./components/STab/STabSelectors.vue')['default'];
     STag: typeof import('./components/STag/STag.vue')['default'];
+    SToggle: typeof import('./components/SToggle/SToggle.vue')['default'];
     SToolbar: typeof import('./components/SToolbar/SToolbar.vue')['default'];
     STooltip: typeof import('./components/STooltip/STooltip.vue')['default'];
     SWizard: typeof import('./components/SWizard/SWizard.vue')['default'];

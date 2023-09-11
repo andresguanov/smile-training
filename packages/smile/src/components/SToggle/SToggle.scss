@@ -1,0 +1,46 @@
+.s-toggle {
+  @apply relative inline-block cursor-pointer;
+  &-disabled {
+    @apply opacity-30;
+  }
+  &-input {
+    @apply pl-[2.7rem] min-h-[1.25rem];
+    .s-toggle-slider {
+      @apply w-10 h-6;
+      @apply before:h-4 before:w-4;
+    }
+    .s-label-text {
+      @apply text-sm text-slate-700 ml-1.5;
+    }
+    input:checked + .s-toggle-slider:before {
+      @apply translate-x-[0.9rem];
+    }
+  }
+}
+
+/* Hide default HTML checkbox */
+.s-toggle input {
+  @apply opacity-0 absolute top-0;
+}
+
+/* The sm-toggle-slider */
+.s-toggle-slider {
+  @apply absolute duration-200 bg-slate-200/[0.45] top-0 left-0 cursor-pointer rounded-full
+    border border-slate-300 p-1;
+}
+
+.s-toggle-slider:hover {
+  @apply bg-slate-200/[.70];
+}
+
+.s-toggle-slider:before {
+  @apply absolute content-[''] border border-slate-300 bg-white duration-200 rounded-full top-[0.18rem];
+}
+
+input:checked + .s-toggle-slider {
+  @apply bg-sm-primary-600 border-sm-primary-600;
+}
+
+input:checked + .s-toggle-slider:before {
+  @apply border-white;
+}

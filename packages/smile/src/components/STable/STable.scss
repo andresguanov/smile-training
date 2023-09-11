@@ -69,4 +69,8 @@
       @apply bg-slate-200/[0.45];
     }
   }
+  &__empty {
+    @apply min-h-[320px] flex items-center justify-center;
+    @apply border-b border-solid border-slate-200;
+  }
 }

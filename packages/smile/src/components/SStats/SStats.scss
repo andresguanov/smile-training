@@ -1,0 +1,45 @@
+.s-stats {
+  @apply bg-white border border-slate-200 rounded-2xl;
+  @apply w-full;
+
+  &-item {
+    @apply flex space-x-4 w-full p-4 border-b border-slate-200;
+  }
+
+  &-item:last-child {
+    @apply border-0;
+  }
+
+  &-icon {
+    @apply bg-slate-50 h-12 w-12 rounded-full flex items-center justify-center;
+  }
+
+  &-label {
+    @apply text-slate-500 text-xs font-medium;
+  }
+
+  &-content {
+    @apply flex items-end space-x-2;
+  }
+
+  &-value {
+    @apply text-slate-700 text-xl font-semibold;
+  }
+
+  &-trend {
+    @apply text-green-700 text-xs;
+  }
+
+  &-trend-error {
+    @apply text-xs text-fire-opal;
+  }
+
+  @screen md {
+    @apply flex;
+
+    &-item {
+      @apply border-b-0;
+      @apply border-r border-slate-200;
+    }
+  }
+}

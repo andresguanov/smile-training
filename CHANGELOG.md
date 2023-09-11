@@ -1,3 +1,31 @@
+## [0.0.36-beta.10] (2023-09-11)
+
+### :tada: Releases:
+
+- _SToggle_
+- _SSlideOver_
+- _SStats_
+- _SAvatar_
+
+### :rocket: Features:
+
+- **SmTable**:
+
+  - Se implementó un generic type a la prop rows para obtener el type correcto al momento de usar los slots (https://github.com/alegradev/smile-ui-next/pull/3).
+
+- **STable**:
+
+  - Se implementó un generic type a la prop rows para obtener el type correcto al momento de usar los slots.
+
+## [0.0.36-beta.9] (2023-08-27)
+
+### :rocket: Features:
+
+- **SDatepicker**:
+
+  - Props: Se agregaron varias props faltantes.
+  - Design: Se realizaron varias mejoras en el diseño del componente.
+
 ## [0.0.36-beta.8] (2023-08-22)
 
 ### :warning: BREAKING CHANGES:

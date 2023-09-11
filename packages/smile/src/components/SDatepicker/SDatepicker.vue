@@ -36,7 +36,7 @@
           :model-value="value"
           :placeholder="placeholder"
           :size="size"
-          icon-left="calendar"
+          icon-right="calendar"
           @blur="onBlur"
         />
       </template>

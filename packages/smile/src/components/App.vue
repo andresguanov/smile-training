@@ -1,5 +1,7 @@
 <template>
   <div class="app_container">
+    <SSlideover v-model="showSlideOver" header-text="Este es el titulo"></SSlideover>
+    <SStats :items="statsItems"></SStats>
     <SPopOver
       v-model="showPopOver"
       title="Título del popover"
@@ -28,6 +30,7 @@
       <s-form ref="smFormEl" validate-on="focusout">
         <template #default="{ validate, reset, isValid }">
           {{ isValid }}
+          <s-avatar size="md" type="square" icon="accounting" text="Pequeño avatar" />
           <div id="popover-target-1" @click="showPopOver = true">
             <s-chip label="test" selected avatar="Carlos" />
           </div>
@@ -44,7 +47,6 @@
             ]"
             required
           />
-          <s-chip label="test" disabled selected />
           {{ text2 }}
           <s-dropdown
             v-model="text2"
@@ -63,10 +65,6 @@
             @open="logEvent"
             @search="logEvent"
           >
-            <template #leading>
-              <p>🏴</p>
-              yo
-            </template>
           </s-dropdown>
           <s-input
             v-model="text"
@@ -132,14 +130,10 @@
         </template>
       </s-form>
     </sm-card>
-    <sm-table
+    <s-table
       ref="testSmTable"
       :rows="items"
-      :filter-config="{
-        b: {
-          type: 'datepicker',
-        },
-      }"
+      :filters="[{ key: 'date', label: 'fecha', type: 'datepicker', icon: 'clock' }]"
       :column-config="cols"
       class="my-table"
       :actions="[{ label: 'Test', name: 'test', icon: 'add' }]"
@@ -153,17 +147,50 @@
         <input v-model="selectAll" type="checkbox" name="test" id="test" />
       </template>
       <template #rowCell(a)="{ row }">
-        <s-cell :text="row.a" second-line="Second Line" avatar="Hola Mundo" right-content />
+        <s-cell
+          :text="row.a"
+          :avatar="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
+            row.a + 1
+          }.png`"
+          right-content
+          second-line="Second Line"
+        />
       </template>
-    </sm-table>
+    </s-table>
     <!-- <s-table /> -->
   </div>
 </template>
 
 <script setup lang="ts">
-import type { smTableChangeEvent, smTableColumn } from '~/interfaces';
+import type { sStatItem, smTableChangeEvent, smTableColumn } from '~/interfaces';
 import { SButton, SmForm } from './index';
 import { $SmAlert, ISmAlertProvide } from '../utils/alerts';
+
+import SStats from './SStats/SStats.vue';
+
+const statsItems = ref<sStatItem[]>([
+  {
+    icon: 'help',
+    trend: 20,
+    help: 'Hola mundo',
+    label: 'Este es un label',
+    value: '0,000',
+  },
+  {
+    icon: 'help',
+    trend: -20,
+    help: 'Hola mundo',
+    label: 'Este es un label',
+    value: '0,000',
+  },
+  {
+    icon: 'help',
+    trend: 20,
+    help: 'Hola mundo',
+    label: 'Este es un label',
+    value: '0,000',
+  },
+]);
 
 const selectAll = ref(false);
 const modal = ref(false);
@@ -172,7 +199,8 @@ const text = ref('');
 const date = ref('');
 const text2 = ref([]);
 const text3 = ref('');
-const showPopOver = ref(true);
+const showPopOver = ref(false);
+const showSlideOver = ref(true);
 const options = ref<any[]>([
   {
     text: 'Javascript Javascript Javascript Javascript Javascript Javascript',
@@ -204,7 +232,7 @@ const cols: smTableColumn[] = reactive([
     format: (value: string) => value.toUpperCase(),
     label: 'B es un nombre muy largo lorem ipsum -----',
     name: 'b',
-    width: '100px',
+    width: '200px',
     bodyClass: 'b-column whitespace-nowrap text-ellipsis overflow-x-hidden',
   },
   {

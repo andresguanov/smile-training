@@ -51,7 +51,7 @@
             :header-name="col.name"
             :style="{ width: col.width }"
           >
-            <slot :name="(('head.' + col.name) as string)" :col="col">
+            <slot :name="('head.' + col.name) as string" :col="col">
               <sm-icon
                 v-if="col.name == sortColumn"
                 :class="{ desc: !ascending }"
@@ -87,7 +87,7 @@
               :data-name="col.name"
             >
               <slot
-                :name="(('bodyRow.' + col.name) as string)"
+                :name="('bodyRow.' + col.name) as string"
                 :row-index="i"
                 :col-index="j"
                 :col="col"
@@ -127,7 +127,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup generic="T extends Record<string, any>">
 import { SmPagination, SmInnerLoading, SmMarkupTable } from '../index';
 import { useSlots } from 'vue';
 import { smPaginationText } from '../../interfaces/sm-pagination.interface';
@@ -140,7 +140,7 @@ import { useFilters } from '../../composables';
 
 const props = withDefaults(
   defineProps<{
-    rows?: Array<any>;
+    rows?: Array<T>;
     hoverable?: boolean;
     total?: number;
     page?: number;
@@ -198,7 +198,7 @@ const hasActionsColumn = computed(
 const { hasFilterableData, filterAttrs, filterValues, showFilters, resetValues, filtersAreFalsy } =
   useFilters(props.columnConfig, props.filterConfig);
 
-const tableData = computed((): Array<any> => {
+const tableData = computed((): Array<T> => {
   if (props.rows.length > internalItemsPerPage.value) {
     return [...props.rows].slice(0, internalItemsPerPage.value);
   }

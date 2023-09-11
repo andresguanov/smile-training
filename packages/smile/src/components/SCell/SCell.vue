@@ -1,6 +1,12 @@
 <template>
   <div class="s-cell" :class="{ 'right-content': rightContent }">
-    <sm-name-avatar v-if="avatar" :name="avatar" class="s-cell__avatar" />
+    <s-avatar
+      v-if="avatar"
+      :image="avatar"
+      :text="text.toString()"
+      size="xs"
+      class="s-cell__avatar"
+    />
     <div class="s-cell__text">
       <p class="s-cell__text__main">{{ text }}</p>
       <p class="s-cell__text__secondary">{{ secondLine }}</p>
