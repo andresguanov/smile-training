@@ -149,7 +149,6 @@ const props = withDefaults(
     hoverable: true,
     rows: (): Array<any> => [],
     columnConfig: (): Array<smTableColumn> => [],
-    filterConfig: () => ({}),
     initialPage: 1,
     initialItemsPerPage: 10,
   }
