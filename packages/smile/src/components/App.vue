@@ -30,10 +30,13 @@
       <s-form ref="smFormEl" validate-on="focusout">
         <template #default="{ validate, reset, isValid }">
           {{ isValid }}
-          <s-avatar size="md" type="square" icon="accounting" text="Pequeño avatar" />
-          <div id="popover-target-1" @click="showPopOver = true">
-            <s-chip label="test" selected avatar="Carlos" />
-          </div>
+          <s-file-upload
+            v-model:files="files"
+            label="Invoices"
+            description="Only PDF, JPG or PNG less than 500mb"
+            multiple
+            @update:files="logEvent"
+          />
           <s-datepicker
             v-model="date"
             label="fecha test"
@@ -162,7 +165,7 @@
 </template>
 
 <script setup lang="ts">
-import type { sStatItem, smTableChangeEvent, smTableColumn } from '~/interfaces';
+import type { sStatItem, smTableChangeEvent, smTableColumn, FileItem } from '~/interfaces';
 import { SButton, SmForm } from './index';
 import { $SmAlert, ISmAlertProvide } from '../utils/alerts';
 
@@ -191,7 +194,7 @@ const statsItems = ref<sStatItem[]>([
     value: '0,000',
   },
 ]);
-
+const files = ref<FileItem[]>([]);
 const selectAll = ref(false);
 const modal = ref(false);
 const number = ref(3);
