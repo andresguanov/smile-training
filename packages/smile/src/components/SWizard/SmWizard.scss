@@ -13,7 +13,7 @@
     }
   }
   &-close {
-    @apply cursor-pointer;
+    @apply pl-2;
   }
   &-topbar {
     @apply px-4 flex justify-between items-center flex-wrap bg-white;
@@ -22,7 +22,14 @@
       @apply px-20 h-full max-h-14;
     }
   }
-
+  &-menu {
+    @apply flex items-center divide-x;
+  }
+  &-avatar {
+    @apply flex justify-center items-center;
+    @apply h-10 w-10 rounded-lg mr-2;
+    @apply cursor-pointer hover:bg-slate-200/[0.45];
+  }
   &-logo {
     @apply w-[90px] h-[34px] bg-cover bg-no-repeat;
     background-image: url('../../assets/logo-alegra.svg');

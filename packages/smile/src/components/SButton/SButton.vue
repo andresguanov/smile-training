@@ -6,19 +6,10 @@
     :content="isOnlyIcon ? label : ''"
     :placement="tooltipPosition"
     :class="[size, type, emphasis, { 's-button--only-icon': isOnlyIcon }]"
-    :disabled="disabled"
+    :disabled="disabled || loading"
     :loading="loading"
     :type="nativeType"
   >
-    <!-- <component
-      :is="tag"
-      class="sm-button"
-      :class="[size, type, emphasis, { 'sm-button--only-icon': isOnlyIcon }]"
-      :disabled="disabled"
-      :loading="loading"
-      :type="nativeType"
-    >
-    </component> -->
     <sm-icon
       v-if="loading"
       icon="loading"
