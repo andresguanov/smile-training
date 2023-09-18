@@ -1,0 +1,84 @@
+@import '../SmInput/SmInput.scss';
+
+.s-datepicker {
+  &__calendar {
+    @apply font-normal;
+
+    :deep(.dp__theme_light) {
+      --dp-background-color: #ffffff;
+      --dp-text-color: #334155;
+      --dp-hover-color: rgba(226, 232, 240, 0.45);
+      --dp-hover-text-color: #334155;
+      --dp-hover-icon-color: #334155;
+      --dp-primary-color: rgb(var(--sm-color-primary-600));
+      --dp-primary-text-color: #ffffff;
+      --dp-secondary-color: #cbd5e1;
+      --dp-border-color: #e2e8f0;
+      --dp-menu-border-color: #ffffff;
+      --dp-border-color-hover: #cbd5e1;
+      --dp-disabled-color: #cbd5e1;
+      --dp-scroll-bar-background: #f1f5f9;
+      --dp-scroll-bar-color: #cbd5e1;
+      --dp-success-color: #16a34a;
+      --dp-success-color-disabled: rgba(22, 163, 74, 0.3);
+      --dp-icon-color: #334155;
+      --dp-danger-color: #e11d48;
+      --dp-highlight-color: rgb(var(--sm-color-primary-50));
+      --dp-border-radius: 16px;
+      --dp-cell-border-radius: 12px;
+      --dp-menu-min-width: 304px;
+      --dp-action-row-padding: 12px;
+      --dp-menu-padding: 12px;
+      --dp-cell-padding: 4px;
+      --dp-cell-size: 40px;
+      --dp-row-maring: 0px;
+    }
+
+    :deep(.s-datepicker__calendar__menu) {
+      @apply drop-shadow-lg;
+
+      .dp__today {
+        &:not(.dp__active_date, .dp__range_start, .dp__range_end) {
+          @apply text-sm-primary-600;
+        }
+      }
+      .dp__calendar_header_item {
+        @apply font-normal uppercase text-slate-500;
+        @apply text-xs leading-8;
+      }
+      .dp__btn.dp__month_year_select {
+        @apply font-semibold text-sm;
+
+        &::after {
+          @apply ml-1 h-4;
+          content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M3.64645 5.64645C3.84171 5.45118 4.15829 5.45118 4.35355 5.64645L8 9.29289L11.6464 5.64645C11.8417 5.45118 12.1583 5.45118 12.3536 5.64645C12.5488 5.84171 12.5488 6.15829 12.3536 6.35355L8.35355 10.3536C8.15829 10.5488 7.84171 10.5488 7.64645 10.3536L3.64645 6.35355C3.45118 6.15829 3.45118 5.84171 3.64645 5.64645Z' fill='%23334155'/%3E%3C/svg%3E");
+        }
+      }
+      .dp__menu_inner:not(.dp__flex_display) {
+        .dp__month_year_row {
+          > .dp__month_year_wrap {
+            @apply order-1;
+
+            .dp__month_year_select {
+              @apply w-2/5;
+            }
+          }
+          > .dp__btn {
+            @apply order-2;
+          }
+        }
+      }
+      .dp__action_row {
+        @apply border-t border-solid border-slate-200;
+      }
+    }
+    &__actions {
+      @apply gap-2;
+      @apply flex justify-between items-center;
+
+      &.left {
+        @apply flex-1;
+      }
+    }
+  }
+}

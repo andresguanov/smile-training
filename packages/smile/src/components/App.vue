@@ -44,11 +44,12 @@
             @update:files="logEvent"
           />
           <s-datepicker
-            v-model="date"
+            v-model="selectedDate"
             label="fecha test"
-            mode="range"
             mark-type="required"
-            error="dasdasdasd"
+            :text-input="true"
+            :range-mode="true"
+            multi-calendars
             :sidebar-options="[
               { id: '1', title: 'Semana pasada' },
               { id: '2', title: 'TEST test' },
@@ -175,6 +176,8 @@ import type { smTableChangeEvent, smTableColumn, FileItem } from '~/interfaces';
 import { SButton, SmForm } from './index';
 import { $SmAlert, ISmAlertProvide } from '../utils/alerts';
 
+const selectedDate = ref([]);
+
 const step = ref(1);
 const step1 = h('div', [h('p', 'Formulario 1'), h('input', { placeholder: 'User' })]);
 const step2 = h('div', [h('p', 'Formulario 2'), h('input', { placeholder: 'Email' })]);
@@ -207,7 +210,6 @@ const selectAll = ref(false);
 const modal = ref(false);
 const number = ref(3);
 const text = ref('');
-const date = ref('');
 const text2 = ref([]);
 const text3 = ref('');
 const showPopOver = ref(false);
