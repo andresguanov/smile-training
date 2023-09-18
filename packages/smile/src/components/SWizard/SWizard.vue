@@ -5,13 +5,14 @@
       <div class="sm-wzd-next-stepper">
         <s-stepper v-model="activePage" :steps="stepsLabels" />
       </div>
-      <sm-icon
-        class="sm-wzd-next-close"
-        icon="close"
-        color="#0F172A"
-        size="medium"
-        @click="closeWizard"
-      />
+      <div class="sm-wzd-next-menu">
+        <div v-if="avatar" class="sm-wzd-next-avatar" @click="emits('clickMenu')">
+          <s-avatar :text="avatar" size="sm" />
+        </div>
+        <div class="sm-wzd-next-close">
+          <s-button only-icon="close" emphasis="text" type="ghost" @click="closeWizard" />
+        </div>
+      </div>
     </div>
     <div class="sm-wzd-next-content">
       <div :class="['sm-wzd-next-body', { 'sm-wzd-next-grid-cols-1': !isMultiRow }]">
@@ -66,6 +67,7 @@ const props = withDefaults(
     backText?: string;
     continueText?: string;
     isOnComponent?: boolean;
+    avatar?: string;
   }>(),
   { backText: 'Atrás', continueText: 'Continuar' }
 );
@@ -73,6 +75,7 @@ const props = withDefaults(
 const emits = defineEmits<{
   (event: 'update:modelValue', value: number): void;
   (event: 'close'): void;
+  (event: 'clickMenu'): void;
 }>();
 
 const slots = useSlots();
