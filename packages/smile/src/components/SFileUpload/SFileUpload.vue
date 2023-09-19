@@ -58,7 +58,7 @@ const props = withDefaults(
      * Tamaño máximo aceptado, en caso de que el archivo elegido supere el máximo
      * establecido, automáticamente se incluirá el estado de `error`.
      */
-    maxFileSize?: number;
+    // maxFileSize?: number;
     fileStatusText?: {
       success: string;
       loading: string;

@@ -1,3 +1,15 @@
+## [0.0.37] (2023-09-19)
+
+### :tada: Releases:
+
+- _SFileUpload_
+
+### :rocket: Features:
+
+- **SDatepicker**:
+
+  - Se añadió la prop sidebarOptions para poder crear un sidebar en el calendario.
+
 ## [0.0.36] (2023-09-18)
 
 ### :tada: Releases:

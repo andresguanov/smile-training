@@ -70,3 +70,4 @@ export { default as SSlideover } from './SSlideover/SSlideover.vue';
 export { default as SStats } from './SStats/SStats.vue';
 export { default as SToggle } from './SToggle/SToggle.vue';
 export { default as SAvatar } from './SAvatar/SAvatar.vue';
+export { default as SFileUpload } from './SFileUpload/SFileUpload.vue';
