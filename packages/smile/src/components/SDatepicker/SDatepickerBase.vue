@@ -55,7 +55,7 @@
         :title="option.title"
         :description="option.description"
         text-style="block"
-        @click="emit('clickOption', option.title)"
+        @click="emit('clickOption', option.id)"
       />
     </template>
   </date-picker>

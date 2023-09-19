@@ -24,6 +24,7 @@
       :text-input="textInput"
       :range-mode="rangeMode"
       :multi-calendars="multiCalendars"
+      @click-option="v => emit('clickOption', v)"
     >
       <template #s-dp-trigger="{ value, onBlur, onInput }">
         <s-input
