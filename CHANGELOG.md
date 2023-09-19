@@ -1,3 +1,10 @@
+## [0.0.36] (2023-09-18)
+
+### :tada: Releases:
+
+- _SDatepickerBase_
+- Todas los cambios lanzados en las beta versión.
+
 ## [0.0.36-beta.10] (2023-09-11)
 
 ### :tada: Releases:

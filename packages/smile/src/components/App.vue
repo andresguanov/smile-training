@@ -1,7 +1,13 @@
 <template>
   <div class="app_container">
+    <s-wizard
+      v-model="step"
+      :steps="steps"
+      has-back-button
+      :is-on-component="true"
+      avatar="Carlos"
+    />
     <SSlideover v-model="showSlideOver" header-text="Este es el titulo"></SSlideover>
-    <SStats :items="statsItems"></SStats>
     <SPopOver
       v-model="showPopOver"
       title="Título del popover"
@@ -30,16 +36,20 @@
       <s-form ref="smFormEl" validate-on="focusout">
         <template #default="{ validate, reset, isValid }">
           {{ isValid }}
-          <s-avatar size="md" type="square" icon="accounting" text="Pequeño avatar" />
-          <div id="popover-target-1" @click="showPopOver = true">
-            <s-chip label="test" selected avatar="Carlos" />
-          </div>
+          <s-file-upload
+            v-model:files="files"
+            label="Invoices"
+            description="Only PDF, JPG or PNG less than 500mb"
+            multiple
+            @update:files="logEvent"
+          />
           <s-datepicker
-            v-model="date"
+            v-model="selectedDate"
             label="fecha test"
-            mode="range"
             mark-type="required"
-            error="dasdasdasd"
+            :text-input="true"
+            :range-mode="true"
+            multi-calendars
             :sidebar-options="[
               { id: '1', title: 'Semana pasada' },
               { id: '2', title: 'TEST test' },
@@ -125,8 +135,8 @@
               inline: true,
             }"
           />
-          <sm-button type="primary" @click="validate()">Submit</sm-button>
-          <sm-button type="primary" @click="reset">Reset</sm-button>
+          <s-button @click="validate()">Submit</s-button>
+          <s-button type="destructive" @click="reset">Reset</s-button>
         </template>
       </s-form>
     </sm-card>
@@ -162,41 +172,44 @@
 </template>
 
 <script setup lang="ts">
-import type { sStatItem, smTableChangeEvent, smTableColumn } from '~/interfaces';
+import type { smTableChangeEvent, smTableColumn, FileItem } from '~/interfaces';
 import { SButton, SmForm } from './index';
 import { $SmAlert, ISmAlertProvide } from '../utils/alerts';
 
-import SStats from './SStats/SStats.vue';
+const selectedDate = ref([]);
 
-const statsItems = ref<sStatItem[]>([
-  {
-    icon: 'help',
-    trend: 20,
-    help: 'Hola mundo',
-    label: 'Este es un label',
-    value: '0,000',
-  },
-  {
-    icon: 'help',
-    trend: -20,
-    help: 'Hola mundo',
-    label: 'Este es un label',
-    value: '0,000',
-  },
-  {
-    icon: 'help',
-    trend: 20,
-    help: 'Hola mundo',
-    label: 'Este es un label',
-    value: '0,000',
-  },
+const step = ref(1);
+const step1 = h('div', [h('p', 'Formulario 1'), h('input', { placeholder: 'User' })]);
+const step2 = h('div', [h('p', 'Formulario 2'), h('input', { placeholder: 'Email' })]);
+const step3 = h('div', [
+  h('p', 'Formulario 2'),
+  h('input', { placeholder: 'Fecha', type: 'date' }),
 ]);
-
+const steps = [
+  {
+    title: 'STEP 1',
+    description: 'Descripción del step 1',
+    label: 'user',
+    components: [step1, SButton],
+  },
+  {
+    title: 'STEP 2',
+    description: 'Descripción del step 2',
+    label: 'email',
+    components: [step2],
+  },
+  {
+    title: 'STEP 3',
+    description: 'Descripción del step 3',
+    label: 'date',
+    components: [step3],
+  },
+];
+const files = ref<FileItem[]>([]);
 const selectAll = ref(false);
 const modal = ref(false);
 const number = ref(3);
 const text = ref('');
-const date = ref('');
 const text2 = ref([]);
 const text3 = ref('');
 const showPopOver = ref(false);

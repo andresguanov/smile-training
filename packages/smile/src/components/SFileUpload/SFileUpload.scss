@@ -1,0 +1,56 @@
+.s-file-upload {
+  &__label {
+    @apply text-slate-700 text-sm font-medium;
+  }
+  &__description {
+    @apply text-slate-500 text-xs font-normal;
+    @apply mt-1;
+  }
+  &__uploader {
+    @apply cursor-pointer relative;
+  }
+  &__button {
+    @apply w-full mt-2;
+  }
+  &__input {
+    @apply opacity-0 hidden;
+  }
+  &__files {
+    @apply mt-4;
+  }
+  &__item {
+    @apply p-3 first:rounded-t-xl last:rounded-b-xl;
+    @apply border border-solid border-slate-300;
+    @apply flex items-center justify-between gap-3;
+
+    &__content {
+      @apply flex flex-col font-medium gap-0.5;
+
+      p {
+        @apply text-slate-700 text-sm;
+      }
+      span {
+        @apply text-slate-500 text-xs;
+      }
+    }
+    &__icon {
+      @apply h-6 w-6;
+    }
+    &.loading {
+      .s-file-upload__item__icon {
+        @apply animate-spin text-sm-primary-600;
+      }
+    }
+    &.error {
+      .s-file-upload__item__icon,
+      .s-file-upload__item__content span {
+        @apply text-rose-600;
+      }
+    }
+    &.success {
+      .s-file-upload__item__icon {
+        @apply text-green-600;
+      }
+    }
+  }
+}

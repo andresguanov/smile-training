@@ -12,9 +12,11 @@ declare module 'vue' {
     SCheckbox: typeof import('./components/SCheckbox/SCheckbox.vue')['default'];
     SChip: typeof import('./components/SChip/SChip.vue')['default'];
     SDatepicker: typeof import('./components/SDatepicker/SDatepicker.vue')['default'];
+    SDatepickerBase: typeof import('./components/SDatepicker/SDatepickerBase.vue')['default'];
     SDropdown: typeof import('./components/SDropwdown/SDropdown.vue')['default'];
     SEmptyState: typeof import('./components/SEmptyState/SEmptyState.vue')['default'];
     SError: typeof import('./components/SError/SError.vue')['default'];
+    SFileUpload: typeof import('./components/SFileUpload/SFileUpload.vue')['default'];
     SForm: typeof import('./components/SForm/SForm.vue')['default'];
     SInput: typeof import('./components/SInput/SInput.vue')['default'];
     SInputLeading: typeof import('./components/SInput/addons/SInputLeading.vue')['default'];
