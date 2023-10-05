@@ -270,6 +270,7 @@ const onRefresh = () => {
 };
 
 defineExpose({
+  closeFilters: onHideFilter,
   onUpdateItemsPerPage,
   onUpdatePage,
   onRefresh,
