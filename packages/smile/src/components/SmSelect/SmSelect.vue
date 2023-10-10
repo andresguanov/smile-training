@@ -8,7 +8,7 @@
         :readonly="!search"
         :disabled="disabled"
         :placeholder="inputText || placeholder"
-        :class="{ 'sm-input-disabled': disabled }"
+        :class="['ellipsis', 'input-padding', { 'sm-input-disabled': disabled }]"
         v-sm-simple-uid
         @focusin="show = true"
         @focusout="hide"
@@ -31,7 +31,7 @@
         >
           <slot name="option" :option="localOptions[index]">
             <div class="sm-select-checkbox" v-if="multiple && !isItemDisabled(index)"></div>
-            <span>{{ option }}</span>
+            <span class="ellipsis">{{ option }}</span>
           </slot>
         </li>
         <li @mousedown="selecting">
@@ -403,3 +403,13 @@ defineExpose({ validate });
 </script>
 
 <style lang="scss" scoped src="./SmSelect.scss"></style>
+<style lang="scss" scoped>
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis; /* Agrega puntos suspensivos (...) si el texto se trunca */
+  white-space: nowrap; /* Evita que el texto se desborde a una nueva línea */
+}
+.input-padding {
+  padding-right: 1.5rem !important;
+}
+</style>
