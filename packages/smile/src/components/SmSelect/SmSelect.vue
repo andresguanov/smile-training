@@ -154,6 +154,9 @@ const sizeClass = computed(() => {
 
 const optionsType = computed(() => {
   hasRenderError.value = false;
+  if (!Array.isArray(props.options)) {
+    return 'undefined';
+  }
   if (props.options.every(option => typeof option === 'object')) {
     return 'object';
   }
@@ -268,11 +271,12 @@ const findItem = () => {
 };
 const resetInternalValues = () => {
   if (!props.multiple) {
-    selectedItem.value = null;
+    selectedItem.value = undefined;
   } else {
     selectedItem.value.clear();
   }
   selectedIndex.value.clear();
+  inputText.value = '';
 };
 
 const findItems = () => {

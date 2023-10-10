@@ -25,7 +25,11 @@
           >
             <component
               v-if="filter.show"
-              :is="filter.component"
+              :is="
+                getComponent(
+                  filter.component as 'SmCheckbox' | 'SmDatePicker' | 'SmInput' | 'SmSelect'
+                )
+              "
               v-model="filterValues[filter.name]"
               v-bind="filter.attrs"
               size="small"
@@ -195,8 +199,15 @@ const hasActionsColumn = computed(
   () => slots['actionsCol'] && typeof slots['actionsCol'] === 'function'
 );
 
-const { hasFilterableData, filterAttrs, filterValues, showFilters, resetValues, filtersAreFalsy } =
-  useFilters(props.columnConfig, props.filterConfig);
+const {
+  hasFilterableData,
+  filterAttrs,
+  filterValues,
+  showFilters,
+  resetValues,
+  filtersAreFalsy,
+  getComponent,
+} = useFilters(props.columnConfig, props.filterConfig);
 
 const tableData = computed((): Array<T> => {
   if (props.rows.length > internalItemsPerPage.value) {
