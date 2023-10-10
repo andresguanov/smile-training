@@ -62,11 +62,10 @@
                 icon="caret-up"
                 size="small"
               />
-              <span v-if="col.order" @click="onSort(col.name)">
-                {{ columnNames[i] }}
-              </span>
-              <span v-else>
-                {{ columnNames[i] }}
+              <span @click="col.order ? onSort(col.name) : ''">
+                <slot :name="`headText.${col.name}`" :colText="columnNames[i]">
+                  {{ columnNames[i] }}
+                </slot>
               </span>
             </slot>
           </th>
