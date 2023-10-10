@@ -37,6 +37,7 @@
           ]"
         >
           <input
+            class="input"
             :id="`dp-input-${inputId}`"
             :value="value"
             :disabled="disabled"
@@ -120,3 +121,12 @@ defineExpose({ validate });
 </script>
 
 <style scoped lang="scss" src="./SmDatepicker.scss"></style>
+<style scoped lang="scss">
+.input::placeholder {
+  font-family: Inter, Roboto, sans-serif;
+  line-height: 18px;
+  font-size: 12px;
+  font-weight: 600;
+  @apply text-slate-400  #{!important};
+}
+</style>
