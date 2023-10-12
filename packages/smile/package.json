@@ -19,16 +19,21 @@
     "dev": "cross-env NODE_ENV=development vite",
     "build": "vite build && vue-tsc --emitDeclarationOnly",
     "link": "npm link",
-    "pack": "npm pack"
+    "pack": "npm pack",
+    "story:dev": "histoire dev",
+    "story:build": "histoire build",
+    "story:preview": "histoire preview"
   },
   "dependencies": {
     "@vueuse/core": "9.3.0"
   },
   "devDependencies": {
-    "@vuepic/vue-datepicker": "6.1.0",
     "@alegradev/smile-icons": "1.0.5",
+    "@histoire/plugin-vue": "^0.17.1",
     "@vitejs/plugin-vue": "^4.2.3",
+    "@vuepic/vue-datepicker": "6.1.0",
     "autoprefixer": "^10.4.14",
+    "histoire": "^0.17.2",
     "postcss": "8.4.25",
     "sass": "1.63.6",
     "tailwind-scrollbar": "3.0.4",
