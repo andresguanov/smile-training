@@ -1,3 +1,4 @@
+/// <reference types="histoire" />
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
 import AutoImport from 'unplugin-auto-import/vite';
@@ -49,4 +50,7 @@ export default defineConfig({
       resolvers: [],
     }),
   ],
+  histoire: {
+    // Histoire config can also go here
+  },
 });
