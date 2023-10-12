@@ -38,6 +38,7 @@
           {{ isValid }}
           <s-file-upload
             v-model:files="files"
+            use-drop-zone
             label="Invoices"
             description="Only PDF, JPG or PNG less than 500mb"
             multiple

@@ -5,5 +5,5 @@ export interface smStepWizard {
   title: string;
   description: string;
   label: string;
-  components: Component;
+  components: Component[];
 }
