@@ -1,10 +1,10 @@
-@import url("https://fonts.bunny.net/css?family=fira-sans:400,400i,600,600i");
+@import url('https://fonts.bunny.net/css?family=fira-sans:400,400i,600,600i');
 
 html {
-  font-family: "Fira Sans", sans-serif !important;
+  font-family: 'Fira Sans', sans-serif !important;
 }
 body {
-  font-family: "Fira Sans", sans-serif !important;
+  font-family: 'Fira Sans', sans-serif !important;
   /* line-height: 28px !important; */
   /* font-size: 16px !important; */
   /* font-weight: 400 !important; */
@@ -52,7 +52,7 @@ h6 {
 }
 ::before,
 ::after {
-  --tw-content: "";
+  --tw-content: '';
 }
 html {
   line-height: 1.5;
@@ -96,8 +96,8 @@ code,
 kbd,
 samp,
 pre {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
   font-size: 1em;
 }
 small {
@@ -139,9 +139,9 @@ select {
   text-transform: none;
 }
 button,
-[type="button"],
-[type="reset"],
-[type="submit"] {
+[type='button'],
+[type='reset'],
+[type='submit'] {
   -webkit-appearance: button;
   background-color: transparent;
   background-image: none;
@@ -159,7 +159,7 @@ progress {
 ::-webkit-outer-spin-button {
   height: auto;
 }
-[type="search"] {
+[type='search'] {
   -webkit-appearance: textfield;
   outline-offset: -2px;
 }
@@ -216,7 +216,7 @@ textarea::placeholder {
   color: #9ca3af;
 }
 button,
-[role="button"] {
+[role='button'] {
   cursor: pointer;
 }
 :disabled {
@@ -375,7 +375,7 @@ video {
   color: white;
 }
 
-.htw-dark .htw-prose :where(hr):not(:where([class~="htw-not-prose"] *)) {
+.htw-dark .htw-prose :where(hr):not(:where([class~='htw-not-prose'] *)) {
   border-color: rgba(255, 255, 255, 0.152) !important;
 }
 
@@ -426,4 +426,19 @@ video {
 .htw-dark .sidebar-r-doc li a.active,
 .htw-dark .sidebar-r-doc li a:hover {
   color: white;
+}
+
+:root {
+  --sm-color-primary-50: 235, 250, 250;
+  --sm-color-primary-100: 212, 242, 241;
+  --sm-color-primary-200: 182, 236, 234;
+  --sm-color-primary-300: 160, 228, 226;
+  --sm-color-primary-400: 134, 223, 220;
+  /* --sm-color-primary-500: 90, 205, 202; */
+  --sm-color-primary-500: 0, 177, 157;
+  --sm-color-primary-600: 10, 158, 154;
+  /* --sm-color-primary-700: 0, 128, 124; */
+  --sm-color-primary-700: 0, 83, 94;
+  --sm-color-primary-800: 0, 106, 103;
+  --sm-color-primary-900: 0, 84, 82;
 }
