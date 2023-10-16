@@ -9,14 +9,30 @@ const alias = {
 
 const scope = alias[target] || target;
 
-if (!target) {
-  spawn.sync(
-    'npx',
-    ['lerna', 'run', 'story:build', '--scope', '@alegradev/smile-ui-next', '--stream', '--verbose'],
-    { stdio: 'inherit' }
-  );
-} else {
-  spawn.sync('npx', ['lerna', 'run', 'story:build', '--scope', scope, '--stream', '--verbose'], {
-    stdio: 'inherit',
-  });
-}
+const build = async function () {
+  try {
+    if (!target) {
+      spawn(
+        'npx',
+        [
+          'lerna',
+          'run',
+          'story:build',
+          '--scope',
+          '@alegradev/smile-ui-next',
+          '--stream',
+          '--verbose',
+        ],
+        { stdio: 'inherit' }
+      );
+    } else {
+      spawn('npx', ['lerna', 'run', 'story:build', '--scope', scope, '--stream', '--verbose'], {
+        stdio: 'inherit',
+      });
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+build();
