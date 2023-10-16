@@ -1,3 +1,8 @@
+---
+group: 'general'
+title: 'Actualizar Microfronts'
+---
+
 <div class="sidebar-r-doc">
   <div>En esta página</div>
   <ul>
