@@ -10,13 +10,13 @@ const alias = {
 const scope = alias[target] || target;
 
 if (!target) {
-  spawn(
+  spawn.sync(
     'npx',
     ['lerna', 'run', 'story:dev', '--scope', '@alegradev/smile-ui-next', '--stream', '--verbose'],
     { stdio: 'inherit' }
   );
 } else {
-  spawn('npx', ['lerna', 'run', 'story:dev', '--scope', scope, '--stream', '--verbose'], {
+  spawn.sync('npx', ['lerna', 'run', 'story:dev', '--scope', scope, '--stream', '--verbose'], {
     stdio: 'inherit',
   });
 }
