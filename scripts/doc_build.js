@@ -12,11 +12,11 @@ const scope = alias[target] || target;
 if (!target) {
   spawn(
     'npx',
-    ['lerna', 'run', 'story:dev', '--scope', '@alegradev/smile-ui-next', '--stream', '--verbose'],
+    ['lerna', 'run', 'story:build', '--scope', '@alegradev/smile-ui-next', '--stream', '--verbose'],
     { stdio: 'inherit' }
   );
 } else {
-  spawn('npx', ['lerna', 'run', 'story:dev', '--scope', scope, '--stream', '--verbose'], {
+  spawn('npx', ['lerna', 'run', 'story:build', '--scope', scope, '--stream', '--verbose'], {
     stdio: 'inherit',
   });
 }
