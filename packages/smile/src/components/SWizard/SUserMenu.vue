@@ -1,26 +1,20 @@
-<!-- <template>
+<template>
   <div
-    class="sm-wzd-next-avatar"
+    class="s-user-menu"
     tabindex="-1"
     @click="showUserMenu = !showUserMenu"
     @blur="showUserMenu = false"
   >
     <s-avatar :text="avatar" size="sm" />
-    <ul
-      :class="[
-        'new-user-menu__dropdown text-sm shadow-lg',
-        { 'opacity-0 invisible': !showUserMenu },
-      ]"
-    >
+    <ul :class="['s-user-menu__dropdown', { 'opacity-0 invisible': !showUserMenu }]">
       <div class="p-4">
         <div v-if="userFullName" class="font-normal text-slate-700">{{ userFullName }}</div>
         <p class="text-slate-500 text-xs m-0">
           {{ shorten(userMail, 28) }}
         </p>
       </div>
-
       <div
-        v-if="isActiveElectronicInvoicing && userMenuOptions.electronicInvoicingStatus"
+        v-if="isActiveElectronicInvoicing"
         class="border-solid border-0 border-t border-slate-200 p-4 flex justify-between"
       >
         <span class="text-slate-900">Facturación electrónica</span>
@@ -49,12 +43,10 @@
           </a>
         </template>
       </div>
-
       <div class="p-2">
         <a :href="`${BASE_URL}/user/log-out`">
           <li id="logout" @click="doLogout">
             <app-icon icon="logout" class="mr-1.5 icon"></app-icon>
-            {{ $transF('topbar.signOut') }}
           </li>
         </a>
       </div>
@@ -65,22 +57,12 @@
 <script setup lang="ts">
 import AppIcon from '@/micro/components/SmIcon/SmIcon.vue';
 import { IUserMenuOptions } from '@/micro/interfaces/menu.interface';
-import { useSessionStore } from 'app_alegra_commons/session';
-import { computed, ComputedRef, ref } from 'vue';
-import { $transF } from 'app_alegra_commons/translate';
-import useEnvironment from '@/micro/composables/useEnvironment';
 
 const SESSION = useSessionStore();
-const { getEnv } = useEnvironment();
-
-const tokenKeys = {
-  local: 'al-test-days-of-thunder',
-  testing: 'al-test-days-of-thunder',
-  production: 'al-days-of-thunder',
-};
 
 const props = withDefaults(
   defineProps<{
+    avatar: string;
     baseUrl?: string;
     userMenuOptions: IUserMenuOptions;
     onlyAvatar?: boolean;
@@ -93,17 +75,9 @@ const props = withDefaults(
 
 const showUserMenu = ref(false);
 
-const companyLogo = computed((): string => SESSION.company.logo);
 const userFullName = computed((): string => SESSION.userFullName);
-const companyName = computed((): string => SESSION.company.name);
-const profileLogo = computed(() => SESSION.user?.profilepic?.url);
 const userMail = computed((): string => SESSION.user.email);
 const BASE_URL = computed((): string => props.baseUrl || getEnv('BASE_URL'));
-const $hasUser = computed(() => SESSION.$hasUser);
-const userName = computed(() => SESSION.userName);
-const letterForHeader = computed(
-  () => (userName.value && userName.value.substr(0, 1).toUpperCase()) || ''
-);
 const isActiveElectronicInvoicing = computed(
   (): boolean => SESSION.company?.settings?.electronicInvoicing
 );
@@ -251,4 +225,4 @@ const shorten = (word, lenght) => {
     }
   }
 }
-</style> -->
+</style>
