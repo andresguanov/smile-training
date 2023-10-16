@@ -2,6 +2,7 @@ import { defineConfig } from 'histoire';
 import { HstVue } from '@histoire/plugin-vue';
 
 export default defineConfig({
+  outDir: '../../dist-docs',
   plugins: [HstVue()],
   setupFile: '/src/stories/config/histoire.setup.js',
   theme: {
