@@ -12,7 +12,7 @@ const scope = alias[target] || target;
 const build = async function () {
   try {
     if (!target) {
-      await spawn(
+      await spawn.sync(
         'npx',
         [
           'lerna',
@@ -26,7 +26,7 @@ const build = async function () {
         { stdio: 'inherit' }
       );
     } else {
-      await spawn(
+      await spawn.sync(
         'npx',
         ['lerna', 'run', 'story:build', '--scope', scope, '--stream', '--verbose'],
         {
