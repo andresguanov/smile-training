@@ -1,6 +1,6 @@
 ---
 group: 'general'
-title: 'Store'
+title: '3.-Store'
 ---
 
 <div class="sidebar-r-doc">
