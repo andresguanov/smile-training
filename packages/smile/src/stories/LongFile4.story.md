@@ -1,3 +1,8 @@
+---
+group: 'general'
+title: 'Store'
+---
+
 <div class="sidebar-r-doc">
   <div>En esta página</div>
   <ul>
@@ -18,7 +23,7 @@ El módulo app fue pensado para guardar información relativa a la aplicación.
 
 ```vue
 <script setup>
-import { useSessionStore } from "app_alegra_commons/session";
+import { useSessionStore } from 'app_alegra_commons/session';
 const APP = useAppStore();
 </script>
 ```

@@ -1,3 +1,8 @@
+---
+group: 'general'
+title: 'Traducción'
+---
+
 <div class="sidebar-r-doc">
   <div>En esta página</div>
   <ul>
@@ -12,7 +17,7 @@ La funcion `$trans` brinda el soporte necesario para implementar internationaliz
 
 ```vue
 <script setup>
-import { $transF } from "app_alegra_commons/translate";
+import { $transF } from 'app_alegra_commons/translate';
 </script>
 ```
 
@@ -44,14 +49,14 @@ Ejemplos
   <sm-input :label="$transF('email')" size="small" />
 
   <sm-button type="primary">
-    {{ $transF("submit") }}
+    {{ $transF('submit') }}
   </sm-button>
 </template>
 
 <script setup>
-import { $transF } from "app_alegra_commons/translate";
+import { $transF } from 'app_alegra_commons/translate';
 
-const label = computed(() => $transF("name"));
+const label = computed(() => $transF('name'));
 </script>
 ```
 
@@ -59,10 +64,10 @@ En el archivo de diccionario: `src/languages/es/common.js`
 
 ```js
 export default {
-  hello: "Default Page",
-  name: "nombre",
-  email: "correo",
-  submit: "Guardar",
+  hello: 'Default Page',
+  name: 'nombre',
+  email: 'correo',
+  submit: 'Guardar',
 };
 ```
 

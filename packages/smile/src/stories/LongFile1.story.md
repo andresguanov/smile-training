@@ -1,3 +1,8 @@
+---
+group: 'general'
+title: 'Proyecto base'
+---
+
 <div class="sidebar-r-doc">
   <div>En esta página</div>
   <ul>
@@ -84,13 +89,13 @@ cp .env.example .env.local
 También se puede simplemente crear un nuevo archivo `.env.local` en la raíz del proyecto. Lo importante es que en el mismo se deben escribir el valor para la key: **VUE_APP_ENVIROMENT**. Las keys escritas en `.env.local` sobrescribirán a las especificadas en `.env`. **Para desarrollo, la key del enviroment debe tener el valor** `"local"`, resultando:
 
 ```js
-VUE_APP_ENVIROMENT = "local";
+VUE_APP_ENVIROMENT = 'local';
 ```
 
 Además, es necesario agregar al archivo `.env.local` el dominio:
 
 ```js
-VUE_APP_DOMAIN = "http://dev.alegra.com:1026/";
+VUE_APP_DOMAIN = 'http://dev.alegra.com:1026/';
 ```
 
 <div class="card-warn">
@@ -120,7 +125,7 @@ Al igual que hicimos con el archivo anterior, es fundamental cambiar el valor de
 ```js
 module.exports = {
   proyect_port: 1026,
-  proyect_name: "app_alegra_xml_administrator_mex",
+  proyect_name: 'app_alegra_xml_administrator_mex',
 };
 ```
 
@@ -143,8 +148,8 @@ A continuación se presenta un ejemplo de cómo se configuran las rutas en el or
 ```js
 const routes = [
   {
-    path: "/report",
-    name: "app_alegra_reports_frontend_vue3",
+    path: '/report',
+    name: 'app_alegra_reports_frontend_vue3',
     domain: `https://${prefixEnvironment}reports-v3.alegra.com`,
   },
 ];
@@ -266,11 +271,11 @@ Por ejemplo, si la ruta base del microfront es `invoice` y se tiene registrada l
 No registrar ni usar rutas nombradas, tales como:
 
 ```js
-route.push({ name: "configuration-page" });
+route.push({ name: 'configuration-page' });
 ```
 
 En su lugar, se deben usar directamente las rutas. Por ejemplo:
 
 ```js
-route.push({ path: "/microfront/configuration" });
+route.push({ path: '/microfront/configuration' });
 ```

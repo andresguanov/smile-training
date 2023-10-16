@@ -1,19 +1,18 @@
 import { defineConfig } from 'histoire';
 import { HstVue } from '@histoire/plugin-vue';
-import { defaultColors } from 'histoire';
 
 export default defineConfig({
   plugins: [HstVue()],
   setupFile: '/src/stories/config/histoire.setup.js',
   theme: {
     title: 'Smile Ui.',
+    favicon: './public/favicon.ico',
     logo: {
       square: './src/stories/config/assets/logo.svg',
       light: './src/stories/config/assets/logo.svg',
       dark: './src/stories/config/assets/logo-dark.svg',
     },
     // logoHref: "https://acme.com",
-    // favicon: './favicon.ico',
     colors: {
       // #1a1a1a
       gray: {
@@ -60,5 +59,17 @@ export default defineConfig({
       //   900: '#3D3D75',
       // },
     },
+  },
+  tree: {
+    groups: [
+      {
+        id: 'general',
+        title: 'Documentación general',
+      },
+      {
+        title: 'Componentes',
+        include: file => true,
+      },
+    ],
   },
 });

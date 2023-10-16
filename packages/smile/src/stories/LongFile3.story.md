@@ -1,3 +1,8 @@
+---
+group: 'general'
+title: 'CSS'
+---
+
 <div class="sidebar-r-doc">
   <div>En esta página</div>
   <ul>
@@ -55,9 +60,7 @@ Esta práctica evita la necesidad de crear clases personalizadas que puedan gene
 ```vue
 <template>
   <div class="w-full bg-white border border-slate-200 rounded-[12px]">
-    <div
-      class="h-12 border-b border-slate-200 flex items-center px-8 font-semibold text-slate-700"
-    >
+    <div class="h-12 border-b border-slate-200 flex items-center px-8 font-semibold text-slate-700">
       <slot name="header"></slot>
     </div>
     <div class="px-8 pt-4 pb-5">
