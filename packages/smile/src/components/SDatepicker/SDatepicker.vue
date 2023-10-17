@@ -23,6 +23,8 @@
       :auto-apply="autoApply"
       :text-input="textInput"
       :range-mode="rangeMode"
+      :max-date="maxDate"
+      :min-date="minDate"
       :multi-calendars="multiCalendars"
       @click-option="v => emit('clickOption', v)"
     >
@@ -95,6 +97,8 @@ const props = withDefaults(
     optionalText?: string;
     hint?: string;
     supportiveText?: string;
+    minDate?: Date | string;
+    maxDate?: Date | string;
   }>(),
   {
     locale: 'es',

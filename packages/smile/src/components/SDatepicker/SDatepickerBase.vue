@@ -15,6 +15,8 @@
     :text-input="textInput"
     :multi-calendars="multiCalendars"
     :enable-time-picker="false"
+    :min-date="minDate"
+    :max-date="maxDate"
     class="s-datepicker__calendar"
     menu-class-name="s-datepicker__calendar__menu"
   >
@@ -83,6 +85,8 @@ const props = withDefaults(
     autoApply?: boolean;
     textInput?: boolean;
     rangeMode?: boolean;
+    minDate?: Date | string;
+    maxDate?: Date | string;
   }>(),
   {
     locale: 'es',

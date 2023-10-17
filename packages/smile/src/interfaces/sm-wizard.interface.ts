@@ -10,13 +10,11 @@ export interface smStepWizard {
 }
 
 export interface sUserMenu {
-  avatar: string;
+  userName: string;
+  userId: string;
+  onlyAvatar?: boolean;
   hasLogout?: boolean;
   showElectronicInvoicingStatus?: boolean;
-  userData: {
-    name: string;
-    id: string;
-  };
   electronicInvoicingText?: {
     label: string;
     active: string;

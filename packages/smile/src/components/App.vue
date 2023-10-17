@@ -5,7 +5,19 @@
       :steps="steps"
       has-back-button
       :is-on-component="true"
-      avatar="Carlos"
+      :menu="{
+        userName: 'Carlos Quispe',
+        userId: '123213',
+        items: [
+          {
+            icon: 'add',
+            id: 'add',
+            text: 'dasads',
+          },
+        ],
+        hasLogout: true,
+        onlyAvatar: true,
+      }"
     />
     <s-table
       ref="testSmTable"

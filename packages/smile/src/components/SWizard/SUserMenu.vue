@@ -1,7 +1,7 @@
 <template>
   <div class="s-user-menu">
-    <div v-if="avatar" class="s-user-menu__avatar" @click="showUserMenu = true">
-      <s-avatar :text="avatar" size="sm" />
+    <div class="s-user-menu__avatar" @click="onAvatarClicked()">
+      <s-avatar :text="userName" size="sm" />
     </div>
     <s-overflow-menu
       v-if="showUserMenu"
@@ -11,8 +11,8 @@
       @click-outside="showUserMenu = false"
     >
       <div class="s-user-menu__user">
-        <h4>{{ userData.name }}</h4>
-        <p>ID: {{ userData.id }}</p>
+        <h4>{{ userName }}</h4>
+        <p>ID: {{ userId }}</p>
       </div>
       <div v-if="showElectronicInvoicingStatus" class="s-user-menu__electronic-invoicing">
         <span>{{ electronicInvoicingText.label }}</span>
@@ -43,7 +43,7 @@
 <script setup lang="ts">
 import type { sUserMenu } from '../../interfaces/sm-wizard.interface';
 
-withDefaults(defineProps<sUserMenu>(), {
+const props = withDefaults(defineProps<sUserMenu>(), {
   hasLogout: true,
   electronicInvoicingText: () => ({
     active: 'Activa',
@@ -52,10 +52,18 @@ withDefaults(defineProps<sUserMenu>(), {
 });
 const emit = defineEmits<{
   (event: 'logout'): void;
+  (event: 'avatarClick'): void;
   (event: 'optionClick', value: string): void;
 }>();
 
 const showUserMenu = ref(false);
+const onAvatarClicked = () => {
+  if (props.onlyAvatar) {
+    emit('avatarClick');
+  } else {
+    showUserMenu.value = true;
+  }
+};
 </script>
 
 <style lang="scss" scoped>

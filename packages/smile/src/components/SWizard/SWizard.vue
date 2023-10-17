@@ -6,7 +6,13 @@
         <s-stepper v-model="activePage" :steps="stepsLabels" />
       </div>
       <div class="sm-wzd-next-menu">
-        <s-user-menu v-if="menu" v-bind="menu" />
+        <s-user-menu
+          v-if="menu"
+          v-bind="menu"
+          @logout="emits('menu:logout')"
+          @avatar-click="emits('menu:avatarClick')"
+          @option-click="emits('menu:optionClick', $event)"
+        />
         <div class="sm-wzd-next-close">
           <s-button only-icon="close" emphasis="text" type="ghost" @click="closeWizard" />
         </div>
@@ -74,6 +80,9 @@ const emits = defineEmits<{
   (event: 'update:modelValue', value: number): void;
   (event: 'close'): void;
   (event: 'clickMenu'): void;
+  (event: 'menu:logout'): void;
+  (event: 'menu:avatarClick'): void;
+  (event: 'menu:optionClick', value: string): void;
 }>();
 
 const slots = useSlots();
