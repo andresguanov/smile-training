@@ -23,6 +23,8 @@
       :range="range"
       :multi-calendars="range"
       :enable-time-picker="false"
+      :min-date="minDate"
+      :max-date="maxDate"
       class="sm-datepicker__calendar"
     >
       <template #dp-input="{ value, onBlur, onInput }">
@@ -84,6 +86,8 @@ const props = withDefaults(
     error?: boolean;
     errorMessages?: Array<string>;
     rules?: Array<(value: any) => boolean | string>;
+    minDate?: Date | string;
+    maxDate?: Date | string;
   }>(),
   {
     locale: 'es',
