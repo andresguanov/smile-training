@@ -130,11 +130,11 @@ const onFilesChange = (event: Event) => {
   //   }
   // });
 };
-const convertToFileItem = (blob: Blob): FileItem => {
+const convertToFileItem = (file: File): FileItem => {
   return {
-    file: blob,
-    name: blob.name,
-    description: formatSizeUnits(blob.size),
+    file,
+    name: file.name,
+    description: formatSizeUnits(file.size),
     status: 'default',
   };
 };
