@@ -1,6 +1,6 @@
 ---
 group: 'general'
-title: '5.-Actualizar Microfronts'
+title: '5.-Actualización'
 ---
 
 <div class="sidebar-r-doc">
