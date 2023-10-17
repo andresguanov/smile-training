@@ -21,8 +21,8 @@
 }
 
 .card-title {
-  background-color: transparent;
-  border-radius: 0.25rem;
+  background-color: #16161807;
+  border-radius: 1rem;
   padding: 1rem 1.5rem;
   font-size: 14px;
 }
