@@ -1,3 +1,33 @@
+## [0.0.38] (2023-10-10)
+
+### :rocket: Features:
+
+- **SmDatepicker**:
+
+  - Props:
+    Prop | Descripción
+    ---- | ------------
+    `showCaretDownIcon` | Permite mostrar el ícono caret-down dentro del componente.
+
+- **SmSelect**:
+
+  - Se agrega ellipsis para desborde de contenido.
+
+- **SmTable**:
+  - Slots:
+    Slot | Descripción
+    ---- | ------------
+    `headText.${col.name}` | Permite personalizar el contenido de la cabecera de la tabla.
+
+### :bug: Bug fixes
+
+- **SmDatepicker**:
+
+  - Se ajustan los estilos del placeholder.
+
+- **SmSelect**:
+  - Se corrige error que impedía limpiar el selector al usar como filtro de SmTable.
+
 ## [0.0.37] (2023-09-19)
 
 ### :tada: Releases:

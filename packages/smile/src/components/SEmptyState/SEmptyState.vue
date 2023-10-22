@@ -1,12 +1,13 @@
 <template>
   <div :class="{ 's-empty--in-component': isOnComponent }" class="s-empty">
+    <sm-icon v-if="isOnComponent" :icon="generalIcon" class="s-empty__icon" />
     <img
+      v-else
       :src="emptyStateIllustration"
       alt="No hubo resultados"
       class="s-empty__image"
       aria-hidden
     />
-    <sm-icon :icon="generalIcon" class="s-empty__icon" />
     <h3 class="s-empty__title">{{ title }}</h3>
     <p class="s-empty__message">{{ description }}</p>
     <s-button

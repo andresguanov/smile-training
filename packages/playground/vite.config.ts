@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import federation from '@originjs/vite-plugin-federation';
+import path from 'path';
 import vue from '@vitejs/plugin-vue';
 
 // Types
@@ -7,6 +8,11 @@ import type { RemotesConfig } from '@originjs/vite-plugin-federation';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
   plugins: [
     federation({
       name: 'app-alegra-expenses-payments',
