@@ -9,15 +9,15 @@
           @close="() => console.log('Close')"
         ></s-wizard>
       </template>
-
       <template #controls>
-        <component
-          v-model="initState[control.key]"
-          v-for="control in controls"
-          :is="`Hst${control.input}`"
-          :title="control.key"
-          v-bind="control.props"
-        />
+        <template v-for="control in controls">
+          <component
+            v-model="initState[control.key]"
+            :is="`Hst${control.input}`"
+            :title="control.key"
+            v-bind="control.props"
+          />
+        </template>
       </template>
     </Variant>
   </Story>
@@ -65,6 +65,30 @@ const initState = reactive({
       components: [step3],
     },
   ],
+  menu: {
+    userName: 'Alegra',
+    userId: '123',
+    onlyAvatar: false,
+    hasLogout: true,
+    showElectronicInvoicingStatus: true,
+    electronicInvoicingText: {
+      label: 'Factura como pro',
+      active: 'Activo',
+    },
+    items: [
+      {
+        id: 'item-1',
+        text: 'Mi perfil',
+        icon: icons[12],
+      },
+      {
+        id: 'item-2',
+        text: 'Ayuda',
+        icon: icons[5],
+        external: true,
+      },
+    ],
+  },
 });
 
 const controls = [
@@ -104,8 +128,8 @@ const controls = [
     props: {},
   },
   {
-    key: 'avatar',
-    input: 'Text',
+    key: 'menu',
+    input: 'Json',
     props: {},
   },
 ];

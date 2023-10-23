@@ -2,7 +2,7 @@
   <Story title="s-overflow-menu" auto-props-disabled>
     <Variant title="default">
       <template #default>
-        <s-overflow-menu v-bind="initState" @clickOutside="() => console.log('clickOutside')">
+        <s-overflow-menu v-bind="initState" @clickOutside="logEvent('clickOutside')">
           <template #header>
             <h1 style="text-align: center; font-size: 24px"><b>Slot Header</b></h1>
           </template>
@@ -20,21 +20,22 @@
           </template>
         </s-overflow-menu>
       </template>
-
       <template #controls>
-        <component
-          v-model="initState[control.key]"
-          v-for="control in controls"
-          :is="`Hst${control.input}`"
-          :title="control.key"
-          v-bind="control.props"
-        />
+        <template v-for="control in controls">
+          <component
+            v-model="initState[control.key]"
+            :is="`Hst${control.input}`"
+            :title="control.key"
+            v-bind="control.props"
+          />
+        </template>
       </template>
     </Variant>
   </Story>
 </template>
 
 <script setup>
+import { logEvent } from 'histoire/client';
 import { ref, reactive } from 'vue';
 
 const initState = reactive({

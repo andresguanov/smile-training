@@ -1,5 +1,5 @@
 <template>
-  <Story title="s-datepicker" auto-props-disabled>
+  <Story title="datepicker/s-datepicker" auto-props-disabled>
     <Variant title="default">
       <template #default>
         <s-datepicker
@@ -10,7 +10,15 @@
       </template>
       <template #controls>
         <template v-for="control in controls">
+          <CustomInputControl
+            v-if="control.input === 'Date'"
+            v-model="initState[control.key]"
+            :label="control.key"
+            :uid="control.key"
+            type="date"
+          />
           <component
+            v-else
             v-model="initState[control.key]"
             :is="`Hst${control.input}`"
             :title="control.key"
@@ -25,6 +33,8 @@
 <script setup>
 import { reactive, ref } from 'vue';
 import { logEvent } from 'histoire/client';
+import { DATEPICKER_PROPS } from './commonProps';
+import CustomInputControl from '../../config/controls/CustomInputControl.vue';
 
 const value = ref();
 const initState = reactive({
@@ -46,16 +56,7 @@ const initState = reactive({
 });
 
 const controls = [
-  {
-    key: 'locale',
-    input: 'Select',
-    props: { options: ['es', 'en'] },
-  },
-  {
-    key: 'format',
-    input: 'Text',
-    props: {},
-  },
+  ...DATEPICKER_PROPS,
   {
     key: 'placeholder',
     input: 'Text',
@@ -67,28 +68,8 @@ const controls = [
     props: {},
   },
   {
-    key: 'readonly',
-    input: 'Checkbox',
-    props: {},
-  },
-  {
-    key: 'id',
-    input: 'Text',
-    props: {},
-  },
-  {
     key: 'label',
     input: 'Text',
-    props: {},
-  },
-  {
-    key: 'disabled',
-    input: 'Checkbox',
-    props: {},
-  },
-  {
-    key: 'required',
-    input: 'Checkbox',
     props: {},
   },
   {
@@ -97,38 +78,8 @@ const controls = [
     props: { options: ['small', 'medium', 'large'] },
   },
   {
-    key: 'disabledDates',
-    input: 'Json',
-    props: {},
-  },
-  {
-    key: 'sidebarOptions',
-    input: 'Json',
-    props: {},
-  },
-  {
     key: 'error',
     input: 'Text',
-    props: {},
-  },
-  {
-    key: 'textInput',
-    input: 'Checkbox',
-    props: {},
-  },
-  {
-    key: 'rangeMode',
-    input: 'Checkbox',
-    props: {},
-  },
-  {
-    key: 'multiCalendars',
-    input: 'Checkbox',
-    props: {},
-  },
-  {
-    key: 'autoApply',
-    input: 'Checkbox',
     props: {},
   },
   {

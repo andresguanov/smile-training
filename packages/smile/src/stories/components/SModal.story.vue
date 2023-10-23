@@ -3,10 +3,9 @@
     <Variant title="default">
       <template #default>
         <s-modal
-          v-model="initState['v-model']"
           v-bind="initState"
-          @close="() => console.log('close')"
-          @success="console.log('success')"
+          @close="logEvent('close')"
+          @success="logEvent('success')"
         ></s-modal>
       </template>
 
@@ -24,11 +23,12 @@
 </template>
 
 <script setup>
+import { logEvent } from 'histoire/client';
 import { ref, reactive } from 'vue';
 import { icons } from '../config/utils/IconOptions';
 
 const initState = reactive({
-  'v-model': 'true',
+  modelValue: true,
   headerText: '[Modal Title]',
   cancelText: 'Cancelar',
   successText: 'Guardar',
@@ -36,7 +36,7 @@ const initState = reactive({
 
 const controls = [
   {
-    key: 'v-model',
+    key: 'modelValue',
     input: 'Checkbox',
     props: {},
   },
