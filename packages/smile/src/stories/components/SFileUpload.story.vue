@@ -2,7 +2,7 @@
   <Story title="s-file-upload" auto-props-disabled>
     <Variant title="default">
       <template #default>
-        <s-file-upload v-bind="initState"></s-file-upload>
+        <s-file-upload v-model:files="value" v-bind="initState"></s-file-upload>
       </template>
 
       <template #controls>
@@ -22,6 +22,7 @@
 import { ref, reactive } from 'vue';
 import { icons } from '../config/utils/IconOptions';
 
+const value = ref([]);
 const initState = reactive({
   label: 'Label',
 });
@@ -61,6 +62,11 @@ const controls = [
     key: 'fileIcon',
     input: 'Select',
     props: { options: icons },
+  },
+  {
+    key: 'useDropZone',
+    input: 'Checkbox',
+    props: {},
   },
 ];
 </script>
