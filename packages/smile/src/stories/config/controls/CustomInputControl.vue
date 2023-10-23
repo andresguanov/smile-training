@@ -1,7 +1,12 @@
 <template>
-  <div>
-    <label :for="uid">{{ label }}</label>
-    <input :id="uid" v-model="value" :type="type" />
+  <div class="htw-p-2 htw-flex htw-gap-2">
+    <label :for="uid" class="htw-w-28">{{ label }}</label>
+    <input
+      :id="uid"
+      v-model="value"
+      :type="type"
+      class="htw-py-1 htw-px-2 htw-border htw-rounded-sm htw-border-black/25"
+    />
   </div>
 </template>
 
