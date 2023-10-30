@@ -1,5 +1,9 @@
 <template>
   <div class="app_container">
+    <br /><br />
+
+    <s-slider v-model="sSilderModel" label="Label"></s-slider>
+
     <s-wizard
       v-model="step"
       :steps="steps"
@@ -7,6 +11,7 @@
       :is-on-component="true"
       avatar="Carlos"
     />
+
     <SSlideover v-model="showSlideOver" header-text="Este es el titulo"></SSlideover>
     <SPopOver
       v-model="showPopOver"
@@ -179,6 +184,7 @@ import { $SmAlert, ISmAlertProvide } from '../utils/alerts';
 const selectedDate = ref([]);
 
 const step = ref(1);
+const sSilderModel = ref();
 const step1 = h('div', [h('p', 'Formulario 1'), h('input', { placeholder: 'User' })]);
 const step2 = h('div', [h('p', 'Formulario 2'), h('input', { placeholder: 'Email' })]);
 const step3 = h('div', [

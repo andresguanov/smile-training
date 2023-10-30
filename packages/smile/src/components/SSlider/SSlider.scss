@@ -1,0 +1,29 @@
+.s-slider {
+  @apply space-y-4;
+
+  &-label {
+    @apply text-base font-medium text-slate-700;
+  }
+
+  &-input {
+    -webkit-appearance: none;
+    @apply w-full h-2 bg-slate-200 outline-none rounded-lg;
+    transition: opacity 0.2s;
+  }
+
+  &-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    @apply appearance-none;
+    @apply w-3.5 h-3.5 bg-sm-primary-600 rounded-full;
+    @apply ring-4 ring-white cursor-pointer drop-shadow;
+  }
+
+  &-input::-webkit-slider-thumb:hover {
+    @apply opacity-100;
+  }
+
+  &-footer {
+    @apply flex justify-between;
+    @apply text-xs text-slate-700;
+  }
+}
