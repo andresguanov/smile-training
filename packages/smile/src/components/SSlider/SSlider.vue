@@ -1,6 +1,5 @@
 <template>
   <div class="s-slider">
-    <pre>{{ cursorValues }}</pre>
     <p class="s-slider-label">{{ label }}</p>
     <div class="s-slider-content">
       <input
@@ -10,10 +9,9 @@
         max="100"
         class="s-slider-input"
         ref="slider"
-        @input="onClick"
-        @change="onMouseOut"
-        @mousemove="e => (cursorValues.mouse = e.clientX)"
-        @hover="onHover"
+        @input="showTippy"
+        @change="closeTippy"
+        @mousemove="e => (cursorValues.mouse = e.pageX)"
       />
     </div>
 
@@ -41,7 +39,8 @@ const emits = defineEmits<{
 const tippy = ref();
 const slider = ref<HTMLInputElement | any>();
 const cursorValues = ref({ mouse: 0, x: 0 });
-const sliderWidth = ref(0);
+// const sliderWidth = ref();
+// const tippyRef = ref();
 
 const data = useVModel(props, 'modelValue', emits);
 
@@ -53,25 +52,30 @@ onMounted(() => {
     placement: 'top',
     followCursor: 'horizontal',
     trigger: 'manual',
-    onAfterUpdate(instance, partialProps) {
-      sliderWidth.value = instance.popper.clientWidth;
-    },
+    // onAfterUpdate(instance, partialProps) {
+    //   sliderWidth.value = instance.popper.getBoundingClientRect();
+    //   tippyRef.value = instance.popper;
+    // },
   });
+
+  const thumb = slider.value?.querySelector('::-webkit-slider-thumb');
+
+  console.log(thumb);
+
+  // thumb.addEventListener('mouseenter', () => {
+  //   // Ejecutar la función que desees cuando se haga hover sobre el slider-thumb
+  //   console.log('Hover sobre el slider-thumb');
+  // });
 });
 
-const onClick = (e: Event) => {
+const showTippy = (e: Event) => {
   tippy.value.setContent(data.value);
-  // tippy.value.setProps({ offset: [cursorValues.value.x - sliderWidth.value - 19, 10] });
-  cursorValues.value.x = cursorValues.value.mouse;
+  // tippy.value.setProps({ offset: [cursorValues.value.mouse - slider.value.clientWidth / 2, 10] });
   tippy.value.show();
 };
 
-const onMouseOut = () => {
+const closeTippy = () => {
   tippy.value.hide();
-};
-
-const onHover = () => {
-  tippy.value.show();
 };
 </script>
 
