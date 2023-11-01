@@ -20,7 +20,11 @@ Para llevar a cabo la actualización del proyecto en el que estamos trabajando a
 Estos pasos garantizan una actualización efectiva y organizada del proyecto en curso a partir de la base existente.
 
 ```bash
+# vue 2
 git pull base master
+
+# vue 3
+git pull base main
 ```
 
 ### Conflictos
