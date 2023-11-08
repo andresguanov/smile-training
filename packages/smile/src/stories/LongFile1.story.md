@@ -34,8 +34,8 @@ Para iniciar un proyecto nuevo, el primer paso es clonar el [repositorio](https:
 - `Solicitar Acceso a la Organización @alegradev en GitHub`
   Antes de clonar el repositorio, es obligatorio ser miembro de la organización @alegradev en GitHub. Para solicitar acceso, comuníquese con Andrea Hoyos o Felipe Calad a través del Slack de Alegra.
 
-- `Solicitar Creación de Repositorio para el Nuevo Proyecto`
-  Todos los nuevos proyectos de Frontend se alojarán en GitHub. Por lo tanto, se debe solicitar a las mismas personas mencionadas anteriormente que creen un nuevo repositorio para alojar el proyecto.
+- `Creación de Repositorio para el Nuevo Proyecto`
+  Cada miembro tiene la capacidad de crear un nuevo repositorio privado para su proyecto. Todos los proyectos de Frontend deben ser privados y alojados dentro de la organización Alegra en GitHub.
 
 Antes de comenzar con la clonación, es importante tener en cuenta lo siguiente:
 
