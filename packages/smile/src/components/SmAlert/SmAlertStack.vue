@@ -76,7 +76,7 @@ watch(props, () => {
 <style lang="scss" scoped>
 .sm-alert-stack {
   @apply fixed right-0 top-0 w-96 pointer-events-none;
-  @apply z-[100];
+  @apply z-[9999999];
 }
 
 .sm-alert-stack-move,

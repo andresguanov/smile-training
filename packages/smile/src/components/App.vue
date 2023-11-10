@@ -1,5 +1,10 @@
 <template>
   <div class="app_container">
+    <br /><br />
+    <div>
+      <s-slider v-model="sSilderModel" label="Label"></s-slider>
+    </div>
+
     <s-wizard
       v-model="step"
       :steps="steps"
@@ -55,6 +60,7 @@ import { SButton } from './index';
 import { $SmAlert, ISmAlertProvide } from '../utils/alerts';
 
 const step = ref(1);
+const sSilderModel = ref(0);
 const step1 = h('div', [h('p', 'Formulario 1'), h('input', { placeholder: 'User' })]);
 const step2 = h('div', [h('p', 'Formulario 2'), h('input', { placeholder: 'Email' })]);
 const step3 = h('div', [
