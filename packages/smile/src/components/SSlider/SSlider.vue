@@ -1,17 +1,20 @@
 <template>
   <div class="s-slider">
     <p class="s-slider-label">{{ label }}</p>
-    <div class="s-slider-content">
+    <div class="s-slider-content" @mouseover="showTooltip = true" @mouseout="showTooltip = false">
       <div class="s-slider-value">
-        <div
-          class="s-slider-tooltip"
-          :style="{
-            left: `${-(sliderValue?.offsetWidth / 2) + (data / 100) * slider?.offsetWidth}px`,
-          }"
-        >
-          <span ref="sliderValue">{{ data }}</span>
-          <div class="s-slider-tooltip-arrow"></div>
-        </div>
+        <transition name="fade">
+          <div
+            v-if="showTooltip"
+            class="s-slider-tooltip"
+            :style="{
+              left: `${-(sliderValue?.offsetWidth / 2) + (data / 100) * slider?.offsetWidth}px`,
+            }"
+          >
+            <span ref="sliderValue">{{ data }}</span>
+            <div class="s-slider-tooltip-arrow"></div>
+          </div>
+        </transition>
       </div>
       <input
         v-model="data"
@@ -20,8 +23,6 @@
         :max="max"
         class="s-slider-input"
         ref="slider"
-        @input="showTooltip = true"
-        @mousemove="e => (cursorValues.mouse = e.pageX)"
       />
     </div>
 
@@ -50,7 +51,6 @@ const emits = defineEmits<{
   (event: 'update:modelValue', value: number): void;
 }>();
 const slider = ref<HTMLInputElement | any>();
-const cursorValues = ref({ mouse: 0, x: 0 });
 const sliderValue = ref<HTMLInputElement | any>();
 const showTooltip = ref(false);
 

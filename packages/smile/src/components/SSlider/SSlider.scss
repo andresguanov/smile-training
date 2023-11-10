@@ -7,6 +7,16 @@
 
   &-value {
     @apply relative w-full bg-slate-200;
+
+    .fade-enter-active,
+    .fade-leave-active {
+      transition: opacity 0.5s;
+      transition-delay: 1s;
+    }
+    .fade-enter,
+    .fade-leave-to {
+      opacity: 0;
+    }
   }
 
   &-tooltip {
@@ -16,7 +26,7 @@
     span {
       @apply rounded-lg bg-slate-800 py-1 px-2;
       @apply text-xs font-semibold text-center shadow-md;
-      @apply min-w-[45px];
+      @apply min-w-[45px] w-[45px];
     }
   }
 
