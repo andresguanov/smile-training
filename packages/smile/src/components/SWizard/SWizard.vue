@@ -5,13 +5,18 @@
       <div class="sm-wzd-next-stepper">
         <s-stepper v-model="activePage" :steps="stepsLabels" />
       </div>
-      <sm-icon
-        class="sm-wzd-next-close"
-        icon="close"
-        color="#0F172A"
-        size="medium"
-        @click="closeWizard"
-      />
+      <div class="sm-wzd-next-menu">
+        <s-user-menu
+          v-if="menu"
+          v-bind="menu"
+          @logout="emits('menu:logout')"
+          @avatar-click="emits('menu:avatarClick')"
+          @option-click="emits('menu:optionClick', $event)"
+        />
+        <div class="sm-wzd-next-close">
+          <s-button only-icon="close" emphasis="text" type="ghost" @click="closeWizard" />
+        </div>
+      </div>
     </div>
     <div class="sm-wzd-next-content">
       <div :class="['sm-wzd-next-body', { 'sm-wzd-next-grid-cols-1': !isMultiRow }]">
@@ -53,7 +58,7 @@
 </template>
 
 <script setup lang="ts">
-import { smStepWizard } from '../../interfaces/sm-wizard.interface';
+import type { smStepWizard, sUserMenu } from '../../interfaces/sm-wizard.interface';
 import { useSlots } from 'vue';
 
 const props = withDefaults(
@@ -66,6 +71,7 @@ const props = withDefaults(
     backText?: string;
     continueText?: string;
     isOnComponent?: boolean;
+    menu?: sUserMenu;
   }>(),
   { backText: 'Atrás', continueText: 'Continuar' }
 );
@@ -73,6 +79,10 @@ const props = withDefaults(
 const emits = defineEmits<{
   (event: 'update:modelValue', value: number): void;
   (event: 'close'): void;
+  (event: 'clickMenu'): void;
+  (event: 'menu:logout'): void;
+  (event: 'menu:avatarClick'): void;
+  (event: 'menu:optionClick', value: string): void;
 }>();
 
 const slots = useSlots();

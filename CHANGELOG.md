@@ -1,3 +1,80 @@
+## [0.0.38] (2023-10-10)
+
+### :rocket: Features:
+
+- **SmDatepicker**:
+
+  - Props:
+    Prop | Descripción
+    ---- | ------------
+    `showCaretDownIcon` | Permite mostrar el ícono caret-down dentro del componente.
+
+- **SmSelect**:
+
+  - Se agrega ellipsis para desborde de contenido.
+
+- **SmTable**:
+  - Slots:
+    Slot | Descripción
+    ---- | ------------
+    `headText.${col.name}` | Permite personalizar el contenido de la cabecera de la tabla.
+
+### :bug: Bug fixes
+
+- **SmDatepicker**:
+
+  - Se ajustan los estilos del placeholder.
+
+- **SmSelect**:
+  - Se corrige error que impedía limpiar el selector al usar como filtro de SmTable.
+
+## [0.0.37] (2023-09-19)
+
+### :tada: Releases:
+
+- _SFileUpload_
+
+### :rocket: Features:
+
+- **SDatepicker**:
+
+  - Se añadió la prop sidebarOptions para poder crear un sidebar en el calendario.
+
+## [0.0.36] (2023-09-18)
+
+### :tada: Releases:
+
+- _SDatepickerBase_
+- Todas los cambios lanzados en las beta versión.
+
+## [0.0.36-beta.10] (2023-09-11)
+
+### :tada: Releases:
+
+- _SToggle_
+- _SSlideOver_
+- _SStats_
+- _SAvatar_
+
+### :rocket: Features:
+
+- **SmTable**:
+
+  - Se implementó un generic type a la prop rows para obtener el type correcto al momento de usar los slots (https://github.com/alegradev/smile-ui-next/pull/3).
+
+- **STable**:
+
+  - Se implementó un generic type a la prop rows para obtener el type correcto al momento de usar los slots.
+
+## [0.0.36-beta.9] (2023-08-27)
+
+### :rocket: Features:
+
+- **SDatepicker**:
+
+  - Props: Se agregaron varias props faltantes.
+  - Design: Se realizaron varias mejoras en el diseño del componente.
+
 ## [0.0.36-beta.8] (2023-08-22)
 
 ### :warning: BREAKING CHANGES:
