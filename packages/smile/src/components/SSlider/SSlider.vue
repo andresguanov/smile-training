@@ -34,6 +34,19 @@
 </template>
 
 <script lang="ts" setup>
+/**
+ * SSlider component represents a slider input control that allows users to select a value from a range of values.
+ *
+ * @component SSlider
+ *
+ * @prop {number} modelValue - The value of the slider.
+ * @prop {string} label - The label of the slider.
+ * @prop {number} [min=0] - The minimum value of the slider.
+ * @prop {number} [max=100] - The maximum value of the slider.
+ *
+ * @emits update:modelValue - Emitted when the value of the slider changes.
+ */
+
 const props = withDefaults(
   defineProps<{
     modelValue: number;
