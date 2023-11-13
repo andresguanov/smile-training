@@ -1,5 +1,5 @@
 <template>
-  <Story title="s-file-upload" auto-props-disabled>
+  <Story title="file-upload/s-file-upload" auto-props-disabled>
     <Variant title="default">
       <template #default>
         <s-file-upload v-model:files="value" v-bind="initState"></s-file-upload>
@@ -20,7 +20,7 @@
 
 <script setup>
 import { ref, reactive } from 'vue';
-import { icons } from '../config/utils/IconOptions';
+import { icons } from '../../config/utils/IconOptions';
 
 const value = ref([]);
 const initState = reactive({
