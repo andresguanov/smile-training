@@ -5,9 +5,12 @@ export function useFilters(
   columnConfig: Array<smTableColumn>,
   filterConfig: { [key: string]: smTableFilter }
 ) {
+  // Propiedades reactivas
   const showFilters = ref(false);
+
   const filterValues = ref<{ [key: string]: any }>({});
 
+  // Propiedades computadas
   const filterAttrs = computed(() => {
     return columnConfig.map(col => {
       const filter = filterConfig[col.name];
@@ -17,43 +20,43 @@ export function useFilters(
         width: col.width,
       };
       if (!filter) {
-        return {
+        return reactive({
           ...commonAttr,
           show: false,
-          component: SmInput,
+          component: 'SmInput',
           attrs: {},
-        };
+        });
       }
       if (filter.type === 'checkbox') {
-        return {
+        return reactive({
           ...commonAttr,
-          component: SmCheckbox,
+          component: 'SmCheckbox',
           attrs: { label: col.label || col.name, ...filter.attrs },
-        };
+        });
       }
       if (filter.type === 'datepicker') {
-        return {
+        return reactive({
           ...commonAttr,
-          component: SmDatepicker,
+          component: 'SmDatePicker',
           attrs: { placeholder: col.label || col.name, ...filter.attrs },
-        };
+        });
       }
       if (filter.type === 'select') {
-        return {
+        return reactive({
           ...commonAttr,
-          component: SmSelect,
+          component: 'SmSelect',
           attrs: {
             placeholder: col.label || col.name,
             options: filter.options || [],
             ...filter.attrs,
           },
-        };
+        });
       }
-      return {
+      return reactive({
         ...commonAttr,
-        component: SmInput,
+        component: 'SmInput',
         attrs: { placeholder: col.label || col.name, ...filter.attrs },
-      };
+      });
     });
   });
 
@@ -64,27 +67,53 @@ export function useFilters(
     Object.values(filterValues.value).every(val => (Array.isArray(val) && val.length === 0) || !val)
   );
 
-  const resetValues = () => {
-    columnConfig.forEach(el => {
-      const filter = filterConfig[el.name];
-      if (filter?.type === 'checkbox') {
-        filterValues.value[el.name] = false;
-      } else if (filter?.type === 'select' && filter?.attrs?.multiple) {
-        filterValues.value[el.name] = [];
-      } else {
-        filterValues.value[el.name] = '';
-      }
-    });
+  // Métodos
+  const getComponent = (component?: 'SmCheckbox' | 'SmDatePicker' | 'SmInput' | 'SmSelect') => {
+    if (component == 'SmCheckbox') {
+      return SmCheckbox;
+    }
+    if (component == 'SmDatePicker') {
+      return SmDatepicker;
+    }
+    if (component == 'SmSelect') {
+      return SmSelect;
+    }
+    return SmInput;
   };
 
-  resetValues();
+  const initValues = () => {
+    const rawVal: { [key: string]: any } = {};
+    columnConfig.forEach(column => {
+      if (!column.name) {
+        return;
+      }
+      if (!filterConfig[column.name]) {
+        return;
+      }
+      const type = filterConfig[column.name].type;
+      if (type == 'input' || type == 'datepicker') {
+        rawVal[column.name] = ref<string>('');
+      }
+      if (type == 'checkbox') {
+        rawVal[column.name] = ref<boolean>(false);
+      }
+      if (type == 'select') {
+        rawVal[column.name] = ref(undefined);
+      }
+    });
+    filterValues.value = ref(rawVal);
+  };
+
+  initValues();
 
   return {
     filterValues,
     hasFilterableData,
     filterAttrs,
     showFilters,
-    resetValues,
     filtersAreFalsy,
+    // Métodos
+    getComponent,
+    resetValues: initValues,
   };
 }
