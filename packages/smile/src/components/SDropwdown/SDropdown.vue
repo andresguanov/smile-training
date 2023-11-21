@@ -198,7 +198,12 @@ const onClickOption = (option: MenuOption) => {
   }
   searchText.value = '';
   if (props.multiple) {
-    const opIndex = (data.value as Array<string | number>).findIndex(el => isEqual(el, value));
+    const opIndex = (data.value as Array<string | number>).findIndex(el => {
+      if (props.object) {
+        console.warn('Prop multiple not support prop object');
+      }
+      return el === value;
+    });
     if (opIndex >= 0) {
       (data.value as Array<string | number>).splice(opIndex, 1);
       return;
