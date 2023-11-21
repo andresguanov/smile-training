@@ -14,6 +14,7 @@ declare module 'vue' {
     SDatepicker: typeof import('./components/SDatepicker/SDatepicker.vue')['default']
     SDatepickerBase: typeof import('./components/SDatepicker/SDatepickerBase.vue')['default']
     SDropdown: typeof import('./components/SDropwdown/SDropdown.vue')['default']
+    SDropZone: typeof import('./components/SDropZone/SDropZone.vue')['default']
     SEmptyState: typeof import('./components/SEmptyState/SEmptyState.vue')['default']
     SError: typeof import('./components/SError/SError.vue')['default']
     SFileUpload: typeof import('./components/SFileUpload/SFileUpload.vue')['default']
@@ -74,6 +75,7 @@ declare module 'vue' {
     SPopOver: typeof import('./components/SPopover/SPopOver.vue')['default']
     SRadio: typeof import('./components/SRadio/SRadio.vue')['default']
     SSlideover: typeof import('./components/SSlideover/SSlideover.vue')['default']
+    SSlider: typeof import('./components/SSlider/SSlider.vue')['default']
     SStats: typeof import('./components/SStats/SStats.vue')['default']
     SStep: typeof import('./components/SStepper/SStep.vue')['default']
     SStepper: typeof import('./components/SStepper/SStepper.vue')['default']
@@ -86,6 +88,7 @@ declare module 'vue' {
     SToggle: typeof import('./components/SToggle/SToggle.vue')['default']
     SToolbar: typeof import('./components/SToolbar/SToolbar.vue')['default']
     STooltip: typeof import('./components/STooltip/STooltip.vue')['default']
+    SUserMenu: typeof import('./components/SWizard/SUserMenu.vue')['default']
     SWizard: typeof import('./components/SWizard/SWizard.vue')['default']
   }
 }

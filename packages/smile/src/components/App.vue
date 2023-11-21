@@ -1,145 +1,57 @@
 <template>
   <div class="app_container">
+    <br /><br />
+    <div>
+      <s-slider v-model="sSilderModel" label="Label"></s-slider>
+    </div>
+
+    <s-tag label="Demorado" type="primary" leading-icon="alert-triangle" />
+    <s-tag label="Completado" type="slate" leading-icon="checks" />
+    <s-tag label="TEST" type="rose" />
+    <div class="relative">
+      <s-input
+        v-model="search"
+        icon-right="search"
+        placeholder="Buscar..."
+        @click.stop="open = !open"
+      />
+      <s-overflow-menu
+        v-if="open"
+        top="100%"
+        left="0"
+        right="0"
+        bubbling
+        @click-outside="open = false"
+      >
+        <template #header>
+          <div class="px-2 pt-2">
+            <p>Resultados de la busqueda:</p>
+          </div>
+        </template>
+        <s-menu-item title="Test 1" />
+        <s-menu-item title="Test 2" />
+        <s-menu-item title="Test 3" />
+      </s-overflow-menu>
+    </div>
     <s-wizard
       v-model="step"
       :steps="steps"
       has-back-button
       :is-on-component="true"
-      avatar="Carlos"
+      :menu="{
+        userName: 'Carlos Quispe',
+        userId: '123213',
+        items: [
+          {
+            icon: 'add',
+            id: 'add',
+            text: 'dasads',
+          },
+        ],
+        hasLogout: true,
+        onlyAvatar: true,
+      }"
     />
-    <SSlideover v-model="showSlideOver" header-text="Este es el titulo"></SSlideover>
-    <SPopOver
-      v-model="showPopOver"
-      title="Título del popover"
-      description="Los popovers son desplegados al hacer click o un tap en lugar de hacer hover, como un tooltip"
-    >
-      <span>Paragraph with PopOver</span>
-      <template #actions>
-        <div style="display: flex; justify-content: flex-end">
-          <s-button type="reversed" size="small" emphasis="text" @click="showPopOver = false">
-            Cerrar
-          </s-button>
-          <s-button type="reversed" size="small">Label</s-button>
-        </div>
-      </template>
-    </SPopOver>
-    <br />
-    <sm-alert-stack />
-    <s-modal
-      v-model="modal"
-      header-text="Carga un archivo o documento"
-      success-text="Cargar Archivo"
-      cancel-text="Cancelar"
-    >
-    </s-modal>
-    <sm-card class="mt-1">
-      <s-form ref="smFormEl" validate-on="focusout">
-        <template #default="{ validate, reset, isValid }">
-          {{ isValid }}
-          <s-file-upload
-            v-model:files="files"
-            label="Invoices"
-            description="Only PDF, JPG or PNG less than 500mb"
-            multiple
-            @update:files="logEvent"
-          />
-          <s-datepicker
-            v-model="selectedDate"
-            label="fecha test"
-            mark-type="required"
-            :text-input="true"
-            :range-mode="true"
-            multi-calendars
-            :sidebar-options="[
-              { id: '1', title: 'Semana pasada' },
-              { id: '2', title: 'TEST test' },
-              { id: '3', title: 'S-TEST' },
-            ]"
-            required
-          />
-          {{ text2 }}
-          <s-dropdown
-            v-model="text2"
-            label="elije"
-            placeholder="dasdasd"
-            multiple
-            search
-            id="dropdown-test"
-            :rules="selectRules"
-            :options="options"
-            :leading="{
-              label: 'Leading',
-              leadingIcon: 'accounting',
-            }"
-            @select="logEvent"
-            @open="logEvent"
-            @search="logEvent"
-          >
-          </s-dropdown>
-          <s-input
-            v-model="text"
-            supportive-text="dasdasd"
-            native-type="password"
-            icon-right="bolt"
-            label="password"
-            mark-type="optional"
-            :rules="sRules"
-          >
-            <template #leading>
-              <p>dasdasd</p>
-            </template>
-          </s-input>
-          <s-input
-            v-if="number === 3"
-            v-model="text"
-            icon-left="search"
-            label="label"
-            hint="hint"
-            :rules="sRules"
-            :leading="{
-              label: 'Leading',
-              leadingIcon: 'accounting',
-              actionable: true,
-            }"
-            @blur="logEvent"
-            @focus="logEvent"
-            @click-trailing="number = 3"
-          />
-          <s-dropdown
-            v-model="text3"
-            label="Lenguaje favorito"
-            can-deselect
-            object
-            mark-type="required"
-            required
-            placeholder="Escoge tu lenguaje favorito"
-            :options="options"
-            :loading="isLoadingOptions"
-            max-height="125px"
-            @search="logEvent"
-            @select="logEvent"
-            @open="openLanguajes"
-          >
-            <template #beforeOptions>
-              <button>Añadir lenguaje</button>
-            </template>
-          </s-dropdown>
-          {{ text3 }}
-          <s-number-input
-            v-model="number"
-            label="number"
-            show-mark
-            icon-left="accounting"
-            :leading="{
-              label: '$',
-              inline: true,
-            }"
-          />
-          <s-button @click="validate()">Submit</s-button>
-          <s-button type="destructive" @click="reset">Reset</s-button>
-        </template>
-      </s-form>
-    </sm-card>
     <s-table
       ref="testSmTable"
       :rows="items"
@@ -167,18 +79,18 @@
         />
       </template>
     </s-table>
-    <!-- <s-table /> -->
   </div>
 </template>
 
 <script setup lang="ts">
-import type { smTableChangeEvent, smTableColumn, FileItem } from '~/interfaces';
-import { SButton, SmForm } from './index';
+import type { smTableChangeEvent, smTableColumn } from '~/interfaces';
+import { SButton } from './index';
 import { $SmAlert, ISmAlertProvide } from '../utils/alerts';
 
-const selectedDate = ref([]);
-
+const search = ref('');
+const open = ref(false);
 const step = ref(1);
+const sSilderModel = ref(0);
 const step1 = h('div', [h('p', 'Formulario 1'), h('input', { placeholder: 'User' })]);
 const step2 = h('div', [h('p', 'Formulario 2'), h('input', { placeholder: 'Email' })]);
 const step3 = h('div', [
@@ -205,26 +117,7 @@ const steps = [
     components: [step3],
   },
 ];
-const files = ref<FileItem[]>([]);
 const selectAll = ref(false);
-const modal = ref(false);
-const number = ref(3);
-const text = ref('');
-const text2 = ref([]);
-const text3 = ref('');
-const showPopOver = ref(false);
-const showSlideOver = ref(true);
-const options = ref<any[]>([
-  {
-    text: 'Javascript Javascript Javascript Javascript Javascript Javascript',
-    description: 'Javascript Javascript Javascript Javascript Javascript Javascript',
-    code: 'js',
-    icon: 'flag-3',
-  },
-  { text: 'PHP', code: 'php', icon: 'flag-3' },
-  { text: 'Python', code: 'py', icon: 'flag-3' },
-  { text: 'C++', code: 'cc', icon: 'flag-3' },
-]);
 
 const cols: smTableColumn[] = reactive([
   {
@@ -271,25 +164,6 @@ const onChange = (data: smTableChangeEvent) => {
 const logEvent = (event: any) => {
   console.log({ event });
 };
-const sRules = ref([
-  (v: string) => {
-    return !!v || 'El valor es requerido';
-  },
-]);
-const selectRules = ref([
-  (v: any) => {
-    return Boolean(v?.length) || 'Algo falta';
-  },
-]);
-const smFormEl = ref<InstanceType<typeof SmForm> | null>();
-const isLoadingOptions = ref(false);
-const openLanguajes = () => {
-  isLoadingOptions.value = true;
-  setTimeout(() => {
-    options.value = [...options.value];
-    isLoadingOptions.value = false;
-  }, 3000);
-};
 
 const smAlert = inject<ISmAlertProvide>($SmAlert);
 onMounted(() => {
@@ -297,13 +171,11 @@ onMounted(() => {
   smAlert?.error('Hola mundo');
   smAlert?.warning('Hola mundo', { title: '<h2>Grande</h2> pequeño' });
   smAlert?.info(
-    `
-  Errores:
+    `Errores:
     <ul class="flex gap-4">
       <li>1: Error al cargar los datos bla bla bla...</li>
       <li>2: No se pudo generar la factura de venta a por los sig. motivos...</li>
-    </ul>
-    `,
+    </ul>`,
     {
       title: 'Titulo de info',
       persistent: true,
