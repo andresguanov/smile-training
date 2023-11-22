@@ -5,6 +5,10 @@
 declare module 'vue' {
   export interface GlobalComponents {
     App: typeof import('./components/App.vue')['default']
+    SAccordion: typeof import('./components/SAccordion/SAccordion.vue')['default']
+    SAccordionItem: typeof import('./components/SAccordion/SAccordionItem.vue')['default']
+    SAccordionItemBody: typeof import('./components/SAccordion/SAccordionItemBody.vue')['default']
+    SAccordionItemHeader: typeof import('./components/SAccordion/SAccordionItemHeader.vue')['default']
     SAvatar: typeof import('./components/SAvatar/SAvatar.vue')['default']
     SBreadcrumb: typeof import('./components/SBreadcrumb/SBreadcrumb.vue')['default']
     SButton: typeof import('./components/SButton/SButton.vue')['default']
