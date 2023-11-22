@@ -21,25 +21,30 @@
       }
     }
   }
-  &__input {
-    :deep(.s-input__input) {
-      @apply cursor-pointer;
-    }
-    &.readonly {
-      &.error {
-        :deep(.s-input__container) {
-          @apply bg-white;
-        }
+  &.readonly .s-dropdown__input :deep(.s-input__icon.trailing) {
+    @apply cursor-default;
+  }
+  &:not(.readonly) {
+    .s-dropdown__input {
+      :deep(.s-input__input) {
+        @apply cursor-pointer;
       }
-      &:not(.disabled):not(.error) {
-        :deep(.s-input__container) {
-          @apply bg-white border-slate-300;
-
-          &:hover {
-            @apply border-slate-400;
+      &.readonly {
+        &.error {
+          :deep(.s-input__container) {
+            @apply bg-white;
           }
-          &:focus-within {
-            @apply border-sm-primary-500;
+        }
+        &:not(.disabled):not(.error) {
+          :deep(.s-input__container) {
+            @apply bg-white border-slate-300;
+
+            &:hover {
+              @apply border-slate-400;
+            }
+            &:focus-within {
+              @apply border-sm-primary-500;
+            }
           }
         }
       }

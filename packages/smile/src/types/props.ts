@@ -12,6 +12,7 @@ export type SDropdownProps = {
   hideLoadingText?: boolean;
   placeholder?: string;
   disabled?: boolean;
+  readonly?: boolean;
   required?: boolean;
   success?: boolean;
   loading?: boolean;

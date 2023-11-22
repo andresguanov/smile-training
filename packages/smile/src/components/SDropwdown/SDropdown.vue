@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!hasTheComponentErrors" class="s-dropdown">
+  <div v-if="!hasTheComponentErrors" class="s-dropdown" :class="{ readonly }">
     <div class="s-dropdown__wrapper">
       <s-input
         class="s-dropdown__input"
@@ -16,7 +16,7 @@
         :mark-type="markType"
         :optional-text="optionalText"
         :error="currentError"
-        :readonly="!search"
+        :readonly="readonly || !search"
         @click.stop="toggleOverflow"
       >
         <template #leading>
@@ -241,7 +241,7 @@ const validateProps = (props: SDropdownProps) => {
 };
 
 const toggleOverflow = () => {
-  if (props.disabled) return;
+  if (props.disabled || props.readonly) return;
   if (!open.value) emit('open');
   open.value = !open.value;
 };
