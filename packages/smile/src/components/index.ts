@@ -73,3 +73,4 @@ export { default as SAvatar } from './SAvatar/SAvatar.vue';
 export { default as SFileUpload } from './SFileUpload/SFileUpload.vue';
 export { default as SDropZone } from './SDropZone/SDropZone.vue';
 export { default as SAccordion } from './SAccordion/SAccordion.vue';
+export { default as SSlider } from './SSlider/SSlider.vue';
