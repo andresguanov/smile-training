@@ -1,5 +1,6 @@
 <template>
   <div class="app_container">
+    <s-notify-stack />
     <s-wizard
       v-model="step"
       :steps="steps"
@@ -7,31 +8,6 @@
       :is-on-component="true"
       avatar="Carlos"
     />
-    <SSlideover v-model="showSlideOver" header-text="Este es el titulo"></SSlideover>
-    <SPopOver
-      v-model="showPopOver"
-      title="Título del popover"
-      description="Los popovers son desplegados al hacer click o un tap en lugar de hacer hover, como un tooltip"
-    >
-      <span>Paragraph with PopOver</span>
-      <template #actions>
-        <div style="display: flex; justify-content: flex-end">
-          <s-button type="reversed" size="small" emphasis="text" @click="showPopOver = false">
-            Cerrar
-          </s-button>
-          <s-button type="reversed" size="small">Label</s-button>
-        </div>
-      </template>
-    </SPopOver>
-    <br />
-    <sm-alert-stack />
-    <s-modal
-      v-model="modal"
-      header-text="Carga un archivo o documento"
-      success-text="Cargar Archivo"
-      cancel-text="Cancelar"
-    >
-    </s-modal>
     <sm-card class="mt-1">
       <s-form ref="smFormEl" validate-on="focusout">
         <template #default="{ validate, reset, isValid }">
@@ -207,13 +183,10 @@ const steps = [
 ];
 const files = ref<FileItem[]>([]);
 const selectAll = ref(false);
-const modal = ref(false);
 const number = ref(3);
 const text = ref('');
 const text2 = ref([]);
 const text3 = ref('');
-const showPopOver = ref(false);
-const showSlideOver = ref(true);
 const options = ref<any[]>([
   {
     text: 'Javascript Javascript Javascript Javascript Javascript Javascript',
@@ -296,9 +269,9 @@ onMounted(() => {
   smAlert?.success('Hola mundo');
   smAlert?.error('Hola mundo');
   smAlert?.warning('Hola mundo', { title: '<h2>Grande</h2> pequeño' });
+  smAlert?.neutral('Hola mundo', { label: 'dasdasd' });
   smAlert?.info(
     `
-  Errores:
     <ul class="flex gap-4">
       <li>1: Error al cargar los datos bla bla bla...</li>
       <li>2: No se pudo generar la factura de venta a por los sig. motivos...</li>
