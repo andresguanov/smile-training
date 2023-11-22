@@ -8,11 +8,16 @@
           nisi vitae a error minima ratione.
         </p>
       </s-accordion-item>
+      <s-accordion-item title="Option 2" description="Description 2" icon="banks">
+        <p>Content 2</p>
+      </s-accordion-item>
+      <s-accordion-item title="Option 3" description="Description 3" icon="banks">
+        <p>Content 3</p>
+      </s-accordion-item>
+      <s-accordion-item title="Option 4" description="Description 4" icon="banks">
+        <p>Content 4</p>
+      </s-accordion-item>
     </s-accordion>
-    <br /><br />
-    <div>
-      <s-slider v-model="sSilderModel" label="Label"></s-slider>
-    </div>
 
     <s-wizard
       v-model="step"
@@ -33,142 +38,6 @@
         onlyAvatar: true,
       }"
     />
-    <<<<<<< HEAD =======
-
-    <SSlideover v-model="showSlideOver" header-text="Este es el titulo"></SSlideover>
-    <SPopOver
-      v-model="showPopOver"
-      title="Título del popover"
-      description="Los popovers son desplegados al hacer click o un tap en lugar de hacer hover, como un tooltip"
-    >
-      <span>Paragraph with PopOver</span>
-      <template #actions>
-        <div style="display: flex; justify-content: flex-end">
-          <s-button type="reversed" size="small" emphasis="text" @click="showPopOver = false">
-            Cerrar
-          </s-button>
-          <s-button type="reversed" size="small">Label</s-button>
-        </div>
-      </template>
-    </SPopOver>
-    <br />
-    <sm-alert-stack />
-    <s-modal
-      v-model="modal"
-      header-text="Carga un archivo o documento"
-      success-text="Cargar Archivo"
-      cancel-text="Cancelar"
-    >
-    </s-modal>
-    <sm-card class="mt-1">
-      <s-form ref="smFormEl" validate-on="focusout">
-        <template #default="{ validate, reset, isValid }">
-          {{ isValid }}
-          <s-file-upload
-            v-model:files="files"
-            label="Invoices"
-            description="Only PDF, JPG or PNG less than 500mb"
-            multiple
-            @update:files="logEvent"
-          />
-          <s-datepicker
-            v-model="selectedDate"
-            label="fecha test"
-            mark-type="required"
-            :text-input="true"
-            :range-mode="true"
-            multi-calendars
-            :sidebar-options="[
-              { id: '1', title: 'Semana pasada' },
-              { id: '2', title: 'TEST test' },
-              { id: '3', title: 'S-TEST' },
-            ]"
-            required
-          />
-          {{ text2 }}
-          <s-dropdown
-            v-model="text2"
-            label="elije"
-            placeholder="dasdasd"
-            multiple
-            search
-            id="dropdown-test"
-            :rules="selectRules"
-            :options="options"
-            :leading="{
-              label: 'Leading',
-              leadingIcon: 'accounting',
-            }"
-            @select="logEvent"
-            @open="logEvent"
-            @search="logEvent"
-          >
-          </s-dropdown>
-          <s-input
-            v-model="text"
-            supportive-text="dasdasd"
-            native-type="password"
-            icon-right="bolt"
-            label="password"
-            mark-type="optional"
-            :rules="sRules"
-          >
-            <template #leading>
-              <p>dasdasd</p>
-            </template>
-          </s-input>
-          <s-input
-            v-if="number === 3"
-            v-model="text"
-            icon-left="search"
-            label="label"
-            hint="hint"
-            :rules="sRules"
-            :leading="{
-              label: 'Leading',
-              leadingIcon: 'accounting',
-              actionable: true,
-            }"
-            @blur="logEvent"
-            @focus="logEvent"
-            @click-trailing="number = 3"
-          />
-          <s-dropdown
-            v-model="text3"
-            label="Lenguaje favorito"
-            can-deselect
-            object
-            mark-type="required"
-            required
-            placeholder="Escoge tu lenguaje favorito"
-            :options="options"
-            :loading="isLoadingOptions"
-            max-height="125px"
-            @search="logEvent"
-            @select="logEvent"
-            @open="openLanguajes"
-          >
-            <template #beforeOptions>
-              <button>Añadir lenguaje</button>
-            </template>
-          </s-dropdown>
-          {{ text3 }}
-          <s-number-input
-            v-model="number"
-            label="number"
-            show-mark
-            icon-left="accounting"
-            :leading="{
-              label: '$',
-              inline: true,
-            }"
-          />
-          <s-button @click="validate()">Submit</s-button>
-          <s-button type="destructive" @click="reset">Reset</s-button>
-        </template>
-      </s-form>
-    </sm-card>
-    >>>>>>> feature/crear-slider-smile
     <s-table
       ref="testSmTable"
       :rows="items"
@@ -205,7 +74,6 @@ import { SButton } from './index';
 import { $SmAlert, ISmAlertProvide } from '../utils/alerts';
 
 const step = ref(1);
-const sSilderModel = ref(0);
 const step1 = h('div', [h('p', 'Formulario 1'), h('input', { placeholder: 'User' })]);
 const step2 = h('div', [h('p', 'Formulario 2'), h('input', { placeholder: 'Email' })]);
 const step3 = h('div', [
