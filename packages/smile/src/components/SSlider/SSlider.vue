@@ -9,7 +9,7 @@
               v-if="showTooltip"
               class="s-slider-tooltip"
               :style="{
-                left: `${-(sliderValue?.offsetWidth / 2) + (data / 100) * slider?.offsetWidth}px`,
+                left: `${-(sliderValue?.offsetWidth / 2) + (data / max) * slider?.offsetWidth}px`,
               }"
             >
               <span ref="sliderValue">{{ data }}</span>
