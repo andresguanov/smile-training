@@ -4,7 +4,6 @@
     <div>
       <s-slider v-model="sSilderModel" label="Label"></s-slider>
     </div>
-
     <s-tag label="Demorado" type="primary" leading-icon="alert-triangle" />
     <s-tag label="Completado" type="slate" leading-icon="checks" />
     <s-tag label="TEST" type="rose" />
@@ -170,6 +169,7 @@ onMounted(() => {
   smAlert?.success('Hola mundo');
   smAlert?.error('Hola mundo');
   smAlert?.warning('Hola mundo', { title: '<h2>Grande</h2> pequeño' });
+  smAlert?.neutral('Hola mundo', { label: 'dasdasd' });
   smAlert?.info(
     `Errores:
     <ul class="flex gap-4">
