@@ -1,12 +1,12 @@
 <template>
   <div class="app_container">
-    <br /><br />
+    <s-notify-stack />
     <div>
       <s-slider v-model="sSilderModel" label="Label"></s-slider>
     </div>
-    <s-tag label="Demorado" type="primary" leading-icon="alert-triangle" />
+    <s-tag label="Demorado" type="primary" leading-icon="cloud-download" />
     <s-tag label="Completado" type="slate" leading-icon="checks" />
-    <s-tag label="TEST" type="rose" />
+    <s-datepicker v-model="selected" />
     <div class="relative">
       <s-input
         v-model="search"
@@ -86,6 +86,7 @@ import type { smTableChangeEvent, smTableColumn } from '~/interfaces';
 import { SButton } from './index';
 import { $SmAlert, ISmAlertProvide } from '../utils/alerts';
 
+const selected = ref('');
 const search = ref('');
 const open = ref(false);
 const step = ref(1);

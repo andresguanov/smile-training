@@ -68,6 +68,7 @@ declare module 'vue' {
     SmToggle: typeof import('./components/SmToggle/SmToggle.vue')['default'];
     SmTooltip: typeof import('./components/SmTooltipNext/SmTooltip.vue')['default'];
     SmWizardNext: typeof import('./components/SmWizardNext/SmWizardNext.vue')['default'];
+    SNotifyStack: typeof import('./components/SToast/SNotifyStack.vue')['default'];
     SNumberInput: typeof import('./components/SNumberInput/SNumberInput.vue')['default'];
     SOverflowMenu: typeof import('./components/SOverflowMenu/SOverflowMenu.vue')['default'];
     SPageHeading: typeof import('./components/SPageHeading/SPageHeading.vue')['default'];
@@ -85,6 +86,7 @@ declare module 'vue' {
     STabs: typeof import('./components/STab/STabs.vue')['default'];
     STabSelectors: typeof import('./components/STab/STabSelectors.vue')['default'];
     STag: typeof import('./components/STag/STag.vue')['default'];
+    SToast: typeof import('./components/SToast/SToast.vue')['default'];
     SToggle: typeof import('./components/SToggle/SToggle.vue')['default'];
     SToolbar: typeof import('./components/SToolbar/SToolbar.vue')['default'];
     STooltip: typeof import('./components/STooltip/STooltip.vue')['default'];

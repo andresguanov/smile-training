@@ -38,7 +38,7 @@
           :icon-right="canClear ? 'close' : 'calendar'"
           @blur="onBlur"
           @update:model-value="onInput"
-          @click-icon-right.stop="onClear"
+          @click-icon-right="onClear"
         />
       </template>
     </s-datepicker-base>
@@ -130,8 +130,11 @@ const textMark = computed(() => (props.markType === 'required' ? '*' : `(${props
 const helperText = computed(() => currentError.value || props.supportiveText);
 const canClear = computedEager(() => props.clearable && date.value);
 
-const onClear = () => {
-  if (canClear.value) date.value = '';
+const onClear = (event: PointerEvent) => {
+  if (canClear.value) {
+    event.stopPropagation();
+    date.value = '';
+  }
 };
 </script>
 
