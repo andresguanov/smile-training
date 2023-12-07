@@ -9,7 +9,7 @@
 
 <script lang="ts" setup>
 import type { IconType } from '../../interfaces';
-import smileIcons from '@alegradev/smile-icons/dist/smile-icons.svg';
+import Icons from '@alegradev/smile-icons/dist/smile-icons.svg?raw';
 
 const props = withDefaults(
   defineProps<{
@@ -31,8 +31,12 @@ const props = withDefaults(
     icon: 'help',
   }
 );
+const base64svg = computed(() => {
+  const svgBlob = new Blob([Icons], { type: 'image/svg+xml;charset=utf-8' });
+  return URL.createObjectURL(svgBlob);
+});
 
-const iconUrl = computed(() => `${smileIcons}#${props.icon}`);
+const iconUrl = computed(() => `${base64svg.value}#${props.icon}`);
 </script>
 
 <style lang="scss" scoped>

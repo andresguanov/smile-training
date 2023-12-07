@@ -1,6 +1,6 @@
 {
   "name": "@alegradev/smile-ui-next",
-  "version": "0.0.37",
+  "version": "0.0.38",
   "files": [
     "dist"
   ],
@@ -26,7 +26,7 @@
   },
   "devDependencies": {
     "@vuepic/vue-datepicker": "6.1.0",
-    "@alegradev/smile-icons": "1.0.5",
+    "@alegradev/smile-icons": "1.0.9",
     "@vitejs/plugin-vue": "^4.2.3",
     "autoprefixer": "^10.4.14",
     "postcss": "8.4.25",
