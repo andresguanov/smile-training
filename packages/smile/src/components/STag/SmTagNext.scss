@@ -1,8 +1,9 @@
 .sm-tag-next {
-  @apply rounded px-2 py-1 text-xs font-medium font-semibold text-center;
+  @apply rounded px-2 py-1 text-xs font-semibold text-center;
+  @apply flex items-center justify-center gap-1;
 
   &.primary {
-    @apply bg-sm-primary-100 text-sm-primary-800;
+    @apply bg-sm-primary-100 text-sm-primary-700;
   }
   &.slate {
     @apply bg-slate-200/[0.45] text-slate-500;
