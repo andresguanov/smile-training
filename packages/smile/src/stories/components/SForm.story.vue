@@ -2,10 +2,11 @@
   <Story title="s-form" auto-props-disabled>
     <Variant title="default">
       <template #default>
-        <s-form v-bind="initState" @submit="logEvent" @validation:error="logEvent">
+        <s-form ref="myForm" v-bind="initState" @submit="logEvent" @validation:error="logEvent">
           <template #default="{ validate, reset }">
             <s-input
               v-model="formValues.username"
+              id="my-custom-username-input"
               label="Username"
               :rules="[rules.required, rules.startWithUppercase]"
             />
@@ -22,6 +23,16 @@
             </div>
           </template>
         </s-form>
+        <div v-if="myForm" style="margin-top: 20px">
+          <h3>Métodos expuestos:</h3>
+          <div class="flex gap-4">
+            <s-button emphasis="subtle" @click="myForm.validateInput('my-custom-username-input')">
+              Validate Username Input
+            </s-button>
+            <s-button emphasis="subtle" @click="myForm.validateForm()">Validate Form</s-button>
+            <s-button type="destructive" @click="myForm.resetInputs()">Reset Inputs</s-button>
+          </div>
+        </div>
       </template>
       <template #controls>
         <template v-for="control in controls">
@@ -39,8 +50,9 @@
 
 <script setup>
 import { logEvent } from 'histoire/client';
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 
+const myForm = ref(null);
 const initState = reactive({
   validateOn: 'submit',
 });
