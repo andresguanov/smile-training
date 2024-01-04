@@ -43,7 +43,8 @@
             <slot name="append-item" />
           </li>
           <li
-            v-for="(option, i) in options"
+            ref="itemsRef"
+            v-for="(option, i) in loadedList"
             :key="i"
             :style="`margin-left: ${0.5 * (option.level ?? 0)}rem;`"
             @click="onClickOption(option)"
@@ -76,8 +77,7 @@
 
 <script setup lang="ts">
 // Composables
-import { useSmileValidator } from '~/composables';
-
+import { useSmileValidator, useIntersectionObserver } from '~/composables';
 // Types
 import type { MenuOption, SDropdownProps } from '~/types';
 import type { IconType } from '../../interfaces';
@@ -153,6 +153,27 @@ const textValue = computed({
 });
 
 const trailingIcon = computed<IconType>(() => (open.value ? 'chevron-up' : 'chevron-down'));
+
+// Intersection Observer
+const differenceStep = 10;
+
+const { loadedList, itemsRef, startObserving, setLoadedCount } = useIntersectionObserver(
+  differenceStep,
+  props.options
+);
+
+watch(
+  () => open.value,
+  async newVal => {
+    if (newVal) {
+      if (differenceStep > props.options.length) return;
+      startObserving();
+    } else {
+      // loadedCount.value = differenceStep;
+      setLoadedCount(differenceStep);
+    }
+  }
+);
 
 // Métodos
 const areInvalidProps = () => {
@@ -263,6 +284,7 @@ onMounted(() => {
 // Exposes
 defineExpose({
   toggleOverflow,
+  itemsRef,
 });
 </script>
 
