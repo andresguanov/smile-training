@@ -37,7 +37,7 @@
     @apply mx-auto mt-3;
   }
   &__icon {
-    @apply hidden mx-auto mb-6;
+    @apply mx-auto mb-6;
   }
 
   &--in-component {
@@ -47,9 +47,6 @@
       @apply w-[21rem];
     }
     .s-empty {
-      &__image {
-        @apply hidden;
-      }
       &__title {
         @apply mb-2 text-xl;
       }

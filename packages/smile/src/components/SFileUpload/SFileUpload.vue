@@ -1,7 +1,5 @@
 <template>
   <div class="s-file-upload">
-    <label :for="id" class="s-file-upload__label">{{ label }}</label>
-    <p v-if="description" class="s-file-upload__description">{{ description }}</p>
     <input
       ref="inputElement"
       :id="id"
@@ -11,13 +9,25 @@
       class="s-file-upload__input"
       @change="onFilesChange"
     />
-    <s-button
-      :label="buttonLabel"
-      icon-left="import"
-      emphasis="outline"
-      size="small"
-      class="s-file-upload__button"
-      @click="onClickButton"
+    <template v-if="!useDropZone">
+      <label :for="id" class="s-file-upload__label">{{ label }}</label>
+      <p v-if="description" class="s-file-upload__description">{{ description }}</p>
+      <s-button
+        :label="buttonLabel"
+        icon-left="import"
+        emphasis="outline"
+        size="small"
+        class="s-file-upload__button"
+        @click="onClickButton"
+      />
+    </template>
+    <s-drop-zone
+      v-else
+      :title="label"
+      :description="description"
+      :button-label="buttonLabel"
+      @files-drop="addFiles"
+      @button-click="onClickButton"
     />
     <div class="s-file-upload__files">
       <div v-for="(file, i) in internalFiles" class="s-file-upload__item" :class="file.status">
@@ -58,13 +68,14 @@ const props = withDefaults(
      * Tamaño máximo aceptado, en caso de que el archivo elegido supere el máximo
      * establecido, automáticamente se incluirá el estado de `error`.
      */
-    // maxFileSize?: number;
+    maxFileSize?: number;
     fileStatusText?: {
       success: string;
       loading: string;
       error: string;
       default?: string;
     };
+    useDropZone?: boolean;
   }>(),
   {
     maxFileSize: 5,
@@ -114,13 +125,16 @@ const onFilesChange = (event: Event) => {
     internalFiles.value = [];
     return;
   }
+  addFiles(target.files);
+};
+const addFiles = (files: File[] | FileList) => {
   if (!props.multiple) {
-    internalFiles.value = [convertToFileItem(target.files[0])];
+    internalFiles.value = [convertToFileItem(files[0])];
     return;
   }
   const selectedFiles: FileItem[] = [];
-  for (let index = 0; index < target.files.length; index++) {
-    selectedFiles.push(convertToFileItem(target.files[index]));
+  for (let index = 0; index < files.length; index++) {
+    selectedFiles.push(convertToFileItem(files[index]));
   }
   internalFiles.value = [...selectedFiles];
   // target.files.forEach(selectedFile => {

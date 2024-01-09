@@ -16,7 +16,7 @@ import type { IconType } from '../../interfaces';
 import SmIcon from '../SmIcon/SmIcon.vue';
 
 // TODO: pasar a un archivo de typos cuando importacion de tipos este disponible
-type variant = 'success' | 'error' | 'warning' | 'info';
+type variant = 'success' | 'error' | 'warning' | 'info' | 'neutral';
 
 type alert = {
   title?: string;
@@ -38,11 +38,15 @@ const icons: Record<variant, IconType> = {
   success: 'success',
   warning: 'info',
   info: 'info',
+  neutral: 'info',
 };
 
 const timeOutCallback = ref<number | null>(null);
 
 onMounted(() => {
+  if (props.type === 'neutral') {
+    console.warn('SmAlert: Neutral type is not supported.');
+  }
   if (!props.persistent) {
     timeOutCallback.value = window.setTimeout(() => emit('close'), props.time);
   }
