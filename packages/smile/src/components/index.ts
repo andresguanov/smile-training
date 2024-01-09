@@ -71,3 +71,7 @@ export { default as SStats } from './SStats/SStats.vue';
 export { default as SToggle } from './SToggle/SToggle.vue';
 export { default as SAvatar } from './SAvatar/SAvatar.vue';
 export { default as SFileUpload } from './SFileUpload/SFileUpload.vue';
+export { default as SDropZone } from './SDropZone/SDropZone.vue';
+export { default as SSlider } from './SSlider/SSlider.vue';
+export { default as SNotifyStack } from './SToast/SNotifyStack.vue';
+export { default as SToast } from './SToast/SToast.vue';
