@@ -1,3 +1,10 @@
+## [0.0.39] (2023-12-07)
+
+### :bug: Bug fixes
+
+- **SmIcon**:
+  - Se soluciona error al renderizar los íconos.
+
 ## [0.0.38] (2023-10-10)
 
 ### :rocket: Features:

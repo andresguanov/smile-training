@@ -98,10 +98,11 @@ export function useFilters(
         rawVal[column.name] = ref<boolean>(false);
       }
       if (type == 'select') {
-        rawVal[column.name] = ref(undefined);
+        const isMultiple = filterConfig[column.name].attrs?.multiple;
+        rawVal[column.name] = isMultiple ? ref([]) : ref(undefined);
       }
     });
-    filterValues.value = ref(rawVal);
+    filterValues.value = { ...rawVal };
   };
 
   initValues();
