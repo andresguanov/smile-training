@@ -49,7 +49,7 @@
 .sm-select-option {
   @apply hover:bg-gray-200 cursor-pointer px-1 flex w-full select-none hover:font-bold font-normal;
   & .sm-select-checkbox {
-    @apply content-[''] h-4 w-4 border rounded-sm bg-white my-auto mr-1 ml-2;
+    @apply content-[''] h-4 w-full max-w-[1rem] border rounded-sm bg-white my-auto mr-1 ml-2;
   }
 
   & .sm-select-checkbox:after {

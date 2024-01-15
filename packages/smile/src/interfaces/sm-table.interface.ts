@@ -1,3 +1,4 @@
+import { ComputedRef, Ref } from 'vue';
 import type { IconType } from './sm-icon.interface';
 
 export type ToolbarFilterType = 'input' | 'select' | 'checkbox' | 'datepicker';
@@ -18,7 +19,10 @@ export interface smTableColumn {
 
 export interface smTableFilter {
   type: ToolbarFilterType;
-  options?: Array<{ text: string; value: any; selected?: boolean }>;
+  options?:
+    | Array<{ text: string; value: any; selected?: boolean }>
+    | Ref<{ text: string; value: any; selected?: boolean }[]>
+    | ComputedRef<{ text: string; value: any; selected?: boolean }[]>;
   attrs?: any;
 }
 
