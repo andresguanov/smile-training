@@ -1,17 +1,18 @@
 <template>
   <SForm validate-on="type" ref="form">
     <SDropdown ref="refComp" v-model="selectedOption" :options="options" :rules="rules" object>
-      <template #append-item> test </template>
-      <template #prepend-item> test </template>
+      <!-- <template #append-item> test </template>
+      <template #prepend-item> test </template> -->
     </SDropdown>
     <SButton class="w-full" @click="validate"> Validar </SButton>
+    <!-- <SButton class="w-full" @click="test2 = '123'"> Validar </SButton> -->
   </SForm>
 </template>
 <script lang="ts" setup>
 // Componentes
 import { SDropdown, SForm, SButton } from '@alegradev/smile-ui-next';
 // Importaciones
-import { ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 
 // Types
 import type { ComponentPublicInstance } from 'vue';
@@ -36,13 +37,13 @@ const optionsCreated = Array.from({ length: 3000 }, (_, i) => i + 1).reduce((a, 
   return a;
 }, [] as MenuOption[]);
 
-const options = ref<MenuOption[]>([...optionsCreated]);
+const options = ref<MenuOption[]>([]);
 
 const refComp = ref<any>(null);
 
 const rules = [(v: string) => !!v || 'Requerido'];
 
-const selectedOption = ref<string>();
+const selectedOption = ref<string>('');
 
 // Métodos
 const validate = () => {
@@ -50,4 +51,15 @@ const validate = () => {
     console.log(form.value.validateForm());
   }
 };
+
+// const test2 = ref<string>('asd');
+// watch([test2, options], ([newVal, newOptions]) => {
+//   console.log(`${newVal} - ${newOptions.length}`);
+// });
+
+onMounted(() => {
+  setTimeout(() => {
+    options.value = [...optionsCreated];
+  }, 3000);
+});
 </script>

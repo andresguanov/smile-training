@@ -13,9 +13,11 @@
       <code>src/components</code>
     </p>
     <p class="font-extrabold text-2xl">¡ESTA ÁREA SIEMPRE DEBE ESTAR VACÍA!</p>
+    <SDropdown></SDropdown>
   </DefaultLayout>
 </template>
 
 <script setup lang="ts">
 import DefaultLayout from './layouts/DefaultLayout.vue';
+import SDropdown from './components/SDropDownComponent.vue';
 </script>

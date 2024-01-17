@@ -157,23 +157,21 @@ const trailingIcon = computed<IconType>(() => (open.value ? 'chevron-up' : 'chev
 // Intersection Observer
 const differenceStep = 10;
 
-const { loadedList, itemsRef, startObserving, setLoadedCount } = useIntersectionObserver(
-  differenceStep,
-  props.options
-);
+const { loadedList, itemsRef, setTotalList, startObserving, setLoadedCount } =
+  useIntersectionObserver(differenceStep);
 
-watch(
-  () => open.value,
-  async newVal => {
-    if (newVal) {
-      if (differenceStep > props.options.length) return;
-      startObserving();
-    } else {
-      // loadedCount.value = differenceStep;
-      setLoadedCount(differenceStep);
-    }
+watch([() => props.options, open], async ([newOptions, newOpenVal]) => {
+  // Setea la lista total de opciones
+  setTotalList(newOptions);
+  // Si se abre el menú y hay opciones, se inicia la observación
+  if (newOpenVal && newOptions.length) {
+    if (differenceStep > newOptions.length) return;
+    startObserving();
+  } else {
+    // Si se cierra el menú, se resetea la lista cargada
+    setLoadedCount(differenceStep);
   }
-);
+});
 
 // Métodos
 const areInvalidProps = () => {
