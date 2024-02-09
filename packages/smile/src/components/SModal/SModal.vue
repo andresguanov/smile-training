@@ -1,8 +1,15 @@
 <template>
   <div v-if="data" class="sn-modal-area">
     <div :class="['s-modal', size]">
-      <div class="s-modal-title">{{ headerText }}</div>
-      <div class="s-modal-body">
+      <div class="s-modal-title">
+        <span v-if="backBtn" class="title-back-arrow" @click="emits('back')">
+          <img :src="ArrowLeftIcon" alt="" />
+        </span>
+        <span>
+          {{ headerText }}
+        </span>
+      </div>
+      <div class="s-modal-body scroll_beautifull">
         <slot></slot>
       </div>
       <slot v-if="slots['footer']" name="footer" />
@@ -17,6 +24,8 @@
 
 <script setup lang="ts">
 import { useSlots } from 'vue';
+// eslint-disable-next-line import/no-unresolved
+import ArrowLeftIcon from '../../assets/arrow-left.svg';
 
 const props = withDefaults(
   defineProps<{
@@ -25,6 +34,7 @@ const props = withDefaults(
     headerText: string;
     cancelText?: string;
     successText?: string;
+    backBtn?: boolean;
   }>(),
   {
     size: 'medium',
@@ -39,6 +49,7 @@ const emits = defineEmits<{
   (event: 'update:modelValue', value: number): void;
   (event: 'close'): void;
   (event: 'success'): void;
+  (event: 'back'): void;
 }>();
 
 const data = useVModel(props, 'modelValue', emits);
