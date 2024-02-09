@@ -78,14 +78,23 @@
         />
       </template>
     </s-table>
+    <s-button @click="modal = true" color="primary">Modal</s-button>
+    <s-modal
+      v-model="modal"
+      size="small"
+      back-btn
+      header-text="asdasd"
+      @back="clickBackModal"
+    ></s-modal>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { smTableChangeEvent, smTableColumn } from '~/interfaces';
-import { SButton } from './index';
+import { SButton, SModal } from './index';
 import { $SmAlert, ISmAlertProvide } from '../utils/alerts';
 
+const modal = ref(false);
 const selected = ref('');
 const search = ref('');
 const open = ref(false);
@@ -163,6 +172,9 @@ const onChange = (data: smTableChangeEvent) => {
 };
 const logEvent = (event: any) => {
   console.log({ event });
+};
+const clickBackModal = () => {
+  console.log('object');
 };
 
 const smAlert = inject<ISmAlertProvide>($SmAlert);
