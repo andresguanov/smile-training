@@ -3,7 +3,7 @@
     <div :class="['s-modal', size]">
       <div class="s-modal-title">
         <span v-if="backBtn" class="title-back-arrow" @click="emits('back')">
-          <img :src="ArrowLeftIcon" alt="" />
+          <sm-icon icon="arrow-alt-left" />
         </span>
         <span>
           {{ headerText }}
@@ -24,8 +24,6 @@
 
 <script setup lang="ts">
 import { useSlots } from 'vue';
-// eslint-disable-next-line import/no-unresolved
-import ArrowLeftIcon from '../../assets/arrow-left.svg';
 
 const props = withDefaults(
   defineProps<{
