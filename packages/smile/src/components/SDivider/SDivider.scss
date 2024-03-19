@@ -1,0 +1,14 @@
+.s-divider {
+  &.small {
+    @apply py-1;
+  }
+  &.medium {
+    @apply py-2;
+  }
+  &.large {
+    @apply py-3;
+  }
+  &.huge {
+    @apply py-4;
+  }
+}

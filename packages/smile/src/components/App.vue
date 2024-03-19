@@ -136,6 +136,7 @@
       >
         <template #trailing> ⌘D </template>
       </SMenuItem>
+      <SDivider padding="small"></SDivider>
       <SMenuItem
         textStyle="inline"
         title="Compartir"
@@ -153,6 +154,8 @@
         :divider="true"
       >
       </SMenuItem>
+      <SDivider padding="small"></SDivider>
+
       <SMenuItem
         textStyle="inline"
         title="Eliminar"
