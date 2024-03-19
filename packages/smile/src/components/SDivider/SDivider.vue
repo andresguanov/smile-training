@@ -1,6 +1,6 @@
 <template>
   <div class="s-divider" :class="padding">
-    <hr class="w-full" />
+    <hr />
   </div>
 </template>
 
