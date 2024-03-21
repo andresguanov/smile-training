@@ -1,7 +1,7 @@
 .s-slideover-area {
   @apply fixed w-screen bottom-0 left-0 h-full
       bg-slate-700/60 flex justify-end items-center;
-  @apply z-[300] pr-3;
+  @apply z-[300];
 }
 
 .s-slideover {
