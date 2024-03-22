@@ -11,10 +11,8 @@
         {{ description }}
       </p>
     </div>
-    <div>
-      <div class="s-menu-item__trailing" v-if="$slots['trailing']">
-        <slot name="trailing" />
-      </div>
+    <div class="s-menu-item__trailing" v-if="$slots['trailing']">
+      <slot name="trailing" />
     </div>
   </div>
 </template>
