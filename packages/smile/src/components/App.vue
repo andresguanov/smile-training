@@ -126,6 +126,8 @@
         :destructive="false"
       >
       </SMenuItem>
+      <SDivider size="XS"></SDivider>
+
       <SMenuItem
         textStyle="inline"
         title="Duplicar"
@@ -136,7 +138,8 @@
       >
         <template #trailing> ⌘D </template>
       </SMenuItem>
-      <SDivider padding="small"></SDivider>
+      <SDivider size="SM"></SDivider>
+
       <SMenuItem
         textStyle="inline"
         title="Compartir"
@@ -145,6 +148,8 @@
         :destructive="false"
       >
       </SMenuItem>
+      <SDivider size="MD"></SDivider>
+
       <SMenuItem
         textStyle="inline"
         title="Imprimir"
@@ -154,7 +159,7 @@
         :divider="true"
       >
       </SMenuItem>
-      <SDivider padding="small"></SDivider>
+      <SDivider size="LG"></SDivider>
 
       <SMenuItem
         textStyle="inline"
@@ -164,7 +169,21 @@
         :destructive="true"
       >
       </SMenuItem>
+      <SDivider size="XL"></SDivider>
     </s-overflow-menu>
+    <div class="pt-16">
+      <SmTextarea
+        label="My Label"
+        v-model="myText"
+        :error="hasError"
+        size="medium"
+        required
+        placeholder="Enter some text"
+        :errorMessages="errorMessages"
+        :rules="rules"
+        @on:focusout="handleFocusOut"
+      />
+    </div>
   </div>
 </template>
 
@@ -174,6 +193,17 @@ import { SButton } from './index';
 import { $SmAlert, ISmAlertProvide } from '../utils/alerts';
 
 import { ref, reactive } from 'vue';
+const myText = ref('');
+const hasError = ref(true);
+const errorMessages = ref(['Error message 1', 'Error message 2']);
+const rules = ref([
+  value => !!value || 'Required.',
+  value => (value && value.length >= 3) || 'Minimum 3 characters',
+]);
+
+const handleFocusOut = () => {
+  hasError.value = !rules.value.every(rule => typeof rule(myText.value) === 'boolean');
+};
 
 const initState = reactive({
   label: 'Label',

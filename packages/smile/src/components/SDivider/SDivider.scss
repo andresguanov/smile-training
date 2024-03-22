@@ -1,14 +1,39 @@
 .s-divider {
-  &.small {
+  .wrapper-hr {
+    @apply flex items-center;
+  }
+  hr {
+    @apply flex-1;
+  }
+  &.XS {
+    @apply py-0.5;
+    .wrapper-hr {
+      @apply h-1;
+    }
+  }
+  &.SM {
     @apply py-1;
+    .wrapper-hr {
+      @apply h-2;
+    }
   }
-  &.medium {
+  &.MD {
+    @apply py-1.5;
+
+    .wrapper-hr {
+      @apply h-3;
+    }
+  }
+  &.LG {
     @apply py-2;
+    .wrapper-hr {
+      @apply h-4;
+    }
   }
-  &.large {
+  &.XL {
     @apply py-3;
-  }
-  &.huge {
-    @apply py-4;
+    .wrapper-hr {
+      @apply h-6;
+    }
   }
 }
