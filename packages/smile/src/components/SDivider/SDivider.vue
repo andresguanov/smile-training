@@ -1,15 +1,17 @@
 <template>
-  <div class="s-divider" :class="padding">
-    <hr />
+  <div class="s-divider" :class="size">
+    <div class="wrapper-hr">
+      <hr />
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 defineProps({
-  padding: {
+  size: {
     type: String,
     default: 'medium',
-    validator: value => ['small', 'medium', 'large', 'huge'].includes(value),
+    validator: value => ['XS', 'SM', 'MD', 'LG', 'XL'].includes(value),
   },
 });
 </script>
