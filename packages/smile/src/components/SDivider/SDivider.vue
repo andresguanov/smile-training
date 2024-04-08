@@ -11,7 +11,7 @@ defineProps({
   size: {
     type: String,
     default: 'medium',
-    validator: value => ['XS', 'SM', 'MD', 'LG', 'XL'].includes(value),
+    validator: (value: string) => ['XS', 'SM', 'MD', 'LG', 'XL'].includes(value),
   },
 });
 </script>
