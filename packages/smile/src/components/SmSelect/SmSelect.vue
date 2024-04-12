@@ -94,9 +94,8 @@ const props = withDefaults(defineProps<Props>(), {
 const selectedItem = ref<any>();
 
 // Propiedades de composables
-const { validate, hasError, errorListContent, validateOnFocusout } = useValidate(
+const { validate, hasError, errorListContent, rules, validateOnFocusout } = useValidate(
   selectedItem,
-  props.rules || [],
   props.error,
   props.errorMessages
 );
@@ -368,6 +367,7 @@ onBeforeMount(() => {
 });
 
 // Watcher
+
 watch(
   () => props.multiple,
   newVal => {
@@ -380,6 +380,14 @@ watch(
       selectedItem.value = undefined;
     }
   }
+);
+
+watch(
+  () => props.rules,
+  () => {
+    rules.value = props.rules ?? [];
+  },
+  { immediate: true }
 );
 
 watch(

@@ -24,7 +24,7 @@
     </span>
     <sm-hint v-if="toggleElement && hasError && errorListContent" :to="`#${toggleElement.id}`">
       <template #content>
-        <sm-error-list :error-messages="(errorListContent as Array<string>)" />
+        <sm-error-list :error-messages="errorListContent" />
       </template>
     </sm-hint>
   </div>
@@ -55,9 +55,8 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue', 'on:focusout']);
 const data = useVModel(props, 'modelValue', emit);
 const toggleElement = ref<HTMLSpanElement | null>(null);
-const { validate, hasError, errorListContent, validateOnFocusout } = useValidate(
+const { validate, hasError, errorListContent, rules, validateOnFocusout } = useValidate(
   data,
-  props.rules || [],
   props.error,
   props.errorMessages
 );
@@ -68,6 +67,14 @@ const onFocusOut = () => {
   }
   emit('on:focusout');
 };
+
+watch(
+  () => props.rules,
+  () => {
+    rules.value = props.rules ?? [];
+  },
+  { immediate: true }
+);
 
 defineExpose({ validate });
 </script>

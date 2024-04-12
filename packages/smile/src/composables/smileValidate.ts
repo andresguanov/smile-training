@@ -3,13 +3,12 @@ import type { Ref, WritableComputedRef } from 'vue';
 import { provideSFormSymbol } from './validate';
 import { simpleUid } from '~/utils/uid';
 
-const rules = ref<Array<(value: any) => boolean | string>>([]);
-
 export const useSmileValidate = <T = string>(
   data: Ref<T> | WritableComputedRef<T>,
   externalError?: Ref<string | undefined>,
   id: string = simpleUid()
 ) => {
+  const rules = ref<Array<(value: any) => boolean | string>>([]);
   const stopWatchValidate = watch(data, () => validate());
   const errorBucket = ref<Array<string>>([]);
 
@@ -69,6 +68,7 @@ export const useSmileValidate = <T = string>(
   });
 
   return {
+    id,
     errorBucket,
     validate,
     reset,
