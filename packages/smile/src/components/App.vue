@@ -79,7 +79,7 @@
       </template>
     </s-table>
   </div> -->
-  <div class="app-container">
+  <!-- <div class="app-container">
     <div class="absolute z-20 flex gap-2">
       <sm-button @click="open = true">Overflow 1</sm-button>
       <sm-button @click="open1 = true">Overflow 2</sm-button>
@@ -184,11 +184,11 @@
         @on:focusout="handleFocusOut"
       />
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script setup lang="ts">
-import type { smTableChangeEvent, smTableColumn } from '~/interfaces';
+/* import type { smTableChangeEvent, smTableColumn } from '~/interfaces';
 import { SButton } from './index';
 import { $SmAlert, ISmAlertProvide } from '../utils/alerts';
 
@@ -415,7 +415,7 @@ onMounted(() => {
       persistent: true,
     }
   );
-});
+}); */
 </script>
 
 <style lang="scss" scoped>
