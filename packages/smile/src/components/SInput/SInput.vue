@@ -138,9 +138,8 @@ const emit = defineEmits<{
 }>();
 
 const value = useVModel(props, 'modelValue', emit);
-const { validate, validateOnFocusout, hasError, currentError } = useSmileValidate<string>(
+const { rules, validate, validateOnFocusout, hasError, currentError } = useSmileValidate<string>(
   value,
-  props.rules,
   toRef(props, 'error'),
   props.id
 );
@@ -154,6 +153,14 @@ const onBlur = (event: FocusEvent) => {
   }
   emit('blur', event);
 };
+
+watch(
+  () => props.rules,
+  () => {
+    rules.value = props.rules ?? [];
+  },
+  { immediate: true }
+);
 </script>
 
 <style scoped lang="scss" src="./SInput.scss"></style>
