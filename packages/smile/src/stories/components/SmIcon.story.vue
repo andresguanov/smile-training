@@ -1,20 +1,20 @@
 <template>
-  <Story title="sm-icon" auto-props-disabled>
-    <Variant title="default">
-      <template #default>
-        <sm-icon v-bind="initState"></sm-icon>
+  <Story :layout="{ type: 'grid', width: 98 }">
+    <template v-for="icon in icons" :key="icon">
+      <Variant :title="icon">
+        <SmIcon v-bind="initState" :icon="icon"></SmIcon>
+      </Variant>
+    </template>
+    <template #controls>
+      <template v-for="control in controls">
+        <component
+          v-model="initState[control.key]"
+          :is="`Hst${control.input}`"
+          :title="control.key"
+          v-bind="control.props"
+        />
       </template>
-      <template #controls>
-        <template v-for="control in controls">
-          <component
-            v-model="initState[control.key]"
-            :is="`Hst${control.input}`"
-            :title="control.key"
-            v-bind="control.props"
-          />
-        </template>
-      </template>
-    </Variant>
+    </template>
   </Story>
 </template>
 
@@ -23,16 +23,10 @@ import { reactive } from 'vue';
 import { icons } from '../config/utils/IconOptions';
 
 const initState = reactive({
-  size: 'medium',
-  icon: 'help',
+  size: 'huge',
 });
 
 const controls = [
-  {
-    key: 'icon',
-    input: 'Select',
-    props: { options: icons },
-  },
   {
     key: 'size',
     input: 'Select',
