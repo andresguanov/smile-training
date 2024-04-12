@@ -11,7 +11,7 @@
         v-bind="leading"
         :size="size"
         class="s-number__leading"
-        @click="e => emit('clickLeading', e)"
+        @click="(e: PointerEvent) => emit('clickLeading', e)"
       >
         <slot name="leading" />
       </s-input-leading>
