@@ -184,6 +184,9 @@
         @on:focusout="handleFocusOut"
       />
     </div>
+    <div id="app">
+      <Vue3Lottie :animationData="animationData" :height="200" :width="200" />
+    </div>
   </div>
 </template>
 
@@ -193,6 +196,9 @@ import { SButton } from './index';
 import { $SmAlert, ISmAlertProvide } from '../utils/alerts';
 
 import { ref, reactive } from 'vue';
+import { Vue3Lottie } from 'vue3-lottie';
+import animationData from '../assets/loading-lottie.json';
+const defaultOptions = { animationData };
 const myText = ref('');
 const hasError = ref(true);
 const errorMessages = ref(['Error message 1', 'Error message 2']);
