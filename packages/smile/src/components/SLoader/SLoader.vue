@@ -15,9 +15,9 @@
       :style="lottieStyles"
     />
     <SmIcon
-      icon="loading"
-      :height="isInline ? '20px' : '100%'"
-      :width="isInline ? '20px' : '100%'"
+      icon="loading-spinner"
+      :height="isInline ? '20px' : '50%'"
+      :width="isInline ? '20px' : '50%'"
       v-else
       class="s-loader__icon"
     />

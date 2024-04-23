@@ -1,5 +1,5 @@
 <template>
-  <div class="s-input" :class="{ disabled, readonly, error: hasError }">
+  <div class="s-input" :class="{ disabled, readonly, error: hasError, magic }">
     <div v-if="label" class="s-input__header">
       <label :for="id" class="s-input__label" :class="{ required: markType === 'required' }">
         {{ label }}<span v-if="markType" class="s-input__mark">{{ textMark }}</span>
@@ -18,6 +18,13 @@
       </s-input-leading>
       <div v-if="iconLeft" class="s-input__icon leading">
         <sm-icon :icon="iconLeft" :width="iconSize" :height="iconSize" />
+      </div>
+      <div
+        v-if="magic"
+        class="s-input__magic"
+        :style="{ paddingLeft: $slots['leading'] || iconLeft ? '2rem' : '' }"
+      >
+        <sm-loader label="Autocompletando..." is-inline magic></sm-loader>
       </div>
       <input
         v-model="value"
@@ -67,6 +74,7 @@
 </template>
 
 <script setup lang="ts">
+import SmLoader from '../SLoader/SLoader.vue';
 import { useSmileValidate } from '~/composables';
 import type { IconType, InputAddon } from '../../interfaces';
 
@@ -122,6 +130,7 @@ const props = withDefaults(
      * @default Opcional
      */
     optionalText?: string;
+    magic?: boolean;
   }>(),
   {
     size: 'medium',

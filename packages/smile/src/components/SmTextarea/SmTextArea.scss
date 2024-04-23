@@ -12,4 +12,25 @@
     @apply border-fire-opal;
     @apply focus:border-fire-opal;
   }
+  &__magic {
+    @apply justify-start pl-2 items-center flex w-full absolute h-full pb-4  text-sm-primary-500;
+  }
+}
+.sm-label.magic {
+  @apply relative;
+}
+.sm-label.magic .sm-textarea {
+  @apply border-sm-primary-500 border-2 text-white;
+  animation: pulse 3s infinite;
+  @keyframes pulse {
+    0% {
+      border-color: rgb(var(--sm-color-primary-500));
+    }
+    50% {
+      border-color: rgb(var(--sm-color-primary-200));
+    }
+  }
+  &::placeholder {
+    @apply text-white;
+  }
 }
