@@ -187,32 +187,32 @@
     </div>
     <SInput v-model="myText" label="My Label" icon-left="loading" :magic="magic" />
     <SDropdown
-    :magic="true" 
-  v-model="initState["v-model"]"
-  label="Label"
-  :options="[
-    {
-      text: 'Javascript',
-      code: 'js',
-      icon: 'flag-3',
-    },
-    {
-      text: 'PHP',
-      code: 'php',
-      icon: 'flag-3',
-    },
-    {
-      text: 'Python',
-      code: 'py',
-      icon: 'flag-3',
-    },
-    {
-      text: 'C++',
-      code: 'cc',
-      icon: 'flag-3',
-    },
-  ]"
-/>    <SLoader label="Loading..."></SLoader>
+      :magic="magic"
+      label="Label"
+      :options="[
+        {
+          text: 'Javascript',
+          code: 'js',
+          icon: 'flag-3',
+        },
+        {
+          text: 'PHP',
+          code: 'php',
+          icon: 'flag-3',
+        },
+        {
+          text: 'Python',
+          code: 'py',
+          icon: 'flag-3',
+        },
+        {
+          text: 'C++',
+          code: 'cc',
+          icon: 'flag-3',
+        },
+      ]"
+    />
+    <SLoader label="Loading..."></SLoader>
     <SLoader label="Autocompletando..." is-inline magic></SLoader>
     <div class="w-32 h-32 mx-auto my-8">
       <SLoader label="Loading..." magic></SLoader>
