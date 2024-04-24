@@ -1,6 +1,13 @@
 <template>
-  <div v-if="!hasTheComponentErrors" class="s-dropdown" :class="{ readonly }">
+  <div v-if="!hasTheComponentErrors" class="s-dropdown" :class="[{ readonly, magic }]">
     <div class="s-dropdown__wrapper">
+      <div
+        v-if="magic"
+        class="s-dropdown__magic"
+        :style="{ paddingLeft: leading || $slots['leading'] ? '2rem' : '' }"
+      >
+        <sm-loader label="Autocompletando..." is-inline magic></sm-loader>
+      </div>
       <s-input
         class="s-dropdown__input"
         v-model="textValue"
@@ -77,7 +84,8 @@
 
 <script setup lang="ts">
 // Composables
-import { useSmileValidate, useIntersectionObserver } from '~/composables';
+import { useSmileValidator } from '~/composables';
+import SmLoader from '~/components/SLoader/SLoader.vue';
 // Types
 import type { MenuOption, SDropdownProps } from '~/types';
 import type { IconType } from '../../interfaces';
@@ -100,6 +108,7 @@ const props = withDefaults(defineProps<SDropdownProps>(), {
   valueKey: 'code',
   maxHeight: '300px',
   optionalText: 'Opcional',
+  magic: false,
 });
 
 const data = useVModel(props, 'modelValue', emit);

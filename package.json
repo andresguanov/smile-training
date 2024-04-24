@@ -45,5 +45,8 @@
     "commitizen": {
       "path": "cz-conventional-changelog"
     }
+  },
+  "dependencies": {
+    "vue3-lottie": "^3.3.0"
   }
 }

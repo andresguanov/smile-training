@@ -79,7 +79,7 @@
       </template>
     </s-table>
   </div> -->
-  <!-- <div class="app-container">
+  <div class="app-container">
     <div class="absolute z-20 flex gap-2">
       <sm-button @click="open = true">Overflow 1</sm-button>
       <sm-button @click="open1 = true">Overflow 2</sm-button>
@@ -173,6 +173,7 @@
     </s-overflow-menu>
     <div class="pt-16">
       <SmTextarea
+        :magic="magic"
         label="My Label"
         v-model="myText"
         :error="hasError"
@@ -184,17 +185,52 @@
         @on:focusout="handleFocusOut"
       />
     </div>
-  </div> -->
+    <SInput v-model="myText" label="My Label" icon-left="loading" :magic="magic" />
+    <SDropdown
+      :magic="magic"
+      label="Label"
+      :options="[
+        {
+          text: 'Javascript',
+          code: 'js',
+          icon: 'flag-3',
+        },
+        {
+          text: 'PHP',
+          code: 'php',
+          icon: 'flag-3',
+        },
+        {
+          text: 'Python',
+          code: 'py',
+          icon: 'flag-3',
+        },
+        {
+          text: 'C++',
+          code: 'cc',
+          icon: 'flag-3',
+        },
+      ]"
+    />
+    <SLoader label="Loading..."></SLoader>
+    <SLoader label="Autocompletando..." is-inline magic></SLoader>
+    <div class="w-32 h-32 mx-auto my-8">
+      <SLoader label="Loading..." magic></SLoader>
+    </div>
+    <SLoader label="Autocompletando..." is-inline></SLoader>
+  </div>
 </template>
 
 <script setup lang="ts">
-/* import type { smTableChangeEvent, smTableColumn } from '~/interfaces';
+import type { smTableChangeEvent, smTableColumn } from '~/interfaces';
 import { SButton } from './index';
 import { $SmAlert, ISmAlertProvide } from '../utils/alerts';
 
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
+
 const myText = ref('');
 const hasError = ref(true);
+const magic = ref(false);
 const errorMessages = ref(['Error message 1', 'Error message 2']);
 const rules = ref([
   (value: any) => !!value || 'Required.',
@@ -225,7 +261,7 @@ onMounted(() => {
       persistent: true,
     }
   );
-}); */
+});
 </script>
 
 <style lang="scss" scoped>

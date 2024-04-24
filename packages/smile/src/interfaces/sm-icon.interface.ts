@@ -29,6 +29,7 @@ export type IconType =
   | 'input'
   | 'list'
   | 'loading'
+  | 'loading-spinner'
   | 'lock'
   | 'menu'
   | 'minus'

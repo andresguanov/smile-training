@@ -22,6 +22,7 @@ declare module 'vue' {
     SForm: typeof import('./components/SForm/SForm.vue')['default']
     SInput: typeof import('./components/SInput/SInput.vue')['default']
     SInputLeading: typeof import('./components/SInput/addons/SInputLeading.vue')['default']
+    SLoader: typeof import('./components/SLoader/SLoader.vue')['default']
     SmAccordion: typeof import('./components/SmAccordion/SmAccordion.vue')['default']
     SmAccordionItem: typeof import('./components/SmAccordion/SmAccordionItem.vue')['default']
     SmAccordionItemBody: typeof import('./components/SmAccordion/SmAccordionItemBody.vue')['default']
