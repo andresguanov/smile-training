@@ -187,6 +187,7 @@
     </div>
     <SInput v-model="myText" label="My Label" icon-left="loading" :magic="magic" />
     <SDropdown
+      v-model="myText"
       :magic="magic"
       label="Label"
       :options="[

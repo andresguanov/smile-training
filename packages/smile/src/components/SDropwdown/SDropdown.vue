@@ -84,7 +84,7 @@
 
 <script setup lang="ts">
 // Composables
-import { useSmileValidator } from '~/composables';
+import { useSmileValidate, useIntersectionObserver } from '~/composables';
 import SmLoader from '~/components/SLoader/SLoader.vue';
 // Types
 import type { MenuOption, SDropdownProps } from '~/types';
@@ -118,7 +118,7 @@ const { validate, validateOnFocusout, currentError, rules } = useSmileValidate<
   MenuOption | string | number | Array<string | number> | undefined
 >(data, toRef(props, 'error'), props.id);
 
-// Propiedades reactivas
+// Propiedades reactivass
 const menuTopDistance = computed(() => {
   if (currentError.value) return '80%';
   return '100%';

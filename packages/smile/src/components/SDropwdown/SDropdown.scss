@@ -69,4 +69,12 @@
       }
     }
   }
+  body
+    &.magic:not(.readonly)
+    ::v-deep
+    .s-dropdown__input.readonly[data-v-75b3d686]:not(.disabled):not(.error)
+    .s-input__container
+    .s-input__input {
+    @apply opacity-0;
+  }
 }
