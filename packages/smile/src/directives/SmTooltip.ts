@@ -21,7 +21,6 @@ import { Directive, DirectiveBinding } from 'vue';
 // };
 
 function updateTooltip(el: HTMLElement, binding: DirectiveBinding) {
-  console.log(binding);
   if (typeof binding.value === 'string') {
     let position = binding.arg || 'top';
     let tooltipText = binding.value || 'Tooltip text';

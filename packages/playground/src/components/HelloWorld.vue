@@ -1,135 +1,37 @@
-<template>
-  <div class="app_container">
-    <s-notify-stack />
-    <sm-table
-      ref="testSmTable"
-      :rows="items"
-      :filters="[{ key: 'date', label: 'fecha', type: 'datepicker', icon: 'clock' }]"
-      :filterConfig="{
-        a: {
-          type: 'select',
-          options: [
-            {
-              text: 'Test 1 Test 1 Test 1 Test 1 Test 1 Test 1 Test 1 Test 1 Test 1 Test 1 Test 1 ',
-              value: 'test1',
-            },
-            { text: 'Test 2', value: 'test2' },
-            { text: 'Test 3', value: 'test3' },
-          ],
-          attrs: {
-            multiple: true,
-          },
-        },
-      }"
-      :column-config="cols"
-      class="my-table"
-      :actions="[{ label: 'Test', name: 'test', icon: 'add' }]"
-      pagination-full-mode
-      @refresh="onChange"
-      @change="onChange"
-      @filter="onChange"
-      @toolbar-action="logEvent"
-    >
-      <template #head.a>
-        <input v-model="selectAll" type="checkbox" name="test" id="test" />
-      </template>
-      <template #rowCell(a)="{ row }">
-        <s-cell
-          :text="row.a"
-          :avatar="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
-            row.a + 1
-          }.png`"
-          right-content
-          second-line="Second Line"
-        />
-      </template>
-    </sm-table>
-  </div>
-</template>
-
 <script setup lang="ts">
-import {
-  STable,
-  SmTable,
-  SNotifyStack,
-  useSmAlert,
-  smTableChangeEvent,
-  SCell,
-} from '@alegradev/smile-ui-next';
-import { ref, reactive, onMounted, inject, computed } from 'vue';
+import { ref } from 'vue';
 
-const selectAll = ref(false);
+defineProps<{ msg: string }>();
 
-const cols: smTableColumn[] = reactive([
-  {
-    bodyAlign: 'left',
-    headerAlign: 'left',
-    filterable: true,
-    order: true,
-    format: (value: string) => value.toUpperCase(),
-    label: 'A',
-    name: 'a',
-    width: '100px',
-  },
-  {
-    bodyAlign: 'left',
-    headerAlign: 'left',
-    filterable: true,
-    order: true,
-    format: (value: string) => value.toUpperCase(),
-    label: 'B es un nombre muy largo lorem ipsum -----',
-    name: 'b',
-    width: '200px',
-    bodyClass: 'b-column whitespace-nowrap text-ellipsis overflow-x-hidden',
-  },
-  {
-    bodyAlign: 'left',
-    headerAlign: 'left',
-    format: (value: string) => value.toUpperCase(),
-    label: 'C',
-    name: 'c',
-    width: '100px',
-  },
-]);
-const items = computed(() => {
-  const totalItems = 35;
-  const obj = [];
-  for (let i = 0; i < totalItems; i++) {
-    obj.push({ a: i, b: 'a'.repeat(totalItems), c: 'test test test test test test' });
-  }
-  return obj;
-});
-const onChange = (data: smTableChangeEvent) => {
-  console.log({ data });
-};
-const logEvent = (event: any) => {
-  console.log({ event });
-};
-const smAlert = useSmAlert();
-
-onMounted(() => {
-  smAlert?.success('Hola mundo');
-  smAlert?.error('Hola mundo');
-  smAlert?.warning('Hola mundo', { title: '<h2>Grande</h2> pequeño' });
-  smAlert?.neutral('Hola mundo', { label: 'dasdasd' });
-  smAlert?.info(
-    `Errores:
-    <ul class="flex gap-4">
-      <li>1: Error al cargar los datos bla bla bla...</li>
-      <li>2: No se pudo generar la factura de venta a por los sig. motivos...</li>
-    </ul>`,
-    {
-      title: 'Titulo de info',
-      persistent: true,
-    }
-  );
-});
+const count = ref(0);
 </script>
 
-<style lang="scss" scoped>
-.app_container {
-  @apply flex flex-col;
-  @apply m-5;
-  @apply max-w-5xl;
+<template>
+  <h1>{{ msg }}</h1>
+
+  <div class="card">
+    <button type="button" @click="count++">count is {{ count }}</button>
+    <p>
+      Edit
+      <code>components/HelloWorld.vue</code> to test HMR
+    </p>
+  </div>
+
+  <p>
+    Check out
+    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank">create-vue</a>, the
+    official Vue + Vite starter
+  </p>
+  <p>
+    Install
+    <a href="https://github.com/johnsoncodehk/volar" target="_blank">Volar</a>
+    in your IDE for a better DX
+  </p>
+  <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
+</template>
+
+<style scoped>
+.read-the-docs {
+  color: #888;
 }
 </style>

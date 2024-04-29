@@ -1,6 +1,5 @@
 <template>
   <DefaultLayout>
-    <HelloWorld msg="Hello World!" />
     <h1 class="text-3xl mb-4">Playground</h1>
     <p class="mb-4">
       Área destinada para realizar las pruebas necesarias en el desarrollo de componentes del
@@ -18,6 +17,5 @@
 </template>
 
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue';
 import DefaultLayout from './layouts/DefaultLayout.vue';
 </script>
