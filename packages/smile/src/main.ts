@@ -20,8 +20,10 @@ setDefaultProps({
 
 /* Comentar al compilar */
 
- import { createApp } from 'vue';
+/*
+import { createApp } from 'vue';
 import App from './components/App.vue';
 import { $SmAlert, ISmAlertProvide, useSmAlert } from './utils/alerts';
 
 createApp(App).provide<ISmAlertProvide>($SmAlert, useSmAlert()).mount('#app');
+*/
