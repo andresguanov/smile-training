@@ -5,10 +5,10 @@ import { simpleUid } from '~/utils/uid';
 
 export const useSmileValidate = <T = string>(
   data: Ref<T> | WritableComputedRef<T>,
-  rules: Array<(value: T) => boolean | string>,
   externalError?: Ref<string | undefined>,
   id: string = simpleUid()
 ) => {
+  const rules = ref<Array<(value: any) => boolean | string>>([]);
   const stopWatchValidate = watch(data, () => validate());
   const errorBucket = ref<Array<string>>([]);
 
@@ -17,7 +17,7 @@ export const useSmileValidate = <T = string>(
    */
   const validate = (silent = false): string[] => {
     const errors = [];
-    for (const rule of rules) {
+    for (const rule of rules.value) {
       const handler = typeof rule === 'function' ? rule : () => rule;
       const result = handler(data.value);
 
@@ -68,11 +68,13 @@ export const useSmileValidate = <T = string>(
   });
 
   return {
+    id,
     errorBucket,
     validate,
     reset,
     validateOnFocusout,
     hasError,
     currentError,
+    rules,
   };
 };

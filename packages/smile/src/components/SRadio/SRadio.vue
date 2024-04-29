@@ -71,9 +71,9 @@ const emit = defineEmits<{
 }>();
 
 const internalValue = useVModel(props, 'modelValue', emit);
-const { validate, validateOnFocusout, hasError, currentError } = useSmileValidate<
+const { validate, rules, validateOnFocusout, hasError, currentError } = useSmileValidate<
   string | number | object
->(internalValue, props.rules, toRef(props, 'error'), props.id);
+>(internalValue, toRef(props, 'error'), props.id);
 const textMark = computed(() => (props.markType === 'required' ? '*' : `(${props.optionalText})`));
 
 const onFocusOut = (event: FocusEvent) => {
@@ -82,6 +82,14 @@ const onFocusOut = (event: FocusEvent) => {
   }
   emit('focusOut', event);
 };
+
+watch(
+  () => props.rules,
+  () => {
+    rules.value = props.rules ?? [];
+  },
+  { immediate: true }
+);
 
 defineExpose({
   validate,

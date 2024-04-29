@@ -60,9 +60,8 @@ const emit = defineEmits<{
 }>();
 
 const internalValue = useVModel(props, 'modelValue', emit);
-const { validate, validateOnFocusout, hasError, currentError } = useSmileValidate<string[]>(
+const { rules, validate, validateOnFocusout, hasError, currentError } = useSmileValidate<string[]>(
   internalValue,
-  props.rules,
   toRef(props, 'error'),
   props.id
 );
@@ -73,6 +72,14 @@ const onFocusOut = (event: FocusEvent) => {
   }
   emit('focusOut', event);
 };
+
+watch(
+  () => props.rules,
+  () => {
+    rules.value = props.rules ?? [];
+  },
+  { immediate: true }
+);
 
 defineExpose({
   validate,
