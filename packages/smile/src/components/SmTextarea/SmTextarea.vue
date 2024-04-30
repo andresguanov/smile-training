@@ -21,7 +21,7 @@
     ></textarea>
     <sm-hint v-if="hasError && textareaElement && errorListContent" :to="`#${textareaElement.id}`">
       <template #content>
-        <sm-error-list :error-messages="errorListContent as Array<string>" />
+        <sm-error-list :error-messages="errorListContent" />
       </template>
     </sm-hint>
   </sm-label>

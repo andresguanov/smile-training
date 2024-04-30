@@ -1,6 +1,6 @@
 {
   "name": "@alegradev/smile-ui-next",
-  "version": "0.0.41-beta.4",
+  "version": "0.0.41",
   "files": [
     "dist"
   ],
@@ -23,12 +23,12 @@
     "pack": "npm pack"
   },
   "dependencies": {
-    "@vueuse/core": "9.3.0"
+    "@vueuse/core": "9.3.0",
+    "vue3-lottie": "3.3.0"
   },
   "devDependencies": {
     "@vuepic/vue-datepicker": "6.1.0",
     "@alegradev/smile-icons": "1.1.2",
-    "vue3-lottie": "^3.3.0",
     "@vitejs/plugin-vue": "5.0.4",
     "autoprefixer": "10.4.19",
     "postcss": "8.4.38",

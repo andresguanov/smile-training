@@ -23,7 +23,6 @@ declare module 'vue' {
     SError: (typeof import('./components/SError/SError.vue'))['default'];
     SFileUpload: (typeof import('./components/SFileUpload/SFileUpload.vue'))['default'];
     SForm: (typeof import('./components/SForm/SForm.vue'))['default'];
-    SIconTest: (typeof import('./components/SmIcon/SIconTest.vue'))['default'];
     SInput: (typeof import('./components/SInput/SInput.vue'))['default'];
     SInputLeading: (typeof import('./components/SInput/addons/SInputLeading.vue'))['default'];
     SLoader: (typeof import('./components/SLoader/SLoader.vue'))['default'];
