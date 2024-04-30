@@ -73,7 +73,9 @@ watch(
   () => props.rules,
   () => {
     rules.value = props.rules ?? [];
-  });
+  },
+  { immediate: true }
+);
 
 defineExpose({ validate });
 </script>
