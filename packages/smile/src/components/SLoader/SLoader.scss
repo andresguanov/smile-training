@@ -1,0 +1,10 @@
+.s-loader {
+  @apply flex flex-col justify-center items-center gap-2;
+
+  &.inline {
+    @apply flex-row;
+  }
+  &__icon {
+    @apply text-sm-primary-500 animate-spin w-full h-full;
+  }
+}
