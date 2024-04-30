@@ -5,32 +5,32 @@
   hr {
     @apply flex-1;
   }
-  &.XS {
+  &.xsmall {
     @apply py-0.5;
     .wrapper-hr {
       @apply h-1;
     }
   }
-  &.SM {
+  &.small {
     @apply py-1;
     .wrapper-hr {
       @apply h-2;
     }
   }
-  &.MD {
+  &.medium {
     @apply py-1.5;
 
     .wrapper-hr {
       @apply h-3;
     }
   }
-  &.LG {
+  &.large {
     @apply py-2;
     .wrapper-hr {
       @apply h-4;
     }
   }
-  &.XL {
+  &.huge {
     @apply py-3;
     .wrapper-hr {
       @apply h-6;

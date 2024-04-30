@@ -83,7 +83,6 @@
 
 <script setup lang="ts">
 // Composables
-import { useSmileValidator } from '~/composables';
 import SmLoader from '~/components/SLoader/SLoader.vue';
 import { useSmileValidate } from '~/composables';
 // Types
