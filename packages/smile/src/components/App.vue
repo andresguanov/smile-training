@@ -220,6 +220,7 @@
     </div>
     <SLoader label="Autocompletando..." is-inline></SLoader>
   </div>
+
 </template>
 
 <script setup lang="ts">
@@ -452,7 +453,7 @@ onMounted(() => {
       persistent: true,
     }
   );
-});
+}); 
 </script>
 
 <style lang="scss" scoped>

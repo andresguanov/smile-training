@@ -85,6 +85,7 @@
 // Composables
 import { useSmileValidator } from '~/composables';
 import SmLoader from '~/components/SLoader/SLoader.vue';
+import { useSmileValidate } from '~/composables';
 // Types
 import type { MenuOption, SDropdownProps } from '~/types';
 import type { IconType } from '../../interfaces';
@@ -113,9 +114,9 @@ const props = withDefaults(defineProps<SDropdownProps>(), {
 const data = useVModel(props, 'modelValue', emit);
 
 // Propiedades desde store/composables
-const { validate, validateOnFocusout, currentError } = useSmileValidator<
+const { validate, validateOnFocusout, currentError, rules } = useSmileValidate<
   MenuOption | string | number | Array<string | number> | undefined
->({ data, id: props.id, rules: props.rules, externalError: toRef(props, 'error') });
+>(data, toRef(props, 'error'), props.id);
 
 // Propiedades reactivas
 const menuTopDistance = computed(() => {
@@ -278,6 +279,14 @@ watch(
     hasTheComponentErrors.value = areInvalidProps();
   },
   { deep: true }
+);
+
+watch(
+  () => props.rules,
+  () => {
+    rules.value = props.rules ?? [];
+  },
+  { immediate: true }
 );
 
 // Métodos del ciclo de vida Vue

@@ -11,7 +11,7 @@
         v-bind="leading"
         :size="size"
         class="s-number__leading"
-        @click="e => emit('clickLeading', e)"
+        @click="(e: PointerEvent) => emit('clickLeading', e)"
       >
         <slot name="leading" />
       </s-input-leading>
@@ -127,12 +127,9 @@ const emit = defineEmits<{
 }>();
 
 const value = useVModel(props, 'modelValue', emit);
-const { validate, validateOnFocusout, hasError, currentError } = useSmileValidate<string | number>(
-  value,
-  props.rules,
-  toRef(props, 'error'),
-  props.id
-);
+const { rules, validate, validateOnFocusout, hasError, currentError } = useSmileValidate<
+  string | number
+>(value, toRef(props, 'error'), props.id);
 const textMark = computed(() => (props.markType === 'required' ? '*' : `(${props.optionalText})`));
 const iconSize = computed(() => (props.size === 'small' ? '16px' : '20px'));
 
@@ -152,6 +149,14 @@ const clickMinus = (event: PointerEvent) => {
   emit('clickMinus', event);
   value.value = Number(value.value || 0) - props.step;
 };
+
+watch(
+  () => props.rules,
+  () => {
+    rules.value = props.rules ?? [];
+  },
+  { immediate: true }
+);
 </script>
 
 <style scoped lang="scss" src="./SNumberInput.scss"></style>

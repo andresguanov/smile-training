@@ -110,9 +110,8 @@ const date = useVModel(props, 'modelValue', emit);
 const autoApply = computed(() => true);
 const inputId = computed(() => props.uid || simpleUid());
 
-const { validate, hasError, errorListContent, validateOnFocusout } = useValidate(
+const { validate, rules, hasError, errorListContent, validateOnFocusout } = useValidate(
   date,
-  props.rules || [],
   props.error,
   props.errorMessages
 );
@@ -123,6 +122,14 @@ const onFocusOut = (event: any) => {
   }
   if (event && typeof event === 'function') event();
 };
+
+watch(
+  () => props.rules,
+  () => {
+    rules.value = props.rules ?? [];
+  },
+  { immediate: true }
+);
 
 defineExpose({ validate });
 </script>

@@ -12,7 +12,7 @@
         v-bind="leading"
         :size="size"
         class="s-input__leading"
-        @click="e => emit('clickLeading', e)"
+        @click="(e: PointerEvent) => emit('clickLeading', e)"
       >
         <slot name="leading" />
       </s-input-leading>
@@ -36,8 +36,8 @@
         :required="required"
         :id="id"
         @blur="onBlur"
-        @focus="e => emit('focus', e)"
-        @keypress="e => emit('keypress', e)"
+        @focus="(e: FocusEvent) => emit('focus', e)"
+        @keypress="(e: KeyboardEvent) => emit('keypress', e)"
       />
       <div v-if="success" class="s-input__icon success">
         <sm-icon icon="success" :width="iconSize" :height="iconSize" />
@@ -53,7 +53,7 @@
           :icon="iconRight"
           :width="iconSize"
           :height="iconSize"
-          @click="e => emit('clickIconRight', e)"
+          @click="(e: PointerEvent) => emit('clickIconRight', e)"
         />
       </div>
       <s-input-leading
@@ -62,7 +62,7 @@
         :size="size"
         class="s-input__trailing"
         trailing
-        @click="e => emit('clickTrailing', e)"
+        @click="(e: PointerEvent) => emit('clickTrailing', e)"
       >
         <slot name="trailing" />
       </s-input-leading>
@@ -147,9 +147,8 @@ const emit = defineEmits<{
 }>();
 
 const value = useVModel(props, 'modelValue', emit);
-const { validate, validateOnFocusout, hasError, currentError } = useSmileValidate<string>(
+const { rules, validate, validateOnFocusout, hasError, currentError } = useSmileValidate<string>(
   value,
-  props.rules,
   toRef(props, 'error'),
   props.id
 );
@@ -163,6 +162,14 @@ const onBlur = (event: FocusEvent) => {
   }
   emit('blur', event);
 };
+
+watch(
+  () => props.rules,
+  () => {
+    rules.value = props.rules ?? [];
+  },
+  { immediate: true }
+);
 </script>
 
 <style scoped lang="scss" src="./SInput.scss"></style>
