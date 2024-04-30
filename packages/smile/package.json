@@ -23,7 +23,8 @@
     "pack": "npm pack"
   },
   "dependencies": {
-    "@vueuse/core": "9.3.0"
+    "@vueuse/core": "9.3.0",
+    "vue3-lottie": "^3.3.0"
   },
   "devDependencies": {
     "@vuepic/vue-datepicker": "6.1.0",
