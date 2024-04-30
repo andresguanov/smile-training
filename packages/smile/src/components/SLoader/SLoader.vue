@@ -10,14 +10,14 @@
     <Vue3Lottie
       v-if="magic"
       :animationData="animationData"
-      :height="isInline ? '20px' : '100%'"
-      :width="isInline ? '20px' : '100%'"
+      :height="dimensions.lottie"
+      :width="dimensions.lottie"
       :style="lottieStyles"
     />
     <SmIcon
       icon="loading-spinner"
-      :height="isInline ? '20px' : '50%'"
-      :width="isInline ? '20px' : '50%'"
+      :height="dimensions.icon"
+      :width="dimensions.icon"
       v-else
       class="s-loader__icon"
     />
@@ -28,7 +28,6 @@
 <script setup lang="ts">
 import { Vue3Lottie } from 'vue3-lottie';
 import animationData from '../../assets/loading-lottie.json';
-const defaultOptions = { animationData };
 
 const props = withDefaults(
   defineProps<{
@@ -50,6 +49,12 @@ const lottieStyles = computed(
   --lottie-animation-margin: 0;
 `
 );
+const dimensions = computed(() => {
+  return {
+    lottie: props.isInline ? '20px' : '100%',
+    icon: props.isInline ? '20px' : '50%',
+  };
+});
 </script>
 
 <style scoped lang="scss" src="./SLoader.scss"></style>

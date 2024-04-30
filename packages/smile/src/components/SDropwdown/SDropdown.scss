@@ -55,9 +55,9 @@
   }
   body
     &.magic:not(.readonly)
-    ::v-deep
-    .s-dropdown__input.readonly[data-v-75b3d686]:not(.disabled):not(.error)
-    .s-input__container {
+    :deep(
+      .s-dropdown__input.readonly[data-v-75b3d686]:not(.disabled):not(.error) .s-input__container
+    ) {
     @apply border-sm-primary-500 border-2;
     animation: pulse 3s infinite;
     @keyframes pulse {
@@ -71,10 +71,11 @@
   }
   body
     &.magic:not(.readonly)
-    ::v-deep
-    .s-dropdown__input.readonly[data-v-75b3d686]:not(.disabled):not(.error)
-    .s-input__container
-    .s-input__input {
+    :deep(
+      .s-dropdown__input.readonly[data-v-75b3d686]:not(.disabled):not(.error)
+        .s-input__container
+        .s-input__input
+    ) {
     @apply opacity-0;
   }
 }
