@@ -24,7 +24,7 @@
         class="s-input__magic"
         :style="{ paddingLeft: $slots['leading'] || iconLeft ? '2rem' : '' }"
       >
-        <sm-loader label="Autocompletando..." is-inline magic></sm-loader>
+        <sm-loader :label="autocompleteText" is-inline magic></sm-loader>
       </div>
       <input
         v-model="value"
@@ -131,12 +131,14 @@ const props = withDefaults(
      */
     optionalText?: string;
     magic?: boolean;
+    autocompleteText?: string;
   }>(),
   {
     size: 'medium',
     nativeType: 'text',
     rules: () => [],
     optionalText: 'Opcional',
+    autocompleteText: 'Autocompletando...',
   }
 );
 const emit = defineEmits<{
