@@ -1,3 +1,20 @@
+## [0.0.39] (2024-04-30)
+
+### :tada: Releases:
+
+- Se añadió soporte para el tema de HolaBill.
+- Se añadió una nueva prop _magic_ para un nuevo estado de los componentes SDropdown, SInput y SmTextarea.
+- Se desarrolló nuevo componente _SDivider_
+
+### :rocket: Features:
+
+- **SmIcon**:
+
+  - Se actualizan la cantidad de íconos.
+
+- **SModal**:
+  - Se agrega soporte para botón "back".
+
 ## [0.0.39] (2023-12-07)
 
 ### :bug: Bug fixes
