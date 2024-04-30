@@ -10,14 +10,14 @@ export const ValidateProps = {
 
 export const useValidate = (
   data: Ref<any>,
-  rules: Array<(value: any) => boolean | string>,
   externalError: boolean = false,
   externalErrorMessages: Array<string> = []
 ) => {
   const errorBucket = ref<Array<string>>([]);
+  const rules = ref<Array<(value: any) => boolean | string>>([]);
   const validateOnFocusout = ref(false);
 
-  const errorListContent = computed(() => {
+  const errorListContent = computed((): string[] => {
     return [...errorBucket.value, ...externalErrorMessages];
   });
   const hasError = computed(() => {
@@ -27,8 +27,8 @@ export const useValidate = (
   const validate = (ignoreUpdate?: boolean): boolean => {
     const errors = [];
     const value = data.value;
-    for (let index = 0; index < rules.length; index++) {
-      const rule = rules[index];
+    for (let index = 0; index < rules.value.length; index++) {
+      const rule = rules.value[index];
       const valid = typeof rule === 'function' ? rule(value) : rule;
 
       if (valid === false || typeof valid === 'string') {
@@ -61,11 +61,15 @@ export const useValidate = (
   }
 
   return {
+    // Propiedades
     errorBucket,
-    validate,
     errorListContent,
-    validateOnFocusout,
     hasError,
+    rules,
+    validateOnFocusout,
+
+    // Métodos
+    validate,
     resetValidation,
   };
 };

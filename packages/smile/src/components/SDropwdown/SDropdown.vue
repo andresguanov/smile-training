@@ -1,6 +1,13 @@
 <template>
-  <div v-if="!hasTheComponentErrors" class="s-dropdown" :class="{ readonly }">
+  <div v-if="!hasTheComponentErrors" class="s-dropdown" :class="[{ readonly, magic }]">
     <div class="s-dropdown__wrapper">
+      <div
+        v-if="magic"
+        class="s-dropdown__magic"
+        :style="{ paddingLeft: leading || $slots['leading'] ? '2rem' : '' }"
+      >
+        <sm-loader label="Autocompletando..." is-inline magic></sm-loader>
+      </div>
       <s-input
         class="s-dropdown__input"
         v-model="textValue"
@@ -77,7 +84,8 @@
 <script setup lang="ts">
 // Composables
 import { useSmileValidator } from '~/composables';
-
+import SmLoader from '~/components/SLoader/SLoader.vue';
+import { useSmileValidate } from '~/composables';
 // Types
 import type { MenuOption, SDropdownProps } from '~/types';
 import type { IconType } from '../../interfaces';
@@ -100,14 +108,15 @@ const props = withDefaults(defineProps<SDropdownProps>(), {
   valueKey: 'code',
   maxHeight: '300px',
   optionalText: 'Opcional',
+  magic: false,
 });
 
 const data = useVModel(props, 'modelValue', emit);
 
 // Propiedades desde store/composables
-const { validate, validateOnFocusout, currentError } = useSmileValidator<
+const { validate, validateOnFocusout, currentError, rules } = useSmileValidate<
   MenuOption | string | number | Array<string | number> | undefined
->({ data, id: props.id, rules: props.rules, externalError: toRef(props, 'error') });
+>(data, toRef(props, 'error'), props.id);
 
 // Propiedades reactivas
 const menuTopDistance = computed(() => {
@@ -270,6 +279,14 @@ watch(
     hasTheComponentErrors.value = areInvalidProps();
   },
   { deep: true }
+);
+
+watch(
+  () => props.rules,
+  () => {
+    rules.value = props.rules ?? [];
+  },
+  { immediate: true }
 );
 
 // Métodos del ciclo de vida Vue

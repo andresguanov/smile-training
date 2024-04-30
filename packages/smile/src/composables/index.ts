@@ -4,4 +4,3 @@ export * from './inputs';
 export * from './validate';
 export * from './filters';
 export * from './smileValidate';
-export * from './smileValidator';

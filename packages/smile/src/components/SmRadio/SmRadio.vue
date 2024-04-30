@@ -23,7 +23,7 @@
     </span>
     <sm-hint v-if="radioElement && hasError && errorListContent" :to="`#${radioElement.id}`">
       <template #content>
-        <sm-error-list :error-messages="(errorListContent as Array<string>)" />
+        <sm-error-list :error-messages="errorListContent" />
       </template>
     </sm-hint>
   </div>
@@ -51,9 +51,8 @@ const props = defineProps<{
 const emit = defineEmits(['update:modelValue']);
 const data = useVModel(props, 'modelValue', emit);
 const radioElement = ref<HTMLSpanElement | null>(null);
-const { validate, hasError, errorListContent } = useValidate(
+const { validate, hasError, errorListContent, rules } = useValidate(
   data,
-  props.rules || [],
   props.error,
   props.errorMessages
 );
@@ -62,6 +61,14 @@ const sizeClass = computed(() => {
   let size = props.size || 'medium';
   return `sm-radio-${size}`;
 });
+
+watch(
+  () => props.rules,
+  () => {
+    rules.value = props.rules ?? [];
+  },
+  { immediate: true }
+);
 
 defineExpose({ validate });
 </script>

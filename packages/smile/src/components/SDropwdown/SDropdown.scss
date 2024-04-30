@@ -50,4 +50,32 @@
       }
     }
   }
+  &__magic {
+    @apply self-center flex w-full h-full absolute pl-2 pt-6 text-sm-primary-500;
+  }
+  body
+    &.magic:not(.readonly)
+    :deep(
+      .s-dropdown__input.readonly[data-v-75b3d686]:not(.disabled):not(.error) .s-input__container
+    ) {
+    @apply border-sm-primary-500 border-2;
+    animation: pulse 3s infinite;
+    @keyframes pulse {
+      0% {
+        border-color: rgb(var(--sm-color-primary-500));
+      }
+      50% {
+        border-color: rgb(var(--sm-color-primary-200));
+      }
+    }
+  }
+  body
+    &.magic:not(.readonly)
+    :deep(
+      .s-dropdown__input.readonly[data-v-75b3d686]:not(.disabled):not(.error)
+        .s-input__container
+        .s-input__input
+    ) {
+    @apply opacity-0;
+  }
 }

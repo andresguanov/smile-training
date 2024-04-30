@@ -49,7 +49,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useSmileValidator } from '~/composables';
+import { useSmileValidate } from '~/composables';
 
 type SDatepickerValue = Date | string | Date[] | string[];
 
@@ -116,15 +116,11 @@ const emit = defineEmits<{
 const date = useVModel(props, 'modelValue', emit);
 
 const {
+  id: uid,
   hasError,
   currentError,
-  id: uid,
-} = useSmileValidator<SDatepickerValue>({
-  rules: props.rules,
-  data: date,
-  externalError: toRef(props, 'error'),
-  id: props.id,
-});
+  rules,
+} = useSmileValidate<any>(date, toRef(props, 'error'), props.id);
 
 const textMark = computed(() => (props.markType === 'required' ? '*' : `(${props.optionalText})`));
 const helperText = computed(() => currentError.value || props.supportiveText);
@@ -136,6 +132,14 @@ const onClear = (event: PointerEvent) => {
     date.value = '';
   }
 };
+
+watch(
+  () => props.rules,
+  () => {
+    rules.value = props.rules ?? [];
+  },
+  { immediate: true }
+);
 </script>
 
 <style scoped lang="scss" src="./SDatepicker.scss"></style>

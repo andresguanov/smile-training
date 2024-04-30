@@ -1,5 +1,8 @@
 <template>
-  <sm-label v-bind="$props" :error="hasError">
+  <sm-label v-bind="$props" :error="hasError" :class="[{ magic: magic }]">
+    <div v-if="magic" class="sm-textarea__magic">
+      <sm-loader label="Autocompletando..." is-inline magic></sm-loader>
+    </div>
     <textarea
       ref="textareaElement"
       v-model="data"
@@ -18,13 +21,16 @@
     ></textarea>
     <sm-hint v-if="hasError && textareaElement && errorListContent" :to="`#${textareaElement.id}`">
       <template #content>
-        <sm-error-list :error-messages="(errorListContent as Array<string>)" />
+
+        <sm-error-list :error-messages="errorListContent" />
+
       </template>
     </sm-hint>
   </sm-label>
 </template>
 
 <script lang="ts" setup>
+import SmLoader from '../SLoader/SLoader.vue';
 import { smSimpleUid as vSmSimpleUid } from '../../directives';
 import { computed } from 'vue';
 import { SmLabel, SmHint } from '../index';
@@ -40,13 +46,13 @@ const props = defineProps<{
   placeholder?: string;
   errorMessages?: Array<string>;
   rules?: Array<(value: any) => boolean | string>;
+  magic?: boolean;
 }>();
 
 const emit = defineEmits(['update:modelValue', 'on:focusout']);
 const data = useVModel(props, 'modelValue', emit);
-const { validate, hasError, errorListContent, validateOnFocusout } = useValidate(
+const { validate, hasError, errorListContent, rules, validateOnFocusout } = useValidate(
   data,
-  props.rules || [],
   props.error,
   props.errorMessages
 );
@@ -62,6 +68,14 @@ const onFocusOut = () => {
   }
   emit('on:focusout');
 };
+
+watch(
+  () => props.rules,
+  () => {
+    rules.value = props.rules ?? [];
+  },
+  { immediate: true }
+);
 
 defineExpose({ validate });
 </script>
