@@ -133,4 +133,22 @@
       @apply text-rose-600;
     }
   }
+  &__magic {
+    @apply justify-start items-center flex w-full absolute pl-2 text-sm-primary-500;
+  }
+  &.magic &__container {
+    @apply border-sm-primary-500 border-2 ;
+    animation: pulse 3s infinite;
+    @keyframes pulse {
+      0% {
+        border-color: rgb(var(--sm-color-primary-500));
+      }
+      50% {
+        border-color: rgb(var(--sm-color-primary-200));
+      }
+    }
+  }
+  &.magic &__input {
+    @apply opacity-0;
+  }
 }
