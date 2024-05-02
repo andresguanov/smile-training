@@ -1,7 +1,7 @@
 <template>
   <sm-label v-bind="$props" :error="hasError" :class="[{ magic: magic }]">
     <div v-if="magic" class="sm-textarea__magic">
-      <sm-loader label="Autocompletando..." is-inline magic></sm-loader>
+      <sm-loader :label="autocompleteText" is-inline magic></sm-loader>
     </div>
     <textarea
       ref="textareaElement"
@@ -21,9 +21,7 @@
     ></textarea>
     <sm-hint v-if="hasError && textareaElement && errorListContent" :to="`#${textareaElement.id}`">
       <template #content>
-
         <sm-error-list :error-messages="errorListContent" />
-
       </template>
     </sm-hint>
   </sm-label>
@@ -47,6 +45,7 @@ const props = defineProps<{
   errorMessages?: Array<string>;
   rules?: Array<(value: any) => boolean | string>;
   magic?: boolean;
+  autocompleteText?: string;
 }>();
 
 const emit = defineEmits(['update:modelValue', 'on:focusout']);

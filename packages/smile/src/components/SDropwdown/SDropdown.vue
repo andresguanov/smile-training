@@ -1,14 +1,9 @@
 <template>
   <div v-if="!hasTheComponentErrors" class="s-dropdown" :class="[{ readonly, magic }]">
     <div class="s-dropdown__wrapper">
-      <div
-        v-if="magic"
-        class="s-dropdown__magic"
-        :style="{ paddingLeft: leading || $slots['leading'] ? '2rem' : '' }"
-      >
-        <sm-loader label="Autocompletando..." is-inline magic></sm-loader>
-      </div>
       <s-input
+        :autocompleteText="autocompleteText"
+        :magic="magic"
         class="s-dropdown__input"
         v-model="textValue"
         :label="label"
@@ -108,6 +103,7 @@ const props = withDefaults(defineProps<SDropdownProps>(), {
   maxHeight: '300px',
   optionalText: 'Opcional',
   magic: false,
+  autocompleteText: 'Autocompletando...',
 });
 
 const data = useVModel(props, 'modelValue', emit);
