@@ -1,4 +1,4 @@
-const { theme } = require('./public/theme');
+const { theme } = require('./src/utils/theme');
 const colors = require('tailwindcss/colors');
 const plugin = require('tailwindcss/plugin');
 
