@@ -37,6 +37,7 @@ export const useIntersectionObserver = (initDif: number = 10) => {
 
   const startObserving = async (target = lastItemRef) => {
     await nextTick();
+    if (!target.value) return;
     observer.observe(target.value);
   };
 
