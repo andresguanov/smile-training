@@ -80,3 +80,6 @@ export { default as SDivider } from './SDivider/SDivider.vue';
 export { default as SSurvey } from './SSurvey/SSurveyModal.vue';
 export { default as SCard } from './SCard/SCard.vue';
 export { default as SEmotionCardList } from './SEmotionCard/SEmotionCardList.vue';
+
+export { default as SLoader } from './SLoader/SLoader.vue';
+
