@@ -78,7 +78,7 @@
 
 <script setup lang="ts">
 // Composables
-import SmLoader from '~/components/SLoader/SLoader.vue';
+// import SmLoader from '~/components/SLoader/SLoader.vue';
 import { useSmileValidate } from '~/composables';
 // Types
 import type { MenuOption, SDropdownProps } from '~/types';
