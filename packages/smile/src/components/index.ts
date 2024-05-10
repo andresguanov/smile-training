@@ -72,3 +72,4 @@ export { default as SToggle } from './SToggle/SToggle.vue';
 export { default as SAvatar } from './SAvatar/SAvatar.vue';
 export { default as SFileUpload } from './SFileUpload/SFileUpload.vue';
 export { default as SAccordion } from './SAccordion/SAccordion.vue';
+export { default as SAccordionItem } from './SAccordion/SAccordionItem.vue';
