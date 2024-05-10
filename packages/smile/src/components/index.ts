@@ -73,3 +73,8 @@ export { default as SAvatar } from './SAvatar/SAvatar.vue';
 export { default as SFileUpload } from './SFileUpload/SFileUpload.vue';
 export { default as SAccordion } from './SAccordion/SAccordion.vue';
 export { default as SAccordionItem } from './SAccordion/SAccordionItem.vue';
+export { default as SDropZone } from './SDropZone/SDropZone.vue';
+export { default as SSlider } from './SSlider/SSlider.vue';
+export { default as SNotifyStack } from './SToast/SNotifyStack.vue';
+export { default as SToast } from './SToast/SToast.vue';
+export { default as SDivider } from './SDivider/SDivider.vue';

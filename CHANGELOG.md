@@ -1,3 +1,57 @@
+## [0.0.39] (2024-04-30)
+
+### :tada: Releases:
+
+- Se añadió soporte para el tema de HolaBill.
+- Se añadió una nueva prop _magic_ para un nuevo estado de los componentes SDropdown, SInput y SmTextarea.
+- Se desarrolló nuevo componente _SDivider_
+
+### :rocket: Features:
+
+- **SmIcon**:
+
+  - Se actualizan la cantidad de íconos.
+
+- **SModal**:
+  - Se agrega soporte para botón "back".
+
+## [0.0.39] (2023-12-07)
+
+### :bug: Bug fixes
+
+- **SmIcon**:
+  - Se soluciona error al renderizar los íconos.
+
+## [0.0.38] (2023-10-10)
+
+### :rocket: Features:
+
+- **SmDatepicker**:
+
+  - Props:
+    Prop | Descripción
+    ---- | ------------
+    `showCaretDownIcon` | Permite mostrar el ícono caret-down dentro del componente.
+
+- **SmSelect**:
+
+  - Se agrega ellipsis para desborde de contenido.
+
+- **SmTable**:
+  - Slots:
+    Slot | Descripción
+    ---- | ------------
+    `headText.${col.name}` | Permite personalizar el contenido de la cabecera de la tabla.
+
+### :bug: Bug fixes
+
+- **SmDatepicker**:
+
+  - Se ajustan los estilos del placeholder.
+
+- **SmSelect**:
+  - Se corrige error que impedía limpiar el selector al usar como filtro de SmTable.
+
 ## [0.0.37] (2023-09-19)
 
 ### :tada: Releases:

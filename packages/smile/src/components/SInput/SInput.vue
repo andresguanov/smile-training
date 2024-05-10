@@ -1,5 +1,5 @@
 <template>
-  <div class="s-input" :class="{ disabled, readonly, error: hasError }">
+  <div class="s-input" :class="{ disabled, readonly, error: hasError, magic }">
     <div v-if="label" class="s-input__header">
       <label :for="id" class="s-input__label" :class="{ required: markType === 'required' }">
         {{ label }}<span v-if="markType" class="s-input__mark">{{ textMark }}</span>
@@ -12,12 +12,19 @@
         v-bind="leading"
         :size="size"
         class="s-input__leading"
-        @click="e => emit('clickLeading', e)"
+        @click="(e: PointerEvent) => emit('clickLeading', e)"
       >
         <slot name="leading" />
       </s-input-leading>
       <div v-if="iconLeft" class="s-input__icon leading">
         <sm-icon :icon="iconLeft" :width="iconSize" :height="iconSize" />
+      </div>
+      <div
+        v-if="magic"
+        class="s-input__magic"
+        :style="{ paddingLeft: $slots['leading'] || iconLeft ? '2rem' : '' }"
+      >
+        <sm-loader :label="autocompleteText" is-inline magic></sm-loader>
       </div>
       <input
         v-model="value"
@@ -29,8 +36,8 @@
         :required="required"
         :id="id"
         @blur="onBlur"
-        @focus="e => emit('focus', e)"
-        @keypress="e => emit('keypress', e)"
+        @focus="(e: FocusEvent) => emit('focus', e)"
+        @keypress="(e: KeyboardEvent) => emit('keypress', e)"
       />
       <div v-if="success" class="s-input__icon success">
         <sm-icon icon="success" :width="iconSize" :height="iconSize" />
@@ -46,7 +53,7 @@
           :icon="iconRight"
           :width="iconSize"
           :height="iconSize"
-          @click="e => emit('clickIconRight', e)"
+          @click="(e: PointerEvent) => emit('clickIconRight', e)"
         />
       </div>
       <s-input-leading
@@ -55,7 +62,7 @@
         :size="size"
         class="s-input__trailing"
         trailing
-        @click="e => emit('clickTrailing', e)"
+        @click="(e: PointerEvent) => emit('clickTrailing', e)"
       >
         <slot name="trailing" />
       </s-input-leading>
@@ -67,6 +74,7 @@
 </template>
 
 <script setup lang="ts">
+import SmLoader from '../SLoader/SLoader.vue';
 import { useSmileValidate } from '~/composables';
 import type { IconType, InputAddon } from '../../interfaces';
 
@@ -122,12 +130,15 @@ const props = withDefaults(
      * @default Opcional
      */
     optionalText?: string;
+    magic?: boolean;
+    autocompleteText?: string;
   }>(),
   {
     size: 'medium',
     nativeType: 'text',
     rules: () => [],
     optionalText: 'Opcional',
+    autocompleteText: 'Autocompletando...',
   }
 );
 const emit = defineEmits<{
@@ -138,9 +149,8 @@ const emit = defineEmits<{
 }>();
 
 const value = useVModel(props, 'modelValue', emit);
-const { validate, validateOnFocusout, hasError, currentError } = useSmileValidate<string>(
+const { rules, validate, validateOnFocusout, hasError, currentError } = useSmileValidate<string>(
   value,
-  props.rules,
   toRef(props, 'error'),
   props.id
 );
@@ -154,6 +164,14 @@ const onBlur = (event: FocusEvent) => {
   }
   emit('blur', event);
 };
+
+watch(
+  () => props.rules,
+  () => {
+    rules.value = props.rules ?? [];
+  },
+  { immediate: true }
+);
 </script>
 
 <style scoped lang="scss" src="./SInput.scss"></style>

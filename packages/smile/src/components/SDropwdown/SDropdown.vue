@@ -1,7 +1,9 @@
 <template>
-  <div v-if="!hasTheComponentErrors" class="s-dropdown">
+  <div v-if="!hasTheComponentErrors" class="s-dropdown" :class="[{ readonly, magic }]">
     <div class="s-dropdown__wrapper">
       <s-input
+        :autocompleteText="autocompleteText"
+        :magic="magic"
         class="s-dropdown__input"
         v-model="textValue"
         :label="label"
@@ -16,7 +18,7 @@
         :mark-type="markType"
         :optional-text="optionalText"
         :error="currentError"
-        :readonly="!search"
+        :readonly="readonly || !search"
         @click.stop="toggleOverflow"
       >
         <template #leading>
@@ -76,8 +78,8 @@
 
 <script setup lang="ts">
 // Composables
-import { useSmileValidator } from '~/composables';
-
+import SmLoader from '~/components/SLoader/SLoader.vue';
+import { useSmileValidate } from '~/composables';
 // Types
 import type { MenuOption, SDropdownProps } from '~/types';
 import type { IconType } from '../../interfaces';
@@ -100,14 +102,16 @@ const props = withDefaults(defineProps<SDropdownProps>(), {
   valueKey: 'code',
   maxHeight: '300px',
   optionalText: 'Opcional',
+  magic: false,
+  autocompleteText: 'Autocompletando...',
 });
 
 const data = useVModel(props, 'modelValue', emit);
 
 // Propiedades desde store/composables
-const { validate, validateOnFocusout, currentError } = useSmileValidator<
+const { validate, validateOnFocusout, currentError, rules } = useSmileValidate<
   MenuOption | string | number | Array<string | number> | undefined
->({ data, id: props.id, rules: props.rules, externalError: toRef(props, 'error') });
+>(data, toRef(props, 'error'), props.id);
 
 // Propiedades reactivas
 const menuTopDistance = computed(() => {
@@ -132,7 +136,7 @@ const formattedValue = computed<string>(() => {
       .join(', ');
   }
   if (props.object) {
-    return getText((data.value as MenuOption)[props.valueKey] as string | number);
+    return getText((data.value as MenuOption)[props.valueKey]);
   }
   return getText(data.value as string | number);
 });
@@ -165,8 +169,8 @@ const areInvalidProps = () => {
   }
 };
 
-const getText = (value: string | number) => {
-  const selectedValue = props.options.find(op => op[props.valueKey] === value);
+const getText = (value: unknown) => {
+  const selectedValue = props.options.find(op => isEqual(op[props.valueKey], value));
   if (selectedValue) return String(selectedValue[props.textKey]);
   return '';
 };
@@ -180,7 +184,7 @@ const isSelected = (value: MenuOption) => {
     if (!data?.value || !(props.valueKey in (data.value as MenuOption))) {
       return false;
     }
-    return (data.value as MenuOption)[props.valueKey] === realValue;
+    return isEqual((data.value as MenuOption)[props.valueKey], realValue);
   }
   return data.value === realValue;
 };
@@ -213,9 +217,9 @@ const onClickOption = (option: MenuOption) => {
   }
   if (
     props.canDeselect &&
-    (props.object ? (data.value as MenuOption)[props.valueKey] : data.value) === value
+    isEqual(props.object ? (data.value as MenuOption)?.[props.valueKey] : data.value, value)
   ) {
-    data.value = '';
+    data.value = void 0;
   } else {
     data.value = props.object ? option : value;
   }
@@ -241,9 +245,26 @@ const validateProps = (props: SDropdownProps) => {
 };
 
 const toggleOverflow = () => {
-  if (props.disabled) return;
+  if (props.disabled || props.readonly) return;
   if (!open.value) emit('open');
   open.value = !open.value;
+};
+
+const isEqual = (a: unknown, b: unknown) => {
+  /**
+   * Si los valores son objetos, se comparan como strings con JSON.stringify
+   * para evitar problemas con referencias
+   *
+   * Consideraciones:
+   * - Mantener el mismo orden de propiedades en los objetos a comparar
+   * - Los valores de las propiedades deben ser primitivos puesto que JSON no puede
+   *   representar todos los tipos de datos (undefined, function, symbol, etc.)
+   * - Por esa razón, también los objetos a comparar deben ser de tipo Object o Array
+   */
+  if (a !== null && b !== null && typeof a === 'object' && typeof b === 'object') {
+    return JSON.stringify(a) === JSON.stringify(b);
+  }
+  return a === b;
 };
 
 // Watchers
@@ -253,6 +274,14 @@ watch(
     hasTheComponentErrors.value = areInvalidProps();
   },
   { deep: true }
+);
+
+watch(
+  () => props.rules,
+  () => {
+    rules.value = props.rules ?? [];
+  },
+  { immediate: true }
 );
 
 // Métodos del ciclo de vida Vue

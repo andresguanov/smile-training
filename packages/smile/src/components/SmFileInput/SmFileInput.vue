@@ -24,7 +24,7 @@
     </div>
     <sm-hint v-if="hasError && inputElement && errorListContent" :to="`#${inputElement.id}`">
       <template #content>
-        <sm-error-list :error-messages="(errorListContent as Array<string>)" />
+        <sm-error-list :error-messages="errorListContent" />
       </template>
     </sm-hint>
   </sm-label>
@@ -72,9 +72,8 @@ const emit = defineEmits<{
 const data = useVModel(props, 'modelValue', emit);
 const inputElement = ref<HTMLInputElement | null>(null);
 
-const { validate, hasError, errorListContent, validateOnFocusout } = useValidate(
+const { validate, rules, hasError, errorListContent, validateOnFocusout } = useValidate(
   data,
-  props.rules || [],
   props.error,
   props.errorMessages
 );
@@ -115,6 +114,14 @@ const onFocusOut = () => {
   }
   emit('on:focusout');
 };
+
+watch(
+  () => props.rules,
+  () => {
+    rules.value = props.rules ?? [];
+  },
+  { immediate: true }
+);
 
 defineExpose({ validate, hasError: hasError.value });
 </script>

@@ -8,7 +8,7 @@
         :readonly="!search"
         :disabled="disabled"
         :placeholder="inputText || placeholder"
-        :class="{ 'sm-input-disabled': disabled }"
+        :class="['ellipsis', 'input-padding', { 'sm-input-disabled': disabled }]"
         v-sm-simple-uid
         @focusin="show = true"
         @focusout="hide"
@@ -31,7 +31,7 @@
         >
           <slot name="option" :option="localOptions[index]">
             <div class="sm-select-checkbox" v-if="multiple && !isItemDisabled(index)"></div>
-            <span>{{ option }}</span>
+            <span class="ellipsis">{{ option }}</span>
           </slot>
         </li>
         <li @mousedown="selecting">
@@ -94,9 +94,8 @@ const props = withDefaults(defineProps<Props>(), {
 const selectedItem = ref<any>();
 
 // Propiedades de composables
-const { validate, hasError, errorListContent, validateOnFocusout } = useValidate(
+const { validate, hasError, errorListContent, rules, validateOnFocusout } = useValidate(
   selectedItem,
-  props.rules || [],
   props.error,
   props.errorMessages
 );
@@ -154,6 +153,9 @@ const sizeClass = computed(() => {
 
 const optionsType = computed(() => {
   hasRenderError.value = false;
+  if (!Array.isArray(props.options)) {
+    return 'undefined';
+  }
   if (props.options.every(option => typeof option === 'object')) {
     return 'object';
   }
@@ -268,11 +270,12 @@ const findItem = () => {
 };
 const resetInternalValues = () => {
   if (!props.multiple) {
-    selectedItem.value = null;
+    selectedItem.value = undefined;
   } else {
     selectedItem.value.clear();
   }
   selectedIndex.value.clear();
+  inputText.value = '';
 };
 
 const findItems = () => {
@@ -364,6 +367,7 @@ onBeforeMount(() => {
 });
 
 // Watcher
+
 watch(
   () => props.multiple,
   newVal => {
@@ -376,6 +380,14 @@ watch(
       selectedItem.value = undefined;
     }
   }
+);
+
+watch(
+  () => props.rules,
+  () => {
+    rules.value = props.rules ?? [];
+  },
+  { immediate: true }
 );
 
 watch(
@@ -399,3 +411,13 @@ defineExpose({ validate });
 </script>
 
 <style lang="scss" scoped src="./SmSelect.scss"></style>
+<style lang="scss" scoped>
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis; /* Agrega puntos suspensivos (...) si el texto se trunca */
+  white-space: nowrap; /* Evita que el texto se desborde a una nueva línea */
+}
+.input-padding {
+  padding-right: 1.5rem !important;
+}
+</style>

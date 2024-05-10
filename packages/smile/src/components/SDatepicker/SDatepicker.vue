@@ -23,6 +23,8 @@
       :auto-apply="autoApply"
       :text-input="textInput"
       :range-mode="rangeMode"
+      :max-date="maxDate"
+      :min-date="minDate"
       :multi-calendars="multiCalendars"
       @click-option="v => emit('clickOption', v)"
     >
@@ -36,7 +38,7 @@
           :icon-right="canClear ? 'close' : 'calendar'"
           @blur="onBlur"
           @update:model-value="onInput"
-          @click-icon-right.stop="onClear"
+          @click-icon-right="onClear"
         />
       </template>
     </s-datepicker-base>
@@ -47,7 +49,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useSmileValidator } from '~/composables';
+import { useSmileValidate } from '~/composables';
 
 type SDatepickerValue = Date | string | Date[] | string[];
 
@@ -95,6 +97,8 @@ const props = withDefaults(
     optionalText?: string;
     hint?: string;
     supportiveText?: string;
+    minDate?: Date | string;
+    maxDate?: Date | string;
   }>(),
   {
     locale: 'es',
@@ -112,23 +116,30 @@ const emit = defineEmits<{
 const date = useVModel(props, 'modelValue', emit);
 
 const {
+  id: uid,
   hasError,
   currentError,
-  id: uid,
-} = useSmileValidator<SDatepickerValue>({
-  rules: props.rules,
-  data: date,
-  externalError: toRef(props, 'error'),
-  id: props.id,
-});
+  rules,
+} = useSmileValidate<any>(date, toRef(props, 'error'), props.id);
 
 const textMark = computed(() => (props.markType === 'required' ? '*' : `(${props.optionalText})`));
 const helperText = computed(() => currentError.value || props.supportiveText);
 const canClear = computedEager(() => props.clearable && date.value);
 
-const onClear = () => {
-  if (canClear.value) date.value = '';
+const onClear = (event: PointerEvent) => {
+  if (canClear.value) {
+    event.stopPropagation();
+    date.value = '';
+  }
 };
+
+watch(
+  () => props.rules,
+  () => {
+    rules.value = props.rules ?? [];
+  },
+  { immediate: true }
+);
 </script>
 
 <style scoped lang="scss" src="./SDatepicker.scss"></style>

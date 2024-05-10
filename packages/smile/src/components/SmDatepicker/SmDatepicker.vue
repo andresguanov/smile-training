@@ -23,6 +23,8 @@
       :range="range"
       :multi-calendars="range"
       :enable-time-picker="false"
+      :min-date="minDate"
+      :max-date="maxDate"
       class="sm-datepicker__calendar"
     >
       <template #dp-input="{ value, onBlur, onInput }">
@@ -37,6 +39,7 @@
           ]"
         >
           <input
+            class="input"
             :id="`dp-input-${inputId}`"
             :value="value"
             :disabled="disabled"
@@ -46,6 +49,7 @@
             @input="onInput"
             @blur="onFocusOut(onBlur)"
           />
+          <SmIcon v-if="showCaretDownIcon" class="icon" icon="caret-down" size="small" />
         </div>
       </template>
     </date-picker>
@@ -58,6 +62,7 @@
 </template>
 
 <script lang="ts" setup>
+import { SmIcon } from '..';
 import { useValidate } from '../../composables';
 import { simpleUid } from '~/utils/uid';
 import DatePicker from '@vuepic/vue-datepicker';
@@ -80,15 +85,18 @@ const props = withDefaults(
     size?: 'small' | 'medium' | 'large';
     range?: boolean;
     disabledDates?: Date[] | string[] | ((date: Date) => boolean);
-
     error?: boolean;
     errorMessages?: Array<string>;
     rules?: Array<(value: any) => boolean | string>;
+    minDate?: Date | string;
+    maxDate?: Date | string;
+    showCaretDownIcon?: boolean;
   }>(),
   {
     locale: 'es',
     label: '',
     format: 'dd/MM/yyyy',
+    showCaretDownIcon: false,
     size: 'medium',
     clearable: true,
   }
@@ -102,9 +110,8 @@ const date = useVModel(props, 'modelValue', emit);
 const autoApply = computed(() => true);
 const inputId = computed(() => props.uid || simpleUid());
 
-const { validate, hasError, errorListContent, validateOnFocusout } = useValidate(
+const { validate, rules, hasError, errorListContent, validateOnFocusout } = useValidate(
   date,
-  props.rules || [],
   props.error,
   props.errorMessages
 );
@@ -116,7 +123,32 @@ const onFocusOut = (event: any) => {
   if (event && typeof event === 'function') event();
 };
 
+watch(
+  () => props.rules,
+  () => {
+    rules.value = props.rules ?? [];
+  },
+  { immediate: true }
+);
+
 defineExpose({ validate });
 </script>
 
 <style scoped lang="scss" src="./SmDatepicker.scss"></style>
+<style scoped lang="scss">
+.icon {
+  position: absolute;
+  top: 50%;
+  right: 5px; /* Ajusta la posición del icono según tus necesidades */
+  transform: translateY(-50%);
+  font-size: 20px; /* Tamaño del icono (ajusta según tus necesidades) */
+  fill: gray;
+}
+.input::placeholder {
+  font-family: Inter, Roboto, sans-serif;
+  line-height: 18px;
+  font-size: 12px;
+  font-weight: 600;
+  @apply text-slate-400  #{!important};
+}
+</style>

@@ -25,7 +25,11 @@
           >
             <component
               v-if="filter.show"
-              :is="filter.component"
+              :is="
+                getComponent(
+                  filter.component as 'SmCheckbox' | 'SmDatePicker' | 'SmInput' | 'SmSelect'
+                )
+              "
               v-model="filterValues[filter.name]"
               v-bind="filter.attrs"
               size="small"
@@ -58,11 +62,10 @@
                 icon="caret-up"
                 size="small"
               />
-              <span v-if="col.order" @click="onSort(col.name)">
-                {{ columnNames[i] }}
-              </span>
-              <span v-else>
-                {{ columnNames[i] }}
+              <span @click="col.order ? onSort(col.name) : ''">
+                <slot :name="`headText.${col.name}`" :colText="columnNames[i]">
+                  {{ columnNames[i] }}
+                </slot>
               </span>
             </slot>
           </th>
@@ -144,6 +147,7 @@ const props = withDefaults(
     hoverable?: boolean;
     total?: number;
     page?: number;
+    areLocalItems?: boolean;
     itemsPerPage?: number;
     itemsPerPageOptions?: Array<number>;
     columnConfig?: Array<smTableColumn>;
@@ -195,15 +199,29 @@ const hasActionsColumn = computed(
   () => slots['actionsCol'] && typeof slots['actionsCol'] === 'function'
 );
 
-const { hasFilterableData, filterAttrs, filterValues, showFilters, resetValues, filtersAreFalsy } =
-  useFilters(props.columnConfig, props.filterConfig);
+const {
+  hasFilterableData,
+  filterAttrs,
+  filterValues,
+  showFilters,
+  resetValues,
+  filtersAreFalsy,
+  getComponent,
+} = useFilters(props.columnConfig, props.filterConfig);
 
 const tableData = computed((): Array<T> => {
-  if (props.rows.length > internalItemsPerPage.value) {
-    return [...props.rows].slice(0, internalItemsPerPage.value);
+  const rows = [...props.rows];
+  if (rows.length > internalItemsPerPage.value) {
+    if (!props.areLocalItems) {
+      return rows.slice(0, internalItemsPerPage.value);
+    }
+    const start = (internalPage.value - 1) * internalItemsPerPage.value;
+    const end = start + internalItemsPerPage.value;
+    return rows.slice(start, end);
   }
-  return [...props.rows];
+  return rows;
 });
+
 const columnNames = computed((): Array<string> => {
   return props.columnConfig.map(col => {
     const finalLabel = col.label ? col.label : col.name;
@@ -270,6 +288,7 @@ const onRefresh = () => {
 };
 
 defineExpose({
+  closeFilters: onHideFilter,
   onUpdateItemsPerPage,
   onUpdatePage,
   onRefresh,
