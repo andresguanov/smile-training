@@ -80,7 +80,7 @@
 <script setup lang="ts">
 // Composables
 import { useSmileValidate, useIntersectionObserver } from '~/composables';
-import SmLoader from '~/components/SLoader/SLoader.vue';
+// import SmLoader from '~/components/SLoader/SLoader.vue';
 
 // Types
 import type { MenuOption, SDropdownProps } from '~/types';
