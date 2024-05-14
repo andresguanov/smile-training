@@ -29,11 +29,11 @@
   },
   "devDependencies": {
     "@alegradev/smile-icons": "1.0.5",
-    "@histoire/plugin-vue": "^0.17.1",
     "@vitejs/plugin-vue": "^4.2.3",
+    "@histoire/plugin-vue": "0.17.17",
+    "histoire": "0.17.17",
     "@vuepic/vue-datepicker": "6.1.0",
     "autoprefixer": "^10.4.14",
-    "histoire": "^0.17.2",
     "postcss": "8.4.25",
     "sass": "1.63.6",
     "tailwind-scrollbar": "3.0.4",

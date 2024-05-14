@@ -7,7 +7,7 @@ function withOpacity(variableName: string) {
   };
 }
 
-export const theme = (colors: Record<string, string>) => {
+export const theme = (colors: Record<string, any>) => {
   return {
     colors: {
       'sm-primary-50': withOpacity('--sm-color-primary-50'),

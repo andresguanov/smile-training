@@ -4,7 +4,7 @@ import { HstVue } from '@histoire/plugin-vue';
 export default defineConfig({
   outDir: '../../dist-docs',
   plugins: [HstVue()],
-  setupFile: '/src/stories/config/histoire.setup.js',
+  setupFile: '/src/stories/config/histoire.setup.ts',
   theme: {
     title: 'Smile Ui.',
     favicon: './public/favicon.ico',
@@ -73,4 +73,5 @@ export default defineConfig({
       },
     ],
   },
+  viteNodeInlineDeps: [/lottie-web/],
 });
