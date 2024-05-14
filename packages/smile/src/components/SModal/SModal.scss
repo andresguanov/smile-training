@@ -5,27 +5,69 @@
 }
 
 .s-modal {
-  @apply rounded-lg bg-white drop-shadow-lg p-4;
+  @apply rounded-lg bg-white drop-shadow-lg p-4 flex flex-col;
 
   &-title {
-    @apply text-lg font-semibold text-slate-900 pb-2;
+    @apply text-lg font-semibold text-slate-900 pb-2 flex bg-white;
+
+    .title-back-arrow {
+      @apply w-10 h-10 py-[2px] cursor-pointer;
+    }
   }
 
   &-body {
-    @apply pb-4 text-sm font-normal text-slate-700;
+    @apply pb-4 text-sm font-normal text-slate-700 overflow-auto h-full;
   }
 
   &-footer {
-    @apply flex justify-end space-x-2;
+    @apply flex justify-end space-x-2 bg-white pt-4;
   }
 
   &.small {
     @apply w-80;
+    .s-modal-footer {
+      @apply justify-center;
+      button {
+        @apply w-[50%];
+      }
+    }
   }
   &.medium {
     @apply w-[480px];
   }
   &.large {
     @apply w-[640px];
+  }
+}
+
+.scroll_beautifull {
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1a2;
+    margin-right: 2em;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #969696cc;
+    border-radius: 10px;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #696969;
+  }
+}
+
+.box-shadow {
+  &-b {
+    box-shadow: 0px 5px 10px -5px #0000000f;
+  }
+  &-t {
+    box-shadow: 0px -5px 5px -5px #0000000f;
   }
 }

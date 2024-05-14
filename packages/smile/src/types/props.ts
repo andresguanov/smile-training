@@ -12,6 +12,7 @@ export type SDropdownProps = {
   hideLoadingText?: boolean;
   placeholder?: string;
   disabled?: boolean;
+  readonly?: boolean;
   required?: boolean;
   success?: boolean;
   loading?: boolean;
@@ -65,4 +66,6 @@ export type SDropdownProps = {
    * @default Opcional
    */
   optionalText?: string;
+  magic?: boolean;
+  autocompleteText?: string;
 };

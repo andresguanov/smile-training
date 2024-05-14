@@ -8,6 +8,7 @@ export interface ISmAlertProvide {
   error: (message: string, options?: smAlertProvideOptions) => void;
   warning: (message: string, options?: smAlertProvideOptions) => void;
   info: (message: string, options?: smAlertProvideOptions) => void;
+  neutral: (message: string, options?: smAlertProvideOptions) => void;
 }
 
 export const useSmAlert = () => {
@@ -23,10 +24,14 @@ export const useSmAlert = () => {
   const info = (message: string, options?: smAlertProvideOptions) =>
     alertStore.showAlert({ message, type: 'info', ...options });
 
+  const neutral = (message: string, options?: smAlertProvideOptions) =>
+    alertStore.showAlert({ message, type: 'neutral', ...options });
+
   return {
     success,
     error,
     warning,
     info,
+    neutral,
   };
 };

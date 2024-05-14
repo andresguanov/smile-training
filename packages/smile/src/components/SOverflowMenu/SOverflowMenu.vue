@@ -6,7 +6,7 @@
     <div class="s-menu__body">
       <slot />
     </div>
-    <footer class="s-menu__footer">
+    <footer class="s-menu__footer" v-if="$slots['footer']">
       <slot name="footer" />
     </footer>
   </div>

@@ -1,6 +1,8 @@
 <template>
-  <div class="s-menu-item" :class="{ destructive, disabled }">
-    <slot name="leading" />
+  <div class="s-menu-item" :class="{ destructive, disabled, divider }">
+    <div class="s-menu-item__leading" v-if="$slots['leading']">
+      <slot name="leading" />
+    </div>
     <img v-if="avatar" class="s-menu-item__image" :src="avatar" :alt="title" />
     <sm-icon v-if="icon" :icon="icon" width="20px" height="20px" fluid />
     <div class="s-menu-item__text" :class="[textStyle]">
@@ -9,7 +11,9 @@
         {{ description }}
       </p>
     </div>
-    <slot name="trailing" />
+    <div class="s-menu-item__trailing" v-if="$slots['trailing']">
+      <slot name="trailing" />
+    </div>
   </div>
 </template>
 
@@ -27,6 +31,7 @@ withDefaults(
     icon?: IconType;
     description?: string;
     titleStyle?: string;
+    divider?: boolean;
   }>(),
   { textStyle: 'inline' }
 );
