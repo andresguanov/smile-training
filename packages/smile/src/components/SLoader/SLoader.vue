@@ -15,10 +15,10 @@
       :style="lottieStyles"
     />
     <SmIcon
-      icon="loading-spinner"
+      v-else
       :height="dimensions.icon"
       :width="dimensions.icon"
-      v-else
+      icon="loading-spinner"
       class="s-loader__icon"
     />
     <span>{{ label }}</span>
