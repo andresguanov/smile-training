@@ -3,6 +3,7 @@ export * from './utils';
 export * from './directives';
 export * from './interfaces';
 export * from './types';
+export * from './composables/smileValidate';
 
 // import 'package/styles/dist/main.css'
 import './index.css';
