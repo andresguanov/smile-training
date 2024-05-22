@@ -36,7 +36,6 @@ const props = withDefaults(
   {
     type: 'neutral',
     time: 7500,
-    label: 'TEST',
   }
 );
 const emit = defineEmits<{

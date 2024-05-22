@@ -146,5 +146,10 @@ const controls = [
     input: 'Json',
     props: {},
   },
+  {
+    key: 'magic',
+    input: 'Checkbox',
+    props: {},
+  },
 ];
 </script>
