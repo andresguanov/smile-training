@@ -31,7 +31,6 @@
 import SmLoader from '../SLoader/SLoader.vue';
 import { smSimpleUid as vSmSimpleUid } from '../../directives';
 import { computed } from 'vue';
-import { SmLabel, SmHint } from '../index';
 import { useValidate } from '../../composables';
 
 const props = defineProps<{

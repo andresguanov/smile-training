@@ -1,5 +1,8 @@
-import { SmInput, SmSelect, SmCheckbox, SmDatepicker } from '../components/index';
-import { smTableColumn, smTableFilter } from '../interfaces';
+import type { smTableColumn, smTableFilter } from '../interfaces';
+import SmCheckbox from '~/components/SmCheckbox/SmCheckbox.vue';
+import SmDatepicker from '~/components/SmDatepicker/SmDatepicker.vue';
+import SmSelect from '~/components/SmSelect/SmSelect.vue';
+import SmInput from '~/components/SmInput/SmInput.vue';
 
 export function useFilters(
   columnConfig: Array<smTableColumn>,

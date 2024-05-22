@@ -13,7 +13,7 @@
         @focusin="show = true"
         @focusout="hide"
       />
-      <SmProgressBar v-if="loading" class="sm-select-progress-bar" />
+      <sm-progress-bar v-if="loading" class="sm-select-progress-bar" />
       <ul :class="['sm-select-options', { 'sm-select-options-open': show }]">
         <li
           v-for="(option, index) in optionsAsStringList"
@@ -48,9 +48,6 @@
 </template>
 
 <script lang="ts" setup>
-// Components
-import { SmProgressBar } from '~/components/index';
-
 // Importaciones
 import { useValidate } from '../../composables';
 import { smSimpleUid as vSmSimpleUid } from '../../directives';
