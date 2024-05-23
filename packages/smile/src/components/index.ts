@@ -1,4 +1,6 @@
 export { default as SmIcon } from './SmIcon/SmIcon.vue';
+export { default as SmCheckbox } from './SmCheckbox/SmCheckbox.vue';
+export { default as SmFileInput } from './SmFileInput/SmFileInput.vue';
 // New Smile
 export { default as SButton } from './SButton/SButton.vue';
 export { default as SStepper } from './SStepper/SStepper.vue';

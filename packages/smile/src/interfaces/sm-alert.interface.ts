@@ -1,19 +1,23 @@
-export interface smAlert {
-  id: number;
-  message: string;
-  title?: string;
-  type?: 'success' | 'error' | 'warning' | 'info' | 'neutral';
-  time?: number;
-  persistent?: boolean;
-  label?: string;
+export type ToastTypes = 'success' | 'error' | 'warning' | 'info' | 'neutral';
+
+interface Action {
+  label: string;
+  action: () => void;
 }
 
 export interface smAlertProvideOptions {
   title?: string;
   time?: number;
   persistent?: boolean;
-  label?: string;
+  action?: Action;
 }
+
+export interface smAlert extends smAlertProvideOptions {
+  id: number;
+  message: string;
+  type?: ToastTypes;
+}
+
 export interface smAlertProvide {
   success: (message: string, options?: smAlertProvideOptions) => void;
   error: (message: string, options?: smAlertProvideOptions) => void;
