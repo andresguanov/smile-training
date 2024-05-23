@@ -1,4 +1,4 @@
-export const icons = [
+export const iconOptions = [
   'camera-plus',
   'cloud-computing',
   'hierarchy',
@@ -359,4 +359,4 @@ export const icons = [
   'hierarchy',
   'cloud-computing',
   'open-link',
-];
+] as const;
