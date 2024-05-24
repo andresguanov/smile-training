@@ -13,6 +13,7 @@ export const alertStore = reactive<{
     type = 'success',
     persistent = false,
     time = 7500,
+    action,
   }: Partial<smAlert>) {
     if (message) {
       this.stack.push({
@@ -22,6 +23,7 @@ export const alertStore = reactive<{
         type,
         persistent,
         time,
+        action,
       });
     }
   },

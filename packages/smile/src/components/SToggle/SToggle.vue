@@ -25,7 +25,6 @@
 <script lang="ts" setup>
 import { smSimpleUid as vSmSimpleUid } from '../../directives';
 import { useVModel } from '@vueuse/core';
-import { SmHint, SmErrorList } from '../index';
 import {
   LabelProps as labelProps,
   InputProps as inputProps,

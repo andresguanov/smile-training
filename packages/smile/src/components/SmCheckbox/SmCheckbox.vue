@@ -32,7 +32,6 @@
 <script lang="ts" setup>
 import { smSimpleUid as vSmSimpleUid } from '../../directives';
 import { useVModel } from '@vueuse/core';
-import { SmLabel, SmHint, SmErrorList } from '../index';
 import { useValidate } from '../../composables';
 
 const props = defineProps<{
