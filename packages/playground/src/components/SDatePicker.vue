@@ -1,5 +1,5 @@
 <template>
-  <SmDatepicker v-model="today" locale="en" range type="hour" append-to-body show-time-header>
+  <SDatepicker v-model="today" locale="en" range type="hour" append-to-body show-time-header>
     <template #sidebar>
       <ul>
         <li><strong>Usando Sidebar</strong></li>
@@ -8,11 +8,11 @@
         <li>Este mes</li>
       </ul>
     </template>
-  </SmDatepicker>
+  </SDatepicker>
 </template>
 <script lang="ts" setup>
 // Componentes
-import { SmDatepicker } from '@alegradev/smile-ui-next';
+import { SDatepicker } from '@alegradev/smile-ui-next';
 
 // Importaciones
 import { ref } from 'vue';
