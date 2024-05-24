@@ -14,15 +14,7 @@ const build = async function () {
     if (!target) {
       await spawn.sync(
         'npx',
-        [
-          'lerna',
-          'run',
-          'story:build',
-          '--scope',
-          '@alegradev/smile-ui-next',
-          '--stream',
-          '--verbose',
-        ],
+        ['lerna', 'run', 'story:build', '--scope', alias.dev, '--stream', '--verbose'],
         { stdio: 'inherit' }
       );
     } else {

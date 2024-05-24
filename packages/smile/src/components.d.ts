@@ -39,7 +39,6 @@ declare module 'vue' {
     SMenuItem: (typeof import('./components/SMenuItem/SMenuItem.vue'))['default'];
     SmFileInput: (typeof import('./components/SmFileInput/SmFileInput.vue'))['default'];
     SmIcon: (typeof import('./components/SmIcon/SmIcon.vue'))['default'];
-    SmInnerLoading: (typeof import('./components/SmInnerLoading/SmInnerLoading.vue'))['default'];
     SmLabel: (typeof import('./components/SmLabel/SmLabel.vue'))['default'];
     SModal: (typeof import('./components/SModal/SModal.vue'))['default'];
     SmProgressBar: (typeof import('./components/SmProgressBar/SmProgressBar.vue'))['default'];
