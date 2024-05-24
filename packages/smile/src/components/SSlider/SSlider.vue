@@ -56,7 +56,7 @@
 const props = withDefaults(
   defineProps<{
     modelValue: number | string;
-    label: String;
+    label: string;
     min?: number;
     max?: number;
   }>(),
