@@ -1,5 +1,5 @@
 <template>
-  <div v-if="data" class="sn-modal-area">
+  <div v-if="data" class="sn-modal-area" @click.self="emits('clickOutside')">
     <div :class="['s-modal', size]">
       <div class="s-modal-title">
         <span v-if="backBtn" class="title-back-arrow" @click="emits('back')">
@@ -12,19 +12,17 @@
       <div class="s-modal-body scroll_beautifull">
         <slot></slot>
       </div>
-      <slot v-if="slots['footer']" name="footer" />
-
-      <div v-else class="s-modal-footer">
-        <s-button size="small" emphasis="outline" @click="close">{{ cancelText }}</s-button>
-        <s-button size="small" @click="success"> {{ successText }}</s-button>
-      </div>
+      <slot name="footer">
+        <div class="s-modal-footer">
+          <s-button size="small" emphasis="outline" @click="close">{{ cancelText }}</s-button>
+          <s-button size="small" @click="success"> {{ successText }}</s-button>
+        </div>
+      </slot>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useSlots } from 'vue';
-
 const props = withDefaults(
   defineProps<{
     modelValue: boolean;
@@ -41,13 +39,12 @@ const props = withDefaults(
   }
 );
 
-const slots = useSlots();
-
 const emits = defineEmits<{
   (event: 'update:modelValue', value: number): void;
   (event: 'close'): void;
   (event: 'success'): void;
   (event: 'back'): void;
+  (event: 'clickOutside'): void;
 }>();
 
 const data = useVModel(props, 'modelValue', emits);
@@ -67,6 +64,4 @@ const success = () => {
 };
 </script>
 
-<style lang="scss" scoped>
-@import './SModal.scss';
-</style>
+<style lang="scss" scoped src="./SModal.scss"></style>
