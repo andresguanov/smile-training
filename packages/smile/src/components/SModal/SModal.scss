@@ -5,7 +5,7 @@
 }
 
 .s-modal {
-  @apply rounded-lg bg-white drop-shadow-lg p-4 flex flex-col;
+  @apply rounded-lg bg-white drop-shadow-lg p-4 flex flex-col max-h-[80vh];
 
   &-title {
     @apply text-lg font-semibold text-slate-900 pb-2 flex bg-white;
@@ -16,7 +16,7 @@
   }
 
   &-body {
-    @apply pb-4 text-sm font-normal text-slate-700 overflow-auto h-full;
+    @apply pb-4 text-sm font-normal text-slate-700 h-full;
   }
 
   &-footer {
