@@ -9,7 +9,7 @@
           {{ headerText }}
         </span>
       </div>
-      <div class="s-modal-body scroll_beautifull">
+      <div class="s-modal-body" :class="{ scroll_beautifull: scrollable }">
         <slot></slot>
       </div>
       <slot name="footer">
@@ -31,6 +31,7 @@ const props = withDefaults(
     cancelText?: string;
     successText?: string;
     backBtn?: boolean;
+    scrollable?: boolean;
   }>(),
   {
     size: 'medium',
