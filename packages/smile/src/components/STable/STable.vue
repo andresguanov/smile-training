@@ -1,83 +1,69 @@
 <template>
   <div class="s-table">
-    <s-toolbar
-      v-if="toolbar"
-      :actions="actions"
-      :filters="filters"
-      :toolbar-texts="toolbarTexts"
-      @action="e => emit('toolbarAction', e)"
-      @search="v => emit('search', v)"
-    >
-      <template #actions>
-        <slot name="actions" />
-      </template>
-      <template #filters>
-        <slot name="filters" />
-      </template>
-      <template #rightContent>
-        <slot name="toolbarRightContent" />
-      </template>
-    </s-toolbar>
-    <table class="s-table__wrapper">
-      <thead class="s-table__head">
-        <tr class="s-table__row">
-          <th
-            v-for="(col, i) in columnConfig"
-            :key="'smTableTh' + i"
-            :class="['s-table__head__cell', col.headerAlign, { sortable: col.order }]"
-            :header-name="col.name"
-            :style="{ width: col.width }"
-            @click="onSort(col.name, col.order)"
-          >
-            <slot :name="'headerCell(' + col.name + ')'" :col="col">
-              {{ columnNames[i] }}
-              <sm-icon
-                size="small"
-                class="s-table__head__sort"
-                :class="{ active: col.name == sortColumn }"
-                :icon="sortIcon"
-              />
-            </slot>
-            <span class="s-table__head__divider" />
-          </th>
-          <th
-            v-if="hasActionsColumn"
-            class="sm-table-container-th"
-            :style="{ width: actionsColWidth }"
-          >
-            <slot name="actionsHead">{{ DEFAULT_ACTIONS_TEXT }}</slot>
-          </th>
-        </tr>
-      </thead>
-      <tbody class="s-table__body">
-        <tr
-          v-for="(row, i) in tableData"
-          :key="'smTableTr-' + i"
-          class="s-table__row"
-          :class="{ hoverable }"
-        >
-          <td
-            v-for="(col, j) in columnConfig"
-            :key="`smTableTd-${i}-${j}`"
-            :class="['s-table__body__cell', col.bodyAlign, col.bodyClass]"
-            :data-name="col.name"
-          >
-            <slot
-              :name="'rowCell(' + col.name + ')'"
-              :row-index="i"
-              :col-index="j"
-              :col="col"
-              :row="row"
+    <slot name="toolbar" />
+    <slot name="belowToolbar" />
+    <div class="s-table__wrapper">
+      <table>
+        <thead class="s-table__head">
+          <tr class="s-table__row">
+            <th
+              v-for="(col, i) in columnConfig"
+              :key="'smTableTh' + i"
+              :class="['s-table__head__cell', col.headerAlign, { sortable: col.order }]"
+              :header-name="col.name"
+              :style="{ width: col.width }"
+              @click="onSort(col.name, col.order)"
             >
-              {{ row[col.name] }}
-            </slot>
-          </td>
-          <td v-if="hasActionsColumn" class="sm-table-container-td">
-            <slot name="actionsCol" :row="row" />
-          </td>
-        </tr>
-      </tbody>
-    </table>
+              <slot :name="'headerCell(' + col.name + ')'" :col="col">
+                {{ columnNames[i] }}
+                <sm-icon
+                  size="small"
+                  class="s-table__head__sort"
+                  :class="{ active: col.name == sortColumn }"
+                  :icon="sortIcon"
+                />
+              </slot>
+              <span class="s-table__head__divider" />
+            </th>
+            <th
+              v-if="hasActionsColumn"
+              class="sm-table-container-th"
+              :style="{ width: actionsColWidth }"
+            >
+              <slot name="actionsHead">{{ DEFAULT_ACTIONS_TEXT }}</slot>
+            </th>
+          </tr>
+        </thead>
+        <tbody class="s-table__body">
+          <tr
+            v-for="(row, i) in tableData"
+            :key="'smTableTr-' + i"
+            class="s-table__row"
+            :class="{ hoverable }"
+          >
+            <td
+              v-for="(col, j) in columnConfig"
+              :key="`smTableTd-${i}-${j}`"
+              :class="['s-table__body__cell', col.bodyAlign, col.bodyClass]"
+              :data-name="col.name"
+            >
+              <slot
+                :name="`rowCell(${col.name})`"
+                :row-index="i"
+                :col-index="j"
+                :col="col"
+                :row="row"
+              >
+                {{ row[col.name] }}
+              </slot>
+            </td>
+            <td v-if="hasActionsColumn" class="sm-table-container-td">
+              <slot name="actionsCol" :row="row" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <div v-if="!rows.length" class="s-table__empty">
       <slot name="empty">
         <p>No hay contenido disponible</p>
@@ -90,7 +76,7 @@
       :item-limit-options="itemsPerPageOptions"
       :text="textPagination"
       :full-mode="paginationFullMode"
-      class="sm-table-pagination"
+      class="s-table__pagination"
       @refresh="onRefresh"
       @update:page="onUpdatePage"
       @update:itemsPerPage="onUpdateItemsPerPage"
@@ -100,13 +86,7 @@
 
 <script lang="ts" setup generic="T extends Record<string, any>">
 import type { smPaginationText } from '../../interfaces/sm-pagination.interface';
-import type {
-  smTableColumn,
-  smTableChangeEvent,
-  ToolbarAction,
-  ToolbarFilter,
-} from '../../interfaces/sm-table.interface';
-// import { useFilters } from '../../composables';
+import type { TableColumn, TableChangeEvent } from '../../interfaces/sm-table.interface';
 
 const props = withDefaults(
   defineProps<{
@@ -116,46 +96,28 @@ const props = withDefaults(
     initialPage?: number;
     initialItemsPerPage?: number;
     initialOrder?: 'ASC' | 'DESC';
-    columnConfig?: Array<smTableColumn>;
+    columnConfig?: Array<TableColumn>;
     itemsPerPageOptions?: Array<number>;
     textPagination?: smPaginationText;
-
     /**
      * Indica si la paginación de la tabla mostrará otros datos como
      * el selector de cantidad a mostrar, página actual, etc.
      */
     paginationFullMode?: boolean;
     actionsColWidth?: string;
-    /**
-     * Indica si la tabla presenta o no un toolbar
-     */
-    toolbar?: boolean;
-    toolbarTexts?: {
-      filter: string;
-      by: string;
-      removeFilters: string;
-      searchPlaceholder?: string;
-    };
-    /**
-     * Acciones secundarias para el toolbar,
-     * cada una emite un evento `action` el cual devuelve
-     * la propiedad name como parámetro.
-     */
-    actions?: ToolbarAction[];
-    filters?: ToolbarFilter[];
   }>(),
   {
     toolbar: true,
     hoverable: true,
     rows: (): Array<any> => [],
-    columnConfig: (): Array<smTableColumn> => [],
+    columnConfig: (): Array<TableColumn> => [],
     initialPage: 1,
     initialItemsPerPage: 10,
   }
 );
 const slots = useSlots();
 const emit = defineEmits<{
-  (e: 'refresh' | 'change' | 'filter', data: smTableChangeEvent): void;
+  (e: 'refresh' | 'change' | 'filter', data: TableChangeEvent): void;
   (e: 'update:page', data: number): void;
   (e: 'update:itemsPerPage', data: number): void;
   (e: 'toolbarAction', value: string): void;
@@ -181,8 +143,6 @@ const sortIcon = computed(() =>
       : 'arrow-up'
     : 'arrows-sort'
 );
-
-// const { filterValues } = useFilters(props.columnConfig, props.filterConfig);
 
 const tableData = computed(() => {
   if (props.rows.length > internalItemsPerPage.value) {

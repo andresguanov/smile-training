@@ -2,11 +2,15 @@
   @apply bg-white rounded-none md:rounded-2xl;
   @apply border border-slate-200 border-solid;
 
-  &__toolbar {
-    @apply min-h-[48px];
+  > :deep(.s-toolbar) {
+    @apply min-h-[48px] border-b border-solid border-slate-200;
   }
   &__wrapper {
-    @apply w-full;
+    @apply w-full min-h-[521px];
+
+    > table {
+      @apply w-full;
+    }
   }
   &__head {
     &__cell {
@@ -51,6 +55,9 @@
         @apply opacity-100;
       }
     }
+    .s-table__row {
+      @apply border-t-0;
+    }
   }
   &__header {
     @apply p-0;
@@ -72,5 +79,8 @@
   &__empty {
     @apply min-h-[320px] flex items-center justify-center;
     @apply border-b border-solid border-slate-200;
+  }
+  &__pagination {
+    @apply border-t border-solid border-slate-200 -mt-px;
   }
 }

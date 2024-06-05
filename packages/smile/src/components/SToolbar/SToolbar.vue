@@ -10,35 +10,27 @@
           icon-left="search"
           @update:model-value="emit('search', search)"
         />
-        <div class="s-toolbar__actions__filter">
-          <s-button
-            v-if="filters.length"
-            emphasis="text"
-            type="ghost"
-            size="small"
-            @click.stop="toggleMenu()"
-          >
-            <sm-icon icon="filter" size="small" />
-            <span>{{ toolbarTexts.filter }}</span>
-          </s-button>
-          <s-overflow-menu
-            v-if="menuOpen"
-            class="s-toolbar__menu"
-            bubbling
-            @click-outside="toggleMenu()"
-          >
-            <p class="s-toolbar__menu__label">{{ toolbarTexts.filter }} {{ toolbarTexts.by }}</p>
-            <slot name="filters">
-              <s-menu-item
-                v-for="filter in filters"
-                :key="filter.key"
-                :title="filter.label"
-                :icon="filter.icon || DEFAULT_ICONS[filter.type]"
-                @click="onSelectFilter(filter)"
-              />
-            </slot>
-          </s-overflow-menu>
-        </div>
+        <s-toolbar-menu
+          v-if="filters.length"
+          :header-text="`${toolbarTexts.filter} ${toolbarTexts.by}`"
+          is-limited
+        >
+          <template #toggle="{ toggleMenu }">
+            <s-button emphasis="text" type="ghost" size="small" @click.stop="toggleMenu()">
+              <sm-icon icon="filter" size="small" />
+              <span>{{ toolbarTexts.filter }}</span>
+            </s-button>
+          </template>
+          <template #content>
+            <s-menu-item
+              v-for="filter in filters"
+              :key="filter.key"
+              :title="filter.label"
+              :icon="filter.icon"
+              @click="onSelectFilter(filter)"
+            />
+          </template>
+        </s-toolbar-menu>
         <slot name="actions">
           <s-button
             v-for="action in actions"
@@ -53,98 +45,118 @@
         </slot>
       </div>
       <div class="s-toolbar__actions__right">
+        {{ filterValues }}
         <slot name="rightContent" />
       </div>
     </div>
     <div v-show="showToolbarFilters" class="s-toolbar__filters">
       <div class="s-toolbar__filters__chips">
-        <s-chip
+        <s-toolbar-menu
           v-for="activeFilter in activeFilters"
-          :key="activeFilter.key"
-          :label="activeFilter.label"
-          :icon="activeFilter.icon || DEFAULT_ICONS[activeFilter.type]"
-          type="filter"
-          @click="onDeleteFilter(activeFilter.key)"
-        />
-        <s-button
-          only-icon="plus"
-          emphasis="text"
-          type="ghost"
-          size="small"
-          @click.stop="toggleMenu()"
-        />
+          :header-text="activeFilter.label"
+          has-delete-button
+          @select-delete="deleteFilter(activeFilter.key)"
+        >
+          <template #toggle="{ toggleMenu }">
+            <s-chip
+              :key="activeFilter.key"
+              :label="activeFilter.label"
+              :icon="activeFilter.icon"
+              type="filter"
+              @click.stop="toggleMenu()"
+            />
+          </template>
+          <template #content>
+            <slot
+              :name="`filter(${activeFilter.key})`"
+              :value="filterValues[activeFilter.key]"
+              :update-filter-value="updateFilterValue"
+            />
+          </template>
+        </s-toolbar-menu>
+        <s-toolbar-menu :header-text="`${toolbarTexts.filter} ${toolbarTexts.by}`" is-limited>
+          <template #toggle="{ toggleMenu }">
+            <s-button
+              only-icon="plus"
+              emphasis="text"
+              type="ghost"
+              size="small"
+              @click.stop="toggleMenu()"
+            />
+          </template>
+          <template #content>
+            <s-menu-item
+              v-for="filter in filters"
+              :key="filter.key"
+              :title="filter.label"
+              :icon="filter.icon"
+              @click="onSelectFilter(filter)"
+            />
+          </template>
+        </s-toolbar-menu>
       </div>
       <s-button
         :label="toolbarTexts.removeFilters"
         emphasis="filled"
         type="reversed"
         size="small"
-        @click="deleteAllFilters()"
+        @click="resetFilters()"
       />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { IconType, ToolbarFilterType, ToolbarFilter, ToolbarAction } from '~/interfaces';
+import type { AvailableToolbarFilterValue, ToolbarFilter } from '~/interfaces';
+import { SToolbarProps } from './props';
 
-withDefaults(
-  defineProps<{
-    toolbarTexts?: {
-      filter: string;
-      by: string;
-      removeFilters: string;
-      searchPlaceholder?: string;
-    };
-    /**
-     * Acciones secundarias para el toolbar,
-     * cada una emite un evento `action` el cual devuelve
-     * la propiedad name como parámetro.
-     */
-    actions?: ToolbarAction[];
-    filters?: ToolbarFilter[];
-  }>(),
-  {
-    searchPlaceholder: 'Buscar',
-    filters: () => [],
-    actions: () => [],
-    toolbarTexts: () => ({
-      by: 'por',
-      filter: 'Filtrar',
-      removeFilters: 'Remover filtros',
-    }),
-  }
-);
+withDefaults(defineProps<SToolbarProps>(), {
+  searchPlaceholder: 'Buscar',
+  filters: () => [],
+  actions: () => [],
+  toolbarTexts: () => ({
+    by: 'por',
+    filter: 'Filtrar',
+    removeFilters: 'Remover filtros',
+  }),
+});
 const emit = defineEmits<{
   (event: 'action', value: string): void;
   (event: 'search', value: string): void;
+  (event: 'filter', value: Record<string, AvailableToolbarFilterValue>): void;
 }>();
-
 const search = ref('');
 const activeFilters = ref<ToolbarFilter[]>([]);
-const filterValues = ref<Record<string, unknown>>({});
-const [menuOpen, toggleMenu] = useToggle(false);
+const filterValues = ref<Record<string, AvailableToolbarFilterValue>>({});
 const showToolbarFilters = computedEager(() => activeFilters.value.length);
 
-const DEFAULT_ICONS: Record<ToolbarFilterType, IconType> = {
-  checkbox: 'circle-dashed',
-  datepicker: 'calendar',
-  input: 'edit',
-  select: 'list',
-};
+const findFilterIndex = (key: string) => activeFilters.value.findIndex(el => el.key === key);
 const onSelectFilter = (filter: ToolbarFilter) => {
-  if (activeFilters.value.findIndex(el => el.key === filter.key) === -1) {
+  if (findFilterIndex(filter.key) === -1) {
     activeFilters.value.push(filter);
-    filterValues.value[filter.key] = null;
+    filterValues.value[filter.key] = filter.initialValue || '';
   }
 };
-const onDeleteFilter = (key: string) => {
-  const index = activeFilters.value.findIndex(el => el.key === key);
-  if (index >= 0) activeFilters.value.splice(index, 1);
+const deleteFilter = (key: string) => {
+  const index = findFilterIndex(key);
+  if (index >= 0) {
+    activeFilters.value.splice(index, 1);
+    delete filterValues.value[key];
+  }
 };
-const deleteAllFilters = () => {
+const resetFilters = () => {
   activeFilters.value = [];
+  filterValues.value = {};
 };
+const updateFilterValue = (key: string, value: AvailableToolbarFilterValue) => {
+  filterValues.value[key] = value;
+  emit('filter', filterValues.value);
+};
+
+defineExpose({
+  resetFilters,
+  deleteFilter,
+});
 </script>
 
 <style scoped lang="scss" src="./SToolbar.scss"></style>

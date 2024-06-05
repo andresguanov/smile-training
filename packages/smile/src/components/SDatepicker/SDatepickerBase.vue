@@ -17,6 +17,7 @@
     :enable-time-picker="false"
     :min-date="minDate"
     :max-date="maxDate"
+    :inline="inline"
     class="s-datepicker__calendar"
     menu-class-name="s-datepicker__calendar__menu"
   >
@@ -87,6 +88,7 @@ const props = withDefaults(
     rangeMode?: boolean;
     minDate?: Date | string;
     maxDate?: Date | string;
+    inline?: boolean;
   }>(),
   {
     locale: 'es',

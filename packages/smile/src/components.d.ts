@@ -69,6 +69,7 @@ declare module 'vue' {
     SToast: (typeof import('./components/SToast/SToast.vue'))['default'];
     SToggle: (typeof import('./components/SToggle/SToggle.vue'))['default'];
     SToolbar: (typeof import('./components/SToolbar/SToolbar.vue'))['default'];
+    SToolbarMenu: (typeof import('./components/SToolbar/SToolbarMenu.vue'))['default'];
     STooltip: (typeof import('./components/STooltip/STooltip.vue'))['default'];
     SUserMenu: (typeof import('./components/SWizard/SUserMenu.vue'))['default'];
     SWizard: (typeof import('./components/SWizard/SWizard.vue'))['default'];
