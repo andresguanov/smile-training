@@ -17,6 +17,7 @@
               icon: 'clock',
             },
           ]"
+          hide-search
           @filter="v => console.log({ v })"
         >
           <template #rightContent> rightContent </template>
@@ -24,6 +25,10 @@
             <s-datepicker-base
               :model-value="value"
               inline
+              @update:model-value="v => updateFilterValue('date', v)"
+            />
+            <s-datepicker
+              :model-value="value"
               @update:model-value="v => updateFilterValue('date', v)"
             />
           </template>

@@ -3,13 +3,13 @@
  */
 import type { IconType } from './sm-icon.interface';
 
-export type AvailableToolbarFilterValue = string | string[] | number | boolean;
+export type AvailableToolbarFilterValue<T = string> = T;
 
-export interface ToolbarFilter {
+export interface ToolbarFilter<T = unknown> {
   key: string;
   label: string;
   icon: IconType;
-  initialValue?: AvailableToolbarFilterValue;
+  initialValue?: T;
 }
 
 export interface ToolbarAction {

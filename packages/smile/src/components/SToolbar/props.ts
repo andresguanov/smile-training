@@ -20,4 +20,5 @@ export interface SToolbarProps {
    * la propiedad name como parámetro.
    */
   actions?: ToolbarAction[];
+  hideSearch?: boolean;
 }

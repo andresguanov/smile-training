@@ -3,6 +3,7 @@
     <div class="s-toolbar__actions">
       <div class="s-toolbar__actions__left">
         <s-input
+          v-if="!hideSearch"
           v-model="search"
           :placeholder="toolbarTexts.searchPlaceholder"
           class="s-toolbar__actions__search"
@@ -107,7 +108,7 @@
 </template>
 
 <script setup lang="ts">
-import type { AvailableToolbarFilterValue, ToolbarFilter } from '~/interfaces';
+import type { ToolbarFilter } from '~/interfaces';
 import { SToolbarProps } from './props';
 
 withDefaults(defineProps<SToolbarProps>(), {
@@ -123,11 +124,11 @@ withDefaults(defineProps<SToolbarProps>(), {
 const emit = defineEmits<{
   (event: 'action', value: string): void;
   (event: 'search', value: string): void;
-  (event: 'filter', value: Record<string, AvailableToolbarFilterValue>): void;
+  (event: 'filter', value: Record<string, unknown>): void;
 }>();
 const search = ref('');
 const activeFilters = ref<ToolbarFilter[]>([]);
-const filterValues = ref<Record<string, AvailableToolbarFilterValue>>({});
+const filterValues = ref<Record<string, unknown>>({});
 const showToolbarFilters = computedEager(() => activeFilters.value.length);
 
 const findFilterIndex = (key: string) => activeFilters.value.findIndex(el => el.key === key);
@@ -148,7 +149,7 @@ const resetFilters = () => {
   activeFilters.value = [];
   filterValues.value = {};
 };
-const updateFilterValue = (key: string, value: AvailableToolbarFilterValue) => {
+const updateFilterValue = (key: string, value: unknown) => {
   filterValues.value[key] = value;
   emit('filter', filterValues.value);
 };
