@@ -46,7 +46,6 @@
         </slot>
       </div>
       <div class="s-toolbar__actions__right">
-        {{ filterValues }}
         <slot name="rightContent" />
       </div>
     </div>
