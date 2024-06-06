@@ -1,7 +1,6 @@
 <template>
-  <div class="s-table">
+  <div class="s-table" :class="{ 's-table--with-toolbar': hasToolbarSlot }">
     <slot name="toolbar" />
-    <slot name="belowToolbar" />
     <div class="s-table__wrapper">
       <table>
         <thead class="s-table__head">
@@ -124,15 +123,15 @@ const emit = defineEmits<{
   (e: 'search', value: string): void;
 }>();
 
+const checkSlot = (name: string) => slots[name] && typeof slots[name] === 'function';
 const DEFAULT_ACTIONS_TEXT = 'Acciones';
 const internalPage = ref(props.initialPage);
 const internalItemsPerPage = ref(props.initialItemsPerPage);
 
 const sortColumn = ref('');
 const internarlOrder = ref<'ASC' | 'DESC' | undefined>(props.initialOrder);
-const hasActionsColumn = computedEager(
-  () => slots['actionsCol'] && typeof slots['actionsCol'] === 'function'
-);
+const hasActionsColumn = computedEager(() => checkSlot('actionsCol'));
+const hasToolbarSlot = computedEager(() => checkSlot('toolbar'));
 const internalTotal = computed(() =>
   props.total ? props.total : props.rows.length ? props.rows.length : 1
 );
