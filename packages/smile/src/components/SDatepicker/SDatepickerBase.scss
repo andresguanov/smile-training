@@ -35,6 +35,9 @@
     :deep(.s-datepicker__calendar__menu) {
       @apply drop-shadow-lg;
 
+      &.is-inline {
+        @apply drop-shadow-none;
+      }
       .dp__today {
         &:not(.dp__active_date, .dp__range_start, .dp__range_end) {
           @apply text-sm-primary-600;

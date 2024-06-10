@@ -9,3 +9,4 @@ export * from './sm-option.interface';
 export * from './s-stats.interface';
 export * from './s-file-upload.interface';
 export * from './s-survey.interface';
+export * from './s-toolbar.interface';
