@@ -1,5 +1,13 @@
 .s-slider {
-  @apply space-y-4;
+  @apply space-y-4 w-full;
+
+  &-container {
+    @apply flex items-center space-x-4;
+  }
+
+  &-sinput {
+    @apply max-w-[45px] h-[35px];
+  }
 
   &-label {
     @apply text-base font-medium text-slate-700;

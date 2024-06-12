@@ -3,6 +3,7 @@ export * from './utils';
 export * from './directives';
 export * from './interfaces';
 export * from './types';
+export * from './composables/smileValidate';
 
 // import 'package/styles/dist/main.css'
 import './index.css';
@@ -20,8 +21,10 @@ setDefaultProps({
 
 /* Comentar al compilar */
 
+/*
 import { createApp } from 'vue';
 import App from './components/App.vue';
 import { $SmAlert, ISmAlertProvide, useSmAlert } from './utils/alerts';
 
 createApp(App).provide<ISmAlertProvide>($SmAlert, useSmAlert()).mount('#app');
+*/

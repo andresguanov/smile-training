@@ -1,13 +1,15 @@
 import { PropType, Ref } from 'vue';
 import { smFormProvide } from '../interfaces/sm-form.interface';
 
-export const provideSmFormSymbol = Symbol('smForm');
 export const provideSFormSymbol = Symbol('sForm');
 
 export const ValidateProps = {
   rules: Array as PropType<Array<(value: any) => boolean | string>>,
 };
 
+/**
+ * @deprecated
+ */
 export const useValidate = (
   data: Ref<any>,
   externalError: boolean = false,
@@ -50,7 +52,7 @@ export const useValidate = (
 
   const stopWatchValidate = watch(data, () => validate());
 
-  const formProvide = inject<smFormProvide | null>(provideSmFormSymbol, null);
+  const formProvide = inject<smFormProvide | null>(provideSFormSymbol, null);
   if (formProvide) {
     formProvide.register(validate);
     formProvide.registerReset(resetValidation);

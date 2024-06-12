@@ -8,10 +8,16 @@
       type="file"
       class="s-file-upload__input"
       @change="onFilesChange"
+      :required
     />
     <template v-if="!useDropZone">
-      <label :for="id" class="s-file-upload__label">{{ label }}</label>
-      <p v-if="description" class="s-file-upload__description">{{ description }}</p>
+      <label :for="id" class="s-file-upload__label" :class="{ required: markType === 'required' }"
+        >{{ label }}<span v-if="markType" class="s-input__mark">{{ textMark }}</span>
+      </label>
+      <p v-if="hasError && files.length == 0" class="s-file-upload__description__error">
+        {{ currentError }}
+      </p>
+      <p v-else-if="description" class="s-file-upload__description">{{ description }}</p>
       <s-button
         :label="buttonLabel"
         icon-left="import"
@@ -36,7 +42,11 @@
         </div>
         <div class="s-file-upload__item__content">
           <p>{{ file.name }}</p>
-          <span>{{ fileStatusText[file.status] || file.description }}</span>
+          <span>{{
+            file.status === 'error'
+              ? `${fileStatusText[file.status]}: ${file.description}`
+              : fileStatusText[file.status] || file.description
+          }}</span>
         </div>
         <s-button
           only-icon="close"
@@ -53,6 +63,7 @@
 
 <script lang="ts" setup>
 import type { FileItem, IconType } from '../../interfaces';
+import { useSmileValidate } from '~/composables';
 
 const props = withDefaults(
   defineProps<{
@@ -76,6 +87,11 @@ const props = withDefaults(
       default?: string;
     };
     useDropZone?: boolean;
+    rules?: Array<(value: FileItem[]) => boolean | string>;
+    error?: string;
+    required?: boolean;
+    markType?: 'required' | 'optional';
+    optionalText?: string;
   }>(),
   {
     maxFileSize: 5,
@@ -88,6 +104,8 @@ const props = withDefaults(
       success: 'Cargado',
       default: '',
     }),
+    rules: () => [],
+    optionalText: 'Opcional',
   }
 );
 const emit = defineEmits<{
@@ -116,13 +134,16 @@ const getFileIcon = (status: 'loading' | 'success' | 'error' | 'default'): IconT
 };
 const removeFile = (index: number) => {
   internalFiles.value.splice(index, 1);
-  if (inputElement.value) inputElement.value.value = '';
+  validate();
 };
 const onFilesChange = (event: Event) => {
   const target = event.target as HTMLInputElement;
   if (!target || !target.files?.length) {
     emit('cancelSelection');
     internalFiles.value = [];
+    nextTick(() => {
+      if (validateOnFocusout.value) validate();
+    });
     return;
   }
   addFiles(target.files);
@@ -143,6 +164,9 @@ const addFiles = (files: File[] | FileList) => {
   //     emit('maxSizeError', tempFile.size);
   //   }
   // });
+  nextTick(() => {
+    if (validateOnFocusout.value) validate();
+  });
 };
 const convertToFileItem = (file: File): FileItem => {
   return {
@@ -157,6 +181,20 @@ const formatSizeUnits = (bytes: number, precision = 0) => {
   const formatedSize = bytes / Math.pow(K_UNIT, sizeIndex);
   return formatedSize.toFixed(precision) + ' ' + SIZES[sizeIndex];
 };
+
+const { rules, validate, currentError, hasError, validateOnFocusout } = useSmileValidate<
+  FileItem[]
+>(internalFiles, toRef(props, 'error'), props.id);
+
+const textMark = computed(() => (props.markType === 'required' ? '*' : `(${props.optionalText})`));
+
+watch(
+  () => props.rules,
+  () => {
+    rules.value = props.rules ?? [];
+  },
+  { immediate: true }
+);
 </script>
 
 <style lang="scss" scoped src="./SFileUpload.scss"></style>

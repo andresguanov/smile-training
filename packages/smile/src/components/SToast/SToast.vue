@@ -6,9 +6,9 @@
     <div class="s-toast__body" :class="{ 'has-title': Boolean(title) }">
       <h4 v-if="title" class="s-toast__title" v-html="title" />
       <div class="s-toast__description" v-html="message" />
-      <div>
-        <button v-if="label" class="s-toast__button">
-          {{ label }}
+      <div v-if="action">
+        <button class="s-toast__button" @click="action?.action">
+          {{ action.label }}
         </button>
       </div>
     </div>
@@ -21,24 +21,12 @@
 </template>
 
 <script lang="ts" setup>
-import { IconType } from '../../interfaces';
+import { IconType, ToastTypes, smAlert } from '../../interfaces';
 
-type ToastTypes = 'success' | 'error' | 'warning' | 'info' | 'neutral';
-const props = withDefaults(
-  defineProps<{
-    message: string;
-    title?: string;
-    type?: ToastTypes;
-    time?: number;
-    persistent?: boolean;
-    label?: string;
-  }>(),
-  {
-    type: 'neutral',
-    time: 7500,
-    label: 'TEST',
-  }
-);
+const props = withDefaults(defineProps<smAlert>(), {
+  type: 'neutral',
+  time: 7500,
+});
 const emit = defineEmits<{
   (event: 'close'): void;
 }>();

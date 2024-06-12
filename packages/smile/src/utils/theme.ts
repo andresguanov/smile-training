@@ -1,8 +1,26 @@
-export const theme = (colors: { [key: string]: string }) => {
+function withOpacity(variableName: string) {
+  return ({ opacityValue }: { opacityValue: string }) => {
+    if (opacityValue !== undefined) {
+      return `rgba(var(${variableName}), ${opacityValue})`;
+    }
+    return `rgb(var(${variableName}))`;
+  };
+}
+
+export const theme = (colors: Record<string, any>) => {
   return {
     colors: {
-      'persian-green': '#00B19D',
-      'eagle-green': '#00535E',
+      'sm-primary-50': withOpacity('--sm-color-primary-50'),
+      'sm-primary-100': withOpacity('--sm-color-primary-100'),
+      'sm-primary-200': withOpacity('--sm-color-primary-200'),
+      'sm-primary-300': withOpacity('--sm-color-primary-300'),
+      'sm-primary-400': withOpacity('--sm-color-primary-400'),
+      'sm-primary-500': withOpacity('--sm-color-primary-500'),
+      'sm-primary-600': withOpacity('--sm-color-primary-600'),
+      'sm-primary-700': withOpacity('--sm-color-primary-700'),
+      'sm-primary-800': withOpacity('--sm-color-primary-800'),
+      'sm-primary-900': withOpacity('--sm-color-primary-900'),
+
       'weldon-blue': '#809BB6',
       'tufts-blue': '#4A90E2',
       'columbia-blue': '#BDE3DC',
@@ -28,12 +46,12 @@ export const theme = (colors: { [key: string]: string }) => {
       'sm-brand3': '#4a90e2',
       'sm-grey1': '#fafafa',
       'sm-black': '#000000',
-      'sm-brand2': '#00535e',
+      'sm-brand2': withOpacity('--sm-color-primary-700'),
       'sm-greyblue2': '#f0f2fa',
       'sm-white': '#ffffff',
       'sm-grey8': '#262626',
       'sm-grey7': '#474747',
-      'sm-brand1': '#00b19d',
+      'sm-brand1': withOpacity('--sm-color-primary-500'),
       'sm-grey4': '#cccccc',
       'sm-greyblue5': '#a3adc2',
       'sm-greyblue8': '#29303d',
@@ -52,10 +70,13 @@ export const theme = (colors: { [key: string]: string }) => {
       ...colors,
     },
     fontFamily: {
-      sans: ['Roboto', 'sans-serif'],
+      sans: ['Inter', 'Roboto', 'sans-serif'],
       // sans: ["Mulish", "Roboto", "sans-serif"]
     },
     extend: {
+      borderWidth: {
+        5: '5px',
+      },
       strokeWidth: {
         8: '8px',
       },

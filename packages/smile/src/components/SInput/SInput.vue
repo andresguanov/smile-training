@@ -24,7 +24,7 @@
         class="s-input__magic"
         :style="{ paddingLeft: $slots['leading'] || iconLeft ? '2rem' : '' }"
       >
-        <sm-loader label="Autocompletando..." is-inline magic></sm-loader>
+        <s-loader :label="autocompleteText" is-inline magic />
       </div>
       <input
         v-model="value"
@@ -74,7 +74,6 @@
 </template>
 
 <script setup lang="ts">
-import SmLoader from '../SLoader/SLoader.vue';
 import { useSmileValidate } from '~/composables';
 import type { IconType, InputAddon } from '../../interfaces';
 
@@ -131,12 +130,14 @@ const props = withDefaults(
      */
     optionalText?: string;
     magic?: boolean;
+    autocompleteText?: string;
   }>(),
   {
     size: 'medium',
     nativeType: 'text',
     rules: () => [],
     optionalText: 'Opcional',
+    autocompleteText: 'Autocompletando...',
   }
 );
 const emit = defineEmits<{

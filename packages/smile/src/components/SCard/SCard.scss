@@ -1,0 +1,6 @@
+.s-card {
+  @apply flex flex-col bg-white border border-slate-200 rounded-[12px] gap-y-4 px-4 pb-4 pt-2;
+  &-header {
+    @apply flex flex-col gap-y-2;
+  }
+}

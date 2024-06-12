@@ -1,7 +1,7 @@
 {
   "name": "smile",
   "version": "1.0.0",
-  "description": "",
+  "description": "Component library for Vue 3",
   "workspaces": [
     "packages/*"
   ],
@@ -10,6 +10,8 @@
     "build": "node scripts/build.js",
     "prepare": "node scripts/prepare.js",
     "dev": "node scripts/dev.js",
+    "doc:dev": "node scripts/doc.js",
+    "doc:build": "node scripts/doc_build.js",
     "lint-staged": "lint-staged — config .lintstagedrc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "publish": "node scripts/publish.js"

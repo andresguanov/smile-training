@@ -25,10 +25,10 @@ if (!isCi) {
 
 const prepare = async function () {
   try {
-    await spawn('npx', scriptArgs, {
+    await spawn.sync('npx', scriptArgs, {
       stdio: 'inherit',
     });
-    await spawn('npx', script2Args, {
+    await spawn.sync('npx', script2Args, {
       stdio: 'inherit',
     });
   } catch (error) {

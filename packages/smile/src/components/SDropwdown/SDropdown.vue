@@ -1,14 +1,9 @@
 <template>
   <div v-if="!hasTheComponentErrors" class="s-dropdown" :class="[{ readonly, magic }]">
     <div class="s-dropdown__wrapper">
-      <div
-        v-if="magic"
-        class="s-dropdown__magic"
-        :style="{ paddingLeft: leading || $slots['leading'] ? '2rem' : '' }"
-      >
-        <sm-loader label="Autocompletando..." is-inline magic></sm-loader>
-      </div>
       <s-input
+        :autocompleteText="autocompleteText"
+        :magic="magic"
         class="s-dropdown__input"
         v-model="textValue"
         :label="label"
@@ -50,7 +45,8 @@
             <slot name="append-item" />
           </li>
           <li
-            v-for="(option, i) in options"
+            ref="itemsRef"
+            v-for="(option, i) in loadedList"
             :key="i"
             :style="`margin-left: ${0.5 * (option.level ?? 0)}rem;`"
             @click="onClickOption(option)"
@@ -83,8 +79,9 @@
 
 <script setup lang="ts">
 // Composables
-import SmLoader from '~/components/SLoader/SLoader.vue';
-import { useSmileValidate } from '~/composables';
+import { useSmileValidate, useIntersectionObserver } from '~/composables';
+// import SmLoader from '~/components/SLoader/SLoader.vue';
+
 // Types
 import type { MenuOption, SDropdownProps } from '~/types';
 import type { IconType } from '../../interfaces';
@@ -108,6 +105,7 @@ const props = withDefaults(defineProps<SDropdownProps>(), {
   maxHeight: '300px',
   optionalText: 'Opcional',
   magic: false,
+  autocompleteText: 'Autocompletando...',
 });
 
 const data = useVModel(props, 'modelValue', emit);
@@ -117,7 +115,7 @@ const { validate, validateOnFocusout, currentError, rules } = useSmileValidate<
   MenuOption | string | number | Array<string | number> | undefined
 >(data, toRef(props, 'error'), props.id);
 
-// Propiedades reactivas
+// Propiedades reactivass
 const menuTopDistance = computed(() => {
   if (currentError.value) return '80%';
   return '100%';
@@ -161,6 +159,25 @@ const textValue = computed({
 });
 
 const trailingIcon = computed<IconType>(() => (open.value ? 'chevron-up' : 'chevron-down'));
+
+// Intersection Observer
+const differenceStep = 10;
+
+const { loadedList, itemsRef, setTotalList, startObserving, setLoadedCount } =
+  useIntersectionObserver(differenceStep);
+
+watch([() => props.options, open], async ([newOptions, newOpenVal]) => {
+  // Setea la lista total de opciones
+  setTotalList(newOptions);
+  // Si se abre el menú y hay opciones, se inicia la observación
+  if (newOpenVal && newOptions.length) {
+    if (differenceStep > newOptions.length) return;
+    startObserving();
+  } else {
+    // Si se cierra el menú, se resetea la lista cargada
+    setLoadedCount(differenceStep);
+  }
+});
 
 // Métodos
 const areInvalidProps = () => {
@@ -296,6 +313,7 @@ onMounted(() => {
 // Exposes
 defineExpose({
   toggleOverflow,
+  itemsRef,
 });
 </script>
 

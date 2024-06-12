@@ -1,4 +1,4 @@
-const { theme } = require('@alegradev/smile-ui-next/theme');
+const { theme } = require('@alegradev/smile-ui-next');
 const colors = require('tailwindcss/colors');
 const plugin = require('tailwindcss/plugin');
 const scrollbar = require('tailwind-scrollbar');

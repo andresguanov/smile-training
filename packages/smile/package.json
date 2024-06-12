@@ -1,6 +1,6 @@
 {
   "name": "@alegradev/smile-ui-next",
-  "version": "0.0.41",
+  "version": "1.0.0-beta.1",
   "files": [
     "dist"
   ],
@@ -11,22 +11,25 @@
   "exports": {
     ".": {
       "import": "./dist/main.js",
-      "require": "./dist/main.umd.js"
+      "require": "./dist/main.umd.cjs"
     },
-    "./styles": "./dist/style.css",
-    "./theme": "./dist/theme.js"
+    "./styles": "./dist/style.css"
   },
   "scripts": {
     "dev": "cross-env NODE_ENV=development vite",
     "build": "vite build && vue-tsc --emitDeclarationOnly",
     "link": "npm link",
-    "pack": "npm pack"
+    "pack": "npm pack",
+    "story:dev": "histoire dev",
+    "story:build": "histoire build",
+    "story:preview": "histoire preview"
   },
   "dependencies": {
-    "@vueuse/core": "9.3.0",
-    "vue3-lottie": "3.3.0"
+    "@vueuse/core": "9.3.0"
   },
   "devDependencies": {
+    "@histoire/plugin-vue": "0.17.17",
+    "histoire": "0.17.17",
     "@vuepic/vue-datepicker": "6.1.0",
     "@alegradev/smile-icons": "1.1.2",
     "@vitejs/plugin-vue": "5.0.4",

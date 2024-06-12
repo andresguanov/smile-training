@@ -5,10 +5,10 @@
 }
 
 .s-modal {
-  @apply rounded-lg bg-white drop-shadow-lg p-4 flex flex-col;
+  @apply rounded-lg bg-white drop-shadow-lg flex flex-col max-h-[80vh];
 
   &-title {
-    @apply text-lg font-semibold text-slate-900 pb-2 flex bg-white;
+    @apply text-lg font-semibold text-slate-900 p-4 pb-2 flex bg-white;
 
     .title-back-arrow {
       @apply w-10 h-10 py-[2px] cursor-pointer;
@@ -16,11 +16,11 @@
   }
 
   &-body {
-    @apply pb-4 text-sm font-normal text-slate-700 overflow-auto h-full;
+    @apply pb-4 text-sm font-normal text-slate-700 h-full px-4;
   }
 
   &-footer {
-    @apply flex justify-end space-x-2 bg-white pt-4;
+    @apply flex justify-end space-x-2 bg-white p-4;
   }
 
   &.small {
@@ -41,6 +41,8 @@
 }
 
 .scroll_beautifull {
+  @apply overflow-auto;
+
   &::-webkit-scrollbar {
     width: 10px;
   }

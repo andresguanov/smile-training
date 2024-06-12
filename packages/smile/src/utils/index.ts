@@ -1,7 +1,7 @@
+import type { smAlertProvide } from '../interfaces/sm-alert.interface';
 import { App, Component } from 'vue';
-import * as components from '../components';
-import { smAlertProvide } from '../interfaces/sm-alert.interface';
 import { $SmAlert, useSmAlert } from './alerts';
+import * as components from '../components';
 
 export * from './resolvers';
 export * from './theme';
