@@ -1,10 +1,23 @@
 .s-file-upload {
   &__label {
     @apply text-slate-700 text-sm font-medium;
+    &.required {
+      .s-input__mark {
+        @apply text-rose-600;
+      }
+    }
+    .s-input__mark {
+      @apply ml-1;
+      @apply font-normal text-xs text-slate-500;
+    }
   }
   &__description {
     @apply text-slate-500 text-xs font-normal;
     @apply mt-1;
+    &__error {
+      @apply text-rose-600 text-xs font-normal;
+      @apply mt-1;
+    }
   }
   &__uploader {
     @apply cursor-pointer relative;
@@ -21,20 +34,23 @@
   &__item {
     @apply p-3 first:rounded-t-xl last:rounded-b-xl;
     @apply border border-solid border-slate-300;
-    @apply flex items-center justify-between gap-3;
+    @apply flex items-center gap-3;
 
     &__content {
-      @apply flex flex-col font-medium gap-0.5;
+      @apply flex flex-col font-medium gap-0.5 flex-grow overflow-hidden;
 
       p {
-        @apply text-slate-700 text-sm;
+        @apply text-slate-700 text-sm truncate;
       }
       span {
-        @apply text-slate-500 text-xs;
+        @apply text-slate-500 text-xs break-words text-wrap;
       }
     }
     &__icon {
-      @apply h-6 w-6;
+      @apply h-6 w-6 flex-shrink-0;
+    }
+    &__close {
+      @apply flex-shrink-0;
     }
     &.loading {
       .s-file-upload__item__icon {
