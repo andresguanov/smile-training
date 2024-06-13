@@ -17,8 +17,9 @@
     :enable-time-picker="false"
     :min-date="minDate"
     :max-date="maxDate"
+    :inline="inline"
+    :menu-class-name="`s-datepicker__calendar__menu ${inline ? 'is-inline' : ''}`"
     class="s-datepicker__calendar"
-    menu-class-name="s-datepicker__calendar__menu"
   >
     <template #dp-input="{ value, onBlur, isMenuOpen, onInput }">
       <slot
@@ -87,6 +88,7 @@ const props = withDefaults(
     rangeMode?: boolean;
     minDate?: Date | string;
     maxDate?: Date | string;
+    inline?: boolean;
   }>(),
   {
     locale: 'es',

@@ -14,11 +14,11 @@
 </template>
 
 <script lang="ts" setup>
-import { SmInnerLoading } from '@alegradev/smile-ui-next';
+import { SLoader } from '@alegradev/smile-ui-next';
 import { defineAsyncComponent } from 'vue';
 const AppFloatingButton = defineAsyncComponent({
   loader: () => import('app_alegra_commons/appFloatingButton'),
-  loadingComponent: SmInnerLoading,
+  loadingComponent: SLoader,
 });
 </script>
 

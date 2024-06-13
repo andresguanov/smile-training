@@ -1,6 +1,6 @@
 {
   "extends": "../../tsconfig.json",
-  "include": ["src"],
+  "include": ["src", "env.d.ts"],
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "./dist",
@@ -12,5 +12,6 @@
       "~/*": ["src/*"]
     },
     "rootDir": "src"
-  }
+  },
+  "exclude": ["node_modules", "./src/stories"]
 }
