@@ -1,10 +1,22 @@
 <template>
   <div class="s-table" :class="{ 's-table--with-toolbar': hasToolbarSlot }">
     <slot name="toolbar" />
-    <div class="s-table__wrapper">
+    <div v-if="!rows.length" class="s-table__empty">
+      <slot name="empty">
+        <p>No hay contenido disponible</p>
+      </slot>
+    </div>
+    <div v-else class="s-table__wrapper">
       <table>
         <thead class="s-table__head">
           <tr class="s-table__row">
+            <th
+              v-if="$slots.firstHeaderCol"
+              class="s-table__head__cell"
+              :style="{ width: firstHeaderColWidth }"
+            >
+              <slot name="firstHeaderCol"></slot>
+            </th>
             <th
               v-for="(col, i) in columnConfig"
               :key="'smTableTh' + i"
@@ -22,7 +34,14 @@
                   :icon="sortIcon"
                 />
               </slot>
-              <span class="s-table__head__divider" />
+              <span v-if="i !== columnConfig.length - 1" class="s-table__head__divider" />
+            </th>
+            <th
+              v-if="$slots.lastHeaderCol"
+              class="s-table__head__cell"
+              :style="{ width: lastHeaderColWidth }"
+            >
+              <slot name="firstHeaderCol"></slot>
             </th>
             <th
               v-if="hasActionsColumn"
@@ -40,6 +59,9 @@
             class="s-table__row"
             :class="{ hoverable }"
           >
+            <td v-if="$slots.firstHeaderCol" class="s-table__body__cell">
+              <slot name="firstCol" :row="row" :row-index="i" />
+            </td>
             <td
               v-for="(col, j) in columnConfig"
               :key="`smTableTd-${i}-${j}`"
@@ -56,17 +78,15 @@
                 {{ row[col.name] }}
               </slot>
             </td>
+            <td v-if="$slots.lastHeaderCol" class="s-table__body__cell">
+              <slot name="lastCol" :row="row" :row-index="i" />
+            </td>
             <td v-if="hasActionsColumn" class="sm-table-container-td">
               <slot name="actionsCol" :row="row" />
             </td>
           </tr>
         </tbody>
       </table>
-    </div>
-    <div v-if="!rows.length" class="s-table__empty">
-      <slot name="empty">
-        <p>No hay contenido disponible</p>
-      </slot>
     </div>
     <s-pagination
       :page="internalPage"
@@ -97,7 +117,9 @@ const props = withDefaults(
     initialOrder?: 'ASC' | 'DESC';
     columnConfig?: Array<TableColumn>;
     itemsPerPageOptions?: Array<number>;
+    lastHeaderColWidth?: string;
     textPagination?: smPaginationText;
+    firstHeaderColWidth?: string;
     /**
      * Indica si la paginación de la tabla mostrará otros datos como
      * el selector de cantidad a mostrar, página actual, etc.
@@ -112,6 +134,8 @@ const props = withDefaults(
     columnConfig: (): Array<TableColumn> => [],
     initialPage: 1,
     initialItemsPerPage: 10,
+    lastHeaderColWidth: '5%',
+    firstHeaderColWidth: '5%',
   }
 );
 const slots = useSlots();
