@@ -11,7 +11,7 @@
         <thead class="s-table__head">
           <tr class="s-table__row">
             <th
-              v-if="$slots.firstHeaderCol"
+              v-if="showFirstHeaderCol"
               class="s-table__head__cell"
               :style="{ width: firstHeaderColWidth }"
             >
@@ -37,11 +37,11 @@
               <span v-if="i !== columnConfig.length - 1" class="s-table__head__divider" />
             </th>
             <th
-              v-if="$slots.lastHeaderCol"
+              v-if="showLastHeaderCol"
               class="s-table__head__cell"
               :style="{ width: lastHeaderColWidth }"
             >
-              <slot name="firstHeaderCol"></slot>
+              <slot name="lastHeaderCol"></slot>
             </th>
             <th
               v-if="hasActionsColumn"
@@ -59,7 +59,7 @@
             class="s-table__row"
             :class="{ hoverable }"
           >
-            <td v-if="$slots.firstHeaderCol" class="s-table__body__cell">
+            <td v-if="showFirstHeaderCol" class="s-table__body__cell">
               <slot name="firstCol" :row="row" :row-index="i" />
             </td>
             <td
@@ -78,7 +78,7 @@
                 {{ row[col.name] }}
               </slot>
             </td>
-            <td v-if="$slots.lastHeaderCol" class="s-table__body__cell">
+            <td v-if="showLastHeaderCol" class="s-table__body__cell">
               <slot name="lastCol" :row="row" :row-index="i" />
             </td>
             <td v-if="hasActionsColumn" class="sm-table-container-td">
@@ -118,6 +118,8 @@ const props = withDefaults(
     columnConfig?: Array<TableColumn>;
     itemsPerPageOptions?: Array<number>;
     lastHeaderColWidth?: string;
+    showLastHeaderCol?: boolean;
+    showFirstHeaderCol?: boolean;
     textPagination?: smPaginationText;
     firstHeaderColWidth?: string;
     /**
@@ -136,6 +138,8 @@ const props = withDefaults(
     initialItemsPerPage: 10,
     lastHeaderColWidth: '5%',
     firstHeaderColWidth: '5%',
+    showFirstHeaderCol: false,
+    showLastHeaderCol: false,
   }
 );
 const slots = useSlots();
