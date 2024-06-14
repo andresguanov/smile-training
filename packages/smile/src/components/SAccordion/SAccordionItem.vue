@@ -18,11 +18,12 @@ const props = defineProps<{
   title: string;
   description: string;
   icon: IconType;
+  name?: string;
 }>();
 
 const selected = inject('selected') as Ref<String>;
 
-const uid = (getCurrentInstance()?.uid as number).toString();
+const uid = props.name ?? (getCurrentInstance()?.uid as number).toString();
 
 provide('uid', uid);
 

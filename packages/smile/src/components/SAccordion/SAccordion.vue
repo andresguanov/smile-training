@@ -5,14 +5,32 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, defineModel } from 'vue';
 import { OptionsProps as optionsProps, useOptions } from '../../composables';
 
 const props = defineProps({
   ...optionsProps,
 });
 
-const selected = ref(props.selected);
+const legacySelected = ref(props.selected);
+const newSelected = defineModel<string>();
+
+const selected = computed({
+  get: () => {
+    if (typeof newSelected.value === 'string') {
+      return newSelected.value;
+    }
+
+    return legacySelected.value;
+  },
+  set: (value: string) => {
+    if (typeof newSelected.value === 'string') {
+      newSelected.value = value;
+    } else {
+      legacySelected.value = value;
+    }
+  },
+});
 
 useOptions(selected);
 </script>
