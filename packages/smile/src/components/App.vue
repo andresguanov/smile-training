@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app_container">
     <p>{{ text }}</p>
   </div>
 </template>
@@ -10,8 +10,6 @@ const text = ref('Hello World');
 
 <style lang="scss" scoped>
 .app_container {
-  @apply flex flex-col;
-  @apply m-5;
-  @apply max-w-5xl;
+  @apply flex flex-col p-4;
 }
 </style>
