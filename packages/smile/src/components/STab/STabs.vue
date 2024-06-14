@@ -18,7 +18,24 @@ const props = defineProps({
   },
 });
 
-const selected = ref(props.selected);
+const legacySelected = ref(props.selected);
+const newSelected = defineModel<string>();
+
+const selected = computed({
+  get: () => {
+    if (newSelected.value) {
+      return newSelected.value;
+    }
+    return legacySelected.value;
+  },
+  set: value => {
+    if (newSelected.value) {
+      newSelected.value = value;
+    } else {
+      legacySelected.value = value;
+    }
+  },
+});
 
 useOptions(selected);
 
