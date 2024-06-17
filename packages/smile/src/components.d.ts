@@ -74,5 +74,3 @@ declare module 'vue' {
     SWizard: (typeof import('./components/SWizard/SWizard.vue'))['default'];
   }
 }
-
-export { }
