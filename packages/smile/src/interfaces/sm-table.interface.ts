@@ -1,9 +1,4 @@
-import { ComputedRef, Ref } from 'vue';
-import type { IconType } from './sm-icon.interface';
-
-export type ToolbarFilterType = 'input' | 'select' | 'checkbox' | 'datepicker';
-
-export interface smTableColumn {
+export interface TableColumn {
   name: string;
   label?: string;
   format?: (e: string) => string;
@@ -17,16 +12,7 @@ export interface smTableColumn {
   bodyClass?: string;
 }
 
-export interface smTableFilter {
-  type: ToolbarFilterType;
-  options?:
-    | Array<{ text: string; value: any; selected?: boolean }>
-    | Ref<{ text: string; value: any; selected?: boolean }[]>
-    | ComputedRef<{ text: string; value: any; selected?: boolean }[]>;
-  attrs?: any;
-}
-
-export interface smTableChangeEvent {
+export interface TableChangeEvent {
   start: number;
   to: number;
   limit: number;
@@ -35,17 +21,4 @@ export interface smTableChangeEvent {
   filters: {
     [key: string]: any;
   };
-}
-
-export interface ToolbarFilter {
-  key: string;
-  type: ToolbarFilterType;
-  label: string;
-  icon?: IconType;
-}
-
-export interface ToolbarAction {
-  name: string;
-  label: string;
-  icon?: IconType;
 }

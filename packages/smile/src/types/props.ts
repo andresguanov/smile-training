@@ -66,6 +66,6 @@ export type SDropdownProps = {
    * @default Opcional
    */
   optionalText?: string;
-  magic?:boolean;
+  magic?: boolean;
   autocompleteText?: string;
 };
