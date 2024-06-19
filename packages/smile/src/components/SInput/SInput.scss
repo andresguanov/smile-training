@@ -1,5 +1,5 @@
 .s-input {
-  @apply space-y-1;
+  @apply space-y-1 relative;
 
   &__label {
     @apply text-slate-700 text-sm font-medium;
@@ -45,6 +45,12 @@
           @apply p-2;
         }
       }
+      .s-input__suggestion {
+        @apply text-sm leading-[1rem] top-[56px];
+        & span {
+          @apply text-[0.65rem];
+        }
+      }
     }
     &.large {
       @apply rounded-xl h-12;
@@ -56,6 +62,9 @@
         &.trailing {
           @apply p-3.5;
         }
+      }
+      .s-input__suggestion {
+        @apply top-[72px];
       }
     }
   }
@@ -150,5 +159,19 @@
   }
   &.magic &__input {
     @apply opacity-0;
+  }
+  .fade-enter-active,
+  .fade-leave-active {
+    @apply opacity-0 translate-y-1;
+  }
+  .fade-enter-to,
+  .fade-leave-to {
+    @apply -translate-y-1 opacity-0;
+  }
+  &__suggestion {
+    @apply z-[200] absolute left-0 right-0 top-[64px] rounded-lg shadow-lg bg-white hover:bg-slate-100 cursor-pointer text-slate-900 text-base flex flex-col py-1 px-4 border border-slate-200 transition-all duration-100;
+    & span {
+      @apply text-xs text-slate-500;
+    }
   }
 }

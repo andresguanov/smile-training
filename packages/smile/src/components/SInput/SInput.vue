@@ -36,7 +36,7 @@
         :required="required"
         :id="id"
         @blur="onBlur"
-        @focus="(e: FocusEvent) => emit('focus', e)"
+        @focus="onFocus"
         @keypress="(e: KeyboardEvent) => emit('keypress', e)"
       />
       <div v-if="success" class="s-input__icon success">
@@ -66,6 +66,16 @@
       >
         <slot name="trailing" />
       </s-input-leading>
+      <transition name="fade">
+        <div
+          v-if="suggestion && showSuggestion && !readonly"
+          class="s-input__suggestion"
+          @mousedown.capture.stop="acceptSuggestion"
+        >
+          {{ formatAmount(suggestion, true) }}
+          <span>{{ suggestionText }}</span>
+        </div>
+      </transition>
     </div>
     <div class="s-input__footer" v-if="helperText">
       <p class="s-input__helper">{{ helperText }}</p>
@@ -131,6 +141,25 @@ const props = withDefaults(
     optionalText?: string;
     magic?: boolean;
     autocompleteText?: string;
+    /**
+     * Número (sin símbolos de moneda o comas) que se mostrará como sugerencia.
+     */
+    suggestion?: string | number;
+    /**
+     * Texto que se mostrará debajo de la sugerencia
+     * Por defecto: "Monto por pagar"
+     */
+    suggestionText?: string;
+    /**
+     * Símbolo de moneda mostrado en la sugerencia
+     * Por defecto: "$"
+     */
+    currencySymbol?: string;
+    /**
+     * Símbolo de moneda mostrado en la sugerencia
+     * Por defecto: 2
+     */
+    currencyDecimals?: number;
   }>(),
   {
     size: 'medium',
@@ -138,6 +167,9 @@ const props = withDefaults(
     rules: () => [],
     optionalText: 'Opcional',
     autocompleteText: 'Autocompletando...',
+    suggestionText: 'Monto por pagar',
+    currencySymbol: '$',
+    currencyDecimals: 2,
   }
 );
 const emit = defineEmits<{
@@ -156,12 +188,30 @@ const { rules, validate, validateOnFocusout, hasError, currentError } = useSmile
 const textMark = computed(() => (props.markType === 'required' ? '*' : `(${props.optionalText})`));
 const iconSize = computed(() => (props.size === 'small' ? '16px' : '20px'));
 const helperText = computed(() => currentError.value || props.supportiveText);
-
+const showSuggestion = ref(false);
 const onBlur = (event: FocusEvent) => {
   if (validateOnFocusout.value) {
     validate();
   }
   emit('blur', event);
+  showSuggestion.value = false;
+};
+const onFocus = (event: FocusEvent) => {
+  emit('focus', event);
+  showSuggestion.value = true;
+};
+
+const acceptSuggestion = async () => {
+  if (props.suggestion) value.value = formatAmount(props.suggestion);
+};
+
+const formatAmount = (number: number | string, addSymbol: boolean = false): string => {
+  if (!Number(number)) return `${addSymbol ? props.currencySymbol : ''}${number}`;
+  const formatter = new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: props.currencyDecimals,
+    maximumFractionDigits: props.currencyDecimals,
+  });
+  return `${addSymbol ? props.currencySymbol : ''}${formatter.format(Number(number))}`;
 };
 
 watch(
