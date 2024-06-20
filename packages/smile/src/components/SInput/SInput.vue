@@ -68,12 +68,12 @@
       </s-input-leading>
       <transition name="fade">
         <div
-          v-if="suggestion && showSuggestion && !readonly"
+          v-if="suggestion && showSuggestion"
           class="s-input__suggestion"
           @mousedown.capture.stop="acceptSuggestion"
         >
-          {{ formatAmount(suggestion, true) }}
-          <span>{{ suggestionText }}</span>
+          {{ suggestion.text || suggestion.value }}
+          <span v-if="suggestion.description">{{ suggestion.description }}</span>
         </div>
       </transition>
     </div>
@@ -85,7 +85,7 @@
 
 <script setup lang="ts">
 import { useSmileValidate } from '~/composables';
-import type { IconType, InputAddon } from '../../interfaces';
+import type { IconType, InputAddon, Suggestion } from '../../interfaces';
 
 const props = withDefaults(
   defineProps<{
@@ -142,24 +142,11 @@ const props = withDefaults(
     magic?: boolean;
     autocompleteText?: string;
     /**
-     * Número (sin símbolos de moneda o comas) que se mostrará como sugerencia.
+     * Contiene el valor, y opcionalmente, texto y descripción a mostrar
+     * en la sugerencia
+     * @see Suggestion
      */
-    suggestion?: string | number;
-    /**
-     * Texto que se mostrará debajo de la sugerencia
-     * Por defecto: "Monto por pagar"
-     */
-    suggestionText?: string;
-    /**
-     * Símbolo de moneda mostrado en la sugerencia
-     * Por defecto: "$"
-     */
-    currencySymbol?: string;
-    /**
-     * Símbolo de moneda mostrado en la sugerencia
-     * Por defecto: 2
-     */
-    currencyDecimals?: number;
+    suggestion?: Suggestion;
   }>(),
   {
     size: 'medium',
@@ -167,9 +154,6 @@ const props = withDefaults(
     rules: () => [],
     optionalText: 'Opcional',
     autocompleteText: 'Autocompletando...',
-    suggestionText: 'Monto por pagar',
-    currencySymbol: '$',
-    currencyDecimals: 2,
   }
 );
 const emit = defineEmits<{
@@ -198,20 +182,11 @@ const onBlur = (event: FocusEvent) => {
 };
 const onFocus = (event: FocusEvent) => {
   emit('focus', event);
-  showSuggestion.value = true;
+  if (!props.readonly) showSuggestion.value = true;
 };
 
 const acceptSuggestion = async () => {
-  if (props.suggestion) value.value = formatAmount(props.suggestion);
-};
-
-const formatAmount = (number: number | string, addSymbol: boolean = false): string => {
-  if (!Number(number)) return `${addSymbol ? props.currencySymbol : ''}${number}`;
-  const formatter = new Intl.NumberFormat('en-US', {
-    minimumFractionDigits: props.currencyDecimals,
-    maximumFractionDigits: props.currencyDecimals,
-  });
-  return `${addSymbol ? props.currencySymbol : ''}${formatter.format(Number(number))}`;
+  if (props.suggestion) value.value = props.suggestion.value;
 };
 
 watch(

@@ -10,3 +10,4 @@ export * from './s-stats.interface';
 export * from './s-file-upload.interface';
 export * from './s-survey.interface';
 export * from './s-toolbar.interface';
+export * from './s-input.interface';
