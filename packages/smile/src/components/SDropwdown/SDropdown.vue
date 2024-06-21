@@ -21,7 +21,7 @@
         :readonly="readonly || !search"
         @click.stop="toggleOverflow"
       >
-        <template #leading>
+        <template v-if="!magic" #leading>
           <slot name="leading" />
         </template>
       </s-input>
