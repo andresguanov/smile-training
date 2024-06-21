@@ -1,43 +1,18 @@
 <template>
   <p class="text-slate-900 text-xl my-3">Sugerencias en SInput</p>
-  <details>
-    <summary class="text-slate-500 text-lg mb-3 cursor-pointer hover:bg-slate-400/10">
-      Nuevas props:
-    </summary>
-    <div class="mb-3">
-      <div class="font-bold">suggestion</div>
-      Recibe un número as string o number (no debe incluir símbolos de moneda o comas separando
-      miles). Si está presente la prop, cuando el input reciba el foco, se mostrará la sugerencia
-      debajo del input. Al hacer click sobre la sugerencia, el input tomará el valor de la
-      sugerencia.
-    </div>
-    <div class="mb-3">
-      <div class="font-bold">suggestionText</div>
-      Es el texto que se mostrará debajo del valor de la sugerencia, por defecto toma el valor de
-      "Monto por pagar".
-    </div>
-    <div class="mb-3">
-      <div class="font-bold">currencySymbol</div>
-      Símbolo de la moneda, por defecto es '$', se utiliza para mostrarse junto a la sugerencia.
-    </div>
-    <div class="mb-3">
-      <div class="font-bold">currencyDecimals</div>
-      Número de decimales que debe tener la sugerencia, por defecto toma el valor de 2.
-    </div>
-  </details>
 
   <SForm
     id="form"
     ref="form"
     class="sm:grid grid-cols-3 gap-2 sm:space-y-0 space-y-5 mt-5"
-    validate-on="focusout"
+    validate-on="submit"
   >
     <div class="col-span-3 sm:grid grid-cols-2 gap-2 sm:space-y-0 space-y-5 mt-5">
       <SDropdown
         label="Contacto *"
         v-model="selectedClient"
         :options="clientOptions"
-        @update:modelValue="handleClient"
+        @update:modelValue="fetchClientInfo"
         object
       />
       <SDropdown
@@ -59,7 +34,7 @@
       readonly
     />
     <SInput
-      v-model="paid"
+      v-model="alreadyPaid"
       label="Pagado"
       size="medium"
       :leading="{
@@ -68,11 +43,12 @@
       }"
     />
     <SInput
-      v-model="amount_to_pay"
+      v-model="payment"
       label="Monto a pagar"
       size="medium"
       :suggestion="suggestion"
       :rules
+      readonly
       :leading="{
         inline: true,
         label: '$',
@@ -90,16 +66,23 @@
 import { SInput, SButton, SForm, SDropdown } from '@alegradev/smile-ui-next';
 import { ref, computed, watch, onMounted } from 'vue';
 import type { ComponentPublicInstance } from 'vue';
-import type { MenuOption } from '@alegradev/smile-ui-next';
+import type { MenuOption, Suggestion } from '@alegradev/smile-ui-next';
 
 // Definiciones y variables reactivas
 const debt = ref<string>('0');
-const paid = ref<string>('0');
-const amount_to_pay = ref<string>('0');
+const alreadyPaid = ref<string>('0');
+const payment = ref<string>('0');
 const selectedClient = ref<MenuOption | string>();
 const selectedBank = ref<MenuOption | string>();
 const isMagic = ref(false);
-
+const suggestion = computed<Suggestion>(() => {
+  const remaining = toNumber(debt.value) - toNumber(alreadyPaid.value);
+  return {
+    value: toCurrency(remaining),
+    text: `$${toCurrency(remaining)}`,
+    description: `Monto por pagar`,
+  };
+});
 const form = ref<
   ComponentPublicInstance & {
     validateForm: () => {
@@ -112,7 +95,6 @@ const form = ref<
   }
 >();
 
-// Opciones de menú
 const clientOptions = <MenuOption[]>[
   { text: 'Adriana Restrepo López', code: 1 },
   { text: 'Cristina Fuentes Díaz', code: 2 },
@@ -125,26 +107,13 @@ const bankOptions = <MenuOption[]>[
   { text: 'Banco Imaginario', code: 3 },
 ];
 
-// Funciones y reglas de validación
-const moneyToNumber = (amount: string): number => {
-  const number = Number(amount.replace(/[^\d.-]/g, ''));
-  return parseFloat(number.toFixed(2));
-};
-
-const suggestion = computed(() =>
-  // '321,000.50' // Sugerencia como string
-  parseFloat((moneyToNumber(debt.value) - moneyToNumber(paid.value)).toFixed(2))
-);
-
 const rules = [
   (value: string) => {
-    const total_to_pay = (moneyToNumber(debt.value) - moneyToNumber(paid.value)).toFixed(2);
-    return moneyToNumber(value) <= Number(total_to_pay)
-      ? true
-      : `La cantidad a pagar excede la deuda`;
+    const payment = (toNumber(debt.value) - toNumber(alreadyPaid.value)).toFixed(2);
+    return toNumber(value) <= Number(payment) ? true : `La cantidad a pagar excede la deuda`;
   },
   (value: string) => {
-    return Number(value) != 0 ? true : `Tienes que introducir una cantidad`;
+    return Number(value) != 0 ? true : `La cantidad no puede ser cero o negativa`;
   },
 ];
 
@@ -154,14 +123,26 @@ const validate = () => {
   }
 };
 
-// Métodos
-const handleClient = async () => {
+const fetchClientInfo = async () => {
   isMagic.value = true;
   setTimeout(() => {
     isMagic.value = false;
     selectedBank.value = bankOptions[1]; // Banco Falso
     debt.value = '214,205.55';
-    paid.value = '163,000.00';
+    alreadyPaid.value = '163,000.00';
   }, 3000);
+};
+
+const toCurrency = (number: number): string => {
+  const formatter = new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+  return `${formatter.format(Number(number))}`;
+};
+
+const toNumber = (amount: string): number => {
+  const number = Number(amount.replace(/[^\d.-]/g, ''));
+  return parseFloat(number.toFixed(2));
 };
 </script>
