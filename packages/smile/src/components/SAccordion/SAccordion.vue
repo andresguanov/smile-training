@@ -5,7 +5,6 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, defineModel } from 'vue';
 import { OptionsProps as optionsProps, useOptions } from '../../composables';
 
 const props = defineProps({
