@@ -24,8 +24,8 @@
         :optional-text="optionalText"
         :error="currentError"
         :readonly="readonly || !search"
-        @click.stop="openOverflow"
-        @click-icon-right.stop="toggleOverflow"
+        @click.stop="toggleOverflow(search)"
+        @click-icon-right.stop="toggleOverflow()"
       >
         <template v-if="!magic" #leading>
           <slot name="leading" />
@@ -267,16 +267,10 @@ const validateProps = (props: SDropdownProps) => {
   }
 };
 
-const toggleOverflow = () => {
+const toggleOverflow = (search?: boolean) => {
   if (props.disabled || props.readonly) return;
   if (!open.value) emit('open');
-  open.value = !open.value;
-};
-
-const openOverflow = () => {
-  if (props.disabled || props.readonly) return;
-  if (!open.value) emit('open');
-  open.value = props.search || !open.value;
+  open.value = search || !open.value;
 };
 
 const isEqual = (a: unknown, b: unknown) => {
