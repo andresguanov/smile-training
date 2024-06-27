@@ -36,7 +36,7 @@
         :required="required"
         :id="id"
         @blur="onBlur"
-        @focus="(e: FocusEvent) => emit('focus', e)"
+        @focus="onFocus"
         @keypress="(e: KeyboardEvent) => emit('keypress', e)"
       />
       <div v-if="success" class="s-input__icon success">
@@ -66,6 +66,16 @@
       >
         <slot name="trailing" />
       </s-input-leading>
+      <transition name="fade">
+        <div
+          v-if="suggestion && showSuggestion"
+          class="s-input__suggestion"
+          @mousedown.capture.stop="acceptSuggestion"
+        >
+          {{ suggestion.text || suggestion.value }}
+          <span v-if="suggestion.description">{{ suggestion.description }}</span>
+        </div>
+      </transition>
     </div>
     <div class="s-input__footer" v-if="helperText">
       <p class="s-input__helper">{{ helperText }}</p>
@@ -75,7 +85,7 @@
 
 <script setup lang="ts">
 import { useSmileValidate } from '~/composables';
-import type { IconType, InputAddon } from '../../interfaces';
+import type { IconType, InputAddon, Suggestion } from '../../interfaces';
 
 const props = withDefaults(
   defineProps<{
@@ -131,6 +141,12 @@ const props = withDefaults(
     optionalText?: string;
     magic?: boolean;
     autocompleteText?: string;
+    /**
+     * Contiene el valor, y opcionalmente, texto y descripción a mostrar
+     * en la sugerencia
+     * @see Suggestion
+     */
+    suggestion?: Suggestion;
   }>(),
   {
     size: 'medium',
@@ -156,12 +172,21 @@ const { rules, validate, validateOnFocusout, hasError, currentError } = useSmile
 const textMark = computed(() => (props.markType === 'required' ? '*' : `(${props.optionalText})`));
 const iconSize = computed(() => (props.size === 'small' ? '16px' : '20px'));
 const helperText = computed(() => currentError.value || props.supportiveText);
-
+const showSuggestion = ref(false);
 const onBlur = (event: FocusEvent) => {
   if (validateOnFocusout.value) {
     validate();
   }
   emit('blur', event);
+  showSuggestion.value = false;
+};
+const onFocus = (event: FocusEvent) => {
+  emit('focus', event);
+  if (!props.readonly) showSuggestion.value = true;
+};
+
+const acceptSuggestion = async () => {
+  if (props.suggestion) value.value = props.suggestion.value;
 };
 
 watch(

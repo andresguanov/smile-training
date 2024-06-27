@@ -1,5 +1,10 @@
 <template>
-  <div v-if="!hasTheComponentErrors" class="s-dropdown" :class="[{ readonly, magic }]">
+  <div
+    v-if="!hasTheComponentErrors"
+    class="s-dropdown"
+    :class="[{ readonly, magic }]"
+    ref="dropdownContainer"
+  >
     <div class="s-dropdown__wrapper">
       <s-input
         :autocompleteText="autocompleteText"
@@ -19,20 +24,15 @@
         :optional-text="optionalText"
         :error="currentError"
         :readonly="readonly || !search"
-        @click.stop="toggleOverflow"
+        @click.stop="openOverflow"
+        @click-icon-right.stop="toggleOverflow"
       >
-        <template #leading>
+        <template v-if="!magic" #leading>
           <slot name="leading" />
         </template>
       </s-input>
     </div>
-    <s-overflow-menu
-      v-if="open"
-      class="s-dropdown__menu"
-      :top="menuTopDistance"
-      bubbling
-      @click-outside="onClickOutside"
-    >
+    <s-overflow-menu v-if="open" class="s-dropdown__menu" :top="menuTopDistance">
       <div v-if="loading && !hideLoadingText">
         <slot name="loading">
           <p>{{ loadingText }}</p>
@@ -126,6 +126,8 @@ const hasTheComponentErrors = ref<boolean>(false);
 const open = ref(false);
 
 const searchText = ref('');
+
+const dropdownContainer = ref<HTMLDivElement | null>(null);
 
 // Propiedades computadas
 const formattedValue = computed<string>(() => {
@@ -247,12 +249,12 @@ const onClickOption = (option: MenuOption) => {
   open.value = false;
 };
 
-const onClickOutside = () => {
+onClickOutside(dropdownContainer, () => {
   if (validateOnFocusout.value) {
     validate();
   }
   open.value = false;
-};
+});
 
 const validateProps = (props: SDropdownProps) => {
   const isOptionsArray = Array.isArray(props.options);
@@ -269,6 +271,12 @@ const toggleOverflow = () => {
   if (props.disabled || props.readonly) return;
   if (!open.value) emit('open');
   open.value = !open.value;
+};
+
+const openOverflow = () => {
+  if (props.disabled || props.readonly) return;
+  if (!open.value) emit('open');
+  open.value = props.search || !open.value;
 };
 
 const isEqual = (a: unknown, b: unknown) => {
