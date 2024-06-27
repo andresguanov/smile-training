@@ -17,19 +17,40 @@
             :uid="control.key"
             type="date"
           />
+
           <component
             v-else
             v-model="initState[control.key]"
             :is="`Hst${control.input}`"
             :title="control.key"
             v-bind="control.props"
+            :dynamic-attribute="dynamicKeyInput"
           />
         </template>
       </template>
     </Variant>
   </Story>
 </template>
+<docs lang="md">
+# Modes
 
+Para poder usar los distintos modos solo hace falta que revisen cual usar [aquí](https://vue3datepicker.com/props/modes/) y ponerlo como atributo o prop al componente
+
+# Format
+
+Format the value of the date(s) in the input field. Formatting is done automatically via provided string format. However, you can override the default format by providing a custom formatter function.
+
+**Type:** `string | ((date: Date) => string) | ((dates: Date[]) => string)`
+
+**Default:**
+
+- Single picker: `MM/dd/yyyy HH:mm`
+- Range picker: `MM/dd/yyyy HH:mm - MM/dd/yyyy HH:mm`
+- Month picker: `MM/yyyy`
+- Time picker: `HH:mm`
+- Time picker range: `HH:mm - HH:mm`
+- Week picker: `RR-yyyy` | `ww-yyyy` (depends on week numbering)
+</docs>
 <script setup>
 import { reactive, ref } from 'vue';
 import { logEvent } from 'histoire/client';
@@ -37,6 +58,7 @@ import { DATEPICKER_PROPS } from './commonProps';
 import CustomInputControl from '../../config/controls/CustomInputControl.vue';
 
 const value = ref();
+
 const initState = reactive({
   label: 'Smile datepicker',
   size: 'medium',

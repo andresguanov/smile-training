@@ -1,6 +1,6 @@
 {
   "name": "smile",
-  "version": "1.0.0",
+  "version": "0.0.43-beta.0",
   "description": "Component library for Vue 3",
   "workspaces": [
     "packages/*"

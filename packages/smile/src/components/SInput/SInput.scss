@@ -1,6 +1,5 @@
 .s-input {
-  @apply space-y-1 relative;
-
+  @apply relative;
   &__label {
     @apply text-slate-700 text-sm font-medium;
 
@@ -15,13 +14,13 @@
     }
   }
   &__helper {
-    @apply text-slate-500 text-xs font-normal;
+    @apply text-slate-500 text-xs font-normal mt-1;
   }
   &__header {
     @apply flex items-center justify-between;
   }
   &__container {
-    @apply flex items-center overflow-hidden;
+    @apply flex items-center overflow-hidden mt-1;
     @apply bg-white border border-slate-300;
     @apply rounded-[10px] h-10;
 
@@ -45,12 +44,6 @@
           @apply p-2;
         }
       }
-      .s-input__suggestion {
-        @apply text-sm leading-[1rem] top-[56px];
-        & span {
-          @apply text-[0.65rem];
-        }
-      }
     }
     &.large {
       @apply rounded-xl h-12;
@@ -62,9 +55,6 @@
         &.trailing {
           @apply p-3.5;
         }
-      }
-      .s-input__suggestion {
-        @apply top-[72px];
       }
     }
   }
@@ -169,9 +159,15 @@
     @apply -translate-y-1 opacity-0;
   }
   &__suggestion {
-    @apply z-[200] absolute left-0 right-0 top-[64px] rounded-lg shadow-lg bg-white hover:bg-slate-100 cursor-pointer text-slate-900 text-base flex flex-col py-1 px-4 border border-slate-200 transition-all duration-100;
+    @apply z-[200] absolute left-0 right-0 top-auto rounded-lg shadow-lg bg-white hover:bg-slate-100 cursor-pointer text-slate-900 text-base flex flex-col py-1 px-4 border border-slate-200 transition-all duration-100 min-w-fit text-nowrap;
     & span {
       @apply text-xs text-slate-500;
+    }
+    &.small {
+      @apply text-sm leading-[1rem];
+      & span {
+        @apply text-[0.65rem];
+      }
     }
   }
 }
