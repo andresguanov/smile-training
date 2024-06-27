@@ -84,6 +84,12 @@
       @apply text-left h-12;
       @apply space-x-2 px-4 py-0;
       @apply text-slate-700 text-sm font-normal;
+      &.right {
+        @apply text-right;
+      }
+      &.center {
+        @apply text-center;
+      }
     }
   }
   &__row {
