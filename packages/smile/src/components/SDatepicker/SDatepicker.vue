@@ -27,6 +27,7 @@
       :min-date="minDate"
       :multi-calendars="multiCalendars"
       @click-option="v => emit('clickOption', v)"
+      v-bind="$attrs"
     >
       <template #s-dp-trigger="{ value, onBlur, onInput }">
         <s-input
