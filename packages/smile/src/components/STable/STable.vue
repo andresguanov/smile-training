@@ -51,6 +51,13 @@
               <slot name="actionsHead">{{ DEFAULT_ACTIONS_TEXT }}</slot>
             </th>
           </tr>
+          <tr v-if="loading">
+            <td colspan="100%">
+              <div class="loader">
+                <div class="loaderBar"></div>
+              </div>
+            </td>
+          </tr>
         </thead>
         <tbody class="s-table__body">
           <tr
@@ -73,6 +80,8 @@
                 :row-index="i"
                 :col-index="j"
                 :col="col"
+                :page="internalPage"
+                :items-per-page="internalItemsPerPage"
                 :row="row"
               >
                 {{ row[col.name] }}
@@ -118,6 +127,7 @@ const props = withDefaults(
     columnConfig?: Array<TableColumn>;
     itemsPerPageOptions?: Array<number>;
     lastHeaderColWidth?: string;
+    loading?: boolean;
     showLastHeaderCol?: boolean;
     showFirstHeaderCol?: boolean;
     textPagination?: smPaginationText;
@@ -137,6 +147,7 @@ const props = withDefaults(
     initialPage: 1,
     initialItemsPerPage: 10,
     lastHeaderColWidth: '5%',
+    loading: false,
     firstHeaderColWidth: '5%',
     showFirstHeaderCol: false,
     showLastHeaderCol: false,
@@ -233,3 +244,46 @@ defineExpose({
 </script>
 
 <style scoped lang="scss" src="./STable.scss" />
+<style scoped lang="scss">
+.loader {
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 10px;
+  position: relative;
+  padding: 1px;
+}
+.loader .loaderBar {
+  position: absolute;
+  border-radius: 10px;
+  top: 0;
+  right: 100%;
+  bottom: 0;
+  left: 0;
+  background: rgb(var(--sm-color-primary-600));
+  width: 0;
+  animation: borealisBar 2s linear infinite;
+}
+
+@keyframes borealisBar {
+  0% {
+    left: 0%;
+    right: 100%;
+    width: 0%;
+  }
+  10% {
+    left: 0%;
+    right: 50%;
+    width: 50%;
+  }
+  90% {
+    right: 0%;
+    left: 50%;
+    width: 50%;
+  }
+  100% {
+    left: 100%;
+    right: 0%;
+    width: 0%;
+  }
+}
+</style>
