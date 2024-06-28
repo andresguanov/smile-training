@@ -11,7 +11,7 @@
         <thead class="s-table__head">
           <tr class="s-table__row">
             <th
-              v-if="$slots.firstHeaderCol"
+              v-if="showFirstHeaderCol"
               class="s-table__head__cell"
               :style="{ width: firstHeaderColWidth }"
             >
@@ -37,11 +37,11 @@
               <span v-if="i !== columnConfig.length - 1" class="s-table__head__divider" />
             </th>
             <th
-              v-if="$slots.lastHeaderCol"
+              v-if="showLastHeaderCol"
               class="s-table__head__cell"
               :style="{ width: lastHeaderColWidth }"
             >
-              <slot name="firstHeaderCol"></slot>
+              <slot name="lastHeaderCol"></slot>
             </th>
             <th
               v-if="hasActionsColumn"
@@ -51,6 +51,13 @@
               <slot name="actionsHead">{{ DEFAULT_ACTIONS_TEXT }}</slot>
             </th>
           </tr>
+          <tr v-if="loading">
+            <td colspan="100%">
+              <div class="loader">
+                <div class="loaderBar"></div>
+              </div>
+            </td>
+          </tr>
         </thead>
         <tbody class="s-table__body">
           <tr
@@ -59,7 +66,7 @@
             class="s-table__row"
             :class="{ hoverable }"
           >
-            <td v-if="$slots.firstHeaderCol" class="s-table__body__cell">
+            <td v-if="showFirstHeaderCol" class="s-table__body__cell">
               <slot name="firstCol" :row="row" :row-index="i" />
             </td>
             <td
@@ -73,12 +80,14 @@
                 :row-index="i"
                 :col-index="j"
                 :col="col"
+                :page="internalPage"
+                :items-per-page="internalItemsPerPage"
                 :row="row"
               >
                 {{ row[col.name] }}
               </slot>
             </td>
-            <td v-if="$slots.lastHeaderCol" class="s-table__body__cell">
+            <td v-if="showLastHeaderCol" class="s-table__body__cell">
               <slot name="lastCol" :row="row" :row-index="i" />
             </td>
             <td v-if="hasActionsColumn" class="sm-table-container-td">
@@ -118,6 +127,9 @@ const props = withDefaults(
     columnConfig?: Array<TableColumn>;
     itemsPerPageOptions?: Array<number>;
     lastHeaderColWidth?: string;
+    loading?: boolean;
+    showLastHeaderCol?: boolean;
+    showFirstHeaderCol?: boolean;
     textPagination?: smPaginationText;
     firstHeaderColWidth?: string;
     /**
@@ -135,7 +147,10 @@ const props = withDefaults(
     initialPage: 1,
     initialItemsPerPage: 10,
     lastHeaderColWidth: '5%',
+    loading: false,
     firstHeaderColWidth: '5%',
+    showFirstHeaderCol: false,
+    showLastHeaderCol: false,
   }
 );
 const slots = useSlots();
@@ -229,3 +244,46 @@ defineExpose({
 </script>
 
 <style scoped lang="scss" src="./STable.scss" />
+<style scoped lang="scss">
+.loader {
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 10px;
+  position: relative;
+  padding: 1px;
+}
+.loader .loaderBar {
+  position: absolute;
+  border-radius: 10px;
+  top: 0;
+  right: 100%;
+  bottom: 0;
+  left: 0;
+  background: rgb(var(--sm-color-primary-600));
+  width: 0;
+  animation: borealisBar 2s linear infinite;
+}
+
+@keyframes borealisBar {
+  0% {
+    left: 0%;
+    right: 100%;
+    width: 0%;
+  }
+  10% {
+    left: 0%;
+    right: 50%;
+    width: 50%;
+  }
+  90% {
+    right: 0%;
+    left: 50%;
+    width: 50%;
+  }
+  100% {
+    left: 100%;
+    right: 0%;
+    width: 0%;
+  }
+}
+</style>

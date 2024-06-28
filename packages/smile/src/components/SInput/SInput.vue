@@ -66,17 +66,18 @@
       >
         <slot name="trailing" />
       </s-input-leading>
-      <transition name="fade">
-        <div
-          v-if="suggestion && showSuggestion"
-          class="s-input__suggestion"
-          @mousedown.capture.stop="acceptSuggestion"
-        >
-          {{ suggestion.text || suggestion.value }}
-          <span v-if="suggestion.description">{{ suggestion.description }}</span>
-        </div>
-      </transition>
     </div>
+    <transition name="fade">
+      <div
+        v-if="suggestion && showSuggestion"
+        class="s-input__suggestion"
+        :class="size"
+        @mousedown.capture.stop="acceptSuggestion"
+      >
+        {{ suggestion.text || suggestion.value }}
+        <span v-if="suggestion.description">{{ suggestion.description }}</span>
+      </div>
+    </transition>
     <div class="s-input__footer" v-if="helperText">
       <p class="s-input__helper">{{ helperText }}</p>
     </div>
