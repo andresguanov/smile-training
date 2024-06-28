@@ -72,6 +72,7 @@
             <slot name="prepend-item" />
           </li>
         </ul>
+        <slot name="afterOptions" />
       </div>
     </s-overflow-menu>
   </div>
