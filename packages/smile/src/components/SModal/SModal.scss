@@ -13,6 +13,10 @@
     .title-back-arrow {
       @apply w-10 h-10 py-[2px] cursor-pointer;
     }
+
+    .title-close-icon {
+      @apply w-10 h-10 cursor-pointer absolute right-0 #{!important};
+    }
   }
 
   &-body {
