@@ -143,10 +143,12 @@ const deleteFilter = (key: string) => {
     activeFilters.value.splice(index, 1);
     delete filterValues.value[key];
   }
+  emit('filter', filterValues.value);
 };
 const resetFilters = () => {
   activeFilters.value = [];
   filterValues.value = {};
+  emit('filter', filterValues.value);
 };
 const updateFilterValue = (key: string, value: unknown) => {
   filterValues.value[key] = value;
