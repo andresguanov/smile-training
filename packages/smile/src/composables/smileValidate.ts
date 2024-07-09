@@ -1,4 +1,4 @@
-import type { smFormProvide2 } from '../interfaces/sm-form.interface';
+import type { SFormProvide } from '../interfaces/sm-form.interface';
 import type { Ref, WritableComputedRef } from 'vue';
 import { provideSFormSymbol } from './validate';
 import { simpleUid } from '~/utils/uid';
@@ -39,7 +39,7 @@ export const useSmileValidate = <T = string>(
     errorBucket.value = [];
   };
 
-  const formInject = inject<smFormProvide2 | null>(provideSFormSymbol, null);
+  const formInject = inject<SFormProvide | null>(provideSFormSymbol, null);
 
   const hasError = computed(() => {
     return Boolean(externalError?.value) || errorBucket.value.length > 0;

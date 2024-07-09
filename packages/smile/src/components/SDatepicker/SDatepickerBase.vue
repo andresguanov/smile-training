@@ -32,7 +32,7 @@
       />
     </template>
     <template #action-row="{ selectDate, closePicker }">
-      <div class="s-datepicker__calendar__actions left">
+      <div v-if="hasToday" class="s-datepicker__calendar__actions left">
         <s-button
           emphasis="text"
           label="Hoy"
@@ -94,6 +94,7 @@ const props = withDefaults(
     maxDate?: Date | string;
     inline?: boolean;
     position?: 'left' | 'center' | 'right';
+    hasToday?: boolean;
   }>(),
   {
     locale: 'es',

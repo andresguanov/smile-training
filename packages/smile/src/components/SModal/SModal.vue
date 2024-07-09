@@ -1,7 +1,7 @@
 <template>
-  <div v-if="data" class="sn-modal-area" @click.self="emits('clickOutside')">
+  <div v-if="data" class="s-modal-area" @click.self="emits('clickOutside')">
     <div :class="['s-modal', size]">
-      <div class="s-modal-title">
+      <div v-if="headerText" class="s-modal-title">
         <span v-if="backBtn" class="title-back-arrow" @click="emits('back')">
           <sm-icon icon="arrow-alt-left" />
         </span>
@@ -15,12 +15,12 @@
       <div class="s-modal-body" :class="{ scroll_beautifull: scrollable }">
         <slot></slot>
       </div>
-      <slot name="footer">
-        <div class="s-modal-footer">
+      <div class="s-modal-footer">
+        <slot name="footer">
           <s-button size="small" emphasis="outline" @click="close">{{ cancelText }}</s-button>
           <s-button size="small" @click="success"> {{ successText }}</s-button>
-        </div>
-      </slot>
+        </slot>
+      </div>
     </div>
   </div>
 </template>
@@ -30,7 +30,7 @@ const props = withDefaults(
   defineProps<{
     modelValue: boolean;
     size?: 'small' | 'medium' | 'large';
-    headerText: string;
+    headerText?: string;
     cancelText?: string;
     showCloseIcon?: boolean;
     successText?: string;
