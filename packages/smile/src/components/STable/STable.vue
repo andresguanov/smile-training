@@ -118,6 +118,7 @@ import type { TableColumn, TableChangeEvent } from '../../interfaces/sm-table.in
 
 const props = withDefaults(
   defineProps<{
+    areLocalItems?: boolean;
     rows?: Array<T>;
     hoverable?: boolean;
     total?: number;
@@ -140,6 +141,7 @@ const props = withDefaults(
     actionsColWidth?: string;
   }>(),
   {
+    areLocalItems: false,
     toolbar: true,
     hoverable: true,
     rows: (): Array<any> => [],
@@ -183,10 +185,16 @@ const sortIcon = computed(() =>
 );
 
 const tableData = computed(() => {
-  if (props.rows.length > internalItemsPerPage.value) {
-    return [...props.rows].slice(0, internalItemsPerPage.value);
+  const rows = [...props.rows];
+  if (rows.length > internalItemsPerPage.value) {
+    if (!props.areLocalItems) {
+      return rows.slice(0, internalItemsPerPage.value);
+    }
+    const start = (internalPage.value - 1) * internalItemsPerPage.value;
+    const end = start + internalItemsPerPage.value;
+    return rows.slice(start, end);
   }
-  return [...props.rows];
+  return rows;
 });
 const columnNames = computed((): Array<string> => {
   return props.columnConfig.map(col => {

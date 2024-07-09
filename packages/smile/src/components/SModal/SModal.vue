@@ -8,6 +8,9 @@
         <span>
           {{ headerText }}
         </span>
+        <span v-if="showCloseIcon" class="title-close-icon" @click="close">
+          <sm-icon icon="close" />
+        </span>
       </div>
       <div class="s-modal-body" :class="{ scroll_beautifull: scrollable }">
         <slot></slot>
@@ -29,12 +32,14 @@ const props = withDefaults(
     size?: 'small' | 'medium' | 'large';
     headerText: string;
     cancelText?: string;
+    showCloseIcon?: boolean;
     successText?: string;
     backBtn?: boolean;
     scrollable?: boolean;
   }>(),
   {
     size: 'medium',
+    showCloseIcon: false,
     cancelText: 'Label',
     successText: 'Label',
   }
