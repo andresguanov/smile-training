@@ -1,6 +1,14 @@
 <template>
   <div class="app_container">
     <p>{{ text }}</p>
+    <s-modal :model-value="true" header-text="dasdasd" show-close-icon>
+      <template #footer>
+        <div>
+          <button class="bg-black">abrir</button>
+          <button class="bg-black">cerrar</button>
+        </div>
+      </template>
+    </s-modal>
   </div>
 </template>
 

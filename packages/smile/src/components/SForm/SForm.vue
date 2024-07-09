@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { smFormProvide2 } from '~/interfaces';
+import type { SFormProvide } from '~/interfaces';
 import { provideSFormSymbol } from '../../composables';
 
 type FormField = {
@@ -86,7 +86,7 @@ const validateInput = (id: string) => {
   field.validate();
 };
 
-provide<smFormProvide2>(provideSFormSymbol, {
+provide<SFormProvide>(provideSFormSymbol, {
   register: ({ id, validate, reset }) => {
     if (fields.value.some(field => field.id === id)) {
       console.warn(`Duplicate input name "${id}"`);
