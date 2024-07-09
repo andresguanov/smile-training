@@ -1,5 +1,5 @@
 <template>
-  <STable :rows :columnConfig>
+  <STable are-local-items :rows :columnConfig>
     <template #empty>
       <EmptyContainer />
     </template>
@@ -33,25 +33,25 @@ const rows = [
     e: '5',
   },
   {
-    a: '1',
-    b: '2',
-    c: '3',
-    d: '4',
-    e: '5',
+    a: '2',
+    b: '3',
+    c: '4',
+    d: '5',
+    e: '6',
   },
   {
-    a: '1',
-    b: '2',
-    c: '3',
-    d: '4',
-    e: '5',
+    a: '7',
+    b: '8',
+    c: '9',
+    d: '10',
+    e: '11',
   },
   {
-    a: '1',
-    b: '2',
-    c: '3',
-    d: '4',
-    e: '5',
+    a: '12',
+    b: '13',
+    c: '14',
+    d: '14',
+    e: '15',
   },
   {
     a: '1',

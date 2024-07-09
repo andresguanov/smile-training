@@ -72,6 +72,9 @@
       .dp__action_row {
         @apply border-t border-solid border-slate-200;
       }
+      .dp__sidebar_left {
+        width: var(--s-datepicker-calendar, auto);
+      }
     }
     &__actions {
       @apply gap-2;

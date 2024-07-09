@@ -18,6 +18,7 @@
     :min-date="minDate"
     :max-date="maxDate"
     :inline="inline"
+    :position="position"
     :menu-class-name="`s-datepicker__calendar__menu ${inline ? 'is-inline' : ''}`"
     class="s-datepicker__calendar"
   >
@@ -51,14 +52,17 @@
         <s-button label="Aplicar" size="small" class="select-button" @click="selectDate" />
       </div>
     </template>
-    <template v-if="sidebarOptions && sidebarOptions.length" #left-sidebar="{}">
+    <template
+      v-if="sidebarOptions && sidebarOptions.length"
+      #left-sidebar="{ presetDate, selectDate }"
+    >
       <s-menu-item
         v-for="option in sidebarOptions"
         :key="option.id"
         :title="option.title"
         :description="option.description"
         text-style="block"
-        @click="emit('clickOption', option.id)"
+        @click="emit('clickOption', option.id, { presetDate, selectDate })"
       />
     </template>
   </date-picker>
@@ -89,6 +93,7 @@ const props = withDefaults(
     minDate?: Date | string;
     maxDate?: Date | string;
     inline?: boolean;
+    position?: 'left' | 'center' | 'right';
   }>(),
   {
     locale: 'es',
@@ -98,7 +103,14 @@ const props = withDefaults(
 
 const emit = defineEmits<{
   (e: 'update:modelValue', v: SDatepickerValue): void;
-  (e: 'clickOption', v: string): void;
+  (
+    e: 'clickOption',
+    v: string,
+    settings: {
+      selectDate: (day: { value: Date; current: boolean }) => void;
+      presetDate: (dates: Date[] | string[]) => void;
+    }
+  ): void;
 }>();
 const date = useVModel(props, 'modelValue', emit);
 

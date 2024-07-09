@@ -26,7 +26,8 @@
       :max-date="maxDate"
       :min-date="minDate"
       :multi-calendars="multiCalendars"
-      @click-option="v => emit('clickOption', v)"
+      :position="position"
+      @click-option="(key, settings) => emit('clickOption', key, settings)"
       v-bind="$attrs"
     >
       <template #s-dp-trigger="{ value, onBlur, onInput }">
@@ -100,6 +101,7 @@ const props = withDefaults(
     supportiveText?: string;
     minDate?: Date | string;
     maxDate?: Date | string;
+    position?: 'left' | 'center' | 'right';
   }>(),
   {
     locale: 'es',
@@ -112,7 +114,14 @@ const props = withDefaults(
 
 const emit = defineEmits<{
   (e: 'update:modelValue', v: SDatepickerValue): void;
-  (e: 'clickOption', v: string): void;
+  (
+    e: 'clickOption',
+    v: string,
+    settings: {
+      selectDate: (day: { value: Date; current: boolean }) => void;
+      presetDate: (dates: Date[] | string[]) => void;
+    }
+  ): void;
 }>();
 const date = useVModel(props, 'modelValue', emit);
 
