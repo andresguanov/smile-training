@@ -8,7 +8,7 @@ export const useSmileValidate = <T = string>(
   externalError?: Ref<string | undefined>,
   id: string = simpleUid()
 ) => {
-  const rules = ref<Array<(value: any) => boolean | string>>([]);
+  const rules = ref<Array<(value: T) => boolean | string>>([]);
   const stopWatchValidate = watch(data, () => validate());
   const errorBucket = ref<Array<string>>([]);
 
