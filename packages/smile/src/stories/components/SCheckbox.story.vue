@@ -7,8 +7,8 @@
 
       <template #controls>
         <component
-          v-model="initState[control.key]"
           v-for="control in controls"
+          v-model="initState[control.key]"
           :is="`Hst${control.input}`"
           :title="control.key"
           v-bind="control.props"
@@ -39,6 +39,8 @@ const initState = reactive({
       disabled: true,
     },
   ],
+  rules: [],
+  error: '',
 });
 
 const controls = [
@@ -60,6 +62,16 @@ const controls = [
   {
     key: 'options',
     input: 'Json',
+    props: {},
+  },
+  {
+    key: 'rules',
+    input: 'Json',
+    props: {},
+  },
+  {
+    key: 'error',
+    input: 'Text',
     props: {},
   },
 ];
