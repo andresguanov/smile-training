@@ -18,9 +18,38 @@
   </Story>
 </template>
 
+<docs lang="md">
+## SDropdown
+
+Este componente permite seleccionar una opción de una lista desplegable, en las últimas
+versiones se ha mejorado la usabilidad y accesibilidad del componente, además que se integró
+Lazy load para un mejor rendimiento ante cargas grandes.
+
+### Tipos de validación
+
+Estas validaciones se dan en base a las propiedades establecidas en el component padre
+SForm, por lo que es necesario que el componente padre tenga la propiedad `containerIsForm`
+
+Para ello se debe agregar la prop rules la cual recibe un array de callback con las validaciones.
+
+### Metodos expuestos
+
+1. <strong>A través de Slot</strong>
+
+- validate: Permite validar los inputs del formulario, devuelve `{ valid, results }`
+- reset: Permite de manera <strong>visual</strong> ocultar los mensajes de error.
+
+2. <strong>Mediante Ref</strong>
+
+- toggleOverflow: Permite abrir o cerrar el dropdown, recibe un booleano para abrirlo en modo
+  búsqueda.
+- itemsRef: Es la cantidad de items cargados como referencia para la carga lazy de las
+  opciones.
+</docs>
+
 <script setup>
 import { ref, reactive } from 'vue';
-import { icons } from '../config/utils/IconOptions';
+// import { icons } from '../config/utils/IconOptions';
 
 const initState = reactive({
   label: 'Label',
@@ -59,6 +88,11 @@ const controls = [
     props: {},
   },
   {
+    key: 'magic',
+    input: 'Checkbox',
+    props: {},
+  },
+  {
     key: 'placeholder',
     input: 'Text',
     props: {},
@@ -80,6 +114,11 @@ const controls = [
   },
   {
     key: 'loadingText',
+    input: 'Text',
+    props: {},
+  },
+  {
+    key: 'autocompleteText',
     input: 'Text',
     props: {},
   },
