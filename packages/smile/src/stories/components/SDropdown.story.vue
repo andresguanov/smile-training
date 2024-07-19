@@ -2,7 +2,11 @@
   <Story title="s-dropdown" auto-props-disabled>
     <Variant title="default">
       <template #default>
-        <s-dropdown v-model="initState['v-model']" v-bind="initState"></s-dropdown>
+        <s-dropdown v-model="initState['v-model']" v-bind="initState">
+          <template #leading> </template>
+          <template #beforeOptions> </template>
+          <template #append-item> </template>
+        </s-dropdown>
       </template>
 
       <template #controls>
@@ -30,14 +34,14 @@ Lazy load para un mejor rendimiento ante cargas grandes.
 Estas validaciones se dan en base a las propiedades establecidas en el component padre
 SForm, por lo que es necesario que el componente padre tenga la propiedad `containerIsForm`
 
-Para ello se debe agregar la prop rules la cual recibe un array de callback con las validaciones.
+Para ello se debe agregar la prop `rules` la cual recibe un array de callback con las validaciones.
 
 ### Metodos expuestos
 
 1. <strong>A través de Slot</strong>
 
-- validate: Permite validar los inputs del formulario, devuelve `{ valid, results }`
-- reset: Permite de manera <strong>visual</strong> ocultar los mensajes de error.
+- index: Permite obtener el índice de la opción seleccionada.
+- option: Permite obtener la key de la option.
 
 2. <strong>Mediante Ref</strong>
 
