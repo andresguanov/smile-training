@@ -1,27 +1,3 @@
-<template>
-  <Story title="s-dropdown" auto-props-disabled>
-    <Variant title="default">
-      <template #default>
-        <s-dropdown v-model="initState['v-model']" v-bind="initState">
-          <template #leading> </template>
-          <template #beforeOptions> </template>
-          <template #append-item> </template>
-        </s-dropdown>
-      </template>
-
-      <template #controls>
-        <component
-          v-model="initState[control.key]"
-          v-for="control in controls"
-          :is="`Hst${control.input}`"
-          :title="control.key"
-          v-bind="control.props"
-        />
-      </template>
-    </Variant>
-  </Story>
-</template>
-
 <docs lang="md">
 ## SDropdown
 
@@ -35,6 +11,14 @@ Estas validaciones se dan en base a las propiedades establecidas en el component
 SForm, por lo que es necesario que el componente padre tenga la propiedad `containerIsForm`
 
 Para ello se debe agregar la prop `rules` la cual recibe un array de callback con las validaciones.
+
+### Slots
+
+- leading: Permite agregar un icono o texto al inicio del dropdown.
+- beforeOptions: Permite agregar un contenido antes de las opciones.
+- afterOptions: Permite agregar un contenido después de las opciones.
+- append-item: Permite agregar un contenido al inicio de las opciones.
+- prepend-item: Permite agregar un contenido al final de las opciones.
 
 ### Metodos expuestos
 
@@ -51,9 +35,37 @@ Para ello se debe agregar la prop `rules` la cual recibe un array de callback co
   opciones.
 </docs>
 
+<template>
+  <Story title="s-dropdown" auto-props-disabled>
+    <Variant title="default">
+      <template #default>
+        <s-dropdown
+          v-model="initState['v-model']"
+          v-bind="initState"
+          @search="logEvent('search', $event)"
+          @open="logEvent('open')"
+          @select="logEvent('select', $event)"
+        >
+        </s-dropdown>
+      </template>
+
+      <template #controls>
+        <component
+          v-model="initState[control.key]"
+          v-for="control in controls"
+          :is="`Hst${control.input}`"
+          :title="control.key"
+          v-bind="control.props"
+        />
+      </template>
+    </Variant>
+  </Story>
+</template>
+
 <script setup>
 import { ref, reactive } from 'vue';
 // import { icons } from '../config/utils/IconOptions';
+import { logEvent } from 'histoire/client';
 
 const initState = reactive({
   label: 'Label',
