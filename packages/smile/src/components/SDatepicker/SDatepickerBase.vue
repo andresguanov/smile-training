@@ -2,7 +2,7 @@
   <date-picker
     ref="datepickerEl"
     v-model="date"
-    :uid="uid"
+    :uid="id"
     :format="format"
     :locale="locale"
     :clearable="false"
@@ -32,24 +32,16 @@
       />
     </template>
     <template #action-row="{ selectDate, closePicker }">
-      <div class="s-datepicker__calendar__actions left">
-        <s-button
-          emphasis="text"
-          label="Hoy"
-          size="small"
-          class="select-button"
-          @click="selectToday"
-        />
-      </div>
       <div class="s-datepicker__calendar__actions">
+        <s-button v-if="hasToday" emphasis="text" label="Hoy" size="small" @click="selectToday" />
         <s-button
+          class="cancel-button"
           emphasis="text"
           label="Cancelar"
           size="small"
-          class="select-button"
           @click="closePicker"
         />
-        <s-button label="Aplicar" size="small" class="select-button" @click="selectDate" />
+        <s-button label="Aplicar" size="small" @click="selectDate" />
       </div>
     </template>
     <template
@@ -70,36 +62,14 @@
 
 <script lang="ts" setup>
 import type { DatePickerInstance } from '@vuepic/vue-datepicker';
+import type { SDatepickerBaseProps, SDatepickerValue } from './props';
 import DatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 
-type SDatepickerValue = Date | string | Date[] | string[];
-
-const props = withDefaults(
-  defineProps<{
-    modelValue: SDatepickerValue;
-    locale?: 'es' | 'en';
-    format?: string;
-    readonly?: boolean;
-    uid?: string;
-    required?: boolean;
-    disabled?: boolean;
-    disabledDates?: Date[] | string[] | ((date: Date) => boolean);
-    sidebarOptions?: { id: string; title: string; description?: string }[];
-    multiCalendars?: boolean;
-    autoApply?: boolean;
-    textInput?: boolean;
-    rangeMode?: boolean;
-    minDate?: Date | string;
-    maxDate?: Date | string;
-    inline?: boolean;
-    position?: 'left' | 'center' | 'right';
-  }>(),
-  {
-    locale: 'es',
-    format: 'dd/MM/yyyy',
-  }
-);
+const props = withDefaults(defineProps<SDatepickerBaseProps>(), {
+  locale: 'es',
+  format: 'dd/MM/yyyy',
+});
 
 const emit = defineEmits<{
   (e: 'update:modelValue', v: SDatepickerValue): void;

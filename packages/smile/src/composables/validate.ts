@@ -1,5 +1,6 @@
 import { PropType, Ref } from 'vue';
-import { smFormProvide } from '../interfaces/sm-form.interface';
+import { SFormProvide } from '../interfaces/sm-form.interface';
+import { simpleUid } from '~/utils/uid';
 
 export const provideSFormSymbol = Symbol('sForm');
 
@@ -15,6 +16,7 @@ export const useValidate = (
   externalError: boolean = false,
   externalErrorMessages: Array<string> = []
 ) => {
+  const id = simpleUid();
   const errorBucket = ref<Array<string>>([]);
   const rules = ref<Array<(value: any) => boolean | string>>([]);
   const validateOnFocusout = ref(false);
@@ -26,41 +28,47 @@ export const useValidate = (
     return externalError || errorBucket.value.length > 0;
   });
 
-  const validate = (ignoreUpdate?: boolean): boolean => {
+  const validate = (ignoreUpdate?: boolean): string[] => {
     const errors = [];
-    const value = data.value;
-    for (let index = 0; index < rules.value.length; index++) {
-      const rule = rules.value[index];
-      const valid = typeof rule === 'function' ? rule(value) : rule;
+    for (const rule of rules.value) {
+      const handler = typeof rule === 'function' ? rule : () => rule;
+      const result = handler(data.value);
 
-      if (valid === false || typeof valid === 'string') {
-        errors.push(valid || 'Error de validación');
-      } else if (typeof valid !== 'boolean') {
+      if (result === true) continue;
+      if (typeof result !== 'string') {
         console.error(
-          `Rules should return a string or boolean, received '${typeof valid}' instead`
+          `Rules should return a string or boolean, received '${typeof result}' instead`
         );
+        continue;
       }
+      errors.push(result);
     }
     if (!ignoreUpdate) {
       errorBucket.value = [...errors];
     }
-    return errors.length === 0;
+    return errors;
   };
-  const resetValidation = () => {
+  const reset = () => {
     errorBucket.value = [];
   };
 
   const stopWatchValidate = watch(data, () => validate());
 
-  const formProvide = inject<smFormProvide | null>(provideSFormSymbol, null);
-  if (formProvide) {
-    formProvide.register(validate);
-    formProvide.registerReset(resetValidation);
-    if (formProvide.validationMode !== 'on-type') stopWatchValidate();
-    if (formProvide.validationMode === 'on-focusout') validateOnFocusout.value = true;
-  } else {
-    stopWatchValidate();
-  }
+  const formInject = inject<SFormProvide | null>(provideSFormSymbol, null);
+
+  onBeforeMount(() => {
+    if (formInject?.validateOn.value !== 'type') {
+      stopWatchValidate();
+    }
+    formInject?.register({
+      id,
+      validate,
+      reset,
+    });
+  });
+  onBeforeUnmount(() => {
+    formInject?.unregister(id);
+  });
 
   return {
     // Propiedades
@@ -69,9 +77,9 @@ export const useValidate = (
     hasError,
     rules,
     validateOnFocusout,
-
+    id,
     // Métodos
     validate,
-    resetValidation,
+    reset,
   };
 };
