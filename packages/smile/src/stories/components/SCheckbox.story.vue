@@ -39,8 +39,9 @@ const initState = reactive({
       disabled: true,
     },
   ],
-  rules: [],
+  id: 'id',
   error: '',
+  rules: [],
 });
 
 const controls = [
@@ -65,13 +66,18 @@ const controls = [
     props: {},
   },
   {
-    key: 'rules',
-    input: 'Json',
+    key: 'id',
+    input: 'Text',
     props: {},
   },
   {
     key: 'error',
     input: 'Text',
+    props: {},
+  },
+  {
+    key: 'rules',
+    input: 'Json',
     props: {},
   },
 ];
