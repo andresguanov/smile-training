@@ -123,7 +123,7 @@ const props = withDefaults(
      * Disponible solo cuando el componente está dentro de SmForm.
      * Permite establecer las validaciones del componente.
      */
-    rules?: Array<(value: string) => boolean | string>;
+    rules?: Array<(value: string | null) => boolean | string>;
     /**
      * Mensaje de error, los mensajes de error proporcionados por rules tendrán
      * prioridad sobre este.
