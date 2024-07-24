@@ -90,7 +90,6 @@ import type { IconType, InputAddon, Suggestion } from '../../interfaces';
 
 const props = withDefaults(
   defineProps<{
-    modelValue: string;
     size?: 'small' | 'medium' | 'large';
     leading?: InputAddon;
     trailing?: InputAddon;
@@ -158,18 +157,23 @@ const props = withDefaults(
   }
 );
 const emit = defineEmits<{
-  (event: 'update:modelValue', value: string): void;
   (event: 'blur' | 'focus', value: FocusEvent): void;
   (event: 'keypress', value: KeyboardEvent): void;
   (event: 'clickLeading' | 'clickTrailing' | 'clickIconRight', value: PointerEvent): void;
 }>();
 
-const value = useVModel(props, 'modelValue', emit);
-const { rules, validate, validateOnFocusout, hasError, currentError } = useSmileValidate<string>(
-  value,
-  toRef(props, 'error'),
-  props.id
-);
+const [value, modifiers] = defineModel<string | null>({
+  required: true,
+  set(value) {
+    if (modifiers.null && value === '') {
+      return null;
+    }
+    return value;
+  },
+});
+const { rules, validate, validateOnFocusout, hasError, currentError } = useSmileValidate<
+  string | null
+>(value, toRef(props, 'error'), props.id);
 const textMark = computed(() => (props.markType === 'required' ? '*' : `(${props.optionalText})`));
 const iconSize = computed(() => (props.size === 'small' ? '16px' : '20px'));
 const helperText = computed(() => currentError.value || props.supportiveText);

@@ -29,9 +29,9 @@ import { useSmileValidate } from '~/composables';
 
 const props = withDefaults(
   defineProps<{
-    modelValue: object | string | number;
+    modelValue: object | string | number | boolean;
     options?: {
-      value: object | string | number;
+      value: object | string | number | boolean;
       label: string;
       disabled?: boolean;
     }[];
@@ -72,7 +72,7 @@ const emit = defineEmits<{
 
 const internalValue = useVModel(props, 'modelValue', emit);
 const { validate, rules, validateOnFocusout, hasError, currentError } = useSmileValidate<
-  string | number | object
+  string | number | object | boolean
 >(internalValue, toRef(props, 'error'), props.id);
 const textMark = computed(() => (props.markType === 'required' ? '*' : `(${props.optionalText})`));
 
