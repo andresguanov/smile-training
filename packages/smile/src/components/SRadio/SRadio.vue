@@ -47,7 +47,7 @@ const props = withDefaults(
      * Disponible solo cuando el componente está dentro de SmForm.
      * Permite establecer las validaciones del componente.
      */
-    rules?: Array<(value: object | string | number) => boolean | string>;
+    rules?: Array<(value: object | string | number | boolean) => boolean | string>;
     error?: string;
     /**
      * Al pasar esta prop indicas que deseas mostrar al lado del label la marca
