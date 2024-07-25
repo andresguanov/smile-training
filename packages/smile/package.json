@@ -25,15 +25,16 @@
     "story:preview": "histoire preview"
   },
   "dependencies": {
-    "@vueuse/core": "9.3.0"
+    "@vueuse/core": "9.3.0",
+    "maska": "3.0.0"
   },
   "devDependencies": {
-    "@histoire/plugin-vue": "0.17.17",
-    "histoire": "0.17.17",
-    "@vuepic/vue-datepicker": "6.1.0",
     "@alegradev/smile-icons": "1.1.2",
+    "@histoire/plugin-vue": "0.17.17",
     "@vitejs/plugin-vue": "5.0.4",
+    "@vuepic/vue-datepicker": "6.1.0",
     "autoprefixer": "10.4.19",
+    "histoire": "0.17.17",
     "postcss": "8.4.38",
     "sass": "1.75.0",
     "tailwind-scrollbar": "3.1.0",
