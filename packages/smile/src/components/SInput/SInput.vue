@@ -86,9 +86,11 @@
       </div>
     </transition>
     <div class="s-input__footer" v-if="helperText">
-      <slot name="supportive-text-icon">
-        <sm-icon v-if="supportiveTextIcon" :icon="supportiveTextIcon" size="small" type="primary" />
-      </slot>
+      <span class="s-input__helper-icon" v-if="supportiveTextIcon">
+        <slot name="supportive-text-icon">
+          <sm-icon :icon="supportiveTextIcon" size="small" type="primary" />
+        </slot>
+      </span>
       <p class="s-input__helper">
         {{ helperText }}
       </p>
