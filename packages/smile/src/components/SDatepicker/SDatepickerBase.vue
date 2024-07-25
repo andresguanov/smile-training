@@ -14,7 +14,7 @@
     :range="rangeMode"
     :text-input="textInput"
     :multi-calendars="multiCalendars"
-    :enable-time-picker="false"
+    :enable-time-picker="enableTimePicker"
     :min-date="minDate"
     :max-date="maxDate"
     :inline="inline"
@@ -57,6 +57,22 @@
         @click="emit('clickOption', option.id, { presetDate, selectDate })"
       />
     </template>
+    <template #time-picker="{ time, updateTime }">
+      <div class="s-datepicker__calendar__timepicker">
+        <label>{{ timeLabel }}</label>
+        <date-picker
+          format="HH:mm"
+          time-picker
+          :model-value="time"
+          auto-apply
+          :clearable="false"
+          @update:model-value="updateTime"
+          class="s-datepicker__calendar__timepicker__selector"
+        >
+          <template #input-icon> </template>
+        </date-picker>
+      </div>
+    </template>
   </date-picker>
 </template>
 
@@ -69,6 +85,7 @@ import '@vuepic/vue-datepicker/dist/main.css';
 const props = withDefaults(defineProps<SDatepickerBaseProps>(), {
   locale: 'es',
   format: 'dd/MM/yyyy',
+  enableTimePicker: false,
 });
 
 const emit = defineEmits<{
