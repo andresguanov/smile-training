@@ -28,6 +28,8 @@
       :multi-calendars="multiCalendars"
       :position="position"
       :has-today="hasToday"
+      :enable-time-picker="enableTimePicker"
+      :time-label="timeLabel"
       @click-option="(key, settings) => emit('clickOption', key, settings)"
       v-bind="$attrs"
     >
@@ -60,6 +62,7 @@ const props = withDefaults(defineProps<SDatepickerProps>(), {
   format: 'dd/MM/yyyy',
   size: 'medium',
   clearable: true,
+  enableTimePicker: false,
   rules: () => [],
 });
 
