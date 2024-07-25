@@ -27,6 +27,7 @@
       :min-date="minDate"
       :multi-calendars="multiCalendars"
       :position="position"
+      :has-today="hasToday"
       @click-option="(key, settings) => emit('clickOption', key, settings)"
       v-bind="$attrs"
     >
@@ -52,65 +53,15 @@
 
 <script lang="ts" setup>
 import { useSmileValidate } from '~/composables';
+import { SDatepickerValue, SDatepickerProps } from './props';
 
-type SDatepickerValue = Date | string | Date[] | string[];
-
-const props = withDefaults(
-  defineProps<{
-    modelValue: SDatepickerValue;
-    locale?: 'es' | 'en';
-    format?: string;
-    placeholder?: string;
-    clearable?: boolean;
-    readonly?: boolean;
-    /**
-     * No mutable.
-     */
-    id?: string;
-    label?: string;
-    required?: boolean;
-    disabled?: boolean;
-    size?: 'small' | 'medium' | 'large';
-    disabledDates?: Date[] | string[] | ((date: Date) => boolean);
-    sidebarOptions?: { id: string; title: string; description?: string }[];
-    /**
-     * Disponible solo cuando el componente está dentro de SmForm.
-     * Permite establecer las validaciones del componente.
-     */
-    rules?: Array<(value?: SDatepickerValue) => boolean | string>;
-    /**
-     * Mensaje de error, los mensajes de error proporcionados por rules tendrán
-     * prioridad sobre este.
-     */
-    error?: string;
-    textInput?: boolean;
-    rangeMode?: boolean;
-    multiCalendars?: boolean;
-    autoApply?: boolean;
-    /**
-     * Al pasar esta prop indicas que deseas mostrar al lado del label la marca
-     * que indica si el input es requerido u opcional.
-     */
-    markType?: 'required' | 'optional';
-    /**
-     * Texto que se mostrará cuando `markType` es `optional`
-     * @default Opcional
-     */
-    optionalText?: string;
-    hint?: string;
-    supportiveText?: string;
-    minDate?: Date | string;
-    maxDate?: Date | string;
-    position?: 'left' | 'center' | 'right';
-  }>(),
-  {
-    locale: 'es',
-    format: 'dd/MM/yyyy',
-    size: 'medium',
-    clearable: true,
-    rules: () => [],
-  }
-);
+const props = withDefaults(defineProps<SDatepickerProps>(), {
+  locale: 'es',
+  format: 'dd/MM/yyyy',
+  size: 'medium',
+  clearable: true,
+  rules: () => [],
+});
 
 const emit = defineEmits<{
   (e: 'update:modelValue', v: SDatepickerValue): void;
@@ -130,7 +81,7 @@ const {
   hasError,
   currentError,
   rules,
-} = useSmileValidate<any>(date, toRef(props, 'error'), props.id);
+} = useSmileValidate<SDatepickerValue>(date, toRef(props, 'error'), props.id);
 
 const textMark = computed(() => (props.markType === 'required' ? '*' : `(${props.optionalText})`));
 const helperText = computed(() => currentError.value || props.supportiveText);
