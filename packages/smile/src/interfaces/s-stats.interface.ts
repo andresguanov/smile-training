@@ -5,6 +5,8 @@ export interface sStatItem {
   trend?: number;
   trendText?: string;
   countIcon?: IconType;
+  supportive?: string;
+  supportiveIcon?: IconType;
   help?: string;
   label: string;
   value: string;

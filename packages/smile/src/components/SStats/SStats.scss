@@ -18,7 +18,9 @@
   }
 
   &-icon {
-    @apply bg-slate-50 h-12 w-12 rounded-full flex items-center justify-center;
+    @apply bg-slate-50 rounded-full flex items-center justify-center;
+    // @apply h-12 w-12;
+    @apply min-h-12 min-w-12;
   }
 
   &-label {
