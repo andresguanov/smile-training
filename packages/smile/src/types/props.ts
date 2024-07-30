@@ -18,6 +18,9 @@ export type SDropdownProps = {
   loading?: boolean;
   loadingText?: string;
   label?: string;
+  labelIcon?: string;
+  supportiveText?: string;
+  supportiveIcon?: string;
   options?: Array<MenuOption>;
   /**
    * Disponible solo cuando el componente está dentro de SmForm.

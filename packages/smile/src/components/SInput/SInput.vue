@@ -86,9 +86,9 @@
       </div>
     </transition>
     <div class="s-input__footer" v-if="helperText">
-      <span class="s-input__helper-icon" v-if="supportiveTextIcon">
-        <slot name="supportive-text-icon">
-          <sm-icon :icon="supportiveTextIcon" size="small" type="primary" />
+      <span class="s-input__helper-icon" v-if="supportiveIcon">
+        <slot name="supportive-icon">
+          <sm-icon :icon="supportiveIcon" size="small" type="primary" />
         </slot>
       </span>
       <p class="s-input__helper">
@@ -124,7 +124,7 @@ const props = withDefaults(
     label?: string;
     labelIcon?: IconType;
     supportiveText?: string;
-    supportiveTextIcon?: IconType;
+    supportiveIcon?: IconType;
     nativeType?:
       | 'text'
       | 'password'

@@ -12,6 +12,9 @@
         class="s-dropdown__input"
         v-model="textValue"
         :label="label"
+        :label-icon="labelIcon"
+        :supportive-text="supportiveText"
+        :supportive-icon="supportiveIcon"
         :size="size"
         :hint="hint"
         :leading="leading"
@@ -29,6 +32,12 @@
       >
         <template v-if="!magic" #leading>
           <slot name="leading" />
+        </template>
+        <template #label-icon>
+          <slot name="label-icon"></slot>
+        </template>
+        <template #supportive-icon>
+          <slot name="supportive-icon"></slot>
         </template>
       </s-input>
     </div>
