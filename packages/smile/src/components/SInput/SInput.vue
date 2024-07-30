@@ -122,9 +122,9 @@ const props = withDefaults(
     success?: boolean;
     loading?: boolean;
     label?: string;
-    labelIcon?: IconType;
+    labelIcon?: IconType | boolean;
     supportiveText?: string;
-    supportiveIcon?: IconType;
+    supportiveIcon?: IconType | boolean;
     nativeType?:
       | 'text'
       | 'password'
