@@ -27,7 +27,7 @@
           <p class="s-stats-supportive-text">{{ defineTrendRender(item) }}</p>
         </div>
         <div v-else class="s-stats-trend">
-          <slot :name="`supportive-${i + 1}`">
+          <slot :name="`supportive-${item.key ?? i + 1}`">
             <sm-icon v-if="item.supportiveIcon" :icon="item.supportiveIcon" size="small" />
             <p class="s-stats-supportive-text">{{ item.supportive }}</p>
           </slot>

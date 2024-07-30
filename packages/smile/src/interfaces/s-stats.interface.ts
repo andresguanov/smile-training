@@ -1,6 +1,7 @@
 import type { IconType } from './sm-icon.interface';
 
 export interface sStatItem {
+  key?: string;
   icon?: IconType;
   trend?: number;
   trendText?: string;
