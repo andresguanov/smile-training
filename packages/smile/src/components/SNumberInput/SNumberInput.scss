@@ -88,6 +88,19 @@
       @apply animate-spin;
     }
   }
+
+  &__footer {
+    @apply flex gap-x-1 mt-1 items-center;
+  }
+
+  &__helper {
+    @apply text-slate-500 text-xs font-normal;
+    &-icon {
+      @apply h-4 w-4;
+      @apply flex justify-center items-center;
+    }
+  }
+
   &.disabled {
     .s-number__icon,
     .s-number__helper,

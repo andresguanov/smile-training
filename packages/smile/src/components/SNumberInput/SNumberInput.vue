@@ -68,7 +68,15 @@
       />
     </div>
     <div class="s-number__footer">
-      <p class="s-number__helper">{{ currentError }}</p>
+      <span class="s-number__helper-icon" v-if="supportiveIcon">
+        <slot name="supportive-icon">
+          <sm-icon :icon="supportiveIcon" size="small" type="primary" />
+        </slot>
+      </span>
+      <p class="s-number__helper">
+        {{ helperText }}
+      </p>
+      <!-- <p class="s-number__helper">{{ helperText }}</p> -->
     </div>
   </div>
 </template>
@@ -140,6 +148,7 @@ const value = useVModel(props, 'modelValue', emit);
 const { rules, validate, validateOnFocusout, hasError, currentError } = useSmileValidate<
   string | number
 >(value, toRef(props, 'error'), props.id);
+const helperText = computed(() => currentError.value || props.supportiveText);
 const textMark = computed(() => (props.markType === 'required' ? '*' : `(${props.optionalText})`));
 const iconSize = computed(() => (props.size === 'small' ? '16px' : '20px'));
 
