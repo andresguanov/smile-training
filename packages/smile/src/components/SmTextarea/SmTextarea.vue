@@ -24,6 +24,16 @@
         <sm-error-list :error-messages="errorListContent" />
       </template>
     </sm-hint>
+    <div v-else class="sm-textarea_container__footer">
+      <span class="sm-textarea_container__helper-icon" v-if="supportiveIcon">
+        <slot name="supportive-icon">
+          <sm-icon :icon="supportiveIcon" size="small" type="primary" />
+        </slot>
+      </span>
+      <p class="sm-textarea_container__helper">
+        {{ helperText }}
+      </p>
+    </div>
   </sm-label>
 </template>
 
@@ -32,6 +42,7 @@ import SmLoader from '../SLoader/SLoader.vue';
 import { smSimpleUid as vSmSimpleUid } from '../../directives';
 import { computed } from 'vue';
 import { useValidate } from '../../composables';
+import { IconType } from '~/interfaces';
 
 const props = defineProps<{
   label?: string;
@@ -39,6 +50,8 @@ const props = defineProps<{
   error?: boolean;
   size?: 'small' | 'medium' | 'large';
   required?: boolean;
+  supportiveText?: string;
+  supportiveIcon?: IconType;
   disabled?: boolean;
   placeholder?: string;
   errorMessages?: Array<string>;
@@ -59,6 +72,7 @@ const sizeClass = computed(() => {
   let size = props.size || 'medium';
   return `sm-input-${size} sm-text-${size}`;
 });
+const helperText = computed(() => props.supportiveText);
 
 const onFocusOut = () => {
   if (validateOnFocusout.value) {

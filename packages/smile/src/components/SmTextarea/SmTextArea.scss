@@ -2,6 +2,8 @@
   @apply block w-full;
   @apply border rounded border-gray-300 focus:border-sm-primary-500 transition-colors;
   @apply outline-none;
+  @apply px-2 py-1.5;
+  @apply flex items-center overflow-hidden mt-1;
 
   &.sm-input-disabled {
     @apply bg-gray-50;
@@ -14,6 +16,28 @@
     @apply justify-start pl-2 items-center flex w-full absolute h-full pb-4  text-sm-primary-500;
   }
 }
+
+.sm-label {
+  :deep(span) {
+    @apply text-slate-700 text-sm font-medium;
+  }
+}
+
+.sm-textarea_container {
+  &__footer {
+    @apply flex gap-x-1 mt-1 items-center;
+  }
+
+  &__helper {
+    @apply text-slate-500 text-xs font-normal;
+
+    &-icon {
+      @apply h-4 w-4;
+      @apply flex justify-center items-center;
+    }
+  }
+}
+
 .sm-label.magic {
   @apply relative;
 }
@@ -32,3 +56,16 @@
     @apply text-white;
   }
 }
+
+// &__footer {
+//   @apply flex gap-x-1 mt-1 items-center;
+// }
+
+// &__helper {
+//   @apply text-slate-500 text-xs font-normal;
+
+//   &-icon {
+//     @apply h-4 w-4;
+//     @apply flex justify-center items-center;
+//   }
+// }
