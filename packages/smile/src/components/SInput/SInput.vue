@@ -38,6 +38,7 @@
         @blur="onBlur"
         @focus="onFocus"
         @keypress="(e: KeyboardEvent) => emit('keypress', e)"
+        v-maska:unmaskedValue.unmasked="mask"
       />
       <div v-if="success" class="s-input__icon success">
         <sm-icon icon="success" :width="iconSize" :height="iconSize" />
@@ -87,6 +88,8 @@
 <script setup lang="ts">
 import { useSmileValidate } from '~/composables';
 import type { IconType, InputAddon, Suggestion } from '../../interfaces';
+import type { MaskInputOptions } from 'maska';
+import { vMaska } from 'maska/vue';
 
 const props = withDefaults(
   defineProps<{
@@ -147,6 +150,7 @@ const props = withDefaults(
      * @see Suggestion
      */
     suggestion?: Suggestion;
+    mask?: MaskInputOptions;
   }>(),
   {
     size: 'medium',
@@ -174,6 +178,8 @@ const [value, modifiers] = defineModel<string | null>({
 const { rules, validate, validateOnFocusout, hasError, currentError } = useSmileValidate<
   string | null
 >(value, toRef(props, 'error'), props.id);
+const unmaskedValue = defineModel<string>('unmaskedValue');
+
 const textMark = computed(() => (props.markType === 'required' ? '*' : `(${props.optionalText})`));
 const iconSize = computed(() => (props.size === 'small' ? '16px' : '20px'));
 const helperText = computed(() => currentError.value || props.supportiveText);
@@ -201,6 +207,8 @@ watch(
   },
   { immediate: true }
 );
+
+defineExpose({ unmaskedValue });
 </script>
 
 <style scoped lang="scss" src="./SInput.scss"></style>
