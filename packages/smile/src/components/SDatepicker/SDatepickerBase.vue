@@ -66,7 +66,7 @@
           :model-value="time"
           auto-apply
           :clearable="false"
-          @update:model-value="updateTime"
+          @update:modelValue="(val: any) => onNestedTimeUpdate(val, updateTime)"
           class="s-datepicker__calendar__timepicker__selector"
         >
           <template #input-icon> </template>
@@ -79,6 +79,7 @@
 <script lang="ts" setup>
 import type { DatePickerInstance } from '@vuepic/vue-datepicker';
 import type { SDatepickerBaseProps, SDatepickerValue } from './props';
+import { Time } from '../../interfaces';
 import DatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 
@@ -111,6 +112,17 @@ const selectToday = () => {
   datepickerEl.value.updateInternalModelValue(
     props.rangeMode ? [new Date(), new Date()] : new Date()
   );
+};
+
+const onNestedTimeUpdate = (
+  newValue: Time,
+  updateTime: (value: number | number[], isHours: boolean, isSeconds: boolean) => void
+): void => {
+  if (newValue) {
+    const { hours, minutes } = newValue;
+    updateTime(hours, true, false);
+    updateTime(minutes, false, false);
+  }
 };
 </script>
 
