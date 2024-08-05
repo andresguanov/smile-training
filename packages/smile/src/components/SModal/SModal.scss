@@ -1,11 +1,25 @@
 .s-modal {
   @apply rounded-lg bg-white drop-shadow-lg flex flex-col max-h-[80vh];
 
-  &-title {
-    @apply text-lg font-semibold text-slate-900 p-4 pb-2 flex bg-white rounded-lg;
+  &:has(.s-modal-body.scroll_beautifull) {
+    .s-modal-title {
+      @apply shadow-md;
+    }
+    .s-modal-footer {
+      @apply shadow-xl;
+    }
+  }
 
+  &-title {
+    @apply text-lg font-semibold text-slate-900 p-4 pb-2 flex;
+    // @apply rounded-lg
+
+    &:has(> .title-back-arrow) {
+      @apply pl-2;
+    }
     .title-back-arrow {
       @apply w-10 h-10 py-[2px] cursor-pointer;
+      @apply flex justify-center;
     }
 
     > .title-close-icon {
