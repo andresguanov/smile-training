@@ -2,7 +2,14 @@
   <div class="s-number" :class="{ disabled, readonly, error: hasError }">
     <div v-if="label" class="s-number__header">
       <label :for="id" class="s-number__label" :class="{ required: markType === 'required' }">
-        {{ label }}<span v-if="markType" class="s-number__mark">{{ textMark }}</span>
+        <span class="s-number__label-icon" v-if="labelIcon">
+          <slot name="label-icon">
+            <sm-icon :icon="labelIcon" size="small" type="primary" />
+          </slot>
+        </span>
+        <p>
+          {{ label }}<span v-if="markType" class="s-number__mark">{{ textMark }}</span>
+        </p>
       </label>
     </div>
     <div class="s-number__container" :class="size">
@@ -61,14 +68,22 @@
       />
     </div>
     <div class="s-number__footer">
-      <p class="s-number__helper">{{ currentError }}</p>
+      <span class="s-number__helper-icon" v-if="supportiveIcon">
+        <slot name="supportive-icon">
+          <sm-icon :icon="supportiveIcon" size="small" type="primary" />
+        </slot>
+      </span>
+      <p class="s-number__helper">
+        {{ helperText }}
+      </p>
+      <!-- <p class="s-number__helper">{{ helperText }}</p> -->
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useSmileValidate } from '~/composables';
-import type { InputAddon } from '../../interfaces';
+import type { IconType, InputAddon } from '../../interfaces';
 
 const props = withDefaults(
   defineProps<{
@@ -86,6 +101,9 @@ const props = withDefaults(
     success?: boolean;
     loading?: boolean;
     label?: string;
+    labelIcon?: IconType | boolean;
+    supportiveText?: string;
+    supportiveIcon?: IconType | boolean;
     disabledPlus?: boolean;
     disabledMinus?: boolean;
     /**
@@ -130,6 +148,7 @@ const value = useVModel(props, 'modelValue', emit);
 const { rules, validate, validateOnFocusout, hasError, currentError } = useSmileValidate<
   string | number
 >(value, toRef(props, 'error'), props.id);
+const helperText = computed(() => currentError.value || props.supportiveText);
 const textMark = computed(() => (props.markType === 'required' ? '*' : `(${props.optionalText})`));
 const iconSize = computed(() => (props.size === 'small' ? '16px' : '20px'));
 
