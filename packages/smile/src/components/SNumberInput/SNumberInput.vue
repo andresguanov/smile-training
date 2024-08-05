@@ -101,9 +101,9 @@ const props = withDefaults(
     success?: boolean;
     loading?: boolean;
     label?: string;
-    labelIcon?: IconType | boolean;
+    labelIcon?: IconType | false;
     supportiveText?: string;
-    supportiveIcon?: IconType | boolean;
+    supportiveIcon?: IconType | false;
     disabledPlus?: boolean;
     disabledMinus?: boolean;
     /**

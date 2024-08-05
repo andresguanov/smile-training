@@ -1,6 +1,5 @@
-import type { IconType, InputAddon } from '../interfaces';
-
-import type { MenuOption } from './generic';
+import { IconType, InputAddon } from '~/interfaces';
+import { MenuOption } from '~/types';
 
 export type SDropdownProps = {
   modelValue?: MenuOption | string | number | Array<string | number>;
@@ -18,9 +17,9 @@ export type SDropdownProps = {
   loading?: boolean;
   loadingText?: string;
   label?: string;
-  labelIcon?: IconType | boolean;
+  labelIcon?: IconType | false;
   supportiveText?: string;
-  supportiveIcon?: IconType | boolean;
+  supportiveIcon?: IconType | false;
   options?: Array<MenuOption>;
   /**
    * Disponible solo cuando el componente está dentro de SmForm.

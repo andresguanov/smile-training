@@ -93,8 +93,9 @@ import { useSmileValidate, useIntersectionObserver } from '~/composables';
 // import SmLoader from '~/components/SLoader/SLoader.vue';
 
 // Types
-import type { MenuOption, SDropdownProps } from '~/types';
-import type { IconType } from '../../interfaces';
+import type { SDropdownProps } from './props';
+import type { MenuOption } from '~/types';
+import type { IconType } from '~/interfaces';
 
 // Emits
 const emit = defineEmits<{
