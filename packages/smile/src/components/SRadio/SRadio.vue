@@ -17,7 +17,9 @@
           type="radio"
           class="s-radio__radio__input"
         />
-        <span class="s-radio__radio__label"> {{ option.label }} </span>
+        <slot :name="`label-${option.value}`" v-bind="{ label: option.label ?? '' }">
+          <span class="s-radio__radio__label"> {{ option.label }} </span>
+        </slot>
       </label>
     </div>
     <s-error :error="currentError" :is-showing="hasError" />
@@ -32,7 +34,7 @@ const props = withDefaults(
     modelValue: object | string | number;
     options?: {
       value: object | string | number;
-      label: string;
+      label?: string;
       disabled?: boolean;
     }[];
     label?: string;
