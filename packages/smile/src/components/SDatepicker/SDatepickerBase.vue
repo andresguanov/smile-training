@@ -66,7 +66,7 @@
           :model-value="time"
           auto-apply
           :clearable="false"
-          @update:modelValue="(val: any) => onNestedTimeUpdate(val, updateTime)"
+          @update:modelValue="(val: Time) => onNestedTimeUpdate(val, updateTime)"
           class="s-datepicker__calendar__timepicker__selector"
         >
           <template #input-icon> </template>
