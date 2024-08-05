@@ -21,6 +21,8 @@ export interface SDatepickerCommonProps {
   maxDate?: Date | string;
   position?: 'left' | 'center' | 'right';
   hasToday?: boolean;
+  enableTimePicker?: boolean;
+  timeLabel?: string;
 }
 
 export interface SDatepickerBaseProps extends SDatepickerCommonProps {

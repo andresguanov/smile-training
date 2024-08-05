@@ -2,7 +2,14 @@
   <div class="s-input" :class="{ disabled, readonly, error: hasError, magic }">
     <div v-if="label" class="s-input__header">
       <label :for="id" class="s-input__label" :class="{ required: markType === 'required' }">
-        {{ label }}<span v-if="markType" class="s-input__mark">{{ textMark }}</span>
+        <span class="s-input__label-icon" v-if="labelIcon">
+          <slot name="label-icon">
+            <sm-icon :icon="labelIcon" size="small" type="primary" />
+          </slot>
+        </span>
+        <p>
+          {{ label }}<span v-if="markType" class="s-input__mark">{{ textMark }}</span>
+        </p>
       </label>
       <small class="s-input__helper">{{ hint }}</small>
     </div>
@@ -80,7 +87,14 @@
       </div>
     </transition>
     <div class="s-input__footer" v-if="helperText">
-      <p class="s-input__helper">{{ helperText }}</p>
+      <span class="s-input__helper-icon" v-if="supportiveIcon">
+        <slot name="supportive-icon">
+          <sm-icon :icon="supportiveIcon" size="small" type="primary" />
+        </slot>
+      </span>
+      <p class="s-input__helper">
+        {{ helperText }}
+      </p>
     </div>
   </div>
 </template>
@@ -112,7 +126,9 @@ const props = withDefaults(
     success?: boolean;
     loading?: boolean;
     label?: string;
+    labelIcon?: IconType | false;
     supportiveText?: string;
+    supportiveIcon?: IconType | false;
     nativeType?:
       | 'text'
       | 'password'

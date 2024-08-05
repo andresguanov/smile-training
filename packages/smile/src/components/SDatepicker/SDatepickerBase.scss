@@ -83,5 +83,22 @@
         @apply ml-auto;
       }
     }
+    &__timepicker {
+      @apply gap-2;
+      @apply flex justify-between items-center;
+      @apply border-t border-gray-300 p-4 flex items-center;
+      :deep(.dp__input_wrap input) {
+        @apply rounded-md;
+      }
+      &.left {
+        @apply flex-1;
+      }
+      &__selector {
+        @apply max-w-[40%] min-w-[40%];
+      }
+      label {
+        @apply text-slate-700 text-sm font-medium;
+      }
+    }
   }
 }

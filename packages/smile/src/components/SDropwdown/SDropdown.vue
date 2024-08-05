@@ -12,6 +12,9 @@
         class="s-dropdown__input"
         v-model="textValue"
         :label="label"
+        :label-icon="labelIcon"
+        :supportive-text="supportiveText"
+        :supportive-icon="supportiveIcon"
         :size="size"
         :hint="hint"
         :leading="leading"
@@ -29,6 +32,12 @@
       >
         <template v-if="!magic" #leading>
           <slot name="leading" />
+        </template>
+        <template #label-icon>
+          <slot name="label-icon"></slot>
+        </template>
+        <template #supportive-icon>
+          <slot name="supportive-icon"></slot>
         </template>
       </s-input>
     </div>
@@ -84,8 +93,9 @@ import { useSmileValidate, useIntersectionObserver } from '~/composables';
 // import SmLoader from '~/components/SLoader/SLoader.vue';
 
 // Types
-import type { MenuOption, SDropdownProps } from '~/types';
-import type { IconType } from '../../interfaces';
+import type { SDropdownProps } from './props';
+import type { MenuOption } from '~/types';
+import type { IconType } from '~/interfaces';
 
 // Emits
 const emit = defineEmits<{
