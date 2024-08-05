@@ -34,6 +34,8 @@
         :disabled="disabled"
         :readonly="readonly"
         :required="required"
+        :inputmode
+        :pattern
         :id="id"
         @blur="onBlur"
         @focus="onFocus"
@@ -91,6 +93,7 @@ import type { IconType, InputAddon, Suggestion } from '../../interfaces';
 import type { MaskInputOptions } from 'maska';
 import { vMaska } from 'maska/vue';
 import { Mask } from 'maska';
+import type { HTMLAttributes } from 'vue';
 
 const props = withDefaults(
   defineProps<{
@@ -153,6 +156,11 @@ const props = withDefaults(
      */
     suggestion?: Suggestion;
     mask?: MaskInputOptions;
+    /**
+     * Patrón de validación del input: acepta regex
+     */
+    pattern?: string;
+    inputmode?: HTMLAttributes['inputmode'];
   }>(),
   {
     size: 'medium',
