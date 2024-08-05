@@ -90,6 +90,7 @@ import { useSmileValidate } from '~/composables';
 import type { IconType, InputAddon, Suggestion } from '../../interfaces';
 import type { MaskInputOptions } from 'maska';
 import { vMaska } from 'maska/vue';
+import { Mask } from 'maska';
 
 const props = withDefaults(
   defineProps<{
@@ -197,7 +198,14 @@ const onFocus = (event: FocusEvent) => {
 };
 
 const acceptSuggestion = async () => {
-  if (props.suggestion) value.value = props.suggestion.value;
+  if (props.suggestion) {
+    if (props.mask) {
+      unmaskedValue.value = props.suggestion.value;
+      value.value = new Mask(props.mask).masked(props.suggestion.value);
+    } else {
+      value.value = props.suggestion.value;
+    }
+  }
 };
 
 watch(
