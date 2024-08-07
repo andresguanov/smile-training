@@ -87,7 +87,7 @@
       </div>
     </transition>
     <div class="s-input__footer" v-if="helperText">
-      <span class="s-input__helper-icon" v-if="supportiveIcon">
+      <span class="s-input__helper-icon" v-if="supportiveIcon && !hasError">
         <slot name="supportive-icon">
           <sm-icon :icon="supportiveIcon" size="small" type="primary" />
         </slot>
