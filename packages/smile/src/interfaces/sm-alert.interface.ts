@@ -18,6 +18,17 @@ export interface smAlert extends smAlertProvideOptions {
   type?: ToastTypes;
 }
 
+export interface smNotification extends smAlert {
+  contentInline?: boolean;
+}
+
+export interface smNotifications {
+  carousel?: boolean;
+  notifications: smNotification[];
+  addNotification?: (notification: smNotification) => void;
+  removeNotification?: (id: number) => void;
+}
+
 export interface smAlertProvide {
   success: (message: string, options?: smAlertProvideOptions) => void;
   error: (message: string, options?: smAlertProvideOptions) => void;
