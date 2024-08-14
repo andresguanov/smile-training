@@ -97,6 +97,10 @@ body {
 
 Luego, importa este archivo en `mount.js`, donde se instalan los plugins, stores, y se crea la app. Siempre que sea posible, evita usar múltiples librerías externas y prefiere utilizar las herramientas proporcionadas por smile-ui.
 
+- `Eliminación del package-lock.json:`
+
+Se recomienda eliminar el archivo `package-lock.json`, este archivo a veces puede causar conflictos o problemas durante el proceso de instalación.
+
 Espero que esta documentación te resulte útil. Si necesitas algún ajuste o información adicional, házmelo saber. `
 
 `Derian Rosado (Developer)`: derian.rosado@alegra.com
