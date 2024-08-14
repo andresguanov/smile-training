@@ -74,8 +74,6 @@ Las clases globales han sido eliminadas. Como resultado, los inputs o componente
 
 Los widgets exportados a través de un paquete de npm desde un microfront deben estar cubiertos por las mismas clases que el microfront. Para esto, se creó un componente llamado WidgetContainer dentro de la carpeta widget. Este componente debe ser utilizado para envolver los widgets exportados.
 
-Si tu microfrontend utiliza widgets con una versión antigua de smile-ui, puede haber conflictos de estilos. Para solucionarlo, informa al responsable del widget sobre el problema y pídele que actualice la versión de smile-ui utilizada.
-
 ```vue
 <template>
   <WidgetContainer>
@@ -83,6 +81,8 @@ Si tu microfrontend utiliza widgets con una versión antigua de smile-ui, puede 
   </WidgetContainer>
 </template>
 ```
+
+Si tu microfrontend utiliza widgets con una versión antigua de smile-ui, puede haber conflictos de estilos. Para solucionarlo, informa al responsable del widget sobre el problema y pídele que actualice la versión de smile-ui utilizada.
 
 - `Librerías con CSS Propio:`
 
