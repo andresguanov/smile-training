@@ -1,6 +1,6 @@
 .s-notification {
   // shadow-xl
-  @apply p-2  rounded-xl;
+  @apply p-2 rounded-xl;
   @apply border border-solid;
   @apply flex gap-2;
   @apply bg-slate-800 border-transparent;
@@ -29,13 +29,20 @@
     @apply text-sm font-normal text-white/80;
   }
   &__close {
-    @apply text-white cursor-pointer p-2 flex items-center justify-center;
+    @apply text-white cursor-pointer flex items-center justify-center;
+    @apply p-1.5 rounded-lg text-slate-700 hover:bg-slate-900/20;
+  }
+
+  &__alt {
+    @apply absolute right-3 bottom-2 font-normal text-xs text-[#64748B];
   }
   &__icon {
     @apply pl-2 pt-1.5;
   }
   &__button {
     @apply px-2 py-1.5 text-sm font-normal text-sm-primary-300;
+    @apply rounded-lg text-center hover:bg-slate-900/[.05];
+    @apply active:bg-slate-900/10;
   }
 
   &.success,

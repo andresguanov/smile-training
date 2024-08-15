@@ -14,10 +14,13 @@
         </button>
       </div>
     </div>
-    <div>
+    <div class="relative">
       <button class="s-notification__close" @click="emit('close')">
-        <sm-icon icon="close" />
+        <sm-icon size="small" icon="close" />
       </button>
+      <div v-if="counterAlt" class="s-notification__alt">
+        {{ counterAlt }}
+      </div>
     </div>
   </div>
 </template>

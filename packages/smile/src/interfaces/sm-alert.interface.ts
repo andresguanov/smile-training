@@ -20,11 +20,13 @@ export interface smAlert extends smAlertProvideOptions {
 
 export interface smNotification extends smAlert {
   contentInline?: boolean;
+  counterAlt?: string;
 }
 
 export interface smNotifications {
   carousel?: boolean;
   notifications: smNotification[];
+  carouselActionsAlt?: boolean;
   addNotification?: (notification: smNotification) => void;
   removeNotification?: (id: number) => void;
 }

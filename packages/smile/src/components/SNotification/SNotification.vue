@@ -1,5 +1,5 @@
 <template>
-  <transition-group
+  <!-- <transition-group
     tag="ul"
     class="s-notification-stack"
     name="s-notification-stack"
@@ -9,22 +9,52 @@
     <li v-for="(notify, i) in notifications" :key="notify.id">
       <SNotificationItem v-bind="notify" :class="{ current: [currentPage - 1 == i] }" />
     </li>
-    <!-- <SNotificationItem v-bind="notifications[currentPage - 1]" /> -->
     <SNotificationCarousel
       v-if="carousel"
       v-model:currentPage="currentPage"
       :totalPages="notifications.length"
     />
-  </transition-group>
+  </transition-group> -->
+  <SmCarousel v-model="slide" :actionsInline="carouselActionsAlt" :actionsDefault="carousel">
+    <template #default="{ currentSlide, totalCurrent }">
+      <s-carousel-slide
+        v-for="(item, i) in notifications"
+        :key="i"
+        :id="`s-carousel__slide${i + 1}`"
+        :title="item.title"
+        :description="item.message"
+        :image="''"
+      >
+        <s-notification-item
+          :id="item.id"
+          :type="item.type"
+          :title="item.title"
+          :message="item.message"
+          :action="item.action"
+          :contentInline="item.contentInline"
+          :counterAlt="carouselActionsAlt ? `${currentSlide}/${totalCurrent}` : undefined"
+        ></s-notification-item>
+      </s-carousel-slide>
+    </template>
+  </SmCarousel>
 </template>
 <script lang="ts" setup>
 import { smNotifications } from '~/interfaces';
 
-withDefaults(defineProps<smNotifications>(), {
+const props = withDefaults(defineProps<smNotifications>(), {
   carousel: false,
+  modelValue: 1,
+  carouselActionsAlt: false,
 });
 
-const currentPage = ref(1);
+const emit = defineEmits<{
+  (e: 'update:modelValue', value: number): void;
+}>();
+
+const slide = computed({
+  get: () => props.modelValue,
+  set: (value: number) => emit('update:modelValue', value),
+});
 
 const DURATION = 750;
 
