@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts" setup>
-import { IconType, ToastTypes, smNotification } from '../../interfaces';
+import { IconType, ToastTypes, smNotification } from '../../../interfaces';
 
 const props = withDefaults(defineProps<smNotification>(), {
   type: 'neutral',

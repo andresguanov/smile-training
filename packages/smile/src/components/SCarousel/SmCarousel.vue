@@ -1,7 +1,13 @@
 <template>
   <div class="s-carousel" :class="{ inline: actionsInline }">
     <div v-if="actionsInline" class="s-carousel__action-inline">
-      <SButton size="small" emphasis="text" only-icon="arrow-left" @click="prevSlide" />
+      <SButton
+        size="small"
+        emphasis="text"
+        only-icon="arrow-left"
+        :disabled="ctasDisabled['left']"
+        @click="prevSlide"
+      />
     </div>
     <ul ref="carouselListRef" class="s-carousel__viewport">
       <template v-if="items?.length">
@@ -21,16 +27,26 @@
           :actionPrev="prevSlide"
           :actionNext="nextSlide"
           :currentSlide="modelValue"
+          :handlerCurrentSlide="handleUpdateActionSlide"
           :totalCurrent="itemsRef.length"
         >
         </slot>
       </template>
     </ul>
     <div v-if="actionsInline" class="s-carousel__action-inline">
-      <SButton size="small" emphasis="text" only-icon="arrow-right" @click="nextSlide" />
+      <SButton
+        size="small"
+        emphasis="text"
+        only-icon="arrow-right"
+        :disabled="ctasDisabled['right']"
+        @click="nextSlide"
+      />
     </div>
 
-    <div v-if="!actionsInline && actionsDefault" class="s-carousel__action-default">
+    <div
+      v-if="!actionsInline && actionsDefault && !actionsHidden"
+      class="s-carousel__action-default"
+    >
       <slot name="actions">
         <s-carousel-actions
           :current-page="modelValue"
@@ -59,11 +75,13 @@ const props = withDefaults(
     modelValue: number;
     actionsInline?: boolean;
     actionsDefault?: boolean;
+    actionsHidden?: boolean;
     items?: Item[];
   }>(),
   {
     id: generateUUID(),
     modelValue: 1,
+    actionsHidden: false,
   }
 );
 
@@ -96,6 +114,11 @@ const navigateSlides = (page: number) => {
 };
 
 const itemsRef = computed(() => props.items ?? carouselListRef.value?.children ?? []);
+
+const ctasDisabled = computed(() => ({
+  left: props.modelValue === 1,
+  right: props.modelValue === itemsRef.value.length,
+}));
 
 const prevSlide = () => {
   console.log('prevSlide');
@@ -220,6 +243,7 @@ li {
 
 .s-carousel__viewport {
   display: flex;
+  column-gap: 3.5em;
   overflow-x: scroll;
   counter-reset: item;
   scroll-behavior: smooth;
@@ -260,11 +284,5 @@ li {
 .s-carousel::after,
 .carousel__next {
   right: -1rem;
-}
-
-.s-carousel::before {
-}
-
-.s-carousel::after {
 }
 </style>

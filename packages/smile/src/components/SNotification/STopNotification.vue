@@ -1,6 +1,11 @@
 <template>
-  <SmCarousel v-model="slide" :actionsInline="carouselActionsAlt" :actionsDefault="carousel">
-    <template #default="{ currentSlide, totalCurrent }">
+  <SmCarousel
+    v-model="slide"
+    :actionsInline="carouselActionsAlt"
+    :actionsDefault="carousel"
+    actions-hidden
+  >
+    <template #default="{ currentSlide, handlerCurrentSlide, totalCurrent }">
       <s-carousel-slide
         v-for="(item, i) in notifications"
         :key="i"
@@ -9,15 +14,23 @@
         :description="item.message"
         :image="''"
       >
-        <s-notification-item
+        <s-top-notification-item
           :id="item.id"
           :type="item.type"
           :title="item.title"
           :message="item.message"
           :action="item.action"
           :contentInline="item.contentInline"
-          :counterAlt="carouselActionsAlt ? `${currentSlide}/${totalCurrent}` : undefined"
-        ></s-notification-item>
+          :appendAlt="carousel"
+        >
+          <template #append-alt>
+            <s-carousel-actions
+              :current-page="currentSlide"
+              @update:current-page="handlerCurrentSlide"
+              :totalPages="totalCurrent"
+            />
+          </template>
+        </s-top-notification-item>
       </s-carousel-slide>
     </template>
   </SmCarousel>
