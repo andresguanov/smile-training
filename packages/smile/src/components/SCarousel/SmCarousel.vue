@@ -61,7 +61,7 @@
 import { generateUUID } from '~/utils/uid';
 
 interface Item {
-  id: number;
+  id: string;
   title: string;
   description: string;
   bannerImage: string;
