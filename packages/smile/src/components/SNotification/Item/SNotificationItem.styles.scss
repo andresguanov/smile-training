@@ -38,6 +38,9 @@
   }
   &__icon {
     @apply pl-2 pt-1.5;
+    &.content-inline {
+      @apply p-0 pl-2 content-center;
+    }
   }
   &__button {
     @apply px-2 py-1.5 text-sm font-normal text-sm-primary-300;

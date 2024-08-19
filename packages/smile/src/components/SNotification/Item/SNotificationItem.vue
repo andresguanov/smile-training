@@ -1,6 +1,10 @@
 <template>
   <div class="s-notification" :class="type">
-    <div v-if="type !== 'neutral'" class="s-notification__icon">
+    <div
+      v-if="type !== 'neutral'"
+      class="s-notification__icon"
+      :class="{ 'content-inline': contentInline }"
+    >
       <sm-icon size="large" :icon="TOAST_ICONS[type]" />
     </div>
     <div class="s-notification__wrapper">
