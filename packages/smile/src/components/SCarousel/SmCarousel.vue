@@ -1,5 +1,5 @@
 <template>
-  <div class="s-carousel" :class="{ inline: actionsInline }">
+  <div class="s-carousel" :id="props.id" :class="{ inline: actionsInline }">
     <div v-if="actionsInline" class="s-carousel__action-inline">
       <SButton
         size="small"
@@ -13,7 +13,7 @@
       <template v-if="items?.length">
         <SCarouselSlide
           v-for="(item, i) in items"
-          :id="`s-carousel__slide${i + 1}`"
+          :id="defineIdElement(i + 1)"
           :key="i"
           :title="item.title"
           :description="item.description"
@@ -58,7 +58,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { generateUUID } from '~/utils/uid';
+import { simpleUid } from '~/utils/uid';
 
 interface Item {
   id: string;
@@ -76,10 +76,10 @@ const props = withDefaults(
     actionsInline?: boolean;
     actionsDefault?: boolean;
     actionsHidden?: boolean;
-    items?: Item[];
+    items?: Array<Item>;
   }>(),
   {
-    id: generateUUID(),
+    id: () => simpleUid(),
     modelValue: 1,
     actionsHidden: false,
   }
@@ -87,20 +87,22 @@ const props = withDefaults(
 
 const carouselListRef = ref<HTMLUListElement | null>(null);
 
-const defineIdElement = (i: number) => `s-carousel__slide${i + 1}`;
+const defineIdElement = (slide: number) => `s-carousel__slide_${props.id}_${slide}`;
 
 watch(carouselListRef, val => {
-  const items = document.querySelectorAll('.s-carousel-slide');
+  const items = carouselListRef.value;
 
   const validationItems = props.items?.length;
 
   if (!props.modelValue && !val && !validationItems) return;
 
   console.log(items);
-  // define los elementos hijos de la lista con un id
-  items.forEach((child, i) => {
-    child.id = defineIdElement(i);
-  });
+  if (!items || props.items?.length) return;
+  // Definicón de id para cada elemento de la lista
+  for (let i = 0; i < items.children.length; i++) {
+    items.children[i].id = defineIdElement(i + 1);
+    console.log('items.children[i].id', items.children[i].id);
+  }
 });
 
 const emit = defineEmits<{
@@ -109,7 +111,7 @@ const emit = defineEmits<{
 
 const navigateSlides = (page: number) => {
   const element = document.createElement('a');
-  element.href = `#s-carousel__slide${page}`;
+  element.href = `#${defineIdElement(page)}`;
   element.click();
 };
 

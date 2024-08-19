@@ -1,10 +1,5 @@
 <template>
-  <SmCarousel
-    v-model="slide"
-    :actionsInline="carouselActionsAlt"
-    :actionsDefault="carousel"
-    actions-hidden
-  >
+  <SmCarousel v-model="slide" :actionsDefault="carousel" actions-hidden>
     <template #default="{ currentSlide, handlerCurrentSlide, totalCurrent }">
       <s-carousel-slide
         v-for="(item, i) in notifications"
@@ -12,7 +7,6 @@
         :id="`s-carousel__slide${i + 1}`"
         :title="item.title"
         :description="item.message"
-        :image="''"
       >
         <s-top-notification-item
           :id="item.id"
@@ -38,10 +32,10 @@
 <script lang="ts" setup>
 import { smNotifications } from '~/interfaces';
 
-const props = withDefaults(defineProps<smNotifications>(), {
+const props = withDefaults(defineProps<Omit<smNotifications, 'carouselActionsAlt'>>(), {
   carousel: false,
   modelValue: 1,
-  carouselActionsAlt: false,
+  // carouselActionsAlt: false,
 });
 
 const emit = defineEmits<{

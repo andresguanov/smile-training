@@ -7,7 +7,6 @@
         :id="`s-carousel__slide${i + 1}`"
         :title="item.title"
         :description="item.message"
-        :image="''"
       >
         <s-notification-item
           :id="item.id"
