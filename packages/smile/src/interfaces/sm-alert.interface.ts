@@ -24,6 +24,8 @@ export interface smNotification extends smAlert {
 }
 
 export interface smNotifications {
+  modelValue: boolean;
+  slide?: number;
   carousel?: boolean;
   notifications: smNotification[];
   carouselActionsAlt?: boolean;

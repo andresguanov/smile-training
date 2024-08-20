@@ -5,7 +5,7 @@
       class="s-notification__icon"
       :class="{ 'content-inline': contentInline }"
     >
-      <sm-icon size="large" :icon="TOAST_ICONS[type]" />
+      <sm-icon size="medium" :icon="TOAST_ICONS[type]" />
     </div>
     <div class="s-notification__wrapper">
       <div class="s-notification__body" :class="{ 'content-inline': contentInline }">

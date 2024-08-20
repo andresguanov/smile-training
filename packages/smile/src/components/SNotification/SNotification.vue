@@ -34,21 +34,26 @@ import { smNotifications } from '~/interfaces';
 
 const props = withDefaults(defineProps<smNotifications>(), {
   carousel: false,
-  modelValue: 1,
+  slide: 1,
+  modelValue: true,
   carouselActionsAlt: false,
 });
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: number): void;
+  (e: 'update:slide', value: number): void;
+  (e: 'update:modelValue', value: boolean): void;
   (e: 'close'): void;
 }>();
 
-const slide = computed({
+const showNotification = computed({
   get: () => props.modelValue,
-  set: (value: number) => emit('update:modelValue', value),
+  set: (value: boolean) => emit('update:modelValue', value),
 });
 
-const showNotification = ref(true);
+const slide = computed({
+  get: () => props.slide,
+  set: (value: number) => emit('update:slide', value),
+});
 
 const handleClose = () => {
   showNotification.value = false;
