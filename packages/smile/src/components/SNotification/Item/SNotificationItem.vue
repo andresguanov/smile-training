@@ -50,18 +50,18 @@ const TOAST_ICONS: Record<ToastTypes, IconType> = {
   info: 'info',
   neutral: 'close',
 };
-const timeOutCallback = ref<number | null>(null);
+// const timeOutCallback = ref<number | null>(null);
 
-onMounted(() => {
-  if (!props.persistent) {
-    timeOutCallback.value = window.setTimeout(() => emit('close'), props.time);
-  }
-});
-onBeforeUnmount(() => {
-  if (timeOutCallback.value) {
-    window.clearTimeout(timeOutCallback.value);
-  }
-});
+// onMounted(() => {
+//   if (!props.persistent) {
+//     timeOutCallback.value = window.setTimeout(() => emit('close'), props.time);
+//   }
+// });
+// onBeforeUnmount(() => {
+//   if (timeOutCallback.value) {
+//     window.clearTimeout(timeOutCallback.value);
+//   }
+// });
 </script>
 
 <style src="./SNotificationItem.styles.scss" lang="scss" scoped></style>
