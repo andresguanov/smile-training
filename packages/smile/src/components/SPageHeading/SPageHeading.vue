@@ -36,7 +36,7 @@
       <div class="s-page-heading__actions">
         <slot name="actions"></slot>
       </div>
-      <div :class="['s-page-heading__description', { 's-page-heading__padding': icon }]">
+      <div v-if="description || hasDescriptionSlot" :class="['s-page-heading__description', { 's-page-heading__padding': icon }]">
         <slot v-if="hasDescriptionSlot" name="description"></slot>
         <span v-else>{{ description }}</span>
       </div>
@@ -56,7 +56,7 @@ const slots = useSlots()
 const props = withDefaults(
   defineProps<{
     title: string;
-    description: string;
+    description?: string;
     breadcrumb?: string | BreadCrumb[]
     border?: boolean;
     icon?: IconType;
