@@ -1,15 +1,19 @@
 <template>
   <div class="s-carousel">
     <transition-group name="slide" tag="div" class="slide-container">
-      <div
-        v-for="(slide, index) in slides"
-        :key="index"
-        :class="['slide', { active: index === currentSlide }]"
-      >
-        <img :src="slide.image" alt="Slide Image" />
-        <h3>{{ slide.title }}</h3>
-        <p>{{ slide.description }}</p>
-      </div>
+      <slot>
+        <template v-if="items?.length">
+          <s-carousel-slide
+            v-for="(slide, index) in items"
+            :id="simpleUid()"
+            :key="index"
+            :title="slide.title"
+            :description="slide.description"
+            :banner-image="slide.bannerImage"
+            :class="['slide', { active: index === currentSlide }]"
+          />
+        </template>
+      </slot>
     </transition-group>
     <div class="s-carousel__actions">
       <button @click="prevSlide">Prev</button>
@@ -20,43 +24,33 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
 import { sCarouselProps } from '~/interfaces';
+import { simpleUid } from '~/utils/uid';
 
-defineProps<sCarouselProps>();
+const props = defineProps<sCarouselProps>();
 
-const currentSlide = ref(0);
-const slides = ref([
-  {
-    image: 'path/to/image1.jpg',
-    title: 'Slide 1',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-  },
-  {
-    image: 'path/to/image2.jpg',
-    title: 'Slide 2',
-    description: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-  },
-  {
-    image: 'path/to/image3.jpg',
-    title: 'Slide 3',
-    description:
-      'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-  },
-]);
+const emit = defineEmits<{
+  (event: 'update:modelValue', value: number): void;
+}>();
+
+const currentSlide = computed({
+  get: () => props.modelValue,
+  set: value => emit('update:modelValue', value),
+});
 
 const prevSlide = () => {
-  currentSlide.value = (currentSlide.value - 1 + slides.value.length) % slides.value.length;
+  currentSlide.value = (currentSlide.value - 1 + props.items.length) % props.items.length;
 };
 
 const nextSlide = () => {
-  currentSlide.value = (currentSlide.value + 1) % slides.value.length;
+  currentSlide.value = (currentSlide.value + 1) % props.items.length;
 };
 </script>
 
 <style scoped>
 .s-carousel {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 
