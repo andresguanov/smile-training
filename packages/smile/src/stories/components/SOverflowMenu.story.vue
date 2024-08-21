@@ -31,6 +31,39 @@
         </template>
       </template>
     </Variant>
+    <Variant title="user-menu">
+      <template #default>
+        <s-overflow-menu
+          style="width: 20em"
+          v-bind="initState"
+          @clickOutside="logEvent('clickOutside')"
+        >
+          <template #header>
+            <h6 style="text-align: center; font-size: 14px">Mi perfil</h6>
+          </template>
+          <s-menu-item v-for="item in menuItemsExample" v-bind="item"></s-menu-item>
+          <s-divider></s-divider>
+          <s-menu-item v-for="item in menuItemsExample" v-bind="item"></s-menu-item>
+          <s-divider></s-divider>
+          <s-menu-item
+            v-bind="{ title: 'Eliminar', icon: 'delete', destructive: true }"
+          ></s-menu-item>
+          <template #footer>
+            <p style="text-align: center"><small>Slot Footer</small></p>
+          </template>
+        </s-overflow-menu>
+      </template>
+      <template #controls>
+        <template v-for="control in controls">
+          <component
+            v-model="initState[control.key]"
+            :is="`Hst${control.input}`"
+            :title="control.key"
+            v-bind="control.props"
+          />
+        </template>
+      </template>
+    </Variant>
   </Story>
 </template>
 
@@ -72,6 +105,24 @@ const controls = [
     key: 'detectIframe',
     input: 'Checkbox',
     props: {},
+  },
+  {
+    key: 'maxHeight',
+    input: 'Text',
+    props: {},
+  },
+];
+
+const menuItemsExample = [
+  {
+    title: 'Home',
+    icon: 'home',
+    description: 'Description 1',
+  },
+  {
+    title: 'Item 2',
+    icon: 'user',
+    description: 'Description 2',
   },
 ];
 </script>
