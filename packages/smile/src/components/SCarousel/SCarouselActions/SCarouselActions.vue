@@ -25,6 +25,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (event: 'update:currentPage', page: number): void;
+  (event: Action, page: number): void;
 }>();
 
 const ctasDisabled = computed(() => ({
@@ -41,6 +42,7 @@ const actions: Record<Action, (page: number, totalPages: number) => void> = {
 
 const handleAction = (action: Action) => {
   actions[action](props.currentPage, props.totalPages);
+  emit(action, props.currentPage);
 };
 
 const updatePage = (page: number) => {

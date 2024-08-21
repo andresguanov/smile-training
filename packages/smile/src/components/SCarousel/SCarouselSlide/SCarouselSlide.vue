@@ -2,7 +2,7 @@
   <li :id="id" tabindex="0" class="s-carousel-slide">
     <slot>
       <div class="s-carousel__slide">
-        <img :src="image" alt="slide" />
+        <img :src="bannerImage" alt="slide" />
         <h3>{{ title }}</h3>
         <p>{{ description }}</p>
       </div>
@@ -17,6 +17,7 @@ defineProps<sCarouselSlide>();
 .s-carousel__slide {
   @apply w-full relative;
   @apply flex flex-col items-center justify-center;
+  @apply snap-center;
   img {
     @apply aspect-square;
   }

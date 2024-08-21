@@ -1,17 +1,14 @@
-export interface sCarousel {
-  image: string;
-  title: string;
-  description: string;
-}
-
 export interface sCarouselProps {
-  items: sCarousel[];
+  id?: string;
+  modelValue: number;
+  actionsInline: boolean;
+  items: sCarouselSlide[];
   showIndicators?: boolean;
 }
 
 export interface sCarouselSlide {
   id: string;
-  image?: string;
+  bannerImage?: string;
   title?: string;
   description?: string;
   showIndicators?: boolean;
