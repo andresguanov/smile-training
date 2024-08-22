@@ -8,7 +8,7 @@
       type="file"
       class="s-file-upload__input"
       @change="onFilesChange"
-      :required
+      :required="required"
     />
     <template v-if="!useDropZone">
       <label :for="id" class="s-file-upload__label" :class="{ required: markType === 'required' }"
@@ -32,6 +32,8 @@
       :title="label"
       :description="description"
       :button-label="buttonLabel"
+      :error="currentError"
+      :required="required"
       @files-drop="addFiles"
       @button-click="onClickButton"
     />
@@ -118,6 +120,16 @@ const internalFiles = useVModel(props, 'files', emit);
 const K_UNIT = 1024;
 const SIZES = ['B', 'KB', 'MB', 'GB'];
 const inputElement = ref<HTMLInputElement | null>(null);
+
+watch(
+  () => internalFiles.value.length,
+  newVal => {
+    if (!newVal) {
+      inputElement.value = null;
+    }
+  },
+  { immediate: true }
+);
 
 const onClickButton = () => inputElement.value?.click();
 const getFileIcon = (status: 'loading' | 'success' | 'error' | 'default'): IconType => {

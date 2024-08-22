@@ -2,7 +2,14 @@
   <div class="s-input" :class="{ disabled, readonly, error: hasError, magic }">
     <div v-if="label" class="s-input__header">
       <label :for="id" class="s-input__label" :class="{ required: markType === 'required' }">
-        {{ label }}<span v-if="markType" class="s-input__mark">{{ textMark }}</span>
+        <span class="s-input__label-icon" v-if="labelIcon">
+          <slot name="label-icon">
+            <sm-icon :icon="labelIcon" size="small" type="primary" />
+          </slot>
+        </span>
+        <p>
+          {{ label }}<span v-if="markType" class="s-input__mark">{{ textMark }}</span>
+        </p>
       </label>
       <small class="s-input__helper">{{ hint }}</small>
     </div>
@@ -34,10 +41,13 @@
         :disabled="disabled"
         :readonly="readonly"
         :required="required"
+        :inputmode
+        :pattern
         :id="id"
         @blur="onBlur"
         @focus="onFocus"
         @keypress="(e: KeyboardEvent) => emit('keypress', e)"
+        v-maska:unmaskedValue.unmasked="mask"
       />
       <div v-if="success" class="s-input__icon success">
         <sm-icon icon="success" :width="iconSize" :height="iconSize" />
@@ -79,7 +89,14 @@
       </div>
     </transition>
     <div class="s-input__footer" v-if="helperText">
-      <p class="s-input__helper">{{ helperText }}</p>
+      <span class="s-input__helper-icon" v-if="supportiveIcon && !hasError">
+        <slot name="supportive-icon">
+          <sm-icon :icon="supportiveIcon" size="small" type="primary" />
+        </slot>
+      </span>
+      <p class="s-input__helper">
+        {{ helperText }}
+      </p>
     </div>
   </div>
 </template>
@@ -87,6 +104,10 @@
 <script setup lang="ts">
 import { useSmileValidate } from '~/composables';
 import type { IconType, InputAddon, Suggestion } from '../../interfaces';
+import type { MaskInputOptions } from 'maska';
+import { vMaska } from 'maska/vue';
+import { Mask } from 'maska';
+import type { HTMLAttributes } from 'vue';
 
 const props = withDefaults(
   defineProps<{
@@ -107,7 +128,9 @@ const props = withDefaults(
     success?: boolean;
     loading?: boolean;
     label?: string;
+    labelIcon?: IconType | false;
     supportiveText?: string;
+    supportiveIcon?: IconType | false;
     nativeType?:
       | 'text'
       | 'password'
@@ -147,6 +170,12 @@ const props = withDefaults(
      * @see Suggestion
      */
     suggestion?: Suggestion;
+    mask?: MaskInputOptions;
+    /**
+     * Patrón de validación del input: acepta regex
+     */
+    pattern?: string;
+    inputmode?: HTMLAttributes['inputmode'];
   }>(),
   {
     size: 'medium',
@@ -171,6 +200,8 @@ const [value, modifiers] = defineModel<string | null>({
     return value;
   },
 });
+const unmaskedValue = defineModel<string>('unmaskedValue');
+
 const { rules, validate, validateOnFocusout, hasError, currentError } = useSmileValidate<
   string | null
 >(value, toRef(props, 'error'), props.id);
@@ -191,7 +222,14 @@ const onFocus = (event: FocusEvent) => {
 };
 
 const acceptSuggestion = async () => {
-  if (props.suggestion) value.value = props.suggestion.value;
+  if (props.suggestion) {
+    if (props.mask) {
+      unmaskedValue.value = props.suggestion.value;
+      value.value = new Mask(props.mask).masked(props.suggestion.value);
+    } else {
+      value.value = props.suggestion.value;
+    }
+  }
 };
 
 watch(
@@ -201,6 +239,8 @@ watch(
   },
   { immediate: true }
 );
+
+defineExpose({ unmaskedValue });
 </script>
 
 <style scoped lang="scss" src="./SInput.scss"></style>

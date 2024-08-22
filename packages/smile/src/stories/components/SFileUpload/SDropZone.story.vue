@@ -53,5 +53,15 @@ const controls = [
     input: 'Checkbox',
     props: {},
   },
+  {
+    key: 'error',
+    input: 'Text',
+    props: {},
+  },
+  {
+    key: 'id',
+    input: 'Text',
+    props: {},
+  },
 ];
 </script>

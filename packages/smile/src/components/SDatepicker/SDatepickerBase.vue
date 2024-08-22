@@ -2,7 +2,7 @@
   <date-picker
     ref="datepickerEl"
     v-model="date"
-    :uid="uid"
+    :uid="id"
     :format="format"
     :locale="locale"
     :clearable="false"
@@ -14,7 +14,7 @@
     :range="rangeMode"
     :text-input="textInput"
     :multi-calendars="multiCalendars"
-    :enable-time-picker="false"
+    :enable-time-picker="enableTimePicker"
     :min-date="minDate"
     :max-date="maxDate"
     :inline="inline"
@@ -32,24 +32,16 @@
       />
     </template>
     <template #action-row="{ selectDate, closePicker }">
-      <div class="s-datepicker__calendar__actions left">
-        <s-button
-          emphasis="text"
-          label="Hoy"
-          size="small"
-          class="select-button"
-          @click="selectToday"
-        />
-      </div>
       <div class="s-datepicker__calendar__actions">
+        <s-button v-if="hasToday" emphasis="text" label="Hoy" size="small" @click="selectToday" />
         <s-button
+          class="cancel-button"
           emphasis="text"
           label="Cancelar"
           size="small"
-          class="select-button"
           @click="closePicker"
         />
-        <s-button label="Aplicar" size="small" class="select-button" @click="selectDate" />
+        <s-button label="Aplicar" size="small" @click="selectDate" />
       </div>
     </template>
     <template
@@ -65,41 +57,37 @@
         @click="emit('clickOption', option.id, { presetDate, selectDate })"
       />
     </template>
+    <template #time-picker="{ time, updateTime }">
+      <div class="s-datepicker__calendar__timepicker">
+        <label>{{ timeLabel }}</label>
+        <date-picker
+          format="HH:mm"
+          time-picker
+          :model-value="time"
+          auto-apply
+          :clearable="false"
+          @update:modelValue="(val: Time) => onNestedTimeUpdate(val, updateTime)"
+          class="s-datepicker__calendar__timepicker__selector"
+        >
+          <template #input-icon> </template>
+        </date-picker>
+      </div>
+    </template>
   </date-picker>
 </template>
 
 <script lang="ts" setup>
 import type { DatePickerInstance } from '@vuepic/vue-datepicker';
+import type { SDatepickerBaseProps, SDatepickerValue } from './props';
+import { Time } from '../../interfaces';
 import DatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 
-type SDatepickerValue = Date | string | Date[] | string[];
-
-const props = withDefaults(
-  defineProps<{
-    modelValue: SDatepickerValue;
-    locale?: 'es' | 'en';
-    format?: string;
-    readonly?: boolean;
-    uid?: string;
-    required?: boolean;
-    disabled?: boolean;
-    disabledDates?: Date[] | string[] | ((date: Date) => boolean);
-    sidebarOptions?: { id: string; title: string; description?: string }[];
-    multiCalendars?: boolean;
-    autoApply?: boolean;
-    textInput?: boolean;
-    rangeMode?: boolean;
-    minDate?: Date | string;
-    maxDate?: Date | string;
-    inline?: boolean;
-    position?: 'left' | 'center' | 'right';
-  }>(),
-  {
-    locale: 'es',
-    format: 'dd/MM/yyyy',
-  }
-);
+const props = withDefaults(defineProps<SDatepickerBaseProps>(), {
+  locale: 'es',
+  format: 'dd/MM/yyyy',
+  enableTimePicker: false,
+});
 
 const emit = defineEmits<{
   (e: 'update:modelValue', v: SDatepickerValue): void;
@@ -124,6 +112,17 @@ const selectToday = () => {
   datepickerEl.value.updateInternalModelValue(
     props.rangeMode ? [new Date(), new Date()] : new Date()
   );
+};
+
+const onNestedTimeUpdate = (
+  newValue: Time,
+  updateTime: (value: number | number[], isHours: boolean, isSeconds: boolean) => void
+): void => {
+  if (newValue) {
+    const { hours, minutes } = newValue;
+    updateTime(hours, true, false);
+    updateTime(minutes, false, false);
+  }
 };
 </script>
 

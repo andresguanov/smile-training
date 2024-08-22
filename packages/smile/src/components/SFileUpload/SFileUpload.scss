@@ -1,4 +1,5 @@
 .s-file-upload {
+  @apply relative;
   &__label {
     @apply text-slate-700 text-sm font-medium;
     &.required {
@@ -26,7 +27,8 @@
     @apply w-full mt-2;
   }
   &__input {
-    @apply opacity-0 hidden;
+    // @apply opacity-0 hidden;
+    @apply opacity-0 absolute bottom-0 right-0;
   }
   &__files {
     @apply mt-4;

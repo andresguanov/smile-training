@@ -68,5 +68,30 @@ const controls = [
     input: 'Checkbox',
     props: {},
   },
+  {
+    key: 'buttonLabel',
+    input: 'Text',
+    props: {},
+  },
+  {
+    key: 'required',
+    input: 'Checkbox',
+    props: {},
+  },
+  {
+    key: 'markType',
+    input: 'Select',
+    props: { options: ['required', 'optional'] },
+  },
+  {
+    key: 'rules',
+    input: 'Text',
+    props: {},
+  },
+  {
+    key: 'error',
+    input: 'Text',
+    props: {},
+  },
 ];
 </script>
