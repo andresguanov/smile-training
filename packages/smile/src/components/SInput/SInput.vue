@@ -146,7 +146,7 @@ const props = withDefaults(
      * Disponible solo cuando el componente está dentro de SmForm.
      * Permite establecer las validaciones del componente.
      */
-    rules?: Array<(value: string | null) => boolean | string>;
+    rules?: Array<(value: string | number | null) => boolean | string>;
     /**
      * Mensaje de error, los mensajes de error proporcionados por rules tendrán
      * prioridad sobre este.
@@ -191,7 +191,7 @@ const emit = defineEmits<{
   (event: 'clickLeading' | 'clickTrailing' | 'clickIconRight', value: PointerEvent): void;
 }>();
 
-const [value, modifiers] = defineModel<string | null>({
+const [value, modifiers] = defineModel<string | number | null>({
   required: true,
   set(value) {
     if (modifiers.null && value === '') {
@@ -203,7 +203,7 @@ const [value, modifiers] = defineModel<string | null>({
 const unmaskedValue = defineModel<string>('unmaskedValue');
 
 const { rules, validate, validateOnFocusout, hasError, currentError } = useSmileValidate<
-  string | null
+  string | number | null
 >(value, toRef(props, 'error'), props.id);
 const textMark = computed(() => (props.markType === 'required' ? '*' : `(${props.optionalText})`));
 const iconSize = computed(() => (props.size === 'small' ? '16px' : '20px'));
