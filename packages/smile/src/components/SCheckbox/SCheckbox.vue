@@ -28,9 +28,9 @@ import { useSmileValidate } from '~/composables';
 
 const props = withDefaults(
   defineProps<{
-    modelValue: string[];
+    modelValue: string[] | boolean;
     options?: {
-      value: string;
+      value?: string;
       label: string;
       disabled?: boolean;
       indeterminate?: boolean;
@@ -46,7 +46,7 @@ const props = withDefaults(
      * Disponible solo cuando el componente está dentro de SmForm.
      * Permite establecer las validaciones del componente.
      */
-    rules?: Array<(value: string[]) => boolean | string>;
+    rules?: Array<(value: string[] | boolean) => boolean | string>;
     error?: string;
   }>(),
   { orientation: 'vertical', options: () => [], rules: () => [] }
@@ -55,16 +55,14 @@ if (props.options.length < 1) {
   console.warn('Missing data in %coptions', 'color: red;font-weight: bold;padding: 1px', 'prop.');
 }
 const emit = defineEmits<{
-  (event: 'update:modelValue', value: string[]): void;
+  (event: 'update:modelValue', value: string[] | boolean): void;
   (event: 'focusOut', value: FocusEvent): void;
 }>();
 
 const internalValue = useVModel(props, 'modelValue', emit);
-const { rules, validate, validateOnFocusout, hasError, currentError } = useSmileValidate<string[]>(
-  internalValue,
-  toRef(props, 'error'),
-  props.id
-);
+const { rules, validate, validateOnFocusout, hasError, currentError } = useSmileValidate<
+  string[] | boolean
+>(internalValue, toRef(props, 'error'), props.id);
 
 const onFocusOut = (event: FocusEvent) => {
   if (validateOnFocusout.value) {
