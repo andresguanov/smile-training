@@ -59,6 +59,62 @@ Para ello se debe agregar la prop `rules` la cual recibe un array de callback co
         />
       </template>
     </Variant>
+    <Variant title="slots">
+      <template #default>
+        <s-dropdown
+          v-model="initState['v-model']"
+          v-bind="initState"
+          @search="logEvent('search', $event)"
+          @open="logEvent('open')"
+          @select="logEvent('select', $event)"
+        >
+          <template #leading> <s-button size="small">Leading</s-button></template>
+          <template #label-icon>
+            <s-tooltip content="Esto es un label icon" theme="smile-next" position="top">
+              <sm-icon icon="home" size="small"></sm-icon>
+            </s-tooltip>
+          </template>
+          <template #supportive-icon>
+            <s-tooltip content="Esto es un supportive icon" position="bottom"
+              ><sm-icon name="info" size="small"></sm-icon
+            ></s-tooltip>
+          </template>
+          <template #loading>
+            <p>{{ initState.loadingText }}</p>
+          </template>
+          <template #append-item>
+            <s-menu-item destructive title="Slot append-item"></s-menu-item>
+          </template>
+          <template #prepend-item>
+            <s-menu-item title="Slot prepend-item" destructive></s-menu-item>
+          </template>
+
+          <template #beforeOptions>
+            <s-menu-item disabled title="Slot beforeOptions"></s-menu-item>
+          </template>
+          <template #afterOptions>
+            <s-menu-item title="Slot afterOptions" disabled></s-menu-item>
+          </template>
+          <template #item="{ index, option }">
+            <s-menu-item
+              v-bind="option"
+              :title="`${option['text']}`"
+              :description="option.description ?? `index: ${index}`"
+            ></s-menu-item>
+          </template>
+        </s-dropdown>
+      </template>
+
+      <template #controls>
+        <component
+          v-model="initState[control.key]"
+          v-for="control in controls"
+          :is="`Hst${control.input}`"
+          :title="control.key"
+          v-bind="control.props"
+        />
+      </template>
+    </Variant>
   </Story>
 </template>
 
@@ -69,11 +125,19 @@ import { logEvent } from 'histoire/client';
 
 const initState = reactive({
   label: 'Label',
+  supportiveText: 'Supportive text',
+  supportiveIcon: 'info',
+  labelIcon: 'info',
+  leading: {
+    label: 'Leading',
+    inline: true,
+    actionable: true,
+  },
   options: [
     { text: 'Javascript', code: 'js', icon: 'flag-3' },
     { text: 'PHP', code: 'php', icon: 'flag-3' },
-    { text: 'Python', code: 'py', icon: 'flag-3' },
-    { text: 'C++', code: 'cc', icon: 'flag-3' },
+    { text: 'Python', code: 'py', icon: 'flag-3', level: 1 },
+    { text: 'C++', code: 'cc', icon: 'flag-3', level: 2 },
   ],
 });
 
