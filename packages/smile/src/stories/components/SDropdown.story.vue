@@ -12,26 +12,54 @@ SForm, por lo que es necesario que el componente padre tenga la propiedad `conta
 
 Para ello se debe agregar la prop `rules` la cual recibe un array de callback con las validaciones.
 
+### Props
+
+- `options`: Array de opciones (objetos) que se mostrarán en el dropdown.
+  - <strong>Estructura de los objetos:</strong>
+    - `label`: Texto que se mostrará en el dropdown.
+    - `avatar`: Imagen que se mostrará en el dropdown.
+    - `description`: Texto que se mostrará en la descripción del dropdown.
+    - `icon`: Icono que se mostrará en el dropdown.
+    - `disabled`: Indica si la opción está deshabilitada.
+    - `destructive`: Indica si la opción es destructiva.
+    - `level`: Nivel de jerarquía de la opción.
+    - `[any]`: Este valor se puede tomar como `value` de la option, puede ser cualquier texto o propiedad que se defina en la prop `valueKey`.
+- `valueKey`: Key del objeto que se tomará como value de las options. <strong>Ejemplo:</strong>
+  ```js
+  options: [
+    { text: 'Javascript', code: 'js',  },
+    { text: 'PHP', code: 'php',  },
+    { text: 'Python', code: 'py',   },
+    { text: 'C++', code: 'cc', },
+  ],
+  valueKey: 'code'
+  /*En este caso estamos tomando la key `code`
+  como value de cada option*/
+  ```
+
 ### Slots
 
-- leading: Permite agregar un icono o texto al inicio del dropdown.
-- beforeOptions: Permite agregar un contenido antes de las opciones.
-- afterOptions: Permite agregar un contenido después de las opciones.
-- append-item: Permite agregar un contenido al inicio de las opciones.
-- prepend-item: Permite agregar un contenido al final de las opciones.
+- `leading`: Permite agregar un icono o texto al inicio del dropdown.
+- `label-icon`: Permite agregar un ícono en el label.
+- `supportive-icon`: Permite agregar un ícono en el supportive.
+- `beforeOptions`: Permite agregar un contenido antes de las opciones.
+- `afterOptions`: Permite agregar un contenido después de las opciones.
+- `append-item`: Permite agregar un contenido al inicio de las opciones.
+- `item`: Permite customizar el elemento de cada option, recibe valores como el `índice` y la `option`.
+- `prepend-item`: Permite agregar un contenido al final de las opciones.
 
 ### Metodos expuestos
 
 1. <strong>A través de Slot</strong>
 
-- index: Permite obtener el índice de la opción seleccionada.
-- option: Permite obtener la key de la option.
+- `index`: Permite obtener el índice de la opción seleccionada.
+- `option`: Permite obtener la key de la option.
 
 2. <strong>Mediante Ref</strong>
 
-- toggleOverflow: Permite abrir o cerrar el dropdown, recibe un booleano para abrirlo en modo
+- `toggleOverflow`: Permite abrir o cerrar el dropdown, recibe un booleano para abrirlo en modo
   búsqueda.
-- itemsRef: Es la cantidad de items cargados como referencia para la carga lazy de las
+- `itemsRef`: Es la cantidad de items cargados como referencia para la carga lazy de las
   opciones.
 </docs>
 
