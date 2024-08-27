@@ -1,10 +1,24 @@
 <template>
-  <Story title="s-checkbox" auto-props-disabled>
-    <Variant title="default">
-      <template #default>
-        <s-checkbox v-bind="initState"></s-checkbox>
+  <Story title="s-checkbox" :layout="{ type: 'grid', width: 400 }" auto-props-disabled>
+    <Variant title="single">
+      <SCheckbox
+        v-bind="initState"
+        v-model="single"
+        :options="[{ label: 'Aceptar términos y condiciones' }]"
+      />
+      <template #controls>
+        <component
+          v-for="control in controls"
+          v-model="initState[control.key]"
+          :is="`Hst${control.input}`"
+          :title="control.key"
+          v-bind="control.props"
+        />
       </template>
+    </Variant>
 
+    <Variant title="multiple">
+      <SCheckbox v-bind="initState" v-model="multiple" />
       <template #controls>
         <component
           v-for="control in controls"
@@ -20,6 +34,9 @@
 
 <script setup>
 import { ref, reactive } from 'vue';
+
+const single = ref(false);
+const multiple = ref([]);
 
 const initState = reactive({
   label: 'Label',

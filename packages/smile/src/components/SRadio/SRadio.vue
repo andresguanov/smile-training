@@ -31,9 +31,9 @@ import { useSmileValidate } from '~/composables';
 
 const props = withDefaults(
   defineProps<{
-    modelValue: object | string | number;
+    modelValue: object | string | number | boolean;
     options?: {
-      value: object | string | number;
+      value: object | string | number | boolean;
       label?: string;
       disabled?: boolean;
     }[];
@@ -49,7 +49,7 @@ const props = withDefaults(
      * Disponible solo cuando el componente está dentro de SmForm.
      * Permite establecer las validaciones del componente.
      */
-    rules?: Array<(value: object | string | number) => boolean | string>;
+    rules?: Array<(value: object | string | number | boolean) => boolean | string>;
     error?: string;
     /**
      * Al pasar esta prop indicas que deseas mostrar al lado del label la marca
@@ -74,7 +74,7 @@ const emit = defineEmits<{
 
 const internalValue = useVModel(props, 'modelValue', emit);
 const { validate, rules, validateOnFocusout, hasError, currentError } = useSmileValidate<
-  string | number | object
+  string | number | object | boolean
 >(internalValue, toRef(props, 'error'), props.id);
 const textMark = computed(() => (props.markType === 'required' ? '*' : `(${props.optionalText})`));
 
