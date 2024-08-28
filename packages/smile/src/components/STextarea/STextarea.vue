@@ -12,6 +12,9 @@
       <small class="s-textarea__helper">{{ hint }}</small>
     </div>
     <div class="s-textarea__container">
+      <div v-if="magic" class="s-textarea__magic">
+        <s-loader :label="autocompleteText" is-inline magic />
+      </div>
       <textarea
         name="test"
         v-model="value"
@@ -46,7 +49,6 @@
           <sm-icon icon="success" :width="iconSize" :height="iconSize" />
         </div>
         <div v-if="loading" class="s-textarea__icon loading">
-          <!-- <sm-icon icon="loading" :width="iconSize" :height="iconSize" /> -->
           <sm-progress-circle size="small"></sm-progress-circle>
         </div>
       </template>
@@ -87,6 +89,7 @@ const props = withDefaults(
     success?: boolean;
     loading?: boolean;
     magic?: boolean;
+    autocompleteText?: string;
     /**
      * Disponible solo cuando el componente está dentro de SmForm.
      * Permite establecer las validaciones del componente.

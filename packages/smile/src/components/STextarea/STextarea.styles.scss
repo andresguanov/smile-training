@@ -140,7 +140,7 @@
     }
   }
   &__magic {
-    @apply justify-start items-center flex w-full absolute pl-2 text-sm-primary-500;
+    @apply justify-start items-center flex w-full absolute pl-2 text-sm-primary-500 pt-4;
   }
   &.magic &__container {
     @apply border-sm-primary-500 border-2;
