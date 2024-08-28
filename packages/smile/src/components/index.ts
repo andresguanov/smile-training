@@ -47,3 +47,4 @@ export { default as SCard } from './SCard/SCard.vue';
 export { default as SEmotionCardList } from './SEmotionCard/SEmotionCardList.vue';
 export { default as SLoader } from './SLoader/SLoader.vue';
 export { default as SMenuItem } from './SMenuItem/SMenuItem.vue';
+export { default as STextarea } from './STextarea/STextarea.vue';
