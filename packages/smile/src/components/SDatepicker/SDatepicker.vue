@@ -55,7 +55,8 @@
 
 <script lang="ts" setup>
 import { useSmileValidate } from '~/composables';
-import { SDatepickerValue, SDatepickerProps } from './props';
+import { SDatepickerValue } from '~/interfaces';
+import { SDatepickerProps } from './props';
 
 const props = withDefaults(defineProps<SDatepickerProps>(), {
   locale: 'es',

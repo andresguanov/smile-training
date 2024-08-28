@@ -1,0 +1,205 @@
+.s-textarea {
+  @apply relative;
+  &__label {
+    @apply text-slate-700 text-sm font-medium;
+    @apply flex items-center gap-x-1;
+
+    &.required {
+      .s-textarea__mark {
+        @apply text-rose-600;
+      }
+    }
+    .s-textarea__mark {
+      @apply ml-1;
+      @apply font-normal text-xs text-slate-500;
+    }
+    &-icon {
+      @apply h-5 w-5;
+      @apply flex justify-center items-center;
+    }
+  }
+
+  &__footer {
+    @apply flex gap-x-1 mt-1 items-center;
+  }
+
+  &__helper {
+    @apply text-slate-500 text-xs font-normal;
+
+    &-icon {
+      @apply h-4 w-4;
+      @apply flex justify-center items-center;
+    }
+  }
+  &__header {
+    @apply flex items-center justify-between;
+  }
+  &__container {
+    @apply flex overflow-hidden mt-1;
+    // @apply items-center;
+    @apply w-full;
+    @apply bg-white border border-slate-300;
+    @apply rounded-[10px];
+    @apply relative;
+
+    &:hover {
+      @apply border-slate-400;
+    }
+    &:focus-within {
+      @apply border-2 border-sm-primary-500;
+    }
+  }
+  &__textarea {
+    @apply h-full w-full;
+    @apply font-normal text-slate-700 text-base;
+    @apply bg-transparent outline-none;
+
+    @apply px-[14px] py-4;
+    @apply resize-none;
+
+    field-sizing: content; // importante para el resize del textarea
+
+    @apply min-h-32;
+    &::placeholder {
+      @apply text-slate-400;
+    }
+    &[type='password'] {
+      &::-ms-reveal,
+      &::-ms-clear {
+        @apply hidden;
+      }
+    }
+  }
+  &__icon {
+    @apply text-slate-500 flex;
+    @apply flex justify-center items-start;
+    @apply px-[14px] py-4;
+
+    &.trailing {
+      @apply cursor-pointer p-2.5;
+    }
+    &.leading {
+      @apply ml-2.5;
+    }
+    &.error {
+      @apply text-rose-600;
+    }
+    &.success,
+    &.loading {
+      @apply text-sm-primary-600;
+    }
+    // &.loading {
+    //   @apply animate-spin;
+    // }
+    &.loading {
+      .sm-progress-circle {
+        @apply h-[14px] w-[14px];
+        &::before {
+          @apply h-[14px] w-[14px];
+          @apply border-[2px];
+        }
+      }
+    }
+  }
+  &.disabled {
+    .s-textarea__icon,
+    .s-textarea__helper,
+    .s-textarea__label,
+    .s-textarea__textarea,
+    .s-textarea__textarea::placeholder {
+      @apply text-slate-300;
+      @apply cursor-default;
+    }
+    .s-textarea__container {
+      @apply border-slate-200;
+      @apply bg-slate-50;
+    }
+  }
+  &.readonly {
+    .s-textarea__container {
+      @apply border-slate-200;
+      @apply bg-slate-50;
+
+      &:hover,
+      &:focus-within {
+        @apply border-slate-200;
+      }
+    }
+  }
+  &.error {
+    .s-textarea__container {
+      @apply border-rose-600 border-[2px];
+
+      &:hover,
+      &:focus-within {
+        @apply border-rose-600;
+      }
+    }
+    .s-textarea__footer .s-textarea__helper {
+      @apply text-rose-600;
+    }
+  }
+  &__magic {
+    @apply justify-start items-center flex w-full absolute pl-2 text-sm-primary-500 pt-4;
+  }
+  &.magic &__container {
+    @apply border-sm-primary-500 border-2;
+    animation: pulse 3s infinite;
+    @keyframes pulse {
+      0% {
+        border-color: rgb(var(--sm-color-primary-500));
+      }
+      50% {
+        border-color: rgb(var(--sm-color-primary-200));
+      }
+    }
+  }
+  &.magic &__textarea {
+    @apply opacity-0;
+  }
+  .fade-enter-active,
+  .fade-leave-active {
+    @apply opacity-0 translate-y-1;
+  }
+  .fade-enter-to,
+  .fade-leave-to {
+    @apply -translate-y-1 opacity-0;
+  }
+  &__suggestion {
+    @apply z-[200] absolute left-0 right-0 top-auto rounded-lg shadow-lg bg-white hover:bg-slate-100 cursor-pointer text-slate-900 text-base flex flex-col py-1 px-4 border border-slate-200 transition-all duration-100 min-w-fit text-nowrap;
+    & span {
+      @apply text-xs text-slate-500;
+    }
+    &.small {
+      @apply text-sm leading-[1rem];
+      & span {
+        @apply text-[0.65rem];
+      }
+    }
+  }
+}
+
+.scroll_beautifull {
+  @apply overflow-auto;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1a2;
+    margin-right: 2em;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #969696cc;
+    border-radius: 10px;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #696969;
+  }
+}

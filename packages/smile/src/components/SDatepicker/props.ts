@@ -1,4 +1,4 @@
-export type SDatepickerValue = Date | string | Date[] | string[];
+import { SDatepickerValue } from '~/interfaces';
 
 export interface SDatepickerCommonProps {
   modelValue: SDatepickerValue;

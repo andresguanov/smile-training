@@ -1,9 +1,23 @@
 .sm-textarea {
   @apply block w-full;
-  @apply border rounded border-gray-300 focus:border-sm-primary-500 transition-colors;
+  @apply border rounded-[10px] bg-white border-slate-300 transition-colors;
   @apply outline-none;
   @apply px-2 py-1.5;
   @apply flex items-center overflow-hidden mt-1;
+  @apply font-normal text-slate-700 text-base h-24;
+
+  &:hover {
+    @apply border-slate-400;
+  }
+  &:focus-within {
+    @apply border-2 border-sm-primary-500;
+  }
+  &::placeholder {
+    @apply text-slate-400;
+  }
+  &.no-resize {
+    @apply resize-none;
+  }
 
   &.sm-input-disabled {
     @apply bg-gray-50;

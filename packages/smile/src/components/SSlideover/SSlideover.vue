@@ -20,7 +20,7 @@ import { useSlots } from 'vue';
 const props = withDefaults(
   defineProps<{
     modelValue: boolean;
-    size?: 'regular' | 'medium';
+    size?: 'regular' | 'medium' | 'large';
     headerText: string;
   }>(),
   {

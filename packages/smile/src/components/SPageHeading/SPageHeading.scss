@@ -24,6 +24,16 @@
     @apply text-sm text-sm-primary-600 mb-2 flex items-center cursor-pointer;
   }
 
+  &__breadcrumb_container {
+    @apply flex items-center gap-2;
+    &__step {
+      @apply text-sm mb-2 flex items-center text-sm-primary-600 cursor-pointer;
+      &:nth-last-child(-n + 1) {
+        @apply text-gray-600 cursor-default;
+      }
+    }
+  }
+
   @screen md {
     &__actions {
       @apply justify-end col-span-1 row-start-1 col-start-2;

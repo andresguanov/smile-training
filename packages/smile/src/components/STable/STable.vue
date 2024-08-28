@@ -65,6 +65,7 @@
             :key="'smTableTr-' + i"
             class="s-table__row"
             :class="{ hoverable }"
+            @click.stop="emit('clickRow', row)"
           >
             <td v-if="showFirstHeaderCol" class="s-table__body__cell">
               <slot name="firstCol" :row="row" :row-index="i" />
@@ -162,6 +163,7 @@ const emit = defineEmits<{
   (e: 'update:itemsPerPage', data: number): void;
   (e: 'toolbarAction', value: string): void;
   (e: 'search', value: string): void;
+  (e: 'clickRow', value: T): void;
 }>();
 
 const checkSlot = (name: string) => slots[name] && typeof slots[name] === 'function';

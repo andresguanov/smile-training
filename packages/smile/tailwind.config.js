@@ -8,10 +8,9 @@
 //   plugins: [require('tailwind-scrollbar')({ nocompatible: true })],
 // };
 import { theme } from './src/utils/theme';
-import colors from 'tailwindcss/colors';
 
 export default {
   content: ['./index.html', './src/components/*.{vue,js,ts,jsx,tsx}'],
-  theme: theme(colors),
+  theme: theme(),
   plugins: [require('tailwind-scrollbar')({ nocompatible: true })],
 };
