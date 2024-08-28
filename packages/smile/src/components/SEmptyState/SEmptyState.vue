@@ -1,6 +1,6 @@
 <template>
   <div :class="{ 's-empty--in-component': isOnComponent }" class="s-empty">
-    <slot name="head-image">
+    <slot name="illustration">
       <sm-icon v-if="isOnComponent" :icon="generalIcon" class="s-empty__icon" />
       <img
         v-else
