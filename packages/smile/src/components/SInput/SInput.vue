@@ -2,7 +2,14 @@
   <div class="s-input" :class="{ disabled, readonly, error: hasError, magic }">
     <div v-if="label" class="s-input__header">
       <label :for="id" class="s-input__label" :class="{ required: markType === 'required' }">
-        {{ label }}<span v-if="markType" class="s-input__mark">{{ textMark }}</span>
+        <span class="s-input__label-icon" v-if="labelIcon">
+          <slot name="label-icon">
+            <sm-icon :icon="labelIcon" size="small" type="primary" />
+          </slot>
+        </span>
+        <p>
+          {{ label }}<span v-if="markType" class="s-input__mark">{{ textMark }}</span>
+        </p>
       </label>
       <small class="s-input__helper">{{ hint }}</small>
     </div>
@@ -34,6 +41,8 @@
         :disabled="disabled"
         :readonly="readonly"
         :required="required"
+        :inputmode
+        :pattern
         :id="id"
         @blur="onBlur"
         @focus="onFocus"
@@ -80,7 +89,14 @@
       </div>
     </transition>
     <div class="s-input__footer" v-if="helperText">
-      <p class="s-input__helper">{{ helperText }}</p>
+      <span class="s-input__helper-icon" v-if="supportiveIcon && !hasError">
+        <slot name="supportive-icon">
+          <sm-icon :icon="supportiveIcon" size="small" type="primary" />
+        </slot>
+      </span>
+      <p class="s-input__helper">
+        {{ helperText }}
+      </p>
     </div>
   </div>
 </template>
@@ -91,6 +107,7 @@ import type { IconType, InputAddon, Suggestion } from '../../interfaces';
 import type { MaskInputOptions } from 'maska';
 import { vMaska } from 'maska/vue';
 import { Mask } from 'maska';
+import type { HTMLAttributes } from 'vue';
 
 const props = withDefaults(
   defineProps<{
@@ -111,7 +128,9 @@ const props = withDefaults(
     success?: boolean;
     loading?: boolean;
     label?: string;
+    labelIcon?: IconType | false;
     supportiveText?: string;
+    supportiveIcon?: IconType | false;
     nativeType?:
       | 'text'
       | 'password'
@@ -127,7 +146,7 @@ const props = withDefaults(
      * Disponible solo cuando el componente está dentro de SmForm.
      * Permite establecer las validaciones del componente.
      */
-    rules?: Array<(value: string | null) => boolean | string>;
+    rules?: Array<(value: string | number | null) => boolean | string>;
     /**
      * Mensaje de error, los mensajes de error proporcionados por rules tendrán
      * prioridad sobre este.
@@ -152,6 +171,11 @@ const props = withDefaults(
      */
     suggestion?: Suggestion;
     mask?: MaskInputOptions;
+    /**
+     * Patrón de validación del input: acepta regex
+     */
+    pattern?: string;
+    inputmode?: HTMLAttributes['inputmode'];
   }>(),
   {
     size: 'medium',
@@ -167,7 +191,7 @@ const emit = defineEmits<{
   (event: 'clickLeading' | 'clickTrailing' | 'clickIconRight', value: PointerEvent): void;
 }>();
 
-const [value, modifiers] = defineModel<string | null>({
+const [value, modifiers] = defineModel<string | number | null>({
   required: true,
   set(value) {
     if (modifiers.null && value === '') {
@@ -176,11 +200,11 @@ const [value, modifiers] = defineModel<string | null>({
     return value;
   },
 });
-const { rules, validate, validateOnFocusout, hasError, currentError } = useSmileValidate<
-  string | null
->(value, toRef(props, 'error'), props.id);
 const unmaskedValue = defineModel<string>('unmaskedValue');
 
+const { rules, validate, validateOnFocusout, hasError, currentError } = useSmileValidate<
+  string | number | null
+>(value, toRef(props, 'error'), props.id);
 const textMark = computed(() => (props.markType === 'required' ? '*' : `(${props.optionalText})`));
 const iconSize = computed(() => (props.size === 'small' ? '16px' : '20px'));
 const helperText = computed(() => currentError.value || props.supportiveText);

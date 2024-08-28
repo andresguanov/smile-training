@@ -1,3 +1,30 @@
+<docs lang="md">
+## SInput
+
+Este componente permite la captura de texto, con la posibilidad de agregar un icono al inicio y al final del input.
+Además se pueden agregar sugerencias y máscaras de texto.
+
+### Tipos de validación
+
+Estas validaciones se dan en base a las propiedades establecidas en el component padre
+SForm, por lo que es necesario que el componente padre tenga la propiedad `containerIsForm`
+
+Para ello se debe agregar la prop `rules` la cual recibe un array de callback con las validaciones.
+
+### Slots
+
+- leading: Permite agregar un icono o texto al inicio del input.
+- trailing: Permite agregar un icono o texto al final del input.
+- label-icon: Permite agregar un icono al label.
+- supportive-icon: Permite agregar un icono al texto de soporte.
+
+### Metodos expuestos
+
+2. <strong>Mediante Ref</strong>
+
+- unmaskedValue: Retorna el valor sin la máscara.
+</docs>
+
 <template>
   <Story title="s-input" auto-props-disabled>
     <Variant title="default">
@@ -34,6 +61,21 @@ const initState = reactive({
   },
   leading: {
     trailingIcon: icons[3],
+  },
+  suggestion: {
+    value: 'Suggestion',
+    text: 'Suggestion',
+    description: 'Description',
+  },
+  mask: {
+    mask: '',
+    // eager: true,
+    // reversed: true,
+    // number: {
+    //   locale: 'pt-BR',
+    //   fraction: 2,
+    //   unsigned: true,
+    // },
   },
 });
 
@@ -94,6 +136,11 @@ const controls = [
     props: {},
   },
   {
+    key: 'labelIcon',
+    input: 'Select',
+    props: { options: icons },
+  },
+  {
     key: 'nativeType',
     input: 'Select',
     props: {
@@ -132,6 +179,11 @@ const controls = [
     props: {},
   },
   {
+    key: 'supportiveIcon',
+    input: 'Select',
+    props: { options: icons },
+  },
+  {
     key: 'hint',
     input: 'Text',
     props: {},
@@ -149,6 +201,21 @@ const controls = [
   {
     key: 'magic',
     input: 'Checkbox',
+    props: {},
+  },
+  {
+    key: 'autocompleteText',
+    input: 'Text',
+    props: {},
+  },
+  {
+    key: 'suggestion',
+    input: 'Json',
+    props: {},
+  },
+  {
+    key: 'mask',
+    input: 'Json',
     props: {},
   },
 ];

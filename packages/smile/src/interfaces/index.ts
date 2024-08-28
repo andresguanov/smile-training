@@ -11,3 +11,5 @@ export * from './s-file-upload.interface';
 export * from './s-survey.interface';
 export * from './s-toolbar.interface';
 export * from './s-input.interface';
+export * from './s-datepicker.interface';
+export * from './s-page-heading.interface';

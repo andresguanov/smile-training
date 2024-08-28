@@ -1,3 +1,22 @@
+<docs lang="md">
+## SModal
+
+Este componente permite mostrar un modal con un contenido personalizado, además de permitir
+personalizar el header y footer del modal.
+
+### Slots
+
+- `default`: Permite agregar contenido al modal.
+- `footer`: Permite agregar customizar el footer.
+
+### Events
+
+- `close`: Se emite cuando se cierra el modal.
+- `success`: Se emite cuando se presiona el botón de éxito.
+- `back`: Se emite cuando se presiona el botón de regresar.
+- `clickOutside`: Se emite cuando se hace click fuera del modal.
+</docs>
+
 <template>
   <Story title="s-modal" auto-props-disabled>
     <Variant title="default">
@@ -6,7 +25,10 @@
           v-bind="initState"
           @close="logEvent('close')"
           @success="logEvent('success')"
-        ></s-modal>
+          @clickOutside="logEvent('clickOutside')"
+          @back="logEvent('back')"
+          >{{ initState['content-slot'] }}</s-modal
+        >
       </template>
 
       <template #controls>
@@ -29,9 +51,13 @@ import { icons } from '../config/utils/IconOptions';
 
 const initState = reactive({
   modelValue: true,
+  showCloseIcon: true,
+  backBtn: false,
+  scrollable: false,
   headerText: '[Modal Title]',
   cancelText: 'Cancelar',
   successText: 'Guardar',
+  'content-slot': 'Modal Content',
 });
 
 const controls = [
@@ -51,6 +77,16 @@ const controls = [
     props: { options: ['small', 'medium', 'large'] },
   },
   {
+    key: 'showCloseIcon',
+    input: 'Checkbox',
+    props: {},
+  },
+  {
+    key: 'backBtn',
+    input: 'Checkbox',
+    props: {},
+  },
+  {
     key: 'cancelText',
     input: 'Text',
     props: {},
@@ -63,6 +99,16 @@ const controls = [
   {
     key: 'footer-slot',
     input: 'Checkbox',
+    props: {},
+  },
+  {
+    key: 'scrollable',
+    input: 'Checkbox',
+    props: {},
+  },
+  {
+    key: 'content-slot',
+    input: 'Text',
     props: {},
   },
 ];

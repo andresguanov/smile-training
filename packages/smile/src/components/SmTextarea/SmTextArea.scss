@@ -1,7 +1,23 @@
 .sm-textarea {
   @apply block w-full;
-  @apply border rounded border-gray-300 focus:border-sm-primary-500 transition-colors;
+  @apply border rounded-[10px] bg-white border-slate-300 transition-colors;
   @apply outline-none;
+  @apply px-2 py-1.5;
+  @apply flex items-center overflow-hidden mt-1;
+  @apply font-normal text-slate-700 text-base h-24;
+
+  &:hover {
+    @apply border-slate-400;
+  }
+  &:focus-within {
+    @apply border-2 border-sm-primary-500;
+  }
+  &::placeholder {
+    @apply text-slate-400;
+  }
+  &.no-resize {
+    @apply resize-none;
+  }
 
   &.sm-input-disabled {
     @apply bg-gray-50;
@@ -14,6 +30,28 @@
     @apply justify-start pl-2 items-center flex w-full absolute h-full pb-4  text-sm-primary-500;
   }
 }
+
+.sm-label {
+  :deep(span) {
+    @apply text-slate-700 text-sm font-medium;
+  }
+}
+
+.sm-textarea_container {
+  &__footer {
+    @apply flex gap-x-1 mt-1 items-center;
+  }
+
+  &__helper {
+    @apply text-slate-500 text-xs font-normal;
+
+    &-icon {
+      @apply h-4 w-4;
+      @apply flex justify-center items-center;
+    }
+  }
+}
+
 .sm-label.magic {
   @apply relative;
 }
@@ -32,3 +70,16 @@
     @apply text-white;
   }
 }
+
+// &__footer {
+//   @apply flex gap-x-1 mt-1 items-center;
+// }
+
+// &__helper {
+//   @apply text-slate-500 text-xs font-normal;
+
+//   &-icon {
+//     @apply h-4 w-4;
+//     @apply flex justify-center items-center;
+//   }
+// }
