@@ -31,7 +31,7 @@ const props = withDefaults(
 const slots = useSlots();
 
 const emits = defineEmits<{
-  (event: 'update:modelValue', value: number): void;
+  (event: 'update:modelValue', value: boolean): void;
 }>();
 
 const data = useVModel(props, 'modelValue', emits);
