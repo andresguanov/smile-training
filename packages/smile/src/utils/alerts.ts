@@ -27,11 +27,14 @@ export const useSmAlert = () => {
   const neutral = (message: string, options?: smAlertProvideOptions) =>
     alertStore.showAlert({ message, type: 'neutral', ...options });
 
+  const remove = (index: number) => alertStore.removeAlert(index);
+
   return {
     success,
     error,
     warning,
     info,
     neutral,
+    remove,
   };
 };
