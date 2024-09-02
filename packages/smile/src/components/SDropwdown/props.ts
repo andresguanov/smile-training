@@ -70,4 +70,5 @@ export type SDropdownProps = {
   optionalText?: string;
   magic?: boolean;
   autocompleteText?: string;
+  help?: string;
 };

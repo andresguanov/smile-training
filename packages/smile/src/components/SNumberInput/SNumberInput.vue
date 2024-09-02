@@ -7,9 +7,13 @@
             <sm-icon :icon="labelIcon" size="small" type="primary" />
           </slot>
         </span>
-        <p>
-          {{ label }}<span v-if="markType" class="s-number__mark">{{ textMark }}</span>
-        </p>
+        <p class="s-number__label-content">{{ label }}</p>
+        <slot name="help">
+          <s-tooltip v-if="help" class="s-number__help" :content="help">
+            <sm-icon icon="help" type="primary" size="small" />
+          </s-tooltip>
+          <span v-if="markType" class="s-number__mark">{{ textMark }}</span>
+        </slot>
       </label>
     </div>
     <div class="s-number__container" :class="size">
@@ -128,6 +132,7 @@ const props = withDefaults(
      * @default Opcional
      */
     optionalText?: string;
+    help?: string;
   }>(),
   {
     placeholder: '0',
