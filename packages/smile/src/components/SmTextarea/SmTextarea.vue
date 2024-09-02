@@ -15,6 +15,7 @@
         sizeClass,
         { 'sm-input-error': hasError },
         { 'sm-input-disabled': disabled },
+        { 'no-resize': resize === false },
       ]"
       v-sm-simple-uid
       @focusout="onFocusOut"
@@ -57,6 +58,7 @@ const props = defineProps<{
   errorMessages?: Array<string>;
   rules?: Array<(value: any) => boolean | string>;
   magic?: boolean;
+  resize?: boolean;
   autocompleteText?: string;
 }>();
 

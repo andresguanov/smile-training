@@ -111,7 +111,6 @@ import type { HTMLAttributes } from 'vue';
 
 const props = withDefaults(
   defineProps<{
-    modelValue: string;
     size?: 'small' | 'medium' | 'large';
     leading?: InputAddon;
     trailing?: InputAddon;
@@ -147,7 +146,7 @@ const props = withDefaults(
      * Disponible solo cuando el componente está dentro de SmForm.
      * Permite establecer las validaciones del componente.
      */
-    rules?: Array<(value: string) => boolean | string>;
+    rules?: Array<(value: string | number | null) => boolean | string>;
     /**
      * Mensaje de error, los mensajes de error proporcionados por rules tendrán
      * prioridad sobre este.
@@ -187,20 +186,25 @@ const props = withDefaults(
   }
 );
 const emit = defineEmits<{
-  (event: 'update:modelValue', value: string): void;
   (event: 'blur' | 'focus', value: FocusEvent): void;
   (event: 'keypress', value: KeyboardEvent): void;
   (event: 'clickLeading' | 'clickTrailing' | 'clickIconRight', value: PointerEvent): void;
 }>();
 
-const value = useVModel(props, 'modelValue', emit);
+const [value, modifiers] = defineModel<string | number | null>({
+  required: true,
+  set(value) {
+    if (modifiers.null && value === '') {
+      return null;
+    }
+    return value;
+  },
+});
 const unmaskedValue = defineModel<string>('unmaskedValue');
 
-const { rules, validate, validateOnFocusout, hasError, currentError } = useSmileValidate<string>(
-  value,
-  toRef(props, 'error'),
-  props.id
-);
+const { rules, validate, validateOnFocusout, hasError, currentError } = useSmileValidate<
+  string | number | null
+>(value, toRef(props, 'error'), props.id);
 const textMark = computed(() => (props.markType === 'required' ? '*' : `(${props.optionalText})`));
 const iconSize = computed(() => (props.size === 'small' ? '16px' : '20px'));
 const helperText = computed(() => currentError.value || props.supportiveText);
