@@ -9,7 +9,7 @@
         </span>
         <p class="s-number__label-content">{{ label }}</p>
         <slot name="help">
-          <s-tooltip v-if="help" class="s-number__help" :content="help">
+          <s-tooltip v-if="help" class="s-number__help" :content="help" placement="top-start">
             <sm-icon icon="help" type="primary" size="small" />
           </s-tooltip>
           <span v-if="markType" class="s-number__mark">{{ textMark }}</span>

@@ -10,7 +10,7 @@
 
         <p class="s-input__label-content">{{ label }}</p>
         <slot name="help">
-          <s-tooltip v-if="help" class="s-input__help" :content="help">
+          <s-tooltip v-if="help" class="s-input__help" :content="help" placement="top-start">
             <sm-icon icon="help" type="primary" size="small" />
           </s-tooltip>
           <span v-if="markType" class="s-input__mark">{{ textMark }}</span>

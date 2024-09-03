@@ -5,7 +5,7 @@
       :class="[sizeClass, { 'sm-label-required': required, 'sm-label-error': props.error }]"
     >
       {{ label }}
-      <s-tooltip v-if="help" class="sm-label-help" :content="help">
+      <s-tooltip v-if="help" class="sm-label-help" :content="help" placement="top-start">
         <sm-icon icon="help" type="primary" size="small" />
       </s-tooltip>
     </span>
