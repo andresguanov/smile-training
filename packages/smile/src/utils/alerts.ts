@@ -4,11 +4,12 @@ import { alertStore } from '../store';
 export const $SmAlert = Symbol('$SmAlert');
 
 export interface ISmAlertProvide {
-  success: (message: string, options?: smAlertProvideOptions) => void;
-  error: (message: string, options?: smAlertProvideOptions) => void;
-  warning: (message: string, options?: smAlertProvideOptions) => void;
-  info: (message: string, options?: smAlertProvideOptions) => void;
-  neutral: (message: string, options?: smAlertProvideOptions) => void;
+  success: (message: string, options?: smAlertProvideOptions) => number | undefined;
+  error: (message: string, options?: smAlertProvideOptions) => number | undefined;
+  warning: (message: string, options?: smAlertProvideOptions) => number | undefined;
+  info: (message: string, options?: smAlertProvideOptions) => number | undefined;
+  neutral: (message: string, options?: smAlertProvideOptions) => number | undefined;
+  remove: (index: number) => void;
 }
 
 export const useSmAlert = () => {
