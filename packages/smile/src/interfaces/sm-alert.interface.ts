@@ -10,6 +10,7 @@ export interface smAlertProvideOptions {
   time?: number;
   persistent?: boolean;
   action?: Action;
+  onRemove?: () => void;
 }
 
 export interface smAlert extends smAlertProvideOptions {

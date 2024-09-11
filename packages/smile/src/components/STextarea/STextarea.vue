@@ -16,7 +16,7 @@
         <s-loader :label="autocompleteText" is-inline magic />
       </div>
       <textarea
-        name="test"
+        name="s-textarea"
         v-model="value"
         class="s-textarea__textarea"
         :placeholder="placeholder"

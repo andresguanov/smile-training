@@ -53,3 +53,5 @@ export { default as SCarousel } from './SCarousel/SCarousel.vue';
 export { default as SmCarousel } from './SCarousel/SmCarousel.vue';
 export { default as SCarouselSlide } from './SCarousel/SCarouselSlide/SCarouselSlide.vue';
 export { default as SCarouselActions } from './SCarousel/SCarouselActions/SCarouselActions.vue';
+export { default as STextarea } from './STextarea/STextarea.vue';
+
