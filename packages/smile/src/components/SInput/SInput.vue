@@ -98,6 +98,9 @@
         {{ helperText }}
       </p>
     </div>
+    <div v-else="$slots['supportive-text']" class="s-input__footer s-input__helper">
+      <slot name="supportive-text"></slot>
+    </div>
   </div>
 </template>
 
