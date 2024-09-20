@@ -1,7 +1,7 @@
 <template>
   <div class="s-textarea" :class="{ disabled, readonly, error: hasError, magic }">
     <div v-if="label" class="s-textarea__header">
-      <label :for="id" class="s-textarea__label">
+      <label :for="id" class="s-textarea__label" :class="{ required: markType === 'required' }">
         <span v-if="labelIcon" class="s-textarea__label-icon">
           <slot name="label-icon"><sm-icon :icon="labelIcon" size="small" type="primary" /></slot>
         </span>

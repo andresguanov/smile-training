@@ -5,7 +5,7 @@
     @apply flex items-center gap-x-1;
     &.required {
       .s-input__mark {
-        @apply text-rose-600;
+        @apply text-sm-primary-600;
       }
     }
     .s-input__mark {

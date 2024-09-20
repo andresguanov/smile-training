@@ -16,7 +16,7 @@
 
     &.required {
       .s-radio__mark {
-        @apply text-rose-600;
+        @apply text-sm-primary-600;
       }
     }
     .s-radio__mark {
