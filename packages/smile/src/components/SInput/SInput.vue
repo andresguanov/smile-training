@@ -197,6 +197,9 @@ const [value, modifiers] = defineModel<string | number | null>({
     if (modifiers.null && value === '') {
       return null;
     }
+    if (modifiers.uppercase && typeof value === 'string') {
+      return value.toUpperCase();
+    }
     return value;
   },
 });
