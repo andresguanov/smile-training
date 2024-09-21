@@ -1,5 +1,5 @@
 .s-button {
-  @apply flex items-center justify-center gap-1;
+  @apply relative flex items-center justify-center gap-1;
   @apply px-5 py-2;
   @apply rounded-[10px] outline-none;
   @apply text-base font-medium;
@@ -16,10 +16,13 @@
   }
 
   &:disabled {
-    @apply opacity-30 cursor-not-allowed;
+    @apply bg-sm-primary-600/30 text-white/30 cursor-not-allowed;
   }
   &[loading='true'] {
-    @apply bg-slate-200/[0.45] cursor-default;
+    @apply bg-slate-200/45 cursor-default;
+    > *:not(.s-button__loading) {
+      @apply invisible;
+    }
   }
   &:not(:disabled, [loading='true']) {
     &:hover {
@@ -36,6 +39,12 @@
   &.subtle {
     @apply bg-sm-primary-100 text-sm-primary-900;
 
+    &:disabled {
+      @apply bg-sm-primary-100/30 text-sm-primary-900/30;
+    }
+    &[loading='true'] {
+      @apply bg-slate-200/45;
+    }
     &:not(:disabled, [loading='true']) {
       &:hover {
         @apply bg-sm-primary-200;
@@ -50,8 +59,11 @@
   }
   &.outline {
     @apply bg-transparent text-slate-900;
-    @apply border border-solid border-slate-300;
+    @apply border border-solid border-slate-400/40;
 
+    &:disabled {
+      @apply border-slate-400/20 text-slate-900/30;
+    }
     &[loading='true'] {
       @apply border-slate-200;
     }
@@ -59,6 +71,9 @@
   &.text {
     @apply bg-transparent text-sm-primary-600;
 
+    &:disabled {
+      @apply text-sm-primary-600/30;
+    }
     &.ghost {
       @apply text-slate-700;
       &:not(:disabled, [loading='true']) {
@@ -86,6 +101,12 @@
   &.destructive {
     @apply bg-rose-600 text-white;
 
+    &:disabled {
+      @apply bg-rose-600/30 text-white/30;
+    }
+    &[loading='true'] {
+      @apply bg-slate-200/45;
+    }
     &:not(:disabled, [loading='true']) {
       &:hover {
         @apply bg-rose-700;
@@ -97,9 +118,15 @@
         @apply ring-2 ring-offset-1 ring-sm-primary-500;
       }
     }
+    &.subtle {
+      @apply text-white;
+    }
     &.outline {
       @apply border border-solid border-rose-600;
 
+      &:disabled {
+        @apply border-rose-600/30;
+      }
       &[loading='true'] {
         @apply border-slate-200;
       }
@@ -108,6 +135,9 @@
     &.outline {
       @apply bg-transparent text-rose-600;
 
+      &:disabled {
+        @apply text-rose-600/30;
+      }
       &:not(:disabled, [loading='true']) {
         &:hover {
           @apply bg-slate-200/[0.45];
@@ -121,6 +151,9 @@
   &.reversed {
     @apply bg-white text-slate-900;
 
+    &:disabled {
+      @apply bg-white/30 text-slate-900/30;
+    }
     &:not(:disabled, [loading='true']) {
       &:hover {
         @apply bg-white/90;
@@ -135,6 +168,9 @@
     &.subtle {
       @apply bg-white/10 text-white;
 
+      &:disabled {
+        @apply bg-white/5 text-white/30;
+      }
       &:not(:disabled, [loading='true']) {
         &:hover {
           @apply bg-white/20;
@@ -147,6 +183,9 @@
     &.outline {
       @apply border border-solid border-white/30;
 
+      &:disabled {
+        @apply border-white/20 text-white/30;
+      }
       &[loading='true'] {
         @apply border-white/20;
       }
@@ -155,6 +194,9 @@
     &.text {
       @apply bg-transparent text-white;
 
+      &:disabled {
+        @apply text-white/30;
+      }
       &:not(:disabled, [loading='true']) {
         &:hover {
           @apply bg-white/10;
