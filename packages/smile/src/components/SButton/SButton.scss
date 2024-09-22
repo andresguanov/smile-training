@@ -16,7 +16,7 @@
   }
 
   &:disabled {
-    @apply bg-sm-primary-600/30 text-white/30 cursor-not-allowed;
+    @apply bg-sm-primary-600/30 text-white/90 cursor-not-allowed;
   }
   &[loading='true'] {
     @apply bg-slate-200/45 cursor-default;
@@ -102,7 +102,7 @@
     @apply bg-rose-600 text-white;
 
     &:disabled {
-      @apply bg-rose-600/30 text-white/30;
+      @apply bg-rose-600/30 text-white/90;
     }
     &[loading='true'] {
       @apply bg-slate-200/45;
@@ -169,7 +169,7 @@
       @apply bg-white/10 text-white;
 
       &:disabled {
-        @apply bg-white/5 text-white/30;
+        @apply bg-white/5 text-white/90;
       }
       &:not(:disabled, [loading='true']) {
         &:hover {
@@ -184,7 +184,7 @@
       @apply border border-solid border-white/30;
 
       &:disabled {
-        @apply border-white/20 text-white/30;
+        @apply border-white/20 text-white/90;
       }
       &[loading='true'] {
         @apply border-white/20;
