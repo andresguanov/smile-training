@@ -1,3 +1,51 @@
+<docs lang="md">
+## SWizard
+
+Este componente permite mostrar un wizard con pasos y un menú de usuario.
+
+### Props
+
+- `steps`: Pasos del wizard.
+  - <strong>Estructura de los objetos:</strong>
+    - `title`: Título del paso.
+    - `description`: Descripción del paso.
+    - `label`: Label que se mostrará en el stepper.
+    - `components`: Componentes que se mostrarán en el paso.
+- `menu`: User menu <strong>Ejemplo:</strong>
+  ```ts
+  interface sUserMenu {
+    userName: string;
+    userId: string;
+    onlyAvatar?: boolean;
+    hasLogout?: boolean;
+    showElectronicInvoicingStatus?: boolean;
+    electronicInvoicingText?: {
+      label: string;
+      active: string;
+    };
+    items: {
+      id: string;
+      text: string;
+      icon: IconType;
+      external?: boolean;
+    }[];
+  }
+  /*En este caso estamos tomando la key `code`
+  como value de cada option*/
+  ```
+
+### Slots
+
+- `leading`: Permite agregar un icono o texto al inicio del dropdown.
+- `label-icon`: Permite agregar un ícono en el label.
+- `supportive-icon`: Permite agregar un ícono en el supportive.
+- `beforeOptions`: Permite agregar un contenido antes de las opciones.
+- `afterOptions`: Permite agregar un contenido después de las opciones.
+- `append-item`: Permite agregar un contenido al inicio de las opciones.
+- `item`: Permite customizar el elemento de cada option, recibe valores como el `índice` y la `option`.
+- `prepend-item`: Permite agregar un contenido al final de las opciones.
+</docs>
+
 <template>
   <Story title="s-wizard" auto-props-disabled>
     <Variant title="default">
@@ -5,8 +53,11 @@
         <s-wizard
           v-model="initState['v-model']"
           v-bind="initState"
-          @clickMenu="() => console.log('ClickMenu')"
-          @close="() => console.log('Close')"
+          @clickMenu="() => logEvent('ClickMenu')"
+          @close="() => logEvent('Close')"
+          @menu:avatarClick="() => logEvent('AvatarClick')"
+          @menu:logout="() => logEvent('Logout')"
+          @menu:optionClick="$event => logEvent('OptionClick', $event)"
         ></s-wizard>
       </template>
       <template #controls>
@@ -26,6 +77,7 @@
 <script setup>
 import { ref, reactive } from 'vue';
 import { icons } from '../config/utils/IconOptions';
+import { logEvent } from 'histoire/client';
 
 /**
  * Puede usar la función render de Vue 3:

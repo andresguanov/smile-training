@@ -2,7 +2,7 @@
   <Story title="s-slider" auto-props-disabled>
     <Variant title="default">
       <template #default>
-        <s-slider v-model="sliderValue" v-bind="initState">
+        <s-slider v-model="initState['modelValue']" v-bind="initState">
           <s-input v-model="sliderValue" readonly></s-input>
         </s-slider>
       </template>
@@ -21,17 +21,21 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue';
-
-const sliderValue = ref(0);
+import { reactive } from 'vue';
 
 const initState = reactive({
   label: '[Slider Title]',
   min: 0,
   max: 500,
+  modelValue: 0,
 });
 
 const controls = [
+  {
+    key: 'modelValue',
+    input: 'Number',
+    props: {},
+  },
   {
     key: 'label',
     input: 'Text',
