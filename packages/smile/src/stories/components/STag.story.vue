@@ -20,6 +20,7 @@
 
 <script setup>
 import { ref, reactive } from 'vue';
+import { icons } from '../config/utils/IconOptions';
 
 const initState = reactive({
   label: 'label',
@@ -35,6 +36,11 @@ const controls = [
     key: 'type',
     input: 'Select',
     props: { options: ['primary', 'slate', 'rose', 'amber', 'green', 'indigo'] },
+  },
+  {
+    key: 'leadingIcon',
+    input: 'Select',
+    props: { options: icons },
   },
 ];
 </script>
