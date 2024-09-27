@@ -33,17 +33,6 @@ Este componente permite mostrar un wizard con pasos y un menú de usuario.
   /*En este caso estamos tomando la key `code`
   como value de cada option*/
   ```
-
-### Slots
-
-- `leading`: Permite agregar un icono o texto al inicio del dropdown.
-- `label-icon`: Permite agregar un ícono en el label.
-- `supportive-icon`: Permite agregar un ícono en el supportive.
-- `beforeOptions`: Permite agregar un contenido antes de las opciones.
-- `afterOptions`: Permite agregar un contenido después de las opciones.
-- `append-item`: Permite agregar un contenido al inicio de las opciones.
-- `item`: Permite customizar el elemento de cada option, recibe valores como el `índice` y la `option`.
-- `prepend-item`: Permite agregar un contenido al final de las opciones.
 </docs>
 
 <template>
