@@ -42,7 +42,7 @@ import type { IconType, sStatItem } from '../../interfaces';
 
 defineProps<{
   items: sStatItem[];
-  countsIcon: Array<IconType>;
+  countsIcon?: Array<IconType>;
 }>();
 
 const getIcon = (trend: number) => (trend > 0 ? 'arrow-up' : 'arrow-down');

@@ -1,3 +1,73 @@
+<docs lang="md">
+## STable
+
+Tabla con paginación y filtros.
+
+### Props
+
+- `rows`: (Array) Datos a mostrar en la tabla.
+- `hoverable`: (Boolean) Indica si la tabla tendrá un efecto hover.
+- `total`: (Number) Total de elementos.
+- `initialPage`: (Number) Página inicial.
+- `initialItemsPerPage`: (Number) Cantidad de elementos por página.
+- `initialOrder`: (String) Orden inicial de la tabla.
+- `columnConfig`: (Array) Configuración de las columnas.
+- `itemsPerPageOptions`: (Array) Opciones de cantidad de elementos por página.
+- `lastHeaderColWidth`: (String) Ancho de la última columna.
+- `loading`: (Boolean) Indica si la tabla está cargando.
+- `showLastHeaderCol`: (Boolean) Indica si se muestra la última columna.
+- `showFirstHeaderCol`: (Boolean) Indica si se muestra la primera columna.
+- `textPagination`: (Object) Textos de la paginación.
+- `firstHeaderColWidth`: (String) Ancho de la primera columna.
+
+### Slots
+
+- `toolbar`: Slot para implementar un toolbar.
+- `empty`: Slot para implementar un mensaje cuando no hay datos.
+- `firstHeaderCol`: Permite agregar un contenido antes de las opciones.
+- `headerCell(${col.name})`: Permite agregar un contenido al header de cada columna.
+- `lastHeaderCol`: Permite agregar un contenido al final de las opciones.
+- `actionsHead`: Permite customizar el header de las actions.
+- `actionsCol`: Permite customizar el elemento de cada action, recibe valores como el `índice` y la `action`.
+- `firstCol`: Permite customizar el primer elemento de cada fila.
+- `rowCell(${col.name})`: Permite customizar el contenido de cada celda de la fila, recibe valores como el `índice` y la `row`.
+- `lastCol`: Permite customizar el último elemento de cada fila.
+- `actionsCol`: Permite customizar el elemento de cada action, recibe valores como el `índice` y la `action`.
+
+### Metodos expuestos
+
+1. <strong>A través de Slot</strong>
+
+- `col`: Recibe la configuración de la columna. <strong>Incluido en los slots:</strong>
+  - `headerCell(${col.name})`
+  - `rowCell(${col.name})`
+- `row`: Recibe la fila actual. <strong>Incluido en los slots:</strong>
+
+  - `rowCell(${col.name})`
+  - `lastCol`
+
+- `row-index`: Índice de la fila actual. <strong>Slots:</strong>
+
+  - `rowCell(${col.name})`
+  - `lastCol`
+
+- `col-index`: Índice de la columna actual. <strong>Slots:</strong>
+  - `rowCell(${col.name})`
+- `page`: Página actual. <strong>Incluido en los slots:</strong>
+
+  - `rowCell(${col.name})`
+  - `lastCol`
+
+- `items-per-page`: Cantidad de items por página. <strong>Slots:</strong>
+  - `rowCell(${col.name})`
+
+2. <strong>Mediante Ref</strong>
+
+- `onUpdateItemsPerPage`: Método que permite actualizar la cantidad de items por página.
+- `onUpdatePage`: Método que permite actualizar la página actual.
+- `onRefresh`: Método que permite refrescar la tabla.
+</docs>
+
 <template>
   <Story title="table/s-table" auto-props-disabled>
     <Variant title="default">
@@ -33,6 +103,7 @@
           @change="onChange"
           @search="$event => logEvent('search', { $event })"
           @toolbarAction="$event => logEvent('toolbarAction', { $event })"
+          @clickRow="logEvent('clickRow', $event)"
         >
           <template #filters>
             <div>Slot para implementar filtros</div>
@@ -160,6 +231,11 @@ const controls = [
     props: {},
   },
   {
+    key: 'lastHeaderColWidth',
+    input: 'Text',
+    props: {},
+  },
+  {
     key: 'textPagination',
     input: 'Json',
     props: {},
@@ -192,6 +268,31 @@ const controls = [
   {
     key: 'filters',
     input: 'Json',
+    props: {},
+  },
+  {
+    key: 'areLocalItems',
+    input: 'Checkbox',
+    props: {},
+  },
+  {
+    key: 'loading',
+    input: 'Checkbox',
+    props: {},
+  },
+  {
+    key: 'showLastHeaderCol',
+    input: 'Checkbox',
+    props: {},
+  },
+  {
+    key: 'showFirstHeaderCol',
+    input: 'Checkbox',
+    props: {},
+  },
+  {
+    key: 'firstHeaderColWidth',
+    input: 'Text',
     props: {},
   },
 ];

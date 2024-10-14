@@ -2,7 +2,12 @@
   <Story title="table/s-pagination" auto-props-disabled>
     <Variant title="default">
       <template #default>
-        <s-pagination v-bind="initState"></s-pagination>
+        <s-pagination
+          v-bind="initState"
+          v-model:page="initState.page"
+          v-model:itemsPerPage="initState.itemsPerPage"
+        ></s-pagination>
+        {{ initState }}
       </template>
       <template #controls>
         <template v-for="control in controls">
@@ -41,12 +46,12 @@ const controls = [
     props: {},
   },
   {
-    key: 'page',
+    key: 'v-model:page',
     input: 'Number',
     props: {},
   },
   {
-    key: 'itemsPerPage',
+    key: 'v-model:itemsPerPage',
     input: 'Number',
     props: {},
   },
