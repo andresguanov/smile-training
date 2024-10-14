@@ -54,6 +54,7 @@ declare module 'vue' {
     SRadio: (typeof import('./components/SRadio/SRadio.vue'))['default'];
     SSlideover: (typeof import('./components/SSlideover/SSlideover.vue'))['default'];
     SSlider: (typeof import('./components/SSlider/SSlider.vue'))['default'];
+    SStat: (typeof import('./components/SStats/components/SStat.vue'))['default'];
     SStats: (typeof import('./components/SStats/SStats.vue'))['default'];
     SStep: (typeof import('./components/SStepper/SStep.vue'))['default'];
     SStepper: (typeof import('./components/SStepper/SStepper.vue'))['default'];
@@ -66,6 +67,7 @@ declare module 'vue' {
     STabs: (typeof import('./components/STab/STabs.vue'))['default'];
     STabSelectors: (typeof import('./components/STab/STabSelectors.vue'))['default'];
     STag: (typeof import('./components/STag/STag.vue'))['default'];
+    STextarea: (typeof import('./components/STextarea/STextarea.vue'))['default'];
     SToast: (typeof import('./components/SToast/SToast.vue'))['default'];
     SToggle: (typeof import('./components/SToggle/SToggle.vue'))['default'];
     SToolbar: (typeof import('./components/SToolbar/SToolbar.vue'))['default'];
