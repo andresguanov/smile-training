@@ -39,6 +39,9 @@
         <template #supportive-icon>
           <slot name="supportive-icon"></slot>
         </template>
+        <template #supportive-text>
+          <slot name="supportive-text"></slot>
+        </template>
       </s-input>
     </div>
     <s-overflow-menu v-if="open" class="s-dropdown__menu" :top="menuTopDistance">
