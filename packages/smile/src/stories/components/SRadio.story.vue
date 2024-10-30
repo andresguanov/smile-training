@@ -2,7 +2,11 @@
   <Story title="s-radio" auto-props-disabled>
     <Variant title="default">
       <template #default>
-        <s-radio v-model="initState['v-model']" v-bind="initState"></s-radio>
+        <s-radio
+          v-model="initState['v-model']"
+          v-bind="initState"
+          @focusOut="logEvent('focusOut', $event)"
+        ></s-radio>
       </template>
 
       <template #controls>
@@ -21,6 +25,7 @@
 <script setup>
 import { ref, reactive } from 'vue';
 import { icons } from '../config/utils/IconOptions';
+import { logEvent } from 'histoire/client';
 
 const initState = reactive({
   label: 'Label',

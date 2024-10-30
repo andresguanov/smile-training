@@ -78,8 +78,8 @@
 
 <script lang="ts" setup>
 import type { DatePickerInstance } from '@vuepic/vue-datepicker';
-import type { SDatepickerBaseProps, SDatepickerValue } from './props';
-import { Time } from '../../interfaces';
+import type { SDatepickerBaseProps } from './props';
+import { SDatepickerValue, Time } from '~/interfaces';
 import DatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 

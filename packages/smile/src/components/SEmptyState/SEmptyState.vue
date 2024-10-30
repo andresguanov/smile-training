@@ -1,15 +1,17 @@
 <template>
   <div :class="{ 's-empty--in-component': isOnComponent }" class="s-empty">
-    <sm-icon v-if="isOnComponent" :icon="generalIcon" class="s-empty__icon" />
-    <img
-      v-else
-      :src="emptyStateIllustration"
-      alt="No hubo resultados"
-      class="s-empty__image"
-      aria-hidden
-    />
+    <slot name="illustration">
+      <sm-icon v-if="isOnComponent" :icon="generalIcon" class="s-empty__icon" />
+      <img
+        v-else
+        :src="emptyStateIllustration"
+        alt="No hubo resultados"
+        class="s-empty__image"
+        aria-hidden
+      />
+    </slot>
     <h3 class="s-empty__title">{{ title }}</h3>
-    <p class="s-empty__message">{{ description }}</p>
+    <p class="s-empty__message" v-html-sanitized="description"></p>
     <s-button
       :label="action.label"
       :icon-left="action.icon"
@@ -31,6 +33,7 @@
 <script setup lang="ts">
 import emptyStateIllustration from '../../assets/empty-state-illustration.svg';
 import type { IconType } from '../../interfaces';
+import { vHtmlSanitized } from '~/directives';
 
 withDefaults(
   defineProps<{

@@ -68,5 +68,10 @@ const controls = [
     input: 'Checkbox',
     props: {},
   },
+  {
+    key: 'labelToLeft',
+    input: 'Checkbox',
+    props: {},
+  },
 ];
 </script>

@@ -1,7 +1,7 @@
 <docs lang="md">
-## SModal
+## SSurvey
 
-Este componente permite mostrar un modal con un contenido personalizado, además de permitir
+Este componente permite mostrar un modal de encuesta con un contenido personalizado, además de permitir
 personalizar el header y footer del modal.
 
 ### Slots
@@ -18,17 +18,15 @@ personalizar el header y footer del modal.
 </docs>
 
 <template>
-  <Story title="s-modal" auto-props-disabled>
+  <Story title="s-survey-modal" auto-props-disabled>
     <Variant title="default">
       <template #default>
-        <s-modal
+        <s-survey-modal
+          v-model="initState['v-model']"
           v-bind="initState"
-          @close="logEvent('close')"
-          @success="logEvent('success')"
-          @clickOutside="logEvent('clickOutside')"
-          @back="logEvent('back')"
-          >{{ initState['content-slot'] }}</s-modal
-        >
+          @omit="logEvent('omit')"
+          @send="logEvent('send', $event)"
+        />
       </template>
 
       <template #controls>
@@ -46,68 +44,39 @@ personalizar el header y footer del modal.
 
 <script setup>
 import { logEvent } from 'histoire/client';
-import { ref, reactive } from 'vue';
-import { icons } from '../config/utils/IconOptions';
+import { reactive } from 'vue';
 
 const initState = reactive({
-  modelValue: true,
-  showCloseIcon: true,
-  backBtn: false,
-  scrollable: false,
-  headerText: '[Modal Title]',
-  cancelText: 'Cancelar',
-  successText: 'Guardar',
-  'content-slot': 'Modal Content',
+  'v-model': true,
+  title: 'Título',
+  subtitle: 'Subtítulo',
+  sendText: 'Enviar',
+  omitText: 'Omitir',
 });
 
 const controls = [
   {
-    key: 'modelValue',
+    key: 'v-model',
     input: 'Checkbox',
     props: {},
   },
   {
-    key: 'headerText',
+    key: 'title',
     input: 'Text',
     props: {},
   },
   {
-    key: 'size',
-    input: 'Select',
-    props: { options: ['small', 'medium', 'large'] },
-  },
-  {
-    key: 'showCloseIcon',
-    input: 'Checkbox',
-    props: {},
-  },
-  {
-    key: 'backBtn',
-    input: 'Checkbox',
-    props: {},
-  },
-  {
-    key: 'cancelText',
+    key: 'subtitle',
     input: 'Text',
     props: {},
   },
   {
-    key: 'successText',
+    key: 'sendText',
     input: 'Text',
     props: {},
   },
   {
-    key: 'footer-slot',
-    input: 'Checkbox',
-    props: {},
-  },
-  {
-    key: 'scrollable',
-    input: 'Checkbox',
-    props: {},
-  },
-  {
-    key: 'content-slot',
+    key: 'omitText',
     input: 'Text',
     props: {},
   },

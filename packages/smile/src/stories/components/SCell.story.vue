@@ -1,12 +1,8 @@
 <template>
-  <Story title="s-stepper" auto-props-disabled>
+  <Story title="s-cell" auto-props-disabled>
     <Variant title="default">
       <template #default>
-        <s-stepper
-          v-model="initState['v-model']"
-          v-bind="initState"
-          @click-step="logEvent('click-step', $event)"
-        />
+        <s-cell v-bind="initState"></s-cell>
       </template>
 
       <template #controls>
@@ -24,31 +20,32 @@
 
 <script setup>
 import { reactive } from 'vue';
-import { logEvent } from 'histoire/client';
 
 const initState = reactive({
-  'v-model': 1,
-  steps: ['Step 1', 'Step 2', 'Step 3'],
+  text: 'Text',
+  avatar: '',
+  secondLine: 'Description',
+  rightContent: false,
 });
 
 const controls = [
   {
-    key: 'v-model',
-    input: 'Number',
+    key: 'avatar',
+    input: 'Text',
     props: {},
   },
   {
-    key: 'steps',
-    input: 'Json',
+    key: 'text',
+    input: 'Text',
     props: {},
   },
   {
-    key: 'hideLabels',
-    input: 'Checkbox',
+    key: 'secondLine',
+    input: 'Text',
     props: {},
   },
   {
-    key: 'currentStepHasError',
+    key: 'rightContent',
     input: 'Checkbox',
     props: {},
   },

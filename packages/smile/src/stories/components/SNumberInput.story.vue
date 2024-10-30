@@ -1,3 +1,24 @@
+<docs lang="md">
+## SNumberInput
+
+Este componente es una combinación de un input y un botón para incrementar o decrementar el valor del input.
+
+### Slots
+
+- `default`: Permite agregar contenido al modal.
+- `leading`: Permite agregar contenido en el leading del input.
+- `trailing`: Permite agregar contenido en el trailing del input.
+- `supportive-icon`: Permite agregar un icono al lado del texto de ayuda.
+- `label-icon`: Permite agregar contenido al lado del label como un icon.
+
+### Events
+
+- `keypress`: Se emite cuando se presiona un botón.
+- `clickPlus`: Se emite cuando se hace click en el botón de incrementar.
+- `clickMinus`: Se emite cuando se hace click en el botón de decrementar.
+- `clickLeading`: Se emite cuando se hace click en el botón de leading.
+</docs>
+
 <template>
   <Story title="s-number-input" auto-props-disabled>
     <Variant title="default">
@@ -26,6 +47,14 @@ const initState = reactive({
   label: 'Label',
   size: 'medium',
   optionalText: 'Opcional',
+  supportiveText: 'Supportive text',
+  supportiveIcon: 'info',
+  labelIcon: 'info',
+  placeholder: 'Placeholder',
+  id: 'id',
+  step: 1,
+  iconLeft: 'info',
+  disabled: false,
 });
 
 const controls = [
@@ -43,6 +72,11 @@ const controls = [
     key: 'label',
     input: 'Text',
     props: {},
+  },
+  {
+    key: 'labelIcon',
+    input: 'Select',
+    props: { options: icons },
   },
   {
     key: 'size',
@@ -108,6 +142,16 @@ const controls = [
     key: 'optionalText',
     input: 'Text',
     props: {},
+  },
+  {
+    key: 'supportiveText',
+    input: 'Text',
+    props: {},
+  },
+  {
+    key: 'supportiveIcon',
+    input: 'Select',
+    props: { options: icons },
   },
 ];
 </script>
