@@ -58,7 +58,7 @@ const props = defineProps<{
   errorMessages?: Array<string>;
   rules?: Array<(value: any) => boolean | string>;
   magic?: boolean;
-  resize?: boolean
+  resize?: boolean;
   autocompleteText?: string;
 }>();
 

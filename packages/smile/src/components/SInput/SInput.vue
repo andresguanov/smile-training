@@ -7,9 +7,14 @@
             <sm-icon :icon="labelIcon" size="small" type="primary" />
           </slot>
         </span>
-        <p>
-          {{ label }}<span v-if="markType" class="s-input__mark">{{ textMark }}</span>
-        </p>
+
+        <p class="s-input__label-content">{{ label }}</p>
+        <slot name="help">
+          <s-tooltip v-if="help" class="s-input__help" :content="help" placement="top-start">
+            <sm-icon icon="help" type="primary" size="small" />
+          </s-tooltip>
+          <span v-if="markType" class="s-input__mark">{{ textMark }}</span>
+        </slot>
       </label>
       <small class="s-input__helper">{{ hint }}</small>
     </div>
@@ -176,6 +181,7 @@ const props = withDefaults(
      */
     pattern?: string;
     inputmode?: HTMLAttributes['inputmode'];
+    help?: string;
   }>(),
   {
     size: 'medium',

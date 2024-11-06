@@ -31,7 +31,7 @@
         :on-input="onInput"
       />
     </template>
-    <template #action-row="{ selectDate, closePicker }">
+    <template #action-row="{ selectDate, closePicker, internalModelValue }">
       <div class="s-datepicker__calendar__actions">
         <s-button v-if="hasToday" emphasis="text" label="Hoy" size="small" @click="selectToday" />
         <s-button
@@ -41,7 +41,12 @@
           size="small"
           @click="closePicker"
         />
-        <s-button label="Aplicar" size="small" @click="selectDate" />
+        <s-button
+          label="Aplicar"
+          size="small"
+          :disabled="!canApplyInternalValueDate(internalModelValue)"
+          @click="selectDate"
+        />
       </div>
     </template>
     <template
@@ -104,6 +109,10 @@ const date = useVModel(props, 'modelValue', emit);
 
 const datepickerEl = ref<DatePickerInstance>(null);
 
+const canApplyInternalValueDate = (value: unknown) => {
+  if (!props.rangeMode) return true;
+  return Array.isArray(value) && value.length >= 2;
+};
 const selectToday = () => {
   if (!datepickerEl.value) {
     console.error('[Smile SDatepicker]: The element Datepicker norendered');

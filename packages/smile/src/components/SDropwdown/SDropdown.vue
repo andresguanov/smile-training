@@ -27,6 +27,7 @@
         :optional-text="optionalText"
         :error="currentError"
         :readonly="readonly || !search"
+        :help="help"
         @click.stop="toggleOverflow(search)"
         @click-icon-right.stop="toggleOverflow()"
       >
@@ -38,6 +39,9 @@
         </template>
         <template #supportive-icon>
           <slot name="supportive-icon"></slot>
+        </template>
+        <template #help>
+          <slot name="help"></slot>
         </template>
       </s-input>
     </div>
