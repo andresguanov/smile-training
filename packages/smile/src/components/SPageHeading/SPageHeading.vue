@@ -36,7 +36,10 @@
       <div class="s-page-heading__actions">
         <slot name="actions"></slot>
       </div>
-      <div v-if="description || hasDescriptionSlot" :class="['s-page-heading__description', { 's-page-heading__padding': icon }]">
+      <div
+        v-if="description || hasDescriptionSlot"
+        :class="['s-page-heading__description', { 's-page-heading__padding': icon }]"
+      >
         <slot v-if="hasDescriptionSlot" name="description"></slot>
         <span v-else>{{ description }}</span>
       </div>
@@ -47,17 +50,17 @@
 </template>
 
 <script setup lang="ts">
-import { computed, useSlots } from 'vue'
+import { computed, useSlots } from 'vue';
 
 import type { IconType, BreadCrumb } from '../../interfaces';
 
-const slots = useSlots()
+const slots = useSlots();
 
 const props = withDefaults(
   defineProps<{
     title: string;
     description?: string;
-    breadcrumb?: string | BreadCrumb[]
+    breadcrumb?: string | BreadCrumb[];
     border?: boolean;
     icon?: IconType;
   }>(),
@@ -66,7 +69,7 @@ const props = withDefaults(
   }
 );
 
-const checkSlot = (name: string) => slots[name] && typeof slots[name] === 'function'
+const checkSlot = (name: string) => slots[name] && typeof slots[name] === 'function';
 
 const breadcrumbs = computed(() => {
   if (typeof props.breadcrumb === 'string') {
@@ -75,25 +78,25 @@ const breadcrumbs = computed(() => {
         label: props.breadcrumb,
         to: '',
       },
-    ]
+    ];
   }
 
-  return props.breadcrumb ?? []
-})
+  return props.breadcrumb ?? [];
+});
 
-const hasDescriptionSlot = checkSlot('description')
+const hasDescriptionSlot = checkSlot('description');
 
 const emit = defineEmits<{
-  (event: 'clickBreadcrumb', value: MouseEvent, to: string): void
-}>()
+  (event: 'clickBreadcrumb', value: MouseEvent, to: string): void;
+}>();
 
 const clickBreadcrumb = (event: MouseEvent, to: string, isLast: boolean) => {
-  event.preventDefault()
+  event.preventDefault();
   // If it's the last breadcrumb, we don't want to navigate
   if (!isLast) {
-    emit('clickBreadcrumb', event, to)
+    emit('clickBreadcrumb', event, to);
   }
-}
+};
 </script>
 
 <style scoped lang="scss" src="./SPageHeading.scss"></style>
