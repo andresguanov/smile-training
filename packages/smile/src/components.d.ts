@@ -18,6 +18,9 @@ declare module 'vue' {
     SCard: (typeof import('./components/SCard/SCard.vue'))['default'];
     SCardFooter: (typeof import('./components/SCard/SCardFooter.vue'))['default'];
     SCardHeader: (typeof import('./components/SCard/SCardHeader.vue'))['default'];
+    SCarousel: (typeof import('./components/SCarousel/SCarousel.vue'))['default'];
+    SCarouselActions: (typeof import('./components/SCarousel/SCarouselActions/SCarouselActions.vue'))['default'];
+    SCarouselSlide: (typeof import('./components/SCarousel/SCarouselSlide/SCarouselSlide.vue'))['default'];
     SCell: (typeof import('./components/SCell/SCell.vue'))['default'];
     SCheckbox: (typeof import('./components/SCheckbox/SCheckbox.vue'))['default'];
     SChip: (typeof import('./components/SChip/SChip.vue'))['default'];
@@ -35,6 +38,7 @@ declare module 'vue' {
     SInput: (typeof import('./components/SInput/SInput.vue'))['default'];
     SInputLeading: (typeof import('./components/SInput/addons/SInputLeading.vue'))['default'];
     SLoader: (typeof import('./components/SLoader/SLoader.vue'))['default'];
+    SmCarousel: (typeof import('./components/SCarousel/SmCarousel.vue'))['default'];
     SmCheckbox: (typeof import('./components/SmCheckbox/SmCheckbox.vue'))['default'];
     SMenuItem: (typeof import('./components/SMenuItem/SMenuItem.vue'))['default'];
     SmFileInput: (typeof import('./components/SmFileInput/SmFileInput.vue'))['default'];
@@ -45,6 +49,8 @@ declare module 'vue' {
     SmProgressCircle: (typeof import('./components/SmProgressCircle/SmProgressCircle.vue'))['default'];
     SmSkeleton: (typeof import('./components/SmSkeleton/SmSkeleton.vue'))['default'];
     SmTextarea: (typeof import('./components/SmTextarea/SmTextarea.vue'))['default'];
+    SNotification: (typeof import('./components/SNotification/SNotification.vue'))['default'];
+    SNotificationItem: (typeof import('./components/SNotification/Item/SNotificationItem.vue'))['default'];
     SNotifyStack: (typeof import('./components/SToast/SNotifyStack.vue'))['default'];
     SNumberInput: (typeof import('./components/SNumberInput/SNumberInput.vue'))['default'];
     SOverflowMenu: (typeof import('./components/SOverflowMenu/SOverflowMenu.vue'))['default'];
@@ -73,6 +79,8 @@ declare module 'vue' {
     SToolbar: (typeof import('./components/SToolbar/SToolbar.vue'))['default'];
     SToolbarMenu: (typeof import('./components/SToolbar/SToolbarMenu.vue'))['default'];
     STooltip: (typeof import('./components/STooltip/STooltip.vue'))['default'];
+    STopNotification: (typeof import('./components/SNotification/STopNotification.vue'))['default'];
+    STopNotificationItem: (typeof import('./components/SNotification/Item/STopNotificationItem.vue'))['default'];
     SUserMenu: (typeof import('./components/SWizard/SUserMenu.vue'))['default'];
     SWizard: (typeof import('./components/SWizard/SWizard.vue'))['default'];
   }

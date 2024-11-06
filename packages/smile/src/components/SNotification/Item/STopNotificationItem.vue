@@ -30,7 +30,7 @@
 <script lang="ts" setup>
 import { IconType, ToastTypes, smNotification } from '~/interfaces';
 
-const props = withDefaults(
+withDefaults(
   defineProps<
     { appendAlt?: boolean | string } & Omit<smNotification, 'contentInline' | 'counterAlt'>
   >(),
