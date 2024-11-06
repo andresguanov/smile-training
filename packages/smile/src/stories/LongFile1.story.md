@@ -58,6 +58,12 @@ git remote add origin https://github.com/alegradev/app-alegra-banks.git
 git push -u origin main
 ```
 
+<div class="card-warn">
+  <b>Nota:</b>
+  Rsbuild está disponible como una alternativa para los proyectos de Vue 3. Si deseas probar esta opción, te invitamos a que actualices tu proyecto siguiendo las instrucciones específicas en la
+  <a href="/story/src-stories-longfile5-story-js">documentación de actualización</a>.
+</div>
+
 ---
 
 ## Instalando las dependencias

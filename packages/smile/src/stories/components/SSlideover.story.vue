@@ -2,7 +2,9 @@
   <Story title="s-slideover" auto-props-disabled>
     <Variant title="default">
       <template #default>
-        <s-slideover v-bind="initState"></s-slideover>
+        <s-slideover v-bind="initState">
+          {{ initState['content-slot'] }}
+        </s-slideover>
       </template>
       <template #controls>
         <template v-for="control in controls">
@@ -20,10 +22,12 @@
 
 <script setup>
 import { reactive } from 'vue';
-import { icons } from '../config/utils/IconOptions';
 
 const initState = reactive({
+  headerText: 'Modal Header',
   size: 'regular',
+  'content-slot': 'Modal Content',
+  modelValue: true,
 });
 
 const controls = [
@@ -41,6 +45,11 @@ const controls = [
     key: 'size',
     input: 'Select',
     props: { options: ['regular', 'medium'] },
+  },
+  {
+    key: 'content-slot',
+    input: 'Text',
+    props: {},
   },
 ];
 </script>

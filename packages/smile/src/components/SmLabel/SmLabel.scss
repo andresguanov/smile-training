@@ -1,6 +1,9 @@
 .sm-label {
   color: #707070;
   @apply align-middle;
+  &-help {
+    @apply content-center;
+  }
   &-text {
     @apply block;
   }

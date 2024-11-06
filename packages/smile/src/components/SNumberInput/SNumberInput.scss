@@ -10,9 +10,16 @@
         @apply text-sm-primary-600;
       }
     }
-    .s-number__mark {
-      @apply ml-1;
+    .s-number__mark,
+    .s-input__help {
+      // @apply ml-1;
       @apply font-normal text-xs text-slate-500;
+    }
+    .s-number__help {
+      @apply content-center;
+    }
+    &-content {
+      @apply flex;
     }
     &-icon {
       @apply h-5 w-5;

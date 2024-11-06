@@ -8,9 +8,16 @@
         @apply text-sm-primary-600;
       }
     }
-    .s-input__mark {
-      @apply ml-1;
+    .s-input__mark,
+    .s-input__help {
+      // @apply ml-1;
       @apply font-normal text-xs text-slate-500;
+    }
+    .s-input__help {
+      @apply content-center;
+    }
+    &-content {
+      @apply flex;
     }
     &-icon {
       @apply h-5 w-5;

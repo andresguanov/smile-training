@@ -2,7 +2,11 @@
   <Story title="s-stepper" auto-props-disabled>
     <Variant title="default">
       <template #default>
-        <s-stepper v-model="initState['v-model']" v-bind="initState"></s-stepper>
+        <s-stepper
+          v-model="initState['v-model']"
+          v-bind="initState"
+          @click-step="logEvent('click-step', $event)"
+        />
       </template>
 
       <template #controls>
@@ -19,8 +23,8 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue';
-import { icons } from '../config/utils/IconOptions';
+import { reactive } from 'vue';
+import { logEvent } from 'histoire/client';
 
 const initState = reactive({
   'v-model': 1,

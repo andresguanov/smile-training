@@ -8,6 +8,7 @@ export const LabelProps = {
   },
   required: Boolean,
   error: Boolean,
+  help: String,
 };
 
 export const InputProps = {
