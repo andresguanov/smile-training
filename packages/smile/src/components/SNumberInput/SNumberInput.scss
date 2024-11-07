@@ -7,7 +7,7 @@
 
     &.required {
       .s-number__mark {
-        @apply text-rose-600;
+        @apply text-sm-primary-600;
       }
     }
     .s-number__mark,

@@ -26,11 +26,9 @@
         <div v-if="myForm" style="margin-top: 20px">
           <h3>Métodos expuestos:</h3>
           <div class="flex gap-4">
-            <s-button emphasis="subtle" @click="myForm.validateInput('my-custom-username-input')">
-              Validate Username Input
-            </s-button>
-            <s-button emphasis="subtle" @click="myForm.validateForm()">Validate Form</s-button>
-            <s-button type="destructive" @click="myForm.resetInputs()">Reset Inputs</s-button>
+            <s-button emphasis="subtle" @click="validateInput"> Validate Username Input </s-button>
+            <s-button emphasis="subtle" @click="validateForm"> Validate Form </s-button>
+            <s-button type="destructive" @click="myForm.resetInputs()"> Reset Inputs </s-button>
           </div>
         </div>
       </template>
@@ -90,6 +88,16 @@ const controls = [
     props: {},
   },
 ];
+
+const validateInput = () => {
+  const result = myForm.value.validateInput('my-custom-username-input');
+  logEvent('validateInput', result);
+};
+
+const validateForm = () => {
+  const result = myForm.value.validateForm();
+  logEvent('validateForm', result);
+};
 </script>
 
 <docs lang="md">

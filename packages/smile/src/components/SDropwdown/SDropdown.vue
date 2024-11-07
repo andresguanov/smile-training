@@ -40,6 +40,9 @@
         <template #supportive-icon>
           <slot name="supportive-icon"></slot>
         </template>
+        <template #supportive-text>
+          <slot name="supportive-text"></slot>
+        </template>
         <template #help>
           <slot name="help"></slot>
         </template>
@@ -247,10 +250,10 @@ const onClickOption = (option: MenuOption) => {
       return el === value;
     });
     if (opIndex >= 0) {
-      (data.value as Array<string | number>).splice(opIndex, 1);
+      data.value = (data.value as Array<string | number>).filter((_, i) => i !== opIndex);
       return;
     }
-    (data.value as Array<string | number>).push(value);
+    data.value = [...(data.value as Array<string | number>), value];
     return;
   }
   if (

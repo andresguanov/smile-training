@@ -12,27 +12,24 @@
   >
     <sm-icon
       v-if="loading"
-      icon="loading"
+      icon="loading-spinner"
       type="primary"
-      class="s-button__loading"
+      class="s-button__icon s-button__loading"
       :height="iconSize"
       :width="iconSize"
-      :class="{ 's-button__icon': isOnlyIcon }"
     />
-    <template v-else>
-      <sm-icon
-        v-if="isOnlyIcon"
-        :icon="onlyIcon"
-        :height="iconSize"
-        :width="iconSize"
-        class="s-button__icon"
-      />
-      <slot v-else>
-        <sm-icon v-if="iconLeft" :icon="iconLeft" :height="iconSize" :width="iconSize" />
-        <span>{{ label }}</span>
-        <sm-icon v-if="iconRight" :icon="iconRight" :height="iconSize" :width="iconSize" />
-      </slot>
-    </template>
+    <sm-icon
+      v-if="isOnlyIcon"
+      :icon="onlyIcon"
+      :height="iconSize"
+      :width="iconSize"
+      class="s-button__icon"
+    />
+    <slot v-else>
+      <sm-icon v-if="iconLeft" :icon="iconLeft" :height="iconSize" :width="iconSize" />
+      <span>{{ label }}</span>
+      <sm-icon v-if="iconRight" :icon="iconRight" :height="iconSize" :width="iconSize" />
+    </slot>
   </s-tooltip>
 </template>
 
