@@ -93,18 +93,16 @@
         <span v-if="suggestion.description">{{ suggestion.description }}</span>
       </div>
     </transition>
-    <div class="s-input__footer" v-if="helperText">
+    <div class="s-input__footer" v-if="helperText || $slots['supportive-text']">
       <span class="s-input__helper-icon" v-if="supportiveIcon && !hasError">
         <slot name="supportive-icon">
           <sm-icon :icon="supportiveIcon" size="small" type="primary" />
         </slot>
       </span>
-      <p class="s-input__helper">
-        {{ helperText }}
-      </p>
-    </div>
-    <div v-else="$slots['supportive-text']" class="s-input__footer s-input__helper">
-      <slot name="supportive-text"></slot>
+      <div class="s-input__helper">
+        <p v-if="helperText">{{ helperText }}</p>
+        <slot v-else name="supportive-text"></slot>
+      </div>
     </div>
   </div>
 </template>
