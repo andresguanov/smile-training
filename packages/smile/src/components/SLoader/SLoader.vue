@@ -1,5 +1,5 @@
 <template>
-  <div class="s-loader" :class="{ inline: isInline }">
+  <div class="s-loader" :class="{ 's-loader__inline': isInline }">
     <div
       v-if="magic"
       class="s-loader__magic"
