@@ -4,7 +4,7 @@
     @apply text-slate-700 text-sm font-medium;
     &.required {
       .s-input__mark {
-        @apply text-rose-600;
+        @apply text-sm-primary-600;
       }
     }
     .s-input__mark {

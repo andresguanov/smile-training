@@ -38,22 +38,24 @@
       >
         <s-loader :label="autocompleteText" is-inline magic />
       </div>
-      <input
-        v-model="value"
-        class="s-input__input"
-        :type="nativeType"
-        :placeholder="placeholder"
-        :disabled="disabled"
-        :readonly="readonly"
-        :required="required"
-        :inputmode
-        :pattern
-        :id="id"
-        @blur="onBlur"
-        @focus="onFocus"
-        @keypress="(e: KeyboardEvent) => emit('keypress', e)"
-        v-maska:unmaskedValue.unmasked="mask"
-      />
+      <slot name="custom-input">
+        <input
+          v-model="value"
+          class="s-input__input"
+          :type="nativeType"
+          :placeholder="placeholder"
+          :disabled="disabled"
+          :readonly="readonly"
+          :required="required"
+          :inputmode
+          :pattern
+          :id="id"
+          @blur="onBlur"
+          @focus="onFocus"
+          @keypress="(e: KeyboardEvent) => emit('keypress', e)"
+          v-maska:unmaskedValue.unmasked="mask"
+        />
+      </slot>
       <div v-if="success" class="s-input__icon success">
         <sm-icon icon="success" :width="iconSize" :height="iconSize" />
       </div>
@@ -93,15 +95,16 @@
         <span v-if="suggestion.description">{{ suggestion.description }}</span>
       </div>
     </transition>
-    <div class="s-input__footer" v-if="helperText">
+    <div class="s-input__footer" v-if="helperText || $slots['supportive-text']">
       <span class="s-input__helper-icon" v-if="supportiveIcon && !hasError">
         <slot name="supportive-icon">
           <sm-icon :icon="supportiveIcon" size="small" type="primary" />
         </slot>
       </span>
-      <p class="s-input__helper">
-        {{ helperText }}
-      </p>
+      <div class="s-input__helper">
+        <p v-if="helperText">{{ helperText }}</p>
+        <slot v-else name="supportive-text"></slot>
+      </div>
     </div>
   </div>
 </template>
@@ -202,6 +205,9 @@ const [value, modifiers] = defineModel<string | number | null>({
   set(value) {
     if (modifiers.null && value === '') {
       return null;
+    }
+    if (modifiers.uppercase && typeof value === 'string') {
+      return value.toUpperCase();
     }
     return value;
   },

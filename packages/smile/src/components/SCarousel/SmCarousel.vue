@@ -57,6 +57,7 @@
     </div>
   </div>
 </template>
+
 <script lang="ts" setup>
 import { simpleUid } from '~/utils/uid';
 
@@ -95,13 +96,10 @@ watch(carouselListRef, val => {
   const validationItems = props.items?.length;
 
   if (!props.modelValue && !val && !validationItems) return;
-
-  console.log(items);
   if (!items || props.items?.length) return;
   // Definicón de id para cada elemento de la lista
   for (let i = 0; i < items.children.length; i++) {
     items.children[i].id = defineIdElement(i + 1);
-    console.log('items.children[i].id', items.children[i].id);
   }
 });
 
@@ -149,7 +147,7 @@ const handleUpdateActionSlide = (val: number) => {
   navigateSlides(val);
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @keyframes tonext {
   75% {
     left: 0;
@@ -195,41 +193,10 @@ const handleUpdateActionSlide = (val: number) => {
   }
 }
 
-ul {
-  box-sizing: border-box;
-  scrollbar-color: transparent transparent; /* thumb and track color */
-  scrollbar-width: 0px;
-}
-
-*::-webkit-scrollbar {
-  width: 0;
-}
-
-*::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-*::-webkit-scrollbar-thumb {
-  background: transparent;
-  border: none;
-}
-
-* {
-  -ms-overflow-style: none;
-}
-
-ul,
-li {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  scrollbar-width: none;
-  width: 100%;
-}
-
 .s-carousel {
   position: relative;
   width: 100%;
+
   &.inline {
     @apply flex gap-x-1;
   }
@@ -240,6 +207,38 @@ li {
   }
   &__action-default {
     @apply relative flex gap-4 justify-center w-full;
+  }
+
+  ul {
+    box-sizing: border-box;
+    scrollbar-color: transparent transparent; /* thumb and track color */
+    scrollbar-width: 0px;
+  }
+
+  *::-webkit-scrollbar {
+    width: 0;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: transparent;
+    border: none;
+  }
+
+  * {
+    -ms-overflow-style: none;
+  }
+
+  ul,
+  li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    scrollbar-width: none;
+    width: 100%;
   }
 }
 
@@ -260,12 +259,7 @@ li {
   width: 100%;
   height: 100%;
   scroll-snap-align: center;
-  /* transform-style: preserve-3d; */
 }
-
-/* .s-carousel__slide:nth-child(even) {
-  background-color: #99f;
-} */
 
 @media (hover: hover) {
   .s-carousel__slide:last-child .carousel__snapper {

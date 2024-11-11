@@ -6,7 +6,7 @@
 
     &.required {
       .s-textarea__mark {
-        @apply text-rose-600;
+        @apply text-sm-primary-600;
       }
     }
     .s-textarea__mark {

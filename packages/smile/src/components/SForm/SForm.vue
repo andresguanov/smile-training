@@ -43,27 +43,30 @@ const errors = ref<{ id: string; errorMessages: string[] }[]>([]);
 const fields = ref<FormField[]>([]);
 const isValid = computed(() => errors.value.length === 0);
 
+const checkFieldErrors = (field: FormField, silent = false) => {
+  const errorMessages = field.validate(silent);
+  const hasError = errorMessages.length > 0;
+  return hasError ? { id: field.id, errorMessages } : null;
+};
 const validateForm = (silent?: boolean) => {
-  let valid = true;
-  const results = [];
   isValidating.value = true;
+  const formErrors = [];
 
   for (const field of fields.value) {
-    const fieldErrorMessages = field.validate(silent);
-
-    if (fieldErrorMessages.length > 0) {
-      valid = false;
-      results.push({
-        id: field.id,
-        errorMessages: fieldErrorMessages,
-      });
-    }
-    if (!valid && props.breakOnFirstError) break;
+    const fieldErrors = checkFieldErrors(field, silent);
+    if (fieldErrors) formErrors.push(fieldErrors);
+    if (fieldErrors && props.breakOnFirstError) break;
   }
-  errors.value = [...results];
+  errors.value = formErrors;
   isValidating.value = false;
 
-  return { valid, results };
+  return { valid: formErrors.length === 0, results: formErrors };
+};
+const validateInput = (id: string) => {
+  const field = fields.value.find(el => el.id === id);
+  if (!field) throw new Error(`El input con id ${id}, no se encuentra en el formulario`);
+  const fieldErrors = checkFieldErrors(field);
+  return { valid: !fieldErrors, result: fieldErrors };
 };
 const resetInputs = () => {
   fields.value.forEach(({ reset }) => reset());
@@ -79,11 +82,6 @@ const onSubmit = () => {
   } catch (e: any) {
     emits('validation:error', e);
   }
-};
-const validateInput = (id: string) => {
-  const field = fields.value.find(el => el.id === id);
-  if (!field) throw new Error(`El input con id ${id}, no se encuentra en el formulario`);
-  field.validate();
 };
 
 provide<SFormProvide>(provideSFormSymbol, {
