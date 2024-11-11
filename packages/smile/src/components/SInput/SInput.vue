@@ -38,22 +38,24 @@
       >
         <s-loader :label="autocompleteText" is-inline magic />
       </div>
-      <input
-        v-model="value"
-        class="s-input__input"
-        :type="nativeType"
-        :placeholder="placeholder"
-        :disabled="disabled"
-        :readonly="readonly"
-        :required="required"
-        :inputmode
-        :pattern
-        :id="id"
-        @blur="onBlur"
-        @focus="onFocus"
-        @keypress="(e: KeyboardEvent) => emit('keypress', e)"
-        v-maska:unmaskedValue.unmasked="mask"
-      />
+      <slot name="custom-input">
+        <input
+          v-model="value"
+          class="s-input__input"
+          :type="nativeType"
+          :placeholder="placeholder"
+          :disabled="disabled"
+          :readonly="readonly"
+          :required="required"
+          :inputmode
+          :pattern
+          :id="id"
+          @blur="onBlur"
+          @focus="onFocus"
+          @keypress="(e: KeyboardEvent) => emit('keypress', e)"
+          v-maska:unmaskedValue.unmasked="mask"
+        />
+      </slot>
       <div v-if="success" class="s-input__icon success">
         <sm-icon icon="success" :width="iconSize" :height="iconSize" />
       </div>

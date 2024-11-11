@@ -46,6 +46,9 @@
         <template #help>
           <slot name="help"></slot>
         </template>
+        <template #custom-input>
+          <slot name="custom-input" :open></slot>
+        </template>
       </s-input>
     </div>
     <s-overflow-menu v-if="open" class="s-dropdown__menu" :top="menuTopDistance">

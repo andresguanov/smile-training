@@ -1,7 +1,7 @@
 .s-loader {
   @apply flex flex-col justify-center items-center gap-2;
 
-  &.inline {
+  &__inline {
     @apply flex-row;
   }
   &__icon {
