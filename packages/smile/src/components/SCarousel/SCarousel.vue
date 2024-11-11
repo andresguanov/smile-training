@@ -47,7 +47,7 @@ const nextSlide = () => {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .s-carousel {
   display: flex;
   flex-direction: column;
